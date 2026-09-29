@@ -1,0 +1,4 @@
+exp,session,toolchain,variant,alg,keys,order,N,U,pool,batch,calls_per_block,blocks,median_ns_el,min_ns_el,max_ns_el,spread_pct,blocks_ns_el
+E6,s1,gcc13-libstdc++,-,sort,random64,random,1048576,1,64,1,2,9,10.133,9.748,10.378,6.2,9.980;10.222;10.312;10.133;9.748;10.208;10.119;10.102;10.378
+E6,s1,clang18-libc++,-,sort,random64,random,1048576,1,64,1,2,9,1.502,1.362,1.672,20.6,1.502;1.432;1.475;1.672;1.598;1.615;1.390;1.362;1.509
+E6,s1,clang18-libstdc++,-,sort,random64,random,1048576,1,64,1,2,9,10.359,10.065,10.996,9.0,10.243;10.234;10.320;10.065;10.996;10.735;10.516;10.359;10.634

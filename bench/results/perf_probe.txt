@@ -1,0 +1,4 @@
+HW branch-misses   fd=-1 No such file or directory
+HW cache-misses    fd=-1 No such file or directory
+HW cycles          fd=-1 No such file or directory
+SW task-clock      fd=3 OK
