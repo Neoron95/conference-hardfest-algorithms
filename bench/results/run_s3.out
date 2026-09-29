@@ -1,0 +1,97 @@
+[16:15:18] E1 build/bench_gcc --n 1048576 --u 1048576
+[16:15:30] E1 build/bench_clang_libcxx --n 1048576 --u 1048576
+[16:15:43] E1 build/bench_clang_libstdcxx --n 1048576 --u 1048576
+[16:15:55] E2 build/bench_gcc --n 16 --u 8 --algs sort,uset,radix,flat
+[16:15:57] E2 build/bench_clang_libcxx --n 16 --u 8 --algs sort,uset
+[16:15:58] E2 build/bench_gcc --n 64 --u 32 --algs sort,uset,radix,flat
+[16:16:00] E2 build/bench_clang_libcxx --n 64 --u 32 --algs sort,uset
+[16:16:01] E2 build/bench_gcc --n 256 --u 128 --algs sort,uset,radix,flat
+[16:16:04] E2 build/bench_clang_libcxx --n 256 --u 128 --algs sort,uset
+[16:16:05] E2 build/bench_gcc --n 1024 --u 512 --algs sort,uset,radix,flat
+[16:16:08] E2 build/bench_clang_libcxx --n 1024 --u 512 --algs sort,uset
+[16:16:10] E2 build/bench_gcc --n 4096 --u 2048 --algs sort,uset,radix,flat
+[16:16:13] E2 build/bench_clang_libcxx --n 4096 --u 2048 --algs sort,uset
+[16:16:15] E2 build/bench_gcc --n 16384 --u 8192 --algs sort,uset,radix,flat
+[16:16:19] E2 build/bench_clang_libcxx --n 16384 --u 8192 --algs sort,uset
+[16:16:21] E2 build/bench_gcc --n 65536 --u 32768 --algs sort,uset,radix,flat
+[16:16:25] E2 build/bench_clang_libcxx --n 65536 --u 32768 --algs sort,uset
+[16:16:28] E2 build/bench_gcc --n 262144 --u 131072 --algs sort,uset,radix,flat
+[16:16:34] E2 build/bench_clang_libcxx --n 262144 --u 131072 --algs sort,uset
+[16:16:39] E2 build/bench_gcc --n 524288 --u 262144 --algs sort,uset,radix,flat
+[16:16:46] E2 build/bench_clang_libcxx --n 524288 --u 262144 --algs sort,uset
+[16:16:51] E2 build/bench_gcc --n 1048576 --u 524288 --algs sort,uset,radix,flat
+[16:16:59] E2 build/bench_clang_libcxx --n 1048576 --u 524288 --algs sort,uset
+[16:17:04] E2 build/bench_gcc --n 2097152 --u 1048576 --algs sort,uset,radix,flat
+[16:17:12] E2 build/bench_clang_libcxx --n 2097152 --u 1048576 --algs sort,uset
+[16:17:19] E2 build/bench_gcc --n 4194304 --u 2097152 --algs sort,uset,radix,flat
+[16:17:39] E2 build/bench_clang_libcxx --n 4194304 --u 2097152 --algs sort,uset
+[16:17:54] E2b build/bench_gcc --n 16 --u 8 --algs sort,uset --pool 16384 --variant pool_256K_elems
+[16:17:55] E2b build/bench_clang_libcxx --n 16 --u 8 --algs sort,uset --pool 16384 --variant pool_256K_elems
+[16:17:56] E2b build/bench_gcc --n 64 --u 32 --algs sort,uset --pool 4096 --variant pool_256K_elems
+[16:17:57] E2b build/bench_clang_libcxx --n 64 --u 32 --algs sort,uset --pool 4096 --variant pool_256K_elems
+[16:17:58] E2b build/bench_gcc --n 256 --u 128 --algs sort,uset --pool 1024 --variant pool_256K_elems
+[16:18:00] E2b build/bench_clang_libcxx --n 256 --u 128 --algs sort,uset --pool 1024 --variant pool_256K_elems
+[16:18:01] E2b build/bench_gcc --n 1024 --u 512 --algs sort,uset --pool 256 --variant pool_256K_elems
+[16:18:03] E2b build/bench_clang_libcxx --n 1024 --u 512 --algs sort,uset --pool 256 --variant pool_256K_elems
+[16:18:05] E2b build/bench_gcc --n 4096 --u 2048 --algs sort,uset --pool 64 --variant pool_256K_elems
+[16:18:07] E2b build/bench_clang_libcxx --n 4096 --u 2048 --algs sort,uset --pool 64 --variant pool_256K_elems
+[16:18:09] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 1 --variant a_one_array_restored
+[16:18:09] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 64 --variant b_64_identical_copies
+[16:18:09] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 64 --batch 64 --variant c_64_different
+[16:18:10] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 8 --batch 8 --variant d_8_different_64KB
+[16:18:10] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 4 --batch 4 --variant d4_4_different_32KB
+[16:18:10] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 64 --batch 1 --variant e_64_different_one_buffer
+[16:18:11] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 2 --batch 1 --variant f_2_different_one_buffer
+[16:18:11] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 4 --batch 1 --variant f_4_different_one_buffer
+[16:18:12] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 8 --batch 1 --variant f_8_different_one_buffer
+[16:18:12] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 16 --batch 1 --variant f_16_different_one_buffer
+[16:18:13] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 4 --variant g_4_identical_copies
+[16:18:13] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 8 --variant g_8_identical_copies
+[16:18:13] E5 build/bench_gcc --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 16 --variant g_16_identical_copies
+[16:18:13] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 1 --variant a_one_array_restored
+[16:18:13] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 64 --variant b_64_identical_copies
+[16:18:14] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 64 --batch 64 --variant c_64_different
+[16:18:14] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 8 --batch 8 --variant d_8_different_64KB
+[16:18:14] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 4 --batch 4 --variant d4_4_different_32KB
+[16:18:14] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 64 --batch 1 --variant e_64_different_one_buffer
+[16:18:14] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 2 --batch 1 --variant f_2_different_one_buffer
+[16:18:15] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 4 --batch 1 --variant f_4_different_one_buffer
+[16:18:15] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 8 --batch 1 --variant f_8_different_one_buffer
+[16:18:15] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 16 --batch 1 --variant f_16_different_one_buffer
+[16:18:15] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 4 --variant g_4_identical_copies
+[16:18:15] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 8 --variant g_8_identical_copies
+[16:18:16] E5 build/bench_gcc --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 16 --variant g_16_identical_copies
+[16:18:16] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 1 --variant a_one_array_restored
+[16:18:16] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 64 --variant b_64_identical_copies
+[16:18:16] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 64 --batch 64 --variant c_64_different
+[16:18:16] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 8 --batch 8 --variant d_8_different_64KB
+[16:18:17] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 4 --batch 4 --variant d4_4_different_32KB
+[16:18:17] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 64 --batch 1 --variant e_64_different_one_buffer
+[16:18:18] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 2 --batch 1 --variant f_2_different_one_buffer
+[16:18:18] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 4 --batch 1 --variant f_4_different_one_buffer
+[16:18:18] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 8 --batch 1 --variant f_8_different_one_buffer
+[16:18:19] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 16 --batch 1 --variant f_16_different_one_buffer
+[16:18:19] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 4 --variant g_4_identical_copies
+[16:18:19] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 8 --variant g_8_identical_copies
+[16:18:20] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 16 --variant g_16_identical_copies
+[16:18:20] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 1 --variant a_one_array_restored
+[16:18:20] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 64 --variant b_64_identical_copies
+[16:18:20] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 64 --batch 64 --variant c_64_different
+[16:18:20] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 8 --batch 8 --variant d_8_different_64KB
+[16:18:20] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 4 --batch 4 --variant d4_4_different_32KB
+[16:18:20] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 64 --batch 1 --variant e_64_different_one_buffer
+[16:18:21] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 2 --batch 1 --variant f_2_different_one_buffer
+[16:18:21] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 4 --batch 1 --variant f_4_different_one_buffer
+[16:18:21] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 8 --batch 1 --variant f_8_different_one_buffer
+[16:18:21] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 16 --batch 1 --variant f_16_different_one_buffer
+[16:18:21] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 4 --variant g_4_identical_copies
+[16:18:21] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 8 --variant g_8_identical_copies
+[16:18:22] E5 build/bench_clang_libcxx --n 1024 --u 512 --algs radix --work 1048576 --blocks 9 --pool 1 --batch 16 --variant g_16_identical_copies
+[16:18:22] E6 build/bench_gcc --n 1048576 --u 1 --algs sort --blocks 9
+[16:18:23] E6 build/bench_clang_libcxx --n 1048576 --u 1 --algs sort --blocks 9
+[16:18:23] E6 build/bench_clang_libstdcxx --n 1048576 --u 1 --algs sort --blocks 9
+[16:18:24] E10 build/bench_gcc --n 1048576 --u 1048576 --algs sort,uset,uset_1pass
+[16:18:37] E10 build/bench_gcc --n 1048576 --u 524288 --algs sort,uset,uset_1pass
+[16:18:45] E10 build/bench_clang_libcxx --n 1048576 --u 1048576 --algs sort,uset,uset_1pass
+[16:19:00] E10 build/bench_clang_libcxx --n 1048576 --u 524288 --algs sort,uset,uset_1pass
+[16:19:08] session s3 done: E1 E2 E2b E5 E6 E10

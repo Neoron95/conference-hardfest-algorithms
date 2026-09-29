@@ -24,6 +24,7 @@
 #include <cstring>
 #include <iterator>
 #include <memory>
+#include <sys/resource.h>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -68,6 +69,7 @@ struct Config {
   size_t batch = 0;        // буферов, готовых до таймера; 0 = авто
   size_t nlocal = 1u << 20;  // E8: размер отсортированной локальной части
   u64 seed = 17;
+  bool faults = false;  // печатать в stderr minor page faults на вызов
 };
 
 // Один вход пула: U различных ключей, каждый >= 1 раза, всего N.
@@ -132,6 +134,17 @@ static void alg_uset(Vec& v, const Ctx&) {
   v.assign(s.begin(), s.end());
 }  // деструктор s — внутри таймера
 
+// Та же таблица, но выгрузка одним обходом: v.assign(first, last) для прямых
+// итераторов сначала считает std::distance — это лишний проход по узлам.
+static void alg_uset_1pass(Vec& v, const Ctx&) {
+  std::unordered_set<u64> s;
+  s.reserve(v.size());
+  for (u64 x : v) s.insert(x);
+  size_t i = 0;
+  for (u64 x : s) v[i++] = x;  // U <= N: пишем в уже прочитанный вход
+  v.resize(i);
+}
+
 static void alg_flat(Vec& v, const Ctx&) {
   absl::flat_hash_set<u64> s;
   s.reserve(v.size());
@@ -189,7 +202,7 @@ struct Alg { const char* name; AlgFn fn; };
 static const Alg kAlgs[] = {
     {"sort", alg_sort},   {"uset", alg_uset},   {"radix", alg_radix},
     {"flat", alg_flat},   {"merge_inplace", alg_merge_inplace},
-    {"merge_union", alg_merge_union},
+    {"merge_union", alg_merge_union}, {"uset_1pass", alg_uset_1pass},
 };
 
 static const Alg* find_alg(const std::string& n) {
@@ -327,6 +340,8 @@ static int run(const Config& c) {
   std::vector<std::vector<double>> per_block(A);
   size_t cursor = 0;
   std::vector<size_t> ids(B);
+  std::vector<double> flt(A, 0.0), calls(A, 0.0);
+  auto minflt = []() { struct rusage ru; getrusage(RUSAGE_SELF, &ru); return (double)ru.ru_minflt; };
   for (int blk = 0; blk < c.warmup + c.blocks; ++blk) {
     std::vector<double> ns(A, 0.0), el(A, 0.0);
     for (size_t rep = 0; rep < reps; ++rep) {
@@ -335,10 +350,12 @@ static int run(const Config& c) {
       for (size_t j = 0; j < A; ++j) {
         const size_t a = (rep + (size_t)blk + j) % A;  // чередование порядка
         for (size_t k = 0; k < B; ++k) { const Vec& in = get(ids[k]); work[k].assign(in.begin(), in.end()); }
+        const double f0 = c.faults ? minflt() : 0.0;
         const double t0 = now_ns();
         for (size_t k = 0; k < B; ++k) algs[a]->fn(work[k], ctx);
         const double t1 = now_ns();
         ns[a] += t1 - t0;
+        if (c.faults) { flt[a] += minflt() - f0; calls[a] += (double)B; }
         for (size_t k = 0; k < B; ++k) {
           el[a] += (double)pool[ids[k]].size();
           if (!check(work[k], refs[ids[k]])) {
@@ -364,6 +381,53 @@ static int run(const Config& c) {
            c.keys == Keys::E8 ? (size_t)refs[0].size() : c.U, P, B, reps * B, c.blocks, med, s.front(),
            s.back(), 100.0 * (s.back() - s.front()) / med, list.c_str());
     fflush(stdout);
+    if (c.faults)
+      fprintf(stderr, "faults: %s alg=%s N=%zu U=%zu minflt_per_call=%.1f\n", short_toolchain().c_str(),
+              algs[a]->name, N, c.U, flt[a] / calls[a]);
+  }
+  return 0;
+}
+
+// ---------------------------------------------------------------- фазы
+// Раскладка времени хеш-вариантов по фазам одного вызова: reserve + вставки,
+// выгрузка v.assign, деструктор таблицы. Печатает медианы по вызовам, нс/эл.
+template <class Set>
+static void phases_one(const char* name, const Config& c, std::vector<Vec>& pool, int calls) {
+  std::vector<double> ins, out, dtor, total;
+  Vec w;
+  w.reserve(c.N);
+  for (int i = 0; i < calls; ++i) {
+    const Vec& in = pool[i % pool.size()];
+    w.assign(in.begin(), in.end());
+    double t0, t1, t2, t3;
+    {
+      t0 = now_ns();
+      Set s;
+      s.reserve(w.size());
+      for (u64 x : w) s.insert(x);
+      t1 = now_ns();
+      w.assign(s.begin(), s.end());
+      t2 = now_ns();
+    }
+    t3 = now_ns();
+    if (i == 0) continue;  // первый вызов — прогрев
+    const double n = (double)c.N;
+    ins.push_back((t1 - t0) / n); out.push_back((t2 - t1) / n);
+    dtor.push_back((t3 - t2) / n); total.push_back((t3 - t0) / n);
+  }
+  auto m = [](std::vector<double> v) { std::sort(v.begin(), v.end()); return v[v.size() / 2]; };
+  printf("%s,%s,%s,%zu,%zu,%.1f,%.1f,%.1f,%.1f\n", c.session.c_str(), short_toolchain().c_str(), name,
+         c.N, c.U, m(ins), m(out), m(dtor), m(total));
+  fflush(stdout);
+}
+
+static int phases(const Config& c) {
+  std::vector<Vec> pool(8);
+  for (size_t i = 0; i < pool.size(); ++i) pool[i] = make_input(c, i);
+  const int calls = 17;
+  for (int r = 0; r < 2; ++r) {  // два круга, чтобы чередовать
+    phases_one<std::unordered_set<u64>>("uset", c, pool, calls);
+    phases_one<absl::flat_hash_set<u64>>("flat", c, pool, calls);
   }
   return 0;
 }
@@ -394,7 +458,7 @@ static void usage() {
 
 int main(int argc, char** argv) {
   Config c;
-  bool ufrac = false;
+  bool ufrac = false, phases_mode = false;
   double frac = 1.0;
   for (int i = 1; i < argc; ++i) {
     std::string a = argv[i];
@@ -421,10 +485,12 @@ int main(int argc, char** argv) {
     else if (a == "--pool") c.pool = std::stoull(val());
     else if (a == "--batch") c.batch = std::stoull(val());
     else if (a == "--seed") c.seed = std::stoull(val());
+    else if (a == "--faults") c.faults = true;
+    else if (a == "--phases") phases_mode = true;
     else { usage(); return 2; }
   }
   if (ufrac) c.U = std::max<size_t>(1, (size_t)(frac * (double)c.N + 0.5));
   if (c.keys != Keys::E8 && (c.U < 1 || c.U > c.N)) { fprintf(stderr, "need 1 <= U <= N\n"); return 2; }
   if (c.keys == Keys::E8 && c.nlocal >= c.N) { fprintf(stderr, "need nlocal < N\n"); return 2; }
-  return run(c);
+  return phases_mode ? phases(c) : run(c);
 }

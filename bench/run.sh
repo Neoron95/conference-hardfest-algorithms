@@ -6,7 +6,7 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 SESSION=${1:?session label}; shift
-EXPS=${*:-E1 E2 E3 E4 E5 E6 E7 E8 E9}
+EXPS=${*:-E1 E2 E2b E3 E4 E5 E6 E7 E8 E9 E10}
 CPU=${CPU:-2}
 BLOCKS=${BLOCKS:-7}
 GCC=build/bench_gcc
@@ -46,6 +46,12 @@ for E in $EXPS; do
     for n in 16 64 256 1024 4096 16384 65536 262144 524288 1048576 2097152 4194304; do
       b E2 $GCC --n $n --u $((n / 2)) --algs sort,uset,radix,flat
       b E2 $CXX --n $n --u $((n / 2)) --algs sort,uset
+    done ;;
+  E2b)  # контроль к E2 на малых N: пул не 64 входа, а 2^18 / N (256K элементов в пуле)
+    for n in 16 64 256 1024 4096; do
+      for bin in $GCC $CXX; do
+        b E2b $bin --n $n --u $((n / 2)) --algs sort,uset --pool $((262144 / n)) --variant pool_256K_elems
+      done
     done ;;
   E3)  # доля уникальных, N = 2^20
     for bin in $GCC $CXX; do
@@ -89,6 +95,11 @@ for E in $EXPS; do
       b E9 $bin --n $N20 --u $N20 --variant default_malloc
       GLIBC_TUNABLES=glibc.malloc.hugetlb=1 b E9 $bin --n $N20 --u $((N20 / 2)) --algs sort,uset --variant thp_malloc
       b E9 $bin --n $N20 --u $((N20 / 2)) --algs sort,uset --variant default_malloc
+    done ;;
+  E10)  # unordered_set: выгрузка v.assign (2 обхода узлов) против одного обхода
+    for bin in $GCC $CXX; do
+      b E10 $bin --n $N20 --u $N20 --algs sort,uset,uset_1pass
+      b E10 $bin --n $N20 --u $((N20 / 2)) --algs sort,uset,uset_1pass
     done ;;
   *) log "unknown experiment $E" ;;
   esac

@@ -99,3 +99,15 @@
 [16:01:39] E7 build/bench_gcc --n 1048576 --u 524288 --keys random
 [16:01:46] E7 build/bench_gcc --n 1048576 --u 524288 --keys dense
 [16:01:52] E7 build/bench_clang_libcxx --n 1048576 --u 524288 --keys random
+[16:02:00] E7 build/bench_clang_libcxx --n 1048576 --u 524288 --keys dense
+[16:02:07] E8 build/bench_gcc --keys e8 --nlocal 1048576 --n 1114112 --algs sort,uset,radix,flat,merge_inplace,merge_union
+[16:02:19] E8 build/bench_clang_libcxx --keys e8 --nlocal 1048576 --n 1114112 --algs sort,uset,radix,flat,merge_inplace,merge_union
+[16:02:31] E9 build/bench_gcc --n 1048576 --u 1048576 --variant thp_malloc
+[16:02:44] E9 build/bench_gcc --n 1048576 --u 1048576 --variant default_malloc
+[16:02:56] E9 build/bench_gcc --n 1048576 --u 524288 --algs sort,uset --variant thp_malloc
+[16:03:02] E9 build/bench_gcc --n 1048576 --u 524288 --algs sort,uset --variant default_malloc
+[16:03:07] E9 build/bench_clang_libcxx --n 1048576 --u 1048576 --variant thp_malloc
+[16:03:20] E9 build/bench_clang_libcxx --n 1048576 --u 1048576 --variant default_malloc
+[16:03:32] E9 build/bench_clang_libcxx --n 1048576 --u 524288 --algs sort,uset --variant thp_malloc
+[16:03:39] E9 build/bench_clang_libcxx --n 1048576 --u 524288 --algs sort,uset --variant default_malloc
+[16:03:45] session s1 done: E1 E2 E3 E4 E5 E6 E7 E8 E9

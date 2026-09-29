@@ -109,6 +109,21 @@ for tc in (GCC, CXX):
         p(f"| {n} | {fmt(med(s))} | {fmt(med(u))} | {extra}{fmt(r, 2)} | {who} | {between(s)} / {between(u)} |")
     p()
 
+# ------------------------------------------------------------------ E2b
+p("### E2b. Контроль к E2: малые N с пулом 2^18/N входов (256K элементов) вместо 64, нс/эл\n")
+p("| связка | N | sort, пул 64 | sort, большой пул | uset, пул 64 | uset, большой пул | T_sort/T_uset (большой пул) |")
+p("|---|---|---|---|---|---|---|")
+for tc in (GCC, CXX):
+    for n in (16, 64, 256, 1024, 4096):
+        sb = get("E2b", tc, "sort", n, n // 2)
+        ub = get("E2b", tc, "uset", n, n // 2)
+        if not sb:
+            continue
+        s64 = get("E2", tc, "sort", n, n // 2)
+        u64 = get("E2", tc, "uset", n, n // 2)
+        p(f"| {tc} | {n} | {fmt(med(s64))} | {fmt(med(sb))} | {fmt(med(u64))} | {fmt(med(ub))} | {fmt(med(sb) / med(ub), 2)} |")
+p()
+
 # ------------------------------------------------------------------ E3
 p("### E3. N = 2^20, доля уникальных, нс/эл\n")
 for tc in (GCC, CXX):
@@ -200,6 +215,66 @@ for tc in (GCC, CXX):
             c = {a: med(get("E9", tc, a, N20, U, variant=v) or {}) for a in ("sort", "uset", "radix", "flat")}
             if c["sort"] == c["sort"]:
                 p(f"| {tc} | {U} | {v} | {fmt(c['sort'])} | {fmt(c['uset'])} | {fmt(c['radix'])} | {fmt(c['flat'])} | {fmt(c['uset'] / c['sort'], 2)} |")
+p()
+
+# ------------------------------------------------------------------ E10
+p("### E10. unordered_set: выгрузка `v.assign(begin, end)` (distance + копия = 2 обхода узлов) против одного обхода, N = 2^20, нс/эл\n")
+p("| связка | U | sort | uset (assign) | uset (1 обход) | uset/sort | uset_1pass/sort |")
+p("|---|---|---|---|---|---|---|")
+for tc in (GCC, CXX):
+    for U in (N20, N20 // 2):
+        c = {a: med(get("E10", tc, a, N20, U) or {}) for a in ("sort", "uset", "uset_1pass")}
+        if c["sort"] == c["sort"]:
+            p(f"| {tc} | {U} | {fmt(c['sort'])} | {fmt(c['uset'])} | {fmt(c['uset_1pass'])} | {fmt(c['uset'] / c['sort'], 2)} | {fmt(c['uset_1pass'] / c['sort'], 2)} |")
+p()
+
+# ------------------------------------------------------------------ E11
+if os.path.exists("results/phases_E11.csv"):
+    p("### E11. Фазы одного вызова хеш-вариантов, N = 2^20, нс/эл (медиана 16 вызовов, два круга)\n")
+    p("| связка | алгоритм | U | reserve+вставки | выгрузка v.assign | деструктор | всего |")
+    p("|---|---|---|---|---|---|---|")
+    with open("results/phases_E11.csv") as fh:
+        for r in csv.DictReader(fh):
+            p(f"| {r['toolchain']} | {r['alg']} | {r['U']} | {fmt(float(r['insert_ns_el']))} | {fmt(float(r['assign_ns_el']))} | "
+              f"{fmt(float(r['dtor_ns_el']))} | {fmt(float(r['total_ns_el']))} |")
+    p()
+
+# ------------------------------------------------------------------ колода vs контейнер
+p("### Колода против контейнера (x86)\n")
+p("| что | колода | контейнер (медиана сессий) | отклонение | направление |")
+p("|---|---|---|---|---|")
+
+
+def row(what, deck, here, same_dir, d=1):
+    dev = f"{(here / deck - 1) * 100:+.0f}%".replace("-", "−") if (here == here and deck == deck) else "—"
+    p(f"| {what} | {fmt(deck, d)} | {fmt(here, d)} | {dev} | {same_dir} |")
+
+
+s1 = med(get("E1", GCC, "sort", N20, N20)); u1 = med(get("E1", GCC, "uset", N20, N20))
+uc = med(get("E1", CXX, "uset", N20, N20)); sc = med(get("E1", CXX, "sort", N20, N20))
+row("E1 sort+unique, libstdc++, нс/эл", 70, s1, "—")
+row("E1 unordered_set, libstdc++, нс/эл", 146, u1, "—")
+row("E1 unordered_set, libc++, нс/эл", 139, uc, "—")
+row("E1 uset/sort, libstdc++, раз", 2.07, u1 / s1, "да: sort быстрее" if u1 > s1 else "НЕТ", 2)
+row("E1 uset/sort, libc++, раз", float("nan"), uc / sc, "—", 2)
+for n, deck in ((65536, 42), (262144, 27), (524288, 20), (1048576, 15)):
+    r = med(get("E2", GCC, "sort", n, n // 2)) / med(get("E2", GCC, "uset", n, n // 2))
+    here = (r - 1) * 100
+    alt = (1 - 1 / r) * 100
+    same = "да: хеш впереди" if r > 1.03 else ("ничья (±3%)" if r > 0.97 else "НЕТ: sort впереди")
+    p(f"| E2 U=N/2, N={n}: «хеш на X%» (T_sort/T_uset − 1; в скобках 1 − T_uset/T_sort) | {deck}% | {here:.0f}% ({alt:.0f}%) | — | {same} |")
+for n in (16, 64, 256, 4194304):
+    r = med(get("E2", GCC, "sort", n, n // 2)) / med(get("E2", GCC, "uset", n, n // 2))
+    same = "да: sort впереди" if r < 0.97 else ("ничья (±3%)" if r < 1.03 else "НЕТ: хеш впереди")
+    p(f"| E2 U=N/2, N={n}: кто быстрее | sort | T_uset/T_sort = {fmt(1 / r, 2)} | — | {same} |")
+for v, deck in (("a_one_array_restored", 6.3), ("b_64_identical_copies", 5.7), ("c_64_different", 27.1)):
+    row(f"E5 sort N=1024, {v}, libstdc++", deck, med(get("E5", GCC, "sort", variant=v)), "—")
+a5 = med(get("E5", GCC, "sort", variant="a_one_array_restored")); c5 = med(get("E5", GCC, "sort", variant="c_64_different"))
+row("E5 отношение c/a", 27.1 / 6.3, c5 / a5, "да" if c5 / a5 > 2 else "НЕТ", 2)
+e6g = med(get("E6", GCC, "sort", N20, 1)); e6c = med(get("E6", CXX, "sort", N20, 1))
+row("E6 sort, все равны, libstdc++", 7.8, e6g, "—")
+row("E6 sort, все равны, libc++", 1.2, e6c, "—", 2)
+row("E6 отношение libstdc++/libc++", 7.8 / 1.2, e6g / e6c, "да" if e6g / e6c > 2 else "НЕТ", 1)
 p()
 
 # ------------------------------------------------------------------ шум
