@@ -1,0 +1,19 @@
+<section id="reserve" style="background:#F5F4EF; color:#1B1F27; font-family:'IBM Plex Sans', Arial, sans-serif; padding:112px 128px 160px; display:flex; flex-direction:column; gap:24px">
+<p style="font-size:24px; font-weight:600; letter-spacing:2px; line-height:1.4; color:#6A7280">BACKUP · ДЛЯ ВОПРОСОВ</p>
+<h2 style="font-size:56px; font-weight:600; line-height:1.1; color:#1B1F27">reserve(N) — тоже решение, и оно стоит памяти</h2>
+<div style="display:flex; gap:32px">
+<div style="flex:1; background:#FFFFFF; padding:48px; border-radius:16px; border:1px solid #DAD7CE; display:flex; flex-direction:column; gap:16px">
+<p style="font-size:32px; font-weight:600; line-height:1.4">С reserve(N)</p>
+<p style="font-size:96px; font-weight:700; line-height:1; font-variant-numeric:tabular-nums">3,6 нс</p>
+<p style="font-size:32px; line-height:1.4; color:#4A5360">18,9 МБ таблицы</p>
+</div>
+<div style="flex:1; background:#FFFFFF; padding:48px; border-radius:16px; border:1px solid #DAD7CE; display:flex; flex-direction:column; gap:16px">
+<p style="font-size:32px; font-weight:600; line-height:1.4">Без reserve</p>
+<p style="font-size:96px; font-weight:700; line-height:1; color:#13806C; font-variant-numeric:tabular-nums">2,9 нс</p>
+<p style="font-size:32px; line-height:1.4; color:#4A5360">0,3 МБ таблицы</p>
+</div>
+</div>
+<p style="font-size:32px; color:#4A5360; line-height:1.4">N мы знаем, U — нет. Резерв под N при 1% уникальных сильно превышает число ключей: в 64 раза больше памяти (по точным байтам) и медленнее.</p>
+<p style="position:absolute; left:128px; bottom:64px; width:1664px; font-size:24px; line-height:1.3; color:#6A7280">flat_hash_set · N = 2^20, U/N = 1% · M2 Pro, macOS · нс на элемент · память — сумма запрошенных байт за операцию, МБ = 10^6 байт · id — случайные 64-битные</p>
+<aside>Backup, вне тайминга.<br>Q&amp;A: «Почему reserve(N), а не под U? Вы искусственно раздули flat».<br>Ответ: я резервировал под N, потому что N известен, а число уникальных — нет. При одном проценте уникальных это в 64 раза больше памяти и медленнее: 3,6 наносекунды на элемент против 2,9 — больше ёмкость, больше инициализации и обхода. Reserve — тоже решение, не бесплатная галочка, и зависит оно от доли уникальных. Оценить U по выборке — отдельный приём.<br>Под рукой:<br>— 18 874 344 / 294 912 ≈ 64,0 по точным байтам; 3,6 / 2,9 = 1,24 — на 24% медленнее.<br>— «Почему 18,9 МБ, если ключей на 8 МБ?» (errata P2-11): 2^20 — неудачная точка для Swiss Table: ёмкость 2^20 − 1 вмещает только 917 504 ключа при загрузке 7/8, поэтому reserve берёт 2^21 − 1 слотов — по 8 байт ключа и байту метаданных, 18,9 МБ, заполнение 50%.<br>— Отсюда правило на decision: «мало уникальных → плоская хеш-таблица, без reserve под весь вход». При 1% уникальных узловая таблица (3,2 нс/эл) даже быстрее flat с reserve(N) (3,6).</aside>
+</section>

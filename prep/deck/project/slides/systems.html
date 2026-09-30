@@ -1,0 +1,33 @@
+<section id="systems" data-transition="fade" style="background:#F5F4EF; color:#1B1F27; font-family:'IBM Plex Sans', Arial, sans-serif; padding:112px 128px 160px; display:flex; flex-direction:column; gap:24px">
+<p style="font-size:24px; font-weight:600; letter-spacing:2px; line-height:1.4; color:#6A7280">BACKUP · ДЛЯ ВОПРОСОВ</p>
+<h2 style="font-size:56px; font-weight:600; line-height:1.1; color:#1B1F27">Точка перехода на каждой системе своя</h2>
+<div style="display:flex; gap:24px">
+<div style="flex:1; background:#FFFFFF; padding:28px; border-radius:16px; border:1px solid #DAD7CE; display:flex; flex-direction:column; gap:8px">
+<p style="height:72px; font-size:30px; font-weight:600; line-height:1.2">x86-64 · Linux</p>
+<p style="height:114px; font-size:28px; line-height:1.35; color:#6A7280">Xeon 2,1 ГГц · GCC 13</p>
+<p style="font-size:64px; font-weight:700; line-height:1; color:#2F6FDB; font-variant-numeric:tabular-nums">× 2,07</p>
+<p style="font-size:28px; line-height:1.35; color:#4A5360">При U = N/2 сортировка впереди при N = 16 и с 2M; от 64 до 1M — хеш или ничья (повтор)</p>
+</div>
+<div style="flex:1; background:#FFFFFF; padding:28px; border-radius:16px; border:1px solid #DAD7CE; display:flex; flex-direction:column; gap:8px">
+<p style="height:72px; font-size:30px; font-weight:600; line-height:1.2">M2 Pro · Linux</p>
+<p style="height:114px; font-size:28px; line-height:1.35; color:#6A7280">VM, 4 vCPU · GCC 11 · тип ядра под vCPU выбирает хост</p>
+<p style="font-size:64px; font-weight:700; line-height:1; color:#2F6FDB; font-variant-numeric:tabular-nums">× 2,67</p>
+<p style="font-size:28px; line-height:1.35; color:#4A5360">При U = N/2 сортировка впереди при N ≤ 128 и с 2M</p>
+</div>
+<div style="flex:1; background:#FFFFFF; padding:28px; border-radius:16px; border:1px solid #DAD7CE; display:flex; flex-direction:column; gap:8px">
+<p style="height:72px; font-size:30px; font-weight:600; line-height:1.2">M2 Pro · macOS</p>
+<p style="height:114px; font-size:28px; line-height:1.35; color:#6A7280">Apple clang 21 · libc++</p>
+<p style="font-size:64px; font-weight:700; line-height:1; color:#2F6FDB; font-variant-numeric:tabular-nums">× 2,59</p>
+<p style="font-size:28px; line-height:1.35; color:#4A5360">При U = N/2 сортировка впереди при N ≤ 256 и с 1M; от 512 до 512K — близко</p>
+</div>
+<div style="flex:1; background:#FFFFFF; padding:28px; border-radius:16px; border:1px solid #DAD7CE; display:flex; flex-direction:column; gap:8px">
+<p style="height:72px; font-size:30px; font-weight:600; line-height:1.2">iPhone <span style="color:#8A5F00">[модель iPhone]</span></p>
+<p style="height:114px; font-size:28px; line-height:1.35; color:#6A7280">iOS <span style="color:#8A5F00">[27.0.x]</span> · libc++ · QoS userInitiated</p>
+<p style="font-size:64px; font-weight:700; line-height:1; color:#2F6FDB; font-variant-numeric:tabular-nums">× 2,53</p>
+<p style="font-size:28px; line-height:1.35; color:#4A5360">При U = N/2 сортировка впереди при N ≤ 256 и с 1M</p>
+</div>
+</div>
+<p style="font-size:28px; color:#4A5360; line-height:1.35">Крупное число — во сколько раз сортировка быстрее unordered_set при N = U = 2^20. Мелкая строка — где сортировка впереди при U = N/2. Это сравнение систем целиком: вместе меняются железо, ОС, компилятор и библиотека.</p>
+<p style="position:absolute; left:128px; bottom:64px; width:1664px; font-size:24px; line-height:1.3; color:#6A7280">Отношение = T(unordered_set) / T(sort + unique), по неокруглённым медианам · один код, одинаковые входы · id — случайные 64-битные · медиана 4 блоков · 27 сентября 2026 · x86 при U = N/2 — независимый повтор</p>
+<aside>Backup, вне тайминга. Открывать на вопрос «А на других системах так же?» или «Где точка перехода у вас?».<br>Ответ: это сравнение систем целиком — вместе меняются железо, ОС, компилятор и библиотека. Когда все id разные, N = U = 2^20, сортировка быстрее unordered_set везде: x86 — в 2,07 раза, M2 Pro в Linux-виртуалке — в 2,67, macOS — в 2,59, iPhone — в 2,53. А при половине дублей порог у каждой системы свой. На x86, по независимому повтору, сортировка впереди только при N = 16 и с двух миллионов; от 64 до миллиона — хеш или ничья. На macOS сортировка впереди до 256 и с миллиона, между ними близко. На iPhone — до 256 и с миллиона. Направление на больших N одно, а где именно переход — решает система.<br>Под рукой:<br>— Отношения посчитаны по неокруглённым медианам: 51,3 / 19,9 даёт 2,58, на слайде 2,59. Вслух — «в два с половиной раза».<br>— x86, ×2,07 — мой прогон на своей VM (70 против 146 нс/эл). Независимый повтор на другой VM того же типа: ×3,1 с libstdc++ и ×2,9 с libc++, абсолютные наносекунды выше на 19–78%, направление то же (bench.md E1). Поэтому вслух только «в два-три раза».<br>— x86, U = N/2 (повтор, bench.md E2): N = 16 — сортировка впереди, но пул из 64 входов при N = 16 — всего 1024 элемента, предсказатель его выучивает; на честно разных данных сортировка впереди в 1,75 раза, а не в 4 (E2b, тема learned). N = 64 и 256 — хеш на 4–9% с libstdc++, ничья с libc++. 1M — ничья (±2%) в обеих библиотеках. 2M — сортировка в 1,15 раза (libc++ — в 1,21).<br>— M2 Pro · Linux — виртуальная машина на 4 vCPU: какой тип ядра стоит под vCPU, выбирает хост, я это не контролировал.<br>— macOS: при N ≤ 256 сортировка заметно впереди (на 16 — 3,1 против 13,3 нс/эл), от 512 до 512K — в пределах ±8%, с 1M — снова сортировка (как на curve).<br>— iPhone: [модель iPhone, чип, iOS]. Проверить до 17.10, что ×2,53 снято на том же аппарате, что серии utility; если нет — говорить «на iPhone почти то же» без модели.</aside>
+</section>

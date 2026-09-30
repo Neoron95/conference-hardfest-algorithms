@@ -1,0 +1,38 @@
+<section id="nb-where" style="background:#F5F4EF; color:#1B1F27; font-family:'IBM Plex Sans', Arial, sans-serif; padding:112px 128px 160px; display:flex; flex-direction:column; gap:24px">
+<p style="font-size:24px; font-weight:600; letter-spacing:2px; line-height:1.4; color:#6A7280">BACKUP · ДЛЯ ВОПРОСОВ</p>
+<h2 style="font-size:56px; font-weight:600; line-height:1.1; color:#1B1F27">Где мерили: у каждой машины свои ядра и кэши</h2>
+<div style="display:grid; grid-template-columns:222px 426px 410px 280px 326px; gap:0">
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280">Условие</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#1B1F27">iPhone</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#1B1F27">Mac</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#1B1F27">x86</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280">Раннер GitHub, macOS</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; font-weight:600; color:#6A7280">Устройство</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE"><span style="color:#8A5F00">[модель iPhone]</span> (<span style="color:#8A5F00">[hw.machine, чип]</span>)</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">MacBook Pro, M2 Pro <span style="color:#8A5F00">[сверить: 8P + 4E или 6P + 4E]</span></p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">Intel Xeon 2,1 ГГц, VM</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; color:#4A5360">«Apple M1 (Virtual)», 3 vCPU; xlarge — M2, 5 vCPU</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; font-weight:600; color:#6A7280">Ядра и кэши (sysctl)</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE"><span style="color:#8A5F00">[L1/L2 P- и E-ядер iPhone из sysctl]</span></p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">P: L1D 128 КиБ · L2 16 МиБ<br>E: L1D 64 КиБ · L2 4 МиБ<br>строка кэша 128 Б</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE"><span style="color:#8A5F00">[L3 из lscpu]</span></p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; color:#4A5360">hw.nperflevels = 1<br>«Standard»: L1D 128 КиБ, L2 12 МиБ</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; font-weight:600; color:#6A7280">Планировщик</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">kern.sched = <span style="color:#8A5F00">[снять на iPhone]</span></p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">kern.sched = edge</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">Linux, все vCPU одного типа</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; color:#4A5360">симметричный: в VM нет AMP</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; font-weight:600; color:#6A7280">ОС и сборка</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">iOS <span style="color:#8A5F00">[27.0.x]</span> · Xcode 27.0 / Apple clang 21.0.0 · <span style="color:#8A5F00">[флаги сборки DedupBench]</span></p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">macOS 27 · Xcode 27.0 / Apple clang 21.0.0 · -O3</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">Linux · GCC 13 / libstdc++</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; color:#4A5360">macOS 26 · Xcode 26.6</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; font-weight:600; color:#6A7280">Режим</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">Low Power Mode off · заряд 40–80%, без кабеля · thermalState nominal</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">QoS — так же, как на iPhone</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE">без QoS</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 12px; border-bottom:1px solid #DAD7CE; color:#4A5360">QoS не выбирает тип ядра</p>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; width:1664px; font-size:24px; line-height:1.3; color:#6A7280">1 поток · QoS через pthread_set_qos_class_self_np · std::sort для uint64_t на iPhone — из системной libc++, его задаёт версия iOS · x86-повтор (E1–E11): другая VM Xeon 2,1 ГГц</p>
+<aside>Backup · без шагов. Вопросы: «Какой iPhone, какая iOS?» (qa M1), «x86 — VM или железо?» (M10), «У нас CI на Mac-раннерах» (V7, P8), «Релиз собирают с -Os» (M9).<br>Ответ: iPhone — [модель iPhone, чип, iOS]; Low Power Mode выключен, заряд 40–80 %, без кабеля, thermalState nominal; всё это пишет «паспорт устройства» в репозитории. Модель важна: у A15 L2 P-кластера 12 МБ, у A16–A18 Pro — 16 МБ, от этого зависит, где у хеша ступенька. x86 — VM, поэтому абсолютные наносекунды с Apple не сравниваю, только отношения внутри одной машины. Стандартный macOS-раннер GitHub — VM на M1 с тремя vCPU: гость видит один тип ядер (hw.nperflevels = 1), QoS не уведёт поток на E-ядро, мой эффект в hosted CI не воспроизвести. Ловить так: устройство целевого класса, тот же QoS, версии ОС, компилятора и библиотеки в логе.<br>-Os: DedupBench собран с [флаги сборки DedupBench]; std::sort для uint64_t исполняется из системной libc++ и от наших флагов не зависит, хеш упирается в память; прогон с -Os — в плане.<br>Мостик: «Поэтому паспорт условий — пункт чек-листа, а не формальность».</aside>
+</section>

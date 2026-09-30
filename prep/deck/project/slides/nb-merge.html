@@ -1,0 +1,37 @@
+<section id="nb-merge" style="background:#F5F4EF; color:#1B1F27; font-family:'IBM Plex Sans', Arial, sans-serif; padding:112px 128px 160px; display:flex; flex-direction:column; gap:24px">
+<p style="font-size:24px; font-weight:600; letter-spacing:2px; line-height:1.4; color:#6A7280">BACKUP · ДЛЯ ВОПРОСОВ</p>
+<h2 style="font-size:56px; font-weight:600; line-height:1.1; color:#1B1F27">Сортируем только дельту и сливаем: на x86 в 3,5–6,6 раза быстрее sort + unique</h2>
+<div style="background:#FFFFFF; border:1px solid #DAD7CE; border-radius:16px; padding:14px 32px; display:flex; flex-direction:column; gap:4px">
+<p style="font-size:28px; line-height:1.3; font-family:'JetBrains Mono', 'Courier New', monospace; white-space:nowrap">std::sort(D.begin(), D.end());</p>
+<p style="font-size:28px; line-height:1.3; font-family:'JetBrains Mono', 'Courier New', monospace; white-space:nowrap">D.erase(std::unique(D.begin(), D.end()), D.end());</p>
+<p style="font-size:24px; line-height:1.3; font-weight:600; color:#8A5F00; padding:0 0 0 120px">↑ без этого шага set_union оставит дубли дельты</p>
+<p style="font-size:28px; line-height:1.3; font-family:'JetBrains Mono', 'Courier New', monospace; white-space:nowrap">std::set_union(L.begin(), L.end(), D.begin(), D.end(), std::back_inserter(out));</p>
+</div>
+<div style="display:grid; grid-template-columns:780px 440px 444px; gap:0">
+<p style="font-size:24px; line-height:1.3; padding:6px 16px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280">вариант</p>
+<p style="font-size:24px; line-height:1.3; padding:6px 16px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">нс/эл: libstdc++ / libc++</p>
+<p style="font-size:24px; line-height:1.3; padding:6px 16px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">быстрее sort + unique, раз</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; color:#2F6FDB">sort + unique всего входа</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">42,4 / 31,2</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">1</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; color:#B9501F">unordered_set</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">240,8 / 247,0</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">0,18 / 0,13</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; color:#6A4BB3">radix + unique</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">41,4 / 39,8</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">1,0 / 0,8</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; color:#13806C">flat_hash_set</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">39,3 / 36,4</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">1,1 / 0,9</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; font-weight:600; background:#FBEFD2">sort(Δ) + unique(Δ) + set_union</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; font-weight:600; background:#FBEFD2; text-align:center; font-variant-numeric:tabular-nums">6,4 / 8,9</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; font-weight:600; background:#FBEFD2; text-align:center; font-variant-numeric:tabular-nums">6,6 / 3,5</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; font-weight:600; background:#FBEFD2">sort(Δ) + unique(Δ) + inplace_merge + unique</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; font-weight:600; background:#FBEFD2; text-align:center; font-variant-numeric:tabular-nums">6,7 / 8,6</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; font-weight:600; background:#FBEFD2; text-align:center; font-variant-numeric:tabular-nums">6,3 / 3,6</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE">iPhone, .utility</p>
+<p style="font-size:26px; line-height:1.3; padding:6px 16px; border-bottom:1px solid #DAD7CE; text-align:center; grid-column:span 2"><span style="color:#8A5F00">[домерить на iPhone]</span></p>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; width:1664px; font-size:24px; line-height:1.3; color:#6A7280">L — 2^20 локальных id (отсортированы, уникальны) + дельта D — 2^16, половина — повторы · x86-повтор на отдельной VM (Xeon 2,1 ГГц; GCC 13, Clang 18), медиана сессий · так вставляет диапазон std::flat_set в libc++</p>
+<aside>Backup · без шагов. Вопросы: «Почему не отсортировать только дельту и слить?» (qa X1), «set_union не убирает дубли дельты» (C5), «std::flat_set — это flat_hash_set?» (C10).<br>Ответ: Для нашей задачи это правильный ответ, он же на слайде merge. Сортируем дельту, схлопываем в ней повторы и сливаем с отсортированными локальными id через set_union или inplace_merge + unique. Без unique по дельте set_union оставит её дубли: из второго диапазона он берёт max(n − m, 0) копий — на 1,06 млн осталось 32 966 дублей. На x86 это в 3,5–6,6 раза быстрее sort + unique и в 4–6 раз быстрее flat_hash_set. libc++ в sort + unique быстрее libstdc++ (31 против 42): вход уже на 94% отсортирован. iPhone: [домерить на iPhone]; не домерил — «на телефоне ещё не мерил, цифры появятся в репозитории», не «будет так же».<br>std::flat_set — не хеш-таблица, а отсортированный вектор; его insert(range) в libc++ — ровно этот рецепт: отсортировать хвост, inplace_merge, unique.<br>INSERT OR IGNORE в SQLite (X10) — B-дерево и журнал, ожидаю медленнее, не мерил. Битовая карта для плотных rowid (X5): 1M id — 125 КБ, не мерил.<br>Мостик: лучший алгоритм использует то, что о данных уже известно, — здесь «SQLite уже отсортировала».</aside>
+</section>

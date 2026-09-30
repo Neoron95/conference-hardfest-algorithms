@@ -1,0 +1,41 @@
+<section id="learned-table" style="background:#F5F4EF; color:#1B1F27; font-family:'IBM Plex Sans', Arial, sans-serif; padding:112px 128px 160px; display:flex; flex-direction:column; gap:24px">
+<p style="font-size:24px; font-weight:600; letter-spacing:2px; line-height:1.4; color:#6A7280">BACKUP · ДЛЯ ВОПРОСОВ</p>
+<h2 style="font-size:56px; font-weight:600; line-height:1.1; color:#1B1F27">Бенчмарк врал: причина на x86 и на M2 разная</h2>
+<div style="display:flex; flex-direction:column; gap:8px">
+<p style="font-size:28px; line-height:1.3; color:#6A7280"><span style="color:#2F6FDB">sort + unique</span> · 1024 id, U = 512 · нс на элемент</p>
+<div style="display:grid; grid-template-columns:620px 348px 348px 348px; gap:0">
+<p style="font-size:24px; line-height:1.3; padding:10px 16px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280">система · библиотека</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 16px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">один массив в цикле</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 16px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">64 одинаковые копии</p>
+<p style="font-size:24px; line-height:1.3; padding:10px 16px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">64 разных массива</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE">x86 Xeon · libstdc++</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; color:#8A5F00; text-align:center; font-variant-numeric:tabular-nums">6,3</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; font-weight:600; color:#8A5F00; text-align:center; font-variant-numeric:tabular-nums">5,7</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">27,1</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE">M2 Pro · Linux VM · libstdc++</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; color:#8A5F00; text-align:center; font-variant-numeric:tabular-nums">4,8</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; font-weight:600; text-align:center; font-variant-numeric:tabular-nums">15,4</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">14,6</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE">M2 Pro · macOS · libc++</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; color:#8A5F00; text-align:center; font-variant-numeric:tabular-nums">6,8</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; color:#6A7280; text-align:center; font-variant-numeric:tabular-nums">—</p>
+<p style="font-size:32px; line-height:1.3; padding:10px 16px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">14,4</p>
+</div>
+<p style="font-size:24px; line-height:1.3; color:#6A7280"><span style="color:#8A5F00">янтарём</span> — «подозрительно быстро»: как один массив в цикле</p>
+</div>
+<div style="display:flex; gap:32px">
+<div style="flex:1; background:#FFFFFF; border:1px solid #DAD7CE; border-radius:16px; padding:24px 28px; display:flex; flex-direction:column; gap:8px">
+<p style="font-size:32px; line-height:1.3; font-weight:600">x86 Xeon: копии быстрые</p>
+<p style="font-size:28px; line-height:1.3">5,7 ≈ один массив 6,3 → предсказатель ветвлений</p>
+<p style="font-size:24px; line-height:1.3; color:#4A5360">Повтор (E5): 9,7 / 9,6 / 46,9; 64 разных массива через один буфер 8 КБ — 46,8: рабочий набор ни при чём</p>
+</div>
+<div style="flex:1; background:#FFFFFF; border:1px solid #DAD7CE; border-radius:16px; padding:24px 28px; display:flex; flex-direction:column; gap:8px">
+<p style="font-size:32px; line-height:1.3; font-weight:600">M2 Pro: копии медленные</p>
+<p style="font-size:28px; line-height:1.3">15,4 ≈ разные массивы 14,6 → не история ветвлений, а что-то адресное</p>
+<p style="font-size:24px; line-height:1.3; color:#4A5360">Гипотеза — 512 КБ &gt; L1; счётчики — следующий шаг</p>
+<p style="font-size:24px; line-height:1.3; color:#4A5360">Контроль с копиями на M2 — Linux VM: тип ядра под vCPU не контролировался</p>
+</div>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; width:1664px; font-size:24px; line-height:1.3; color:#6A7280">U = 512, случайный порядок · вход восстанавливается перед каждым вызовом · медиана 4 блоков · заголовочные 6,8 и 14,4 сняты на macOS нативно · все серии доклада — на пуле разных массивов</p>
+<aside>Backup · без шагов. Вопросы: «M4 выучивает 10 000 ветвлений — почему на M2 не предсказатель?» (qa H15, Б3), «Linux VM на M2 — на каких ядрах шли vCPU?» (H17).<br>Ответ: формулировка «предсказатель ни при чём» была слишком сильной. Факт: 64 одинаковые копии, у которых история ветвлений как у одного массива, на M2 так же медленны, как разные массивы. Значит, разницу даёт не история ветвлений, а что-то адресное. «Рабочий набор» — гипотеза, и по величине она объясняет не всё: 8 КБ из L2 — максимум ≈3 нс/эл при разнице ≈10. Следующий шаг — Instruments → CPU Counters и контроль «8 копий × 1024 = 64 КБ &lt; L1».<br>VM: тип ядра под vCPU выбирает хост macOS, я его не контролировал. Заголовочные 6,8 и 14,4 сняты на macOS нативно; в Linux VM шёл только контроль с копиями. Выводы про P и E — только с нативных Mac и iPhone.<br>x86 подтверждён повтором и более сильным контролем: 9,7 / 9,6 / 46,9; 64 разных массива через один буфер 8 КБ — 46,8; уже два чередующихся массива отнимают половину выигрыша (24,3).<br>Мостик: одна и та же ошибка бенчмарка, а механизм на двух процессорах разный. Факт отдельно от гипотезы о причине. Идея опыта — Lemire, 2019.</aside>
+</section>

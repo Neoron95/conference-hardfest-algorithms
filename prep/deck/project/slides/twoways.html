@@ -1,0 +1,15 @@
+<section id="twoways" hidden style="background:#F5F4EF; color:#1B1F27; font-family:'IBM Plex Sans', Arial, sans-serif; padding:128px; display:flex; flex-direction:column; gap:56px">
+<h2 style="font-size:64px; font-weight:600; line-height:1.1">Удалите дубликаты. Два способа</h2>
+<div style="display:flex; gap:48px">
+<div style="flex:1; display:flex; flex-direction:column; gap:24px; background:#FFFFFF; padding:48px; border:2px solid #2F6FDB; border-radius:16px">
+<p style="font-size:32px; font-weight:600; color:#2F6FDB">Сортировка · O(n log n)</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:28px; line-height:1.6; white-space:nowrap">std::sort(v.begin(), v.end());<br>v.erase(std::unique(v.begin(), v.end()),<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;v.end());</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:24px; background:#FFFFFF; padding:48px; border:2px solid #D9622B; border-radius:16px">
+<p style="font-size:32px; font-weight:600; color:#B9501F">Хеш-таблица · ожидаемо O(n)</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:28px; line-height:1.6; white-space:nowrap">std::unordered_set&lt;uint64_t&gt; s;<br>s.reserve(v.size());<br>for (auto x : v) s.insert(x);<br>v.assign(s.begin(), s.end());</p>
+</div>
+</div>
+<p style="font-size:32px; color:#4A5360">Логарифм миллиона — около 20. Кажется, выбор очевиден.</p>
+<aside>2:00–2:45. Дедупликация — это те самые три строчки из ревью. Два классических способа. Первый — отсортировать: после сортировки одинаковые id стоят рядом, и один проход их схлопывает. Это O(n log n). Второй — хеш-таблица: складываем id в множество, оно само отбрасывает повторы, потом выгружаем обратно. Это в среднем O(n) — линейно. Логарифм миллиона — около двадцати. На бумаге второй способ делает в двадцать раз меньше шагов. Я тоже сначала выбрал бы хеш-таблицу и закрыл тикет. Давайте проверим интуицию — вашу и мою.</aside>
+</section>

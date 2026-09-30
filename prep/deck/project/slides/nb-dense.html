@@ -1,0 +1,61 @@
+<section id="nb-dense" style="background:#F5F4EF; color:#1B1F27; font-family:'IBM Plex Sans', Arial, sans-serif; padding:112px 128px 160px; display:flex; flex-direction:column; gap:24px">
+<p style="font-size:24px; font-weight:600; letter-spacing:2px; line-height:1.4; color:#6A7280">BACKUP · ДЛЯ ВОПРОСОВ</p>
+<h2 style="font-size:56px; font-weight:600; line-height:1.1; color:#1B1F27">Плотные rowid: на x86 хеш впереди в 1,7 раза</h2>
+<div style="display:flex; flex-direction:column; gap:8px">
+<p style="font-size:24px; line-height:1.3; color:#6A7280">x86-повтор, серия E7 · N = 2^20, U = N/2 · нс на элемент: libstdc++ / libc++</p>
+<div style="display:grid; grid-template-columns:364px 245px 245px 245px 245px 320px; gap:0">
+<p style="font-size:24px; line-height:1.3; padding:9px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280">id</p>
+<p style="font-size:24px; line-height:1.3; padding:9px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#2F6FDB; text-align:center">sort + unique</p>
+<p style="font-size:24px; line-height:1.3; padding:9px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#B9501F; text-align:center">unordered_set</p>
+<p style="font-size:24px; line-height:1.3; padding:9px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A4BB3; text-align:center">radix + unique</p>
+<p style="font-size:24px; line-height:1.3; padding:9px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#13806C; text-align:center">flat_hash_set</p>
+<p style="font-size:24px; line-height:1.3; padding:9px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">хеш против sort</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE">случайные 64-бит</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">86,4 / 89,0</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">85,6 / 88,7</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">38,0 / 40,3</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">34,7 / 36,9</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; text-align:center">≈ ничья</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE">плотные, перемешаны</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">87,8 / 89,8</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; font-weight:600; text-align:center; font-variant-numeric:tabular-nums">52,8 / 53,3</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">21,6 / 22,1</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">35,5 / 36,9</p>
+<p style="font-size:26px; line-height:1.3; padding:9px 12px; border-bottom:1px solid #DAD7CE; font-weight:600; background:#FBE3D6; text-align:center">хеш ×1,7</p>
+</div>
+</div>
+<div style="display:flex; gap:32px">
+<div style="flex:none; width:1000px; background:#FFFFFF; border:1px solid #DAD7CE; border-radius:16px; padding:24px 28px; display:flex; flex-direction:column; gap:8px">
+<p style="font-size:30px; line-height:1.3; font-weight:600">Ловушка libc++: id с шагом 2^k</p>
+<p style="font-size:24px; line-height:1.3; color:#4A5360">std::hash — тождество: ячейка = младшие k бит id</p>
+<div style="display:flex; flex-direction:column; padding:4px 0 0 0">
+<div style="display:grid; grid-template-columns:220px 220px 272px 232px; gap:0">
+<p style="font-size:24px; line-height:1.3; padding:8px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280">65 536 id</p>
+<p style="font-size:24px; line-height:1.3; padding:8px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">занято ячеек</p>
+<p style="font-size:24px; line-height:1.3; padding:8px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">нс на вставку</p>
+<p style="font-size:24px; line-height:1.3; padding:8px 12px; border-bottom:2px solid #1B1F27; font-weight:600; color:#6A7280; text-align:center">libstdc++: нс</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE">плотные 1..N</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">65 536</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">40</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">39</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE">шаг 1024</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">64</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">2 762 · <b>×70</b></p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">41</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE">шаг 2^20</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">1</p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">60 540 · <b>×1 500</b></p>
+<p style="font-size:26px; line-height:1.3; padding:8px 12px; border-bottom:1px solid #DAD7CE; text-align:center; font-variant-numeric:tabular-nums">38</p>
+</div>
+</div>
+</div>
+<div style="flex:1; background:#FFFFFF; border:1px solid #DAD7CE; border-radius:16px; padding:24px 28px; display:flex; flex-direction:column; gap:12px">
+<p style="font-size:24px; line-height:1.3; font-weight:600; color:#6A7280">iPhone · userInitiated и .utility · 512K и 1M · случайные и плотные id</p>
+<p style="font-size:32px; line-height:1.3; font-weight:600"><span style="color:#8A5F00">[снять до 14.10]</span></p>
+<hr style="border-top:1px solid #DAD7CE">
+<p style="font-size:26px; line-height:1.3">Для rowid победитель может смениться. Лучший кандидат — не хеш и не sort, а слияние дельты или битовая карта</p>
+</div>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; width:1664px; font-size:24px; line-height:1.3; color:#6A7280">x86-повтор на отдельной VM: Xeon 2,1 ГГц; GCC 13 / libstdc++ и Clang 18 / libc++; медиана сессий · ловушка — тест cluster.cpp, x86, reserve(N) · все серии доклада сняты на случайных 64-битных id</p>
+<aside>Backup · без шагов. Вопрос: «В кейсе rowid из SQLite — плотные, а мерили вы случайные 64-битные» (qa M5, Б2), «std::hash для целых — тождество» (C8).<br>Ответ: Справедливо. Случайные id выбраны намеренно, чтобы раскладка не зависела от удачи. На плотных id узловой таблице везёт: std::hash — тождество, коллизий ноль. На x86-повторе при половине дублей unordered_set на плотных в 1,65 раза быстрее, чем на случайных, и обгоняет сортировку в 1,7 раза; при всех уникальных — 320 против 68 нс/эл, в 4,7 раза. Radix делает 3 прохода вместо 8. Sort и flat от раскладки не зависят. Значит, на rowid победитель может смениться — это ровно тезис раунда 3. Серия на iPhone — [снять до 14.10]; не снял — так и сказать.<br>Обратный край: id с общими нулевыми младшими битами (снежинки с нулевым счётчиком, кратные 1024) в libc++ после reserve(2^k) сваливаются в одну цепочку: шаг 1024 — 64 ячейки из 65 536, вставка ×70; шаг 2^20 — ×1 500. libstdc++ простой модуль это скрывает, Abseil и boost перемешивают хеш. Проверьте гистограмму цепочек на своих id.<br>Мостик: для rowid лучший кандидат вообще не хеш и не sort, а слияние отсортированной дельты (следующий слайд) или битовая карта.</aside>
+</section>
