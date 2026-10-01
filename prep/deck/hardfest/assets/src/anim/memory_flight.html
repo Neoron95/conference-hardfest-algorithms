@@ -78,6 +78,8 @@ function launches(lane, t) {
 
 const DEFS = `<defs>
   <filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="9"/></filter>
+  ${LANES.map((L, i) => ['R', 'L'].map(d => `<linearGradient id="tr${i}${d}" x1="${d === 'R' ? 0 : 1}" y1="0" x2="${d === 'R' ? 1 : 0}" y2="0">
+    <stop offset="0" stop-color="${L.color}" stop-opacity="0"/><stop offset="1" stop-color="${L.color}" stop-opacity="0.45"/></linearGradient>`).join('')).join('')}
 </defs>`;
 
 function frame(t) {
@@ -107,10 +109,13 @@ function frame(t) {
       const p = pos(u, L.y, i === 1);
       const r = i === 0 ? 11 : 13;
       glow += el('circle', { cx: p.x, cy: p.y, r: r * 1.8, fill: L.color });
-      // short motion streak behind the dot
-      const q = pos(Math.max(0, u - 0.035), L.y, i === 1);
-      if (Math.abs(q.y - p.y) < 1 && Math.abs(q.x - p.x) > 2)
-        dots += el('line', { x1: q.x, y1: q.y, x2: p.x, y2: p.y, stroke: L.color, 'stroke-width': r * 1.3, 'stroke-linecap': 'round', opacity: 0.3 });
+      // short motion streak behind the dot (fades towards the tail)
+      const q = pos(Math.max(0, u - 0.04), L.y, i === 1);
+      if (Math.abs(q.y - p.y) < 1 && Math.abs(q.x - p.x) > 4) {
+        const right = p.x > q.x, x0 = Math.min(p.x, q.x), w = Math.abs(p.x - q.x), th = r * 1.1;
+        dots += el('rect', { x: x0, y: p.y - th / 2, width: w, height: th, rx: th / 2,
+          fill: `url(#tr${i}${right ? 'R' : 'L'})` });
+      }
       dots += el('circle', { cx: p.x, cy: p.y, r, fill: L.color });
     }
   });
@@ -124,10 +129,11 @@ function frame(t) {
     masks += el('rect', { x: MEM.x, y: top, width: MEM.w, height: MEM.h, rx: 20, fill: C.bg, stroke: C.grey, 'stroke-width': 4 });
     masks += txt(MEM.x + MEM.w / 2, L.y + 20, 'память', { 'text-anchor': 'middle', fill: C.grey });
   });
-  o += dynLayer + `<g opacity="${f2(scaff)}">${masks}</g>`;
+  if (dyn > 0.001) o += dynLayer;
+  o += `<g opacity="${f2(scaff)}">${masks}</g>`;
 
   // ---- counters of completed loads
-  LANES.forEach((L, i) => {
+  if (dyn > 0.001) LANES.forEach((L, i) => {
     const tc = Math.min(t, FADE0 - 0.05); // counters freeze once the fade-out starts (top 30, bottom 3)
     const done = launches(i, tc).filter(t0 => tc - t0 >= DONE_U[i] * RT);
     const n = done.length;
