@@ -1,6 +1,20 @@
 <section id="reserve">
-<p class="k">BACKUP · ДЛЯ ВОПРОСОВ</p>
-<h2 class="t">reserve(N) — тоже решение, и оно стоит памяти</h2>
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">reserve(N)&nbsp;— ТОЖЕ РЕШЕНИЕ, И&nbsp;ОНО СТОИТ ПАМЯТИ</h2>
 <!-- body -->
-<aside>Backup, вне тайминга.<br>Q&amp;A: «Почему reserve(N), а не под U? Вы искусственно раздули flat».<br>Ответ: я резервировал под N, потому что N известен, а число уникальных — нет. При одном проценте уникальных это в 64 раза больше памяти и медленнее: 3,6 наносекунды на элемент против 2,9 — больше ёмкость, больше инициализации и обхода. Reserve — тоже решение, не бесплатная галочка, и зависит оно от доли уникальных. Оценить U по выборке — отдельный приём.<br>Под рукой:<br>— 18 874 344 / 294 912 ≈ 64,0 по точным байтам; 3,6 / 2,9 = 1,24 — на 24% медленнее.<br>— «Почему 18,9 МБ, если ключей на 8 МБ?» (errata P2-11): 2^20 — неудачная точка для Swiss Table: ёмкость 2^20 − 1 вмещает только 917 504 ключа при загрузке 7/8, поэтому reserve берёт 2^21 − 1 слотов — по 8 байт ключа и байту метаданных, 18,9 МБ, заполнение 50%.<br>— Отсюда правило на decision: «мало уникальных → плоская хеш-таблица, без reserve под весь вход». При 1% уникальных узловая таблица (3,2 нс/эл) даже быстрее flat с reserve(N) (3,6).<br>Условия и источники (были в подвале слайда): flat_hash_set · N = 2^20, U/N = 1% · M2 Pro, macOS · нс на элемент · память — сумма запрошенных байт за операцию, МБ = 10^6 байт · id — случайные 64-битные</aside>
+<p class="abs lbl" style="left:117px;top:296px;width:1300px">flat_hash_set · N = 2^20 · 1% уникальных · нс на элемент · M2 Pro</p>
+<div class="card" style="left:117px;top:364px;width:560px;height:400px"></div>
+<p class="abs" style="left:165px;top:400px;width:480px;font-size:40px;font-weight:700;line-height:52px">с <span class="mono">reserve(N)</span></p>
+<p class="abs huge" style="left:165px;top:486px;width:480px">3,6 <span style="font-size:56px;letter-spacing:0">нс</span></p>
+<p class="abs sm sec" style="left:165px;top:680px;width:480px">18,9 МБ таблицы</p>
+<div class="card fill" style="left:717px;top:364px;width:560px;height:400px"></div>
+<p class="abs ink" style="left:765px;top:400px;width:480px;font-size:40px;font-weight:700;line-height:52px">без <span class="mono">reserve</span></p>
+<p class="abs huge ink" style="left:765px;top:486px;width:480px">2,9 <span style="font-size:56px;letter-spacing:0">нс</span></p>
+<p class="abs sm ink" style="left:765px;top:680px;width:480px;font-weight:600">0,3 МБ таблицы</p>
+<p class="abs huge" style="left:1340px;top:400px;width:463px;text-align:right">×64</p>
+<p class="abs lead" style="left:1340px;top:580px;width:463px;text-align:right">памяти</p>
+<p class="abs lbl" style="left:1340px;top:650px;width:463px;text-align:right">по точным байтам</p>
+<p class="abs xl" style="left:117px;top:830px;width:1600px">N мы знаем, <span class="acc">U — нет</span></p>
+<!-- /body -->
+<aside>Backup, вне тайминга.<br>Q&amp;A: «Почему reserve(N), а не под U? Вы искусственно раздули flat».<br>Ответ: я резервировал под N, потому что N известен, а число уникальных — нет. При одном проценте уникальных это в 64 раза больше памяти и медленнее: 3,6 наносекунды на элемент против 2,9 — больше ёмкость, больше инициализации и обхода. Reserve — тоже решение, не бесплатная галочка, и зависит оно от доли уникальных. Оценить U по выборке — отдельный приём.<br>Под рукой:<br>— 18 874 344 / 294 912 ≈ 64,0 по точным байтам; 3,6 / 2,9 = 1,24 — на 24% медленнее.<br>— «Почему 18,9 МБ, если ключей на 8 МБ?» (errata P2-11): 2^20 — неудачная точка для Swiss Table: ёмкость 2^20 − 1 вмещает только 917 504 ключа при загрузке 7/8, поэтому reserve берёт 2^21 − 1 слотов — по 8 байт ключа и байту метаданных, 18,9 МБ, заполнение 50%.<br>— Отсюда правило на decision: «мало уникальных → плоская хеш-таблица, без reserve под весь вход». При 1% уникальных узловая таблица (3,2 нс/эл) даже быстрее flat с reserve(N) (3,6).<br>Условия и источники (были в подвале слайда): flat_hash_set · N = 2^20, U/N = 1% · M2 Pro, macOS · нс на элемент · память — сумма запрошенных байт за операцию, МБ = 10^6 байт · id — случайные 64-битные<br>С экрана убрано: резерв под N при 1% уникальных сильно превышает число ключей: в 64 раза больше памяти (по точным байтам) и медленнее.</aside>
 </section>

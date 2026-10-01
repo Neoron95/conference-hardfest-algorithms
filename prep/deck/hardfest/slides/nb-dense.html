@@ -1,6 +1,28 @@
 <section id="nb-dense">
-<p class="k">BACKUP · ДЛЯ ВОПРОСОВ</p>
-<h2 class="t">Плотные rowid: на x86 хеш впереди в 1,7 раза</h2>
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">ПЛОТНЫЕ rowid: НА x86 ХЕШ ВПЕРЕДИ В 1,7 РАЗА</h2>
 <!-- body -->
-<aside>Backup · без шагов. Вопрос: «В кейсе rowid из SQLite — плотные, а мерили вы случайные 64-битные» (qa M5, Б2), «std::hash для целых — тождество» (C8).<br>Ответ: Справедливо. Случайные id выбраны намеренно, чтобы раскладка не зависела от удачи. На плотных id узловой таблице везёт: std::hash — тождество, коллизий ноль. На x86-повторе при половине дублей unordered_set на плотных в 1,65 раза быстрее, чем на случайных, и обгоняет сортировку в 1,7 раза; при всех уникальных — 320 против 68 нс/эл, в 4,7 раза. Radix делает 3 прохода вместо 8. Sort и flat от раскладки не зависят. Значит, на rowid победитель может смениться — это ровно тезис раунда 3. Серия на iPhone — [снять до 14.10]; не снял — так и сказать.<br>Обратный край: id с общими нулевыми младшими битами (снежинки с нулевым счётчиком, кратные 1024) в libc++ после reserve(2^k) сваливаются в одну цепочку: шаг 1024 — 64 ячейки из 65 536, вставка ×70; шаг 2^20 — ×1 500. libstdc++ простой модуль это скрывает, Abseil и boost перемешивают хеш. Проверьте гистограмму цепочек на своих id.<br>Мостик: для rowid лучший кандидат вообще не хеш и не sort, а слияние отсортированной дельты (следующий слайд) или битовая карта.<br>Условия и источники (были в подвале слайда): x86-повтор на отдельной VM: Xeon 2,1 ГГц; GCC 13 / libstdc++ и Clang 18 / libc++; медиана сессий · ловушка — тест cluster.cpp, x86, reserve(N) · все серии доклада сняты на случайных 64-битных id</aside>
+<p class="abs lbl" style="left:117px;top:296px;width:1400px">x86 · N = 2^20, U = N/2 · нс на элемент: libstdc++ / libc++</p>
+<p class="abs lead sort" style="left:620px;top:352px;width:400px;text-align:center;font-size:40px">sort + unique</p>
+<p class="abs lead hash" style="left:1030px;top:352px;width:400px;text-align:center;font-size:40px">unordered_set</p>
+<div class="rule" style="left:117px;top:420px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:448px;width:500px;font-size:44px">случайные</p>
+<p class="abs body" style="left:620px;top:450px;width:400px;text-align:center">86,4 / 89,0</p>
+<p class="abs body" style="left:1030px;top:450px;width:400px;text-align:center">85,6 / 88,7</p>
+<p class="pill" style="left:1463px;top:436px;width:340px;height:84px;border:3px solid #fff;font-size:44px;line-height:78px">≈ ничья</p>
+<div class="rule" style="left:117px;top:536px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:564px;width:500px;font-size:44px">плотные rowid</p>
+<p class="abs body" style="left:620px;top:566px;width:400px;text-align:center">87,8 / 89,8</p>
+<div class="bar pale-hash" style="left:1050px;top:552px;width:360px;height:84px;border-radius:14px"></div>
+<p class="abs body b" style="left:1030px;top:566px;width:400px;text-align:center">52,8 / 53,3</p>
+<p class="pill pale-hash" style="left:1463px;top:552px;width:340px;height:84px;border:3px solid #E2489B;font-size:48px;line-height:78px">хеш ×1,7</p>
+<div class="rule" style="left:117px;top:652px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:678px;width:500px;font-size:44px">iPhone</p>
+<p class="abs body ph" style="left:620px;top:682px;width:810px;text-align:center">[снять до 14.10]</p>
+<div class="rule" style="left:117px;top:766px;width:1686px"></div>
+<div class="card" style="left:117px;top:800px;width:1686px;height:150px"></div>
+<p class="abs" style="left:157px;top:822px;width:1150px;font-size:40px;font-weight:700;line-height:52px">Обратный край — libc++, id с шагом 2^k:<br><span class="mut" style="font-weight:400">шаг 2^20 → все id в одной ячейке</span></p>
+<p class="abs big hash" style="left:1300px;top:822px;width:463px;text-align:right">×1 500</p>
+<!-- /body -->
+<aside>Backup · без шагов. Вопрос: «В кейсе rowid из SQLite — плотные, а мерили вы случайные 64-битные» (qa M5, Б2), «std::hash для целых — тождество» (C8).<br>Ответ: Справедливо. Случайные id выбраны намеренно, чтобы раскладка не зависела от удачи. На плотных id узловой таблице везёт: std::hash — тождество, коллизий ноль. На x86-повторе при половине дублей unordered_set на плотных в 1,65 раза быстрее, чем на случайных, и обгоняет сортировку в 1,7 раза; при всех уникальных — 320 против 68 нс/эл, в 4,7 раза. Radix делает 3 прохода вместо 8. Sort и flat от раскладки не зависят. Значит, на rowid победитель может смениться — это ровно тезис раунда 3. Серия на iPhone — [снять до 14.10]; не снял — так и сказать.<br>Обратный край: id с общими нулевыми младшими битами (снежинки с нулевым счётчиком, кратные 1024) в libc++ после reserve(2^k) сваливаются в одну цепочку: шаг 1024 — 64 ячейки из 65 536, вставка ×70; шаг 2^20 — ×1 500. libstdc++ простой модуль это скрывает, Abseil и boost перемешивают хеш. Проверьте гистограмму цепочек на своих id.<br>Мостик: для rowid лучший кандидат вообще не хеш и не sort, а слияние отсортированной дельты (следующий слайд) или битовая карта.<br>Условия и источники (были в подвале слайда): x86-повтор на отдельной VM: Xeon 2,1 ГГц; GCC 13 / libstdc++ и Clang 18 / libc++; медиана сессий · ловушка — тест cluster.cpp, x86, reserve(N) · все серии доклада сняты на случайных 64-битных id<br>С экрана убрано: x86-повтор, серия E7, плотные id — перемешаны. radix + unique: случайные 38,0 / 40,3, плотные 21,6 / 22,1; flat_hash_set: случайные 34,7 / 36,9, плотные 35,5 / 36,9 (нс/эл, libstdc++ / libc++). Ловушка libc++: id с шагом 2^k, std::hash — тождество: ячейка = младшие k бит id. 65 536 id: плотные 1..N — занято 65 536 ячеек, 40 нс на вставку (libstdc++: 39); шаг 1024 — 64 ячейки, 2 762 нс · ×70 (libstdc++: 41); шаг 2^20 — 1 ячейка, 60 540 нс · ×1 500 (libstdc++: 38). iPhone · userInitiated и .utility · 512K и 1M · случайные и плотные id: [снять до 14.10]. Для rowid победитель может смениться. Лучший кандидат — не хеш и не sort, а слияние дельты или битовая карта.</aside>
 </section>

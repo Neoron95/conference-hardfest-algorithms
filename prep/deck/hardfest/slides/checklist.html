@@ -1,6 +1,28 @@
 <section id="checklist">
-<p class="k">BACKUP · ДЛЯ ВОПРОСОВ</p>
-<h2 class="t">Честный замер — восемь проверок до вывода</h2>
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">ЧЕСТНЫЙ ЗАМЕР&nbsp;— ВОСЕМЬ ПРОВЕРОК ДО&nbsp;ВЫВОДА</h2>
 <!-- body -->
-<aside>Backup, вне тайминга. На review сказано: «полный чек-лист — в backup и в репозитории».<br>Q&amp;A: «Как вы проверяли, что замер честный?» или «Где полный чек-лист?»<br>Ответ: чек-лист — четыре группы, каждая сегодня уже сработала. Одинаковая задача: контракт до таймера, все участники проходят проверку корректности. Проверенные код и входы: разные массивы, а не один повторённый; свои N и доля уникальных. Повторения и условия: чередование, медиана, разброс, вторая сессия — мы видели, что между сессиями одна и та же точка гуляет на шестнадцать процентов: 22,6 против 26,3. Версия компилятора, библиотеки и ОС в логе — на Apple std::sort для целых живёт в системной libc++. Устройство и режим — модель, QoS, Low Power Mode, заряд, нагрев. И выводы в пределах данных: факт отдельно от гипотезы о причине — «узлы не влезли в L2» до счётчиков остаётся гипотезой.<br>Сфотографируйте — повторять не буду. [5 секунд]<br>Под рукой:<br>— Пункт 3 — урок learned: один массив в цикле давал сортировке тысячи id 6,8 нс/эл против 14,4 на 64 разных; на x86 виноват предсказатель, на M2 — что-то адресное, до счётчиков не дошёл.<br>— Пункт 5: 26,3 / 22,6 = 1,16 — unordered_set на 1M при U = N/2, сессии А и Б; сортировка между сессиями стабильна (20,1 против 20,2).<br>— Пункт 7: модель iPhone — [модель iPhone, чип, iOS]; пока её нет на слайдах, доклад нарушает свой же пункт 7 (qa M1).</aside>
+<p class="abs lbl" style="left:117px;top:300px;width:800px;font-size:30px;letter-spacing:2px;text-transform:uppercase">Одинаковая задача</p>
+<p class="abs num" style="left:117px;top:352px;width:70px;font-size:60px;line-height:64px">1</p>
+<p class="abs" style="left:197px;top:358px;width:700px;font-size:38px;font-weight:600;line-height:52px;white-space:nowrap">Контракт — до таймера</p>
+<p class="abs num" style="left:117px;top:428px;width:70px;font-size:60px;line-height:64px">2</p>
+<p class="abs" style="left:197px;top:434px;width:700px;font-size:38px;font-weight:600;line-height:52px;white-space:nowrap">Все проходят проверку</p>
+<p class="abs lbl" style="left:117px;top:526px;width:800px;font-size:30px;letter-spacing:2px;text-transform:uppercase">Проверенные код и входы</p>
+<p class="abs num" style="left:117px;top:578px;width:70px;font-size:60px;line-height:64px">3</p>
+<p class="abs" style="left:197px;top:584px;width:700px;font-size:38px;font-weight:600;line-height:52px;white-space:nowrap">Разные входы, не один массив</p>
+<p class="abs num" style="left:117px;top:654px;width:70px;font-size:60px;line-height:64px">4</p>
+<p class="abs" style="left:197px;top:660px;width:700px;font-size:38px;font-weight:600;line-height:52px;white-space:nowrap">Свои N и доля уникальных</p>
+<p class="abs lbl" style="left:1000px;top:300px;width:800px;font-size:30px;letter-spacing:2px;text-transform:uppercase">Повторения и условия</p>
+<p class="abs num" style="left:1000px;top:352px;width:70px;font-size:60px;line-height:64px">5</p>
+<p class="abs" style="left:1080px;top:358px;width:723px;font-size:38px;font-weight:600;line-height:52px;white-space:nowrap">Чередование, медиана,<br>разброс, две сессии</p>
+<p class="abs num" style="left:1000px;top:482px;width:70px;font-size:60px;line-height:64px">6</p>
+<p class="abs" style="left:1080px;top:488px;width:723px;font-size:38px;font-weight:600;line-height:52px;white-space:nowrap">Компилятор, библиотека<br>и ОС — в логе</p>
+<p class="abs num" style="left:1000px;top:612px;width:70px;font-size:60px;line-height:64px">7</p>
+<p class="abs" style="left:1080px;top:618px;width:723px;font-size:38px;font-weight:600;line-height:52px;white-space:nowrap">Устройство: модель, QoS,<br>заряд, нагрев</p>
+<div class="card fill" style="left:117px;top:772px;width:1686px;height:140px"></div>
+<p class="abs ink" style="left:165px;top:790px;width:900px;font-size:30px;letter-spacing:2px;text-transform:uppercase;font-weight:600">Выводы в пределах данных</p>
+<p class="abs ink" style="left:165px;top:832px;width:70px;font-size:60px;font-weight:800;line-height:64px">8</p>
+<p class="abs ink" style="left:245px;top:832px;width:1500px;font-size:44px;font-weight:800;line-height:64px">Факт отдельно от гипотезы о причине</p>
+<!-- /body -->
+<aside>Backup, вне тайминга. На review сказано: «полный чек-лист — в backup и в репозитории».<br>Q&amp;A: «Как вы проверяли, что замер честный?» или «Где полный чек-лист?»<br>Ответ: чек-лист — четыре группы, каждая сегодня уже сработала. Одинаковая задача: контракт до таймера, все участники проходят проверку корректности. Проверенные код и входы: разные массивы, а не один повторённый; свои N и доля уникальных. Повторения и условия: чередование, медиана, разброс, вторая сессия — мы видели, что между сессиями одна и та же точка гуляет на шестнадцать процентов: 22,6 против 26,3. Версия компилятора, библиотеки и ОС в логе — на Apple std::sort для целых живёт в системной libc++. Устройство и режим — модель, QoS, Low Power Mode, заряд, нагрев. И выводы в пределах данных: факт отдельно от гипотезы о причине — «узлы не влезли в L2» до счётчиков остаётся гипотезой.<br>Сфотографируйте — повторять не буду. [5 секунд]<br>Под рукой:<br>— Пункт 3 — урок learned: один массив в цикле давал сортировке тысячи id 6,8 нс/эл против 14,4 на 64 разных; на x86 виноват предсказатель, на M2 — что-то адресное, до счётчиков не дошёл.<br>— Пункт 5: 26,3 / 22,6 = 1,16 — unordered_set на 1M при U = N/2, сессии А и Б; сортировка между сессиями стабильна (20,1 против 20,2).<br>— Пункт 7: модель iPhone — [модель iPhone, чип, iOS]; пока её нет на слайдах, доклад нарушает свой же пункт 7 (qa M1).<br>С экрана убрано: полные формулировки пунктов: 1. Контракт записан до запуска таймера. 2. Все участники проходят проверку корректности. 3. Разные входы, а не один повторённый массив. 4. Свои N и доля уникальных, а не «случайные int». 5. Повторы, чередование, медиана и разброс, две сессии. 6. Версия компилятора, библиотеки и ОС в логе. 7. Целевое устройство и его состояние: модель, QoS, Low Power Mode, заряд, нагрев. 8. Факт отдельно от гипотезы о причине.</aside>
 </section>

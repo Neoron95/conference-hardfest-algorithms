@@ -1,6 +1,29 @@
 <section id="nb-merge">
-<p class="k">BACKUP · ДЛЯ ВОПРОСОВ</p>
-<h2 class="t">Сортируем только дельту и сливаем: на x86 в 3,5–6,6 раза быстрее sort + unique</h2>
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">ДЕЛЬТА + СЛИЯНИЕ: В 3,5–6,6 РАЗА БЫСТРЕЕ sort + unique</h2>
 <!-- body -->
-<aside>Backup · без шагов. Вопросы: «Почему не отсортировать только дельту и слить?» (qa X1), «set_union не убирает дубли дельты» (C5), «std::flat_set — это flat_hash_set?» (C10).<br>Ответ: Для нашей задачи это правильный ответ, он же на слайде merge. Сортируем дельту, схлопываем в ней повторы и сливаем с отсортированными локальными id через set_union или inplace_merge + unique. Без unique по дельте set_union оставит её дубли: из второго диапазона он берёт max(n − m, 0) копий — на 1,06 млн осталось 32 966 дублей. На x86 это в 3,5–6,6 раза быстрее sort + unique и в 4–6 раз быстрее flat_hash_set. libc++ в sort + unique быстрее libstdc++ (31 против 42): вход уже на 94% отсортирован. iPhone: [домерить на iPhone]; не домерил — «на телефоне ещё не мерил, цифры появятся в репозитории», не «будет так же».<br>std::flat_set — не хеш-таблица, а отсортированный вектор; его insert(range) в libc++ — ровно этот рецепт: отсортировать хвост, inplace_merge, unique.<br>INSERT OR IGNORE в SQLite (X10) — B-дерево и журнал, ожидаю медленнее, не мерил. Битовая карта для плотных rowid (X5): 1M id — 125 КБ, не мерил.<br>Мостик: лучший алгоритм использует то, что о данных уже известно, — здесь «SQLite уже отсортировала».<br>Условия и источники (были в подвале слайда): L — 2^20 локальных id (отсортированы, уникальны) + дельта D — 2^16, половина — повторы · x86-повтор на отдельной VM (Xeon 2,1 ГГц; GCC 13, Clang 18), медиана сессий · так вставляет диапазон std::flat_set в libc++</aside>
+<p class="abs lbl" style="left:117px;top:296px;width:1400px">x86 · 2^20 отсортированных id + дельта 2^16 · libstdc++ / libc++</p>
+<p class="abs lbl" style="left:900px;top:350px;width:430px;text-align:center">нс на элемент</p>
+<p class="abs lbl" style="left:1350px;top:350px;width:453px;text-align:center">быстрее sort + unique, раз</p>
+<div class="rule" style="left:117px;top:400px;width:1686px"></div>
+<p class="abs body sort" style="left:117px;top:416px;width:780px">sort + unique всего входа</p>
+<p class="abs body" style="left:900px;top:416px;width:430px;text-align:center">42,4 / 31,2</p>
+<p class="abs body" style="left:1350px;top:416px;width:453px;text-align:center">1</p>
+<div class="rule" style="left:117px;top:486px;width:1686px"></div>
+<p class="abs body hash" style="left:117px;top:502px;width:780px">unordered_set</p>
+<p class="abs body" style="left:900px;top:502px;width:430px;text-align:center">240,8 / 247,0</p>
+<p class="abs body" style="left:1350px;top:502px;width:453px;text-align:center">0,18 / 0,13</p>
+<div class="rule" style="left:117px;top:572px;width:1686px"></div>
+<p class="abs body" style="left:117px;top:588px;width:780px">flat_hash_set</p>
+<p class="abs body" style="left:900px;top:588px;width:430px;text-align:center">39,3 / 36,4</p>
+<p class="abs body" style="left:1350px;top:588px;width:453px;text-align:center">1,1 / 0,9</p>
+<div class="card fill" style="left:117px;top:676px;width:1686px;height:150px"></div>
+<p class="abs ink" style="left:157px;top:698px;width:840px;font-size:40px;font-weight:800;line-height:52px">sort(Δ) + unique(Δ) + set_union</p>
+<p class="abs ink" style="left:157px;top:756px;width:840px;font-size:30px;font-weight:600;line-height:40px">без unique(Δ) дубли дельты останутся</p>
+<p class="abs ink" style="left:900px;top:722px;width:430px;text-align:center;font-size:48px;font-weight:700;line-height:58px">6,4 / 8,9</p>
+<p class="abs big ink" style="left:1350px;top:700px;width:453px;text-align:center">6,6 / 3,5</p>
+<p class="abs body" style="left:117px;top:860px;width:780px">iPhone, <span class="mono acc">.utility</span></p>
+<p class="abs body ph" style="left:900px;top:860px;width:903px;text-align:center">[домерить на iPhone]</p>
+<!-- /body -->
+<aside>Backup · без шагов. Вопросы: «Почему не отсортировать только дельту и слить?» (qa X1), «set_union не убирает дубли дельты» (C5), «std::flat_set — это flat_hash_set?» (C10).<br>Ответ: Для нашей задачи это правильный ответ, он же на слайде merge. Сортируем дельту, схлопываем в ней повторы и сливаем с отсортированными локальными id через set_union или inplace_merge + unique. Без unique по дельте set_union оставит её дубли: из второго диапазона он берёт max(n − m, 0) копий — на 1,06 млн осталось 32 966 дублей. На x86 это в 3,5–6,6 раза быстрее sort + unique и в 4–6 раз быстрее flat_hash_set. libc++ в sort + unique быстрее libstdc++ (31 против 42): вход уже на 94% отсортирован. iPhone: [домерить на iPhone]; не домерил — «на телефоне ещё не мерил, цифры появятся в репозитории», не «будет так же».<br>std::flat_set — не хеш-таблица, а отсортированный вектор; его insert(range) в libc++ — ровно этот рецепт: отсортировать хвост, inplace_merge, unique.<br>INSERT OR IGNORE в SQLite (X10) — B-дерево и журнал, ожидаю медленнее, не мерил. Битовая карта для плотных rowid (X5): 1M id — 125 КБ, не мерил.<br>Мостик: лучший алгоритм использует то, что о данных уже известно, — здесь «SQLite уже отсортировала».<br>Условия и источники (были в подвале слайда): L — 2^20 локальных id (отсортированы, уникальны) + дельта D — 2^16, половина — повторы · x86-повтор на отдельной VM (Xeon 2,1 ГГц; GCC 13, Clang 18), медиана сессий · так вставляет диапазон std::flat_set в libc++<br>С экрана убрано: Исходный заголовок: «Сортируем только дельту и сливаем: на x86 в 3,5–6,6 раза быстрее sort + unique». Код: std::sort(D.begin(), D.end()); D.erase(std::unique(D.begin(), D.end()), D.end()); — без этого шага set_union оставит дубли дельты; std::set_union(L.begin(), L.end(), D.begin(), D.end(), std::back_inserter(out)). radix + unique: 41,4 / 39,8 нс/эл, быстрее sort + unique в 1,0 / 0,8 раза. sort(Δ) + unique(Δ) + inplace_merge + unique: 6,7 / 8,6 нс/эл, быстрее в 6,3 / 3,6 раза.</aside>
 </section>

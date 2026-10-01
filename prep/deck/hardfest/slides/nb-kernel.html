@@ -1,6 +1,29 @@
 <section id="nb-kernel">
-<p class="k">BACKUP · ДЛЯ ВОПРОСОВ</p>
-<h2 class="t">utility → E-ядро — не закон XNU, а мой замер</h2>
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">utility → E-ЯДРО: НЕ ЗАКОН XNU, А МОЙ ЗАМЕР</h2>
 <!-- body -->
-<aside>Backup · без шагов. Вопрос: «В XNU написано обратное: при Edge utility может идти на любые ядра» (qa I1, Б1).<br>Ответ: Да, вы правы. Цитата «utility и bg только на E» — из старого AMP-планировщика, он собирается только без Edge. В Edge ограничение одно: background и maintenance контроллер производительности на P-ядра не отправляет никогда. Utility может идти куда угодно, решает закрытый CLPC. Поэтому «utility на E» — не закон ядра, а мой замер: на этом iPhone utility оказался на E, на Mac — на P. Это видно по ступенькам на cores.<br>Мостик: даже ядро ОС не обещает, какое ядро процессора вам достанется. Поэтому я меряю, а не цитирую.<br>Если спросят дальше. «Привязать к P-ядру?» (I9) — нет: thread affinity на Apple silicon не поддерживается, рычаг один — QoS, и он влияет на размещение, а не назначает ядро. «P и E похожи по микроархитектуре» (I2) — да, Tech Talk 2021, но у E вдвое меньше L1D, вчетверо меньше L2 и ниже частота; нагрузка с указателями упирается ровно в это. «На M5 Pro E-ядер нет» (H16) — да, там Super и Performance, фон уйдёт на M-ядра: правило «background = E» перестаёт работать даже у Apple — тем важнее мерить.<br>Условия и источники (были в подвале слайда): xnu-12377.121.6: sched_clutch.c, стр. 6604–6612 · sched.h, стр. 191–207 — Edge на всех асимметричных arm64 · sched_amp_common.c — под #if !CONFIG_SCHED_EDGE · Apple Developer News, 22.06.2020 · ступеньки ядер — слайд cores</aside>
+<p class="abs lbl" style="left:117px;top:300px;width:760px">XNU · Edge-планировщик</p>
+<p class="abs lead" style="left:117px;top:370px;width:780px">utility — на любые ядра</p>
+<p class="abs body mut" style="left:117px;top:434px;width:780px">решает закрытый CLPC</p>
+<div class="rule" style="left:117px;top:518px;width:780px"></div>
+<p class="abs lead" style="left:117px;top:546px;width:780px">background — на P никогда</p>
+<p class="abs sm mut" style="left:117px;top:610px;width:780px">«would never recommend execution<br>on the P-cores»</p>
+<p class="abs lbl acc" style="left:980px;top:300px;width:823px">МОЙ ЗАМЕР</p>
+<p class="abs lead" style="left:1290px;top:360px;width:240px;text-align:center;font-size:44px">Mac</p>
+<p class="abs lead" style="left:1563px;top:360px;width:240px;text-align:center;font-size:44px">iPhone</p>
+<p class="abs lbl ph" style="left:1483px;top:418px;width:320px;text-align:right">[модель iPhone]</p>
+<p class="abs lead" style="left:980px;top:504px;width:270px;font-size:40px">utility</p>
+<p class="abs lead" style="left:980px;top:660px;width:270px;font-size:40px">background</p>
+<div class="card thin" style="left:1290px;top:470px;width:240px;height:130px"></div>
+<p class="abs big" style="left:1290px;top:483px;width:240px;text-align:center">P</p>
+<div class="card fill" style="left:1563px;top:470px;width:240px;height:130px"></div>
+<p class="abs big ink" style="left:1563px;top:483px;width:240px;text-align:center">E</p>
+<div class="card thin" style="left:1290px;top:626px;width:240px;height:130px"></div>
+<p class="abs big" style="left:1290px;top:639px;width:240px;text-align:center">E</p>
+<div class="card thin" style="left:1563px;top:626px;width:240px;height:130px"></div>
+<p class="abs big" style="left:1563px;top:639px;width:240px;text-align:center">E</p>
+<div class="rule" style="left:117px;top:812px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:848px;width:1686px;font-size:44px">На вашем устройстве может быть иначе — <span class="acc">проверьте</span></p>
+<!-- /body -->
+<aside>Backup · без шагов. Вопрос: «В XNU написано обратное: при Edge utility может идти на любые ядра» (qa I1, Б1).<br>Ответ: Да, вы правы. Цитата «utility и bg только на E» — из старого AMP-планировщика, он собирается только без Edge. В Edge ограничение одно: background и maintenance контроллер производительности на P-ядра не отправляет никогда. Utility может идти куда угодно, решает закрытый CLPC. Поэтому «utility на E» — не закон ядра, а мой замер: на этом iPhone utility оказался на E, на Mac — на P. Это видно по ступенькам на cores.<br>Мостик: даже ядро ОС не обещает, какое ядро процессора вам достанется. Поэтому я меряю, а не цитирую.<br>Если спросят дальше. «Привязать к P-ядру?» (I9) — нет: thread affinity на Apple silicon не поддерживается, рычаг один — QoS, и он влияет на размещение, а не назначает ядро. «P и E похожи по микроархитектуре» (I2) — да, Tech Talk 2021, но у E вдвое меньше L1D, вчетверо меньше L2 и ниже частота; нагрузка с указателями упирается ровно в это. «На M5 Pro E-ядер нет» (H16) — да, там Super и Performance, фон уйдёт на M-ядра: правило «background = E» перестаёт работать даже у Apple — тем важнее мерить.<br>Условия и источники (были в подвале слайда): xnu-12377.121.6: sched_clutch.c, стр. 6604–6612 · sched.h, стр. 191–207 — Edge на всех асимметричных arm64 · sched_amp_common.c — под #if !CONFIG_SCHED_EDGE · Apple Developer News, 22.06.2020 · ступеньки ядер — слайд cores<br>С экрана убрано: XNU · Edge-планировщик · sched_clutch.c, цитата целиком: «…lower QoS buckets (such as UT) to be scheduled on all CPUs… The only restriction is for BG/Maintenance… would never recommend execution on the P-cores» — utility на любые ядра, решает закрытый CLPC; для background контроллер P-ядра „would never recommend“. Не действует: старый AMP (sched_amp_common.c), собирается только без Edge: «utility and b[g] threads on E-Cores only». Apple Developer · 22.06.2020: QoS используется, «to influence placement of threads on P or E cores»; привязки к ядру нет: «thread affinity is not implemented / supported for Apple Silicon» (DTS, форум Apple). Мой замер: utility — Mac M2 Pro → P-ядро, iPhone [модель iPhone] → E-ядро; background → E на обоих. Решает закрытый CLPC: на вашем устройстве может быть иначе — проверьте. На M5 Pro и M5 Max E-ядер нет вовсе.</aside>
 </section>

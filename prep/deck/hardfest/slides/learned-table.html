@@ -1,6 +1,31 @@
 <section id="learned-table">
-<p class="k">BACKUP · ДЛЯ ВОПРОСОВ</p>
-<h2 class="t">Бенчмарк врал: причина на x86 и на M2 разная</h2>
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">БЕНЧМАРК ВРАЛ: ПРИЧИНА НА x86 И НА M2 РАЗНАЯ</h2>
 <!-- body -->
-<aside>Backup · без шагов. Вопросы: «M4 выучивает 10 000 ветвлений — почему на M2 не предсказатель?» (qa H15, Б3), «Linux VM на M2 — на каких ядрах шли vCPU?» (H17).<br>Ответ: формулировка «предсказатель ни при чём» была слишком сильной. Факт: 64 одинаковые копии, у которых история ветвлений как у одного массива, на M2 так же медленны, как разные массивы. Значит, разницу даёт не история ветвлений, а что-то адресное. «Рабочий набор» — гипотеза, и по величине она объясняет не всё: 8 КБ из L2 — максимум ≈3 нс/эл при разнице ≈10. Следующий шаг — Instruments → CPU Counters и контроль «8 копий × 1024 = 64 КБ &lt; L1».<br>VM: тип ядра под vCPU выбирает хост macOS, я его не контролировал. Заголовочные 6,8 и 14,4 сняты на macOS нативно; в Linux VM шёл только контроль с копиями. Выводы про P и E — только с нативных Mac и iPhone.<br>x86 подтверждён повтором и более сильным контролем: 9,7 / 9,6 / 46,9; 64 разных массива через один буфер 8 КБ — 46,8; уже два чередующихся массива отнимают половину выигрыша (24,3).<br>Мостик: одна и та же ошибка бенчмарка, а механизм на двух процессорах разный. Факт отдельно от гипотезы о причине. Идея опыта — Lemire, 2019.<br>Условия и источники (были в подвале слайда): U = 512, случайный порядок · вход восстанавливается перед каждым вызовом · медиана 4 блоков · заголовочные 6,8 и 14,4 сняты на macOS нативно · все серии доклада — на пуле разных массивов</aside>
+<p class="abs lbl" style="left:117px;top:296px;width:1500px"><span class="sort">sort + unique</span> · 1024 id, U = 512 · нс на элемент · <span class="acc">бирюзовым</span> — подозрительно быстро</p>
+<p class="abs" style="left:700px;top:352px;width:340px;text-align:center;font-size:36px;font-weight:700;line-height:44px">один массив<br>в цикле</p>
+<p class="abs" style="left:1060px;top:352px;width:360px;text-align:center;font-size:36px;font-weight:700;line-height:44px">64 одинаковые<br>копии</p>
+<p class="abs" style="left:1440px;top:352px;width:363px;text-align:center;font-size:36px;font-weight:700;line-height:44px">64 разных<br>массива</p>
+<div class="rule" style="left:117px;top:458px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:478px;width:560px;font-size:44px;line-height:52px">x86 Xeon<br><span class="lbl">libstdc++</span></p>
+<p class="abs xl acc" style="left:700px;top:486px;width:340px;text-align:center">6,3</p>
+<div class="card thin" style="left:1080px;top:474px;width:320px;height:112px"></div>
+<p class="abs xl acc" style="left:1060px;top:486px;width:360px;text-align:center">5,7</p>
+<p class="abs xl" style="left:1440px;top:486px;width:363px;text-align:center">27,1</p>
+<div class="rule" style="left:117px;top:602px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:622px;width:560px;font-size:44px;line-height:52px">M2 Pro · Linux VM<br><span class="lbl">libstdc++</span></p>
+<p class="abs xl acc" style="left:700px;top:630px;width:340px;text-align:center">4,8</p>
+<div class="card thin" style="left:1080px;top:618px;width:320px;height:112px"></div>
+<p class="abs xl" style="left:1060px;top:630px;width:360px;text-align:center">15,4</p>
+<p class="abs xl" style="left:1440px;top:630px;width:363px;text-align:center">14,6</p>
+<div class="rule" style="left:117px;top:746px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:766px;width:560px;font-size:44px;line-height:52px">M2 Pro · macOS<br><span class="lbl">libc++</span></p>
+<p class="abs xl acc" style="left:700px;top:774px;width:340px;text-align:center">6,8</p>
+<p class="abs xl mut" style="left:1060px;top:774px;width:360px;text-align:center">—</p>
+<p class="abs xl" style="left:1440px;top:774px;width:363px;text-align:center">14,4</p>
+<div class="rule" style="left:117px;top:890px;width:1686px"></div>
+<p class="abs" style="left:117px;top:906px;width:820px;font-size:40px;font-weight:700;line-height:52px">x86: <span class="acc">→ предсказатель</span></p>
+<p class="abs" style="left:983px;top:906px;width:820px;font-size:40px;font-weight:700;line-height:52px">M2: <span class="hash">→ что-то адресное</span></p>
+<!-- /body -->
+<aside>Backup · без шагов. Вопросы: «M4 выучивает 10 000 ветвлений — почему на M2 не предсказатель?» (qa H15, Б3), «Linux VM на M2 — на каких ядрах шли vCPU?» (H17).<br>Ответ: формулировка «предсказатель ни при чём» была слишком сильной. Факт: 64 одинаковые копии, у которых история ветвлений как у одного массива, на M2 так же медленны, как разные массивы. Значит, разницу даёт не история ветвлений, а что-то адресное. «Рабочий набор» — гипотеза, и по величине она объясняет не всё: 8 КБ из L2 — максимум ≈3 нс/эл при разнице ≈10. Следующий шаг — Instruments → CPU Counters и контроль «8 копий × 1024 = 64 КБ &lt; L1».<br>VM: тип ядра под vCPU выбирает хост macOS, я его не контролировал. Заголовочные 6,8 и 14,4 сняты на macOS нативно; в Linux VM шёл только контроль с копиями. Выводы про P и E — только с нативных Mac и iPhone.<br>x86 подтверждён повтором и более сильным контролем: 9,7 / 9,6 / 46,9; 64 разных массива через один буфер 8 КБ — 46,8; уже два чередующихся массива отнимают половину выигрыша (24,3).<br>Мостик: одна и та же ошибка бенчмарка, а механизм на двух процессорах разный. Факт отдельно от гипотезы о причине. Идея опыта — Lemire, 2019.<br>Условия и источники (были в подвале слайда): U = 512, случайный порядок · вход восстанавливается перед каждым вызовом · медиана 4 блоков · заголовочные 6,8 и 14,4 сняты на macOS нативно · все серии доклада — на пуле разных массивов<br>С экрана убрано: x86 Xeon: копии быстрые — 5,7 ≈ один массив 6,3 → предсказатель ветвлений; повтор (E5): 9,7 / 9,6 / 46,9; 64 разных массива через один буфер 8 КБ — 46,8: рабочий набор ни при чём. M2 Pro: копии медленные — 15,4 ≈ разные массивы 14,6 → не история ветвлений, а что-то адресное; гипотеза — 512 КБ &gt; L1; счётчики — следующий шаг. Контроль с копиями на M2 — Linux VM: тип ядра под vCPU не контролировался.</aside>
 </section>

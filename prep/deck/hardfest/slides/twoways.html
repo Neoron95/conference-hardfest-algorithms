@@ -1,6 +1,18 @@
 <section id="twoways" hidden>
-<p class="k"></p>
-<h2 class="t">Удалите дубликаты. Два способа</h2>
+<p class="k">Архив</p>
+<h2 class="t">УДАЛИТЕ ДУБЛИКАТЫ. ДВА СПОСОБА</h2>
 <!-- body -->
-<aside>2:00–2:45. Дедупликация — это те самые три строчки из ревью. Два классических способа. Первый — отсортировать: после сортировки одинаковые id стоят рядом, и один проход их схлопывает. Это O(n log n). Второй — хеш-таблица: складываем id в множество, оно само отбрасывает повторы, потом выгружаем обратно. Это в среднем O(n) — линейно. Логарифм миллиона — около двадцати. На бумаге второй способ делает в двадцать раз меньше шагов. Я тоже сначала выбрал бы хеш-таблицу и закрыл тикет. Давайте проверим интуицию — вашу и мою.</aside>
+<div class="bar bg-sort" style="left:117px;top:270px;width:823px;height:10px;border-radius:5px"></div>
+<p class="abs lead sort" style="left:117px;top:302px;width:823px">Сортировка</p>
+<p class="abs mono" style="left:117px;top:368px;width:823px;font-size:40px;font-weight:700;line-height:52px">O(n log n)</p>
+<div class="panel" style="left:117px;top:448px;width:823px;height:300px"></div>
+<p class="abs mono" style="left:153px;top:484px;width:780px;font-size:32px;line-height:52px;white-space:pre">std::sort(v.begin(), v.end());<br>v.erase(std::unique(v.begin(), v.end()),<br>        v.end());</p>
+<div class="bar bg-hash" style="left:980px;top:270px;width:823px;height:10px;border-radius:5px"></div>
+<p class="abs lead hash" style="left:980px;top:302px;width:823px">Хеш-таблица</p>
+<p class="abs mono" style="left:980px;top:368px;width:823px;font-size:40px;font-weight:700;line-height:52px">O(n) <span class="mut" style="font-family:Montserrat;font-weight:600;font-size:34px">ожидаемо</span></p>
+<div class="panel" style="left:980px;top:448px;width:823px;height:300px"></div>
+<p class="abs mono" style="left:1016px;top:484px;width:780px;font-size:32px;line-height:52px;white-space:pre">std::unordered_set&lt;uint64_t&gt; s;<br>s.reserve(v.size());<br>for (auto x : v) s.insert(x);<br>v.assign(s.begin(), s.end());</p>
+<p class="abs" style="left:117px;top:800px;width:1600px;font-size:64px;font-weight:800;line-height:80px">log₂ 10⁶ ≈ 20 <span class="mut" style="font-size:44px;font-weight:600">— кажется, выбор очевиден</span></p>
+<!-- /body -->
+<aside>2:00–2:45. Дедупликация — это те самые три строчки из ревью. Два классических способа. Первый — отсортировать: после сортировки одинаковые id стоят рядом, и один проход их схлопывает. Это O(n log n). Второй — хеш-таблица: складываем id в множество, оно само отбрасывает повторы, потом выгружаем обратно. Это в среднем O(n) — линейно. Логарифм миллиона — около двадцати. На бумаге второй способ делает в двадцать раз меньше шагов. Я тоже сначала выбрал бы хеш-таблицу и закрыл тикет. Давайте проверим интуицию — вашу и мою.<br>С экрана убрано: Логарифм миллиона — около 20 (на экране: log₂ 10⁶ ≈ 20). Кажется, выбор очевиден.</aside>
 </section>
