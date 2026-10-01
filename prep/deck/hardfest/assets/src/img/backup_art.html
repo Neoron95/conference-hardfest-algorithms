@@ -1,0 +1,155 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- backup_art.png, 1520x2160, black, no text. Sorted turquoise bars (top) dissolving into a pink hash-table field
+     of scattered nodes + pointer lines (bottom), fading to black. Deterministic: seeded PRNG (SEED below). -->
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  svg { display: block; }
+</style></head>
+<body>
+<svg id="s" width="1520" height="2160" viewBox="0 0 1520 2160" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+window.__ready = false;
+const SEED = 20261001;
+const W = 1520, H = 2160;
+const C = { tq: '#46CDAE', pk: '#E2489B', wh: '#FFFFFF', gr: '#8F8F8F' };
+
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a);
+  t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const rnd = mulberry32(SEED);
+const R = (a, b) => a + (b - a) * rnd();
+const gauss = () => { let u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+const smooth = (e0, e1, x) => { const t = Math.min(1, Math.max(0, (x - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
+const fade = y => 1 - smooth(1640, 2060, y);          // bottom fade to black
+const f2 = n => n.toFixed(1);
+
+// ---------------- layout ----------------
+const N = 22, X0 = 150, X1 = W - 150;
+const pitch = (X1 - X0) / N;
+const BW = 30;                                         // bar width
+const BASE = 1040;                                     // bars stand on this line
+
+// sorted heights: random values, then sorted (looks like real data, not a smooth ramp)
+const heights = Array.from({ length: N }, () => R(230, 880)).sort((a, b) => a - b);
+const WHITE_BAR = 15;
+
+const bars = [], frags = [], nodes = [], cols = [];
+const tooClose = (x, y, r, gap) => nodes.some(n => Math.hypot(n.x - x, n.y - y) < n.r + r + gap)
+  || frags.some(f => Math.hypot(f.x - x, Math.max(0, f.y0 - y, y - f.y1)) < f.w / 2 + r + 30);
+for (let i = 0; i < N; i++) {
+  const cx = X0 + pitch * (i + 0.5);
+  bars.push({ x: cx, y0: BASE - heights[i], y1: BASE, white: i === WHITE_BAR });
+
+  // dissolve below the baseline: shrinking turquoise segments, then pink dots drifting sideways
+  let y = BASE + R(28, 38), dx = 0, len = R(80, 130), w = BW;
+  const nSeg = 1 + Math.floor(R(0, 4));                // 1..4 segments
+  const pinkTail = nSeg >= 2 && rnd() < 0.35;          // last segment already turns pink
+  for (let j = 0; j < nSeg; j++) {
+    frags.push({ x: cx + dx, y0: y, y1: y + Math.max(len, w), w, a: pinkTail && j === nSeg - 1 ? 1 : 1 - j * 0.14, pink: pinkTail && j === nSeg - 1 });
+    y += Math.max(len, w) + 20 + j * 10;
+    len *= R(0.42, 0.6); w = Math.max(20, w - 3);
+    dx += gauss() * (1.5 + j * 4);
+  }
+  cols.push({ cx, y, dx, pinkTail });
+}
+// second pass (after all fragments exist): dots that drift away from their column
+for (const col of cols) {
+  let { cx, y, dx, pinkTail } = col;
+  const nDot = 2 + Math.floor(R(0, 3));                // 2..4 dots
+  const tqFirst = !pinkTail && rnd() < 0.4;            // first dot may still be turquoise
+  for (let k = 0; k < nDot; k++) {
+    const r = R(9, 14) * (1 - k * 0.05);
+    y += r + (k === 0 ? R(14, 110) : R(40, 80) * (1 + k * 0.6));
+    dx += gauss() * (18 + k * 70);
+    const x = Math.min(W - 80, Math.max(80, cx + dx));
+    if (rnd() < 0.12 + k * 0.12 || tooClose(x, y, r, 46)) continue;
+    nodes.push({ x, y, r, early: k === 0, tq: tqFirst && k === 0 });
+    y += r;
+  }
+}
+
+// a few free nodes deeper in the field, sparse
+for (let k = 0, tries = 0; k < 9 && tries < 4000; tries++) {
+  const x = R(110, W - 110), y = R(1480, 1980), r = R(8, 13);
+  if (tooClose(x, y, r, 110)) continue;
+  nodes.push({ x, y, r }); k++;
+}
+
+// pointer lines: short downward chains between nodes in the scattered zone (linked buckets), no crossings
+const links = [];
+{
+  const segX = (p1, p2, p3, p4) => {                   // proper segment intersection
+    const d = (a, b, c) => (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+    return d(p1, p2, p3) * d(p1, p2, p4) < 0 && d(p3, p4, p1) * d(p3, p4, p2) < 0;
+  };
+  const distSeg = (p, a, b) => { const vx = b.x - a.x, vy = b.y - a.y, t = Math.max(0, Math.min(1, ((p.x - a.x) * vx + (p.y - a.y) * vy) / (vx * vx + vy * vy)));
+    return Math.hypot(p.x - a.x - t * vx, p.y - a.y - t * vy); };
+  const deep = nodes.filter(n => n.y > 1300 && !n.early).sort((a, b) => a.y - b.y);
+  for (const a of deep) {
+    if (a.out || rnd() < 0.25) continue;
+    let best = null, bd = 1e9;
+    for (const b of deep) {
+      if (b === a || b.in || b.y < a.y + 50) continue;
+      const d = Math.hypot(b.x - a.x, b.y - a.y);
+      if (d < 100 || d > 250 || d >= bd) continue;
+      if (links.some(([p, q]) => segX(a, b, p, q))) continue;
+      if (nodes.some(n => n !== a && n !== b && distSeg(n, a, b) < n.r + 18)) continue;
+      bd = d; best = b;
+    }
+    if (best) { links.push([a, best]); a.out = true; best.in = true; }
+  }
+}
+// white highlights: a few nodes in the upper part of the field
+{
+  // one per horizontal third, so the highlights spread across the field
+  for (let k = 0; k < 3; k++) {
+    const lo = X0 + (X1 - X0) * k / 3, hi = X0 + (X1 - X0) * (k + 1) / 3;
+    const cand = nodes.filter(n => n.y > 1260 && n.y < 1680 && !n.early && n.x >= lo && n.x < hi);
+    if (!cand.length) continue;
+    const n = cand[Math.floor(rnd() * cand.length)]; n.white = true; n.r = Math.max(n.r, 12);
+  }
+}
+
+// ---------------- draw ----------------
+const out = [];
+out.push(`<defs>
+  <filter id="g1" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="16"/></filter>
+  <filter id="g2" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="12"/></filter>
+</defs>`);
+
+const barPath = b => `M ${f2(b.x)} ${f2(b.y0 + BW / 2)} L ${f2(b.x)} ${f2(b.y1 - BW / 2)}`;
+// glow layers
+out.push(`<g stroke="${C.tq}" stroke-width="${BW + 4}" stroke-linecap="round" opacity="0.27" filter="url(#g1)">${
+  bars.filter(b => !b.white).map(b => `<path d="${barPath(b)}"/>`).join('')}</g>`);
+out.push(`<g stroke="${C.wh}" stroke-width="${BW + 4}" stroke-linecap="round" opacity="0.34" filter="url(#g1)">${
+  bars.filter(b => b.white).map(b => `<path d="${barPath(b)}"/>`).join('')}</g>`);
+out.push(`<g stroke="${C.tq}" stroke-linecap="round" filter="url(#g2)">${
+  frags.map(s => `<path d="M ${f2(s.x)} ${f2(s.y0 + s.w / 2)} L ${f2(s.x)} ${f2(Math.max(s.y0 + s.w / 2, s.y1 - s.w / 2))}" stroke="${s.pink ? C.pk : C.tq}" stroke-width="${s.w + 4}" opacity="${f2(0.28 * s.a)}"/>`).join('')}</g>`);
+out.push(`<g filter="url(#g2)">${nodes.map(n => `<circle cx="${f2(n.x)}" cy="${f2(n.y)}" r="${f2(n.r * 2.2)}" fill="${n.white ? C.wh : n.tq ? C.tq : C.pk}" opacity="${f2((n.white ? 0.42 : 0.30) * fade(n.y))}"/>`).join('')}</g>`);
+
+// pointer lines (under nodes)
+for (const [a, b] of links) {
+  const ang = Math.atan2(b.y - a.y, b.x - a.x);
+  const sx = a.x + Math.cos(ang) * (a.r + 8), sy = a.y + Math.sin(ang) * (a.r + 8);
+  const ex = b.x - Math.cos(ang) * (b.r + 10), ey = b.y - Math.sin(ang) * (b.r + 10);
+  const op = 0.55 * fade((a.y + b.y) / 2);
+  const L = 13, sp = 0.6;
+  out.push(`<path d="M ${f2(sx)} ${f2(sy)} L ${f2(ex)} ${f2(ey)}" stroke="${C.pk}" stroke-width="3" stroke-linecap="round" opacity="${f2(op)}"/>`);
+  out.push(`<path d="M ${f2(ex - L * Math.cos(ang - sp))} ${f2(ey - L * Math.sin(ang - sp))} L ${f2(ex)} ${f2(ey)} L ${f2(ex - L * Math.cos(ang + sp))} ${f2(ey - L * Math.sin(ang + sp))}"
+    fill="none" stroke="${C.pk}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="${f2(op)}"/>`);
+}
+
+// crisp shapes
+out.push(`<g stroke-linecap="round">${bars.map(b => `<path d="${barPath(b)}" stroke="${b.white ? C.wh : C.tq}" stroke-width="${BW}"/>`).join('')}</g>`);
+out.push(`<g stroke="${C.tq}" stroke-linecap="round">${
+  frags.map(s => `<path d="M ${f2(s.x)} ${f2(s.y0 + s.w / 2)} L ${f2(s.x)} ${f2(Math.max(s.y0 + s.w / 2, s.y1 - s.w / 2))}" stroke="${s.pink ? C.pk : C.tq}" stroke-width="${s.w}" opacity="${f2(s.a)}"/>`).join('')}</g>`);
+out.push(nodes.map(n => {
+  const a = f2(fade(n.y));
+  if (n.white) return `<circle cx="${f2(n.x)}" cy="${f2(n.y)}" r="${f2(n.r)}" fill="${C.wh}" opacity="${a}"/>`;
+  return `<circle cx="${f2(n.x)}" cy="${f2(n.y)}" r="${f2(n.r)}" fill="${n.tq ? C.tq : C.pk}" opacity="${a}"/>`;
+}).join(''));
+
+document.getElementById('s').innerHTML = out.join('\n');
+window.__ready = true;
+</script>
+</body></html>

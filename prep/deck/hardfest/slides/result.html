@@ -1,0 +1,25 @@
+<section id="result">
+<p class="k">Ставка №1 · что показал секундомер</p>
+<h2 class="t">СОРТИРОВКА В 2,6 РАЗА БЫСТРЕЕ ХЕША</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:300px;width:1300px">нс на элемент · 1M уникальных id · Mac M2 Pro · меньше — лучше</p>
+<p data-build-in="fade 1" class="abs lead sort" style="left:117px;top:372px;width:600px">sort + unique</p>
+<div data-build-in="fade 1" class="bar bg-sort" style="left:117px;top:440px;width:425px;height:96px"></div>
+<p data-build-in="fade 1" class="abs xl" style="left:570px;top:448px;width:300px">19,9</p>
+<p data-build-in="fade 2" class="abs lead hash" style="left:117px;top:572px;width:600px">unordered_set</p>
+<div data-build-in="fade 2" class="bar bg-hash" style="left:117px;top:640px;width:1096px;height:96px"></div>
+<p data-build-in="fade 2" class="abs xl" style="left:1241px;top:648px;width:300px">51,3</p>
+<p data-build-in="fade 3" class="abs hero" style="left:1180px;top:330px;width:620px;text-align:right">×2,6</p>
+<svg data-build-in="fade 4" style="position:absolute;left:117px;top:812px;width:1686px;height:120px" width="1686" height="120" viewBox="0 0 1686 120">
+<polygon points="0,0 386,0 430,60 386,120 0,120" fill="#46CDAE"/>
+<polygon points="418,0 804,0 848,60 804,120 418,120 462,60" fill="#46CDAE"/>
+<polygon points="836,0 1222,0 1266,60 1222,120 836,120 880,60" fill="#46CDAE"/>
+<polygon points="1254,0 1640,0 1684,60 1640,120 1254,120 1298,60" fill="#E2489B"/>
+</svg>
+<p data-build-in="fade 4" class="abs ink" style="left:150px;top:850px;width:320px;font-size:32px;font-weight:700;line-height:44px"><span style="font-weight:800">1</span>  Память</p>
+<p data-build-in="fade 4" class="abs ink" style="left:590px;top:850px;width:320px;font-size:32px;font-weight:700;line-height:44px"><span style="font-weight:800">2</span>  Реализация</p>
+<p data-build-in="fade 4" class="abs ink" style="left:1008px;top:850px;width:320px;font-size:32px;font-weight:700;line-height:44px"><span style="font-weight:800">3</span>  Данные</p>
+<p data-build-in="fade 4" class="abs ink" style="left:1426px;top:850px;width:340px;font-size:32px;font-weight:700;line-height:44px"><span style="font-weight:800">4</span>  Процессор</p>
+<!-- /body -->
+<aside>План 1:20 · к концу 4:25.<br>Условия как в ставке, Mac на M2 Pro. Полоски — время на один элемент, короче — лучше. [щелчок] Сортировка — двадцать наносекунд. [щелчок] Хеш-таблица — пятьдесят одна.<br>[щелчок] [пауза 2 с] O(n) проиграл O(n log n) в два и шесть десятых раза. [пауза 2 с]<br>На iPhone [модель iPhone] при обычном приоритете почти то же. На серверном x86 — в два-три раза.<br>[смотрю в зал] И это не открытие. Даниэль Лемир поставил почти такой же опыт в 2017 году, а Чендлер Каррут объяснил, почему так, на CppCon ещё в 2014-м. Я повторил это на своём железе, чтобы дойти туда, где их не было, — до телефона в фоне. Голосовавшим за B: реванш — во втором раунде.<br>[щелчок] Дальше четыре раунда. Первый — размер и память. Второй — реализация хеша. Третий — данные и тикет. Первые два — классика, пройдём быстро. А в последнем я не трону ни строчки алгоритма — и победитель сменится. [пауза]<br>Но сначала правило, иначе любое сравнение можно оспорить.<br>Если отстаю (−25 с): Выбросить фразы про iPhone, x86 и голосовавших за B. Атрибуцию одной фразой: «Это классика: Лемир мерил в 2017-м, Каррут объяснил в 2014-м». Карту раундов и обещание раунда 4 не трогать.<br>Под рукой:<br>• Лемир, «Counting exactly the number of distinct elements: sorted arrays vs. hash sets?», 23.05.2017: unordered_set&lt;uint64_t&gt; против sort + unique на случайных 64-битных, код открыт. У него подсчёт, а не выгрузка, и нет flat, radix, контракта и QoS — отсюда «почти такой же». Каррут, CppCon 2014, с. 38: «Discontiguous data structures are the root of all (performance) evil».<br>• По системам при N = U: iPhone [модель iPhone, чип, iOS], userInitiated — ×2,53 (backup systems; если снято на другом аппарате, чем серии utility, — говорить «на iPhone почти то же» без модели). x86: в колоде ×2,07 (70 против 146 нс/эл), независимый повтор — ×3,1 (libstdc++) и ×2,9 (libc++) (bench.md E1). На «почему 2,07, а не 3,1»: «Другая VM того же типа: абсолютные наносекунды там выше на 19–78%, отношение 2,9–3,1, направление то же. Моё 2,07 — прогон на своей VM, харнесс тот же, что в репозитории, деструктор в таймере [подтвердить]». Поэтому вслух только «в два-три раза».<br>• «Релиз собирают с -Os, а у вас -O3» (qa M9): std::sort для uint64_t исполняется из системной libc++.dylib и от наших флагов не зависит, unordered_set упирается в память. DedupBench на iPhone собран с [флаги сборки DedupBench]; прогон с -Os — в плане. «Почему нс на элемент?» — так разные N ложатся на одну шкалу; полное время = × N: 19,9 × 2^20 ≈ 20,9 мс.<br>Условия и источники (были в подвале слайда): Apple M2 Pro · macOS 27 · Xcode 27.0 (Apple clang 21.0.0), libc++ · -O3 · 1 поток, QoS userInitiated · N = U = 2^20 · id случайные 64-битные · медиана 4 блоков<br>С экрана убрано: тот же опыт: D. Lemire, 2017 · почему: C. Carruth, CppCon 2014; полное время: sort 20,9 мс, unordered_set 53,8 мс</aside>
+</section>

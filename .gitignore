@@ -2,3 +2,7 @@
 bench/build/
 *.o
 *.a
+
+# deck build temp files
+prep/deck/*/slides/.render-*.html
+__pycache__/

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>flat_probe</title>
+<!-- HardFest 2026 · Swiss-table probe: keys sit in the slot array next to 1-byte tags; one SIMD compare
+     checks the tags of a whole group (8 slots on ARM NEON / Apple M2, 16 on x86 SSE2).
+     1800x920 px (2x of the on-slide size), 6 s seamless loop. Rendered by render.js via window.render(t). -->
+<style>
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" width="1800" height="920" viewBox="0 0 1800 920"></svg>
+<script>
+'use strict';
+const W = 1800, H = 920, DUR = 6;
+const FULL_FADE = /fullfade/.test(location.search);
+window.CLIP = { duration: DUR, poster: 5.0 };
+
+// ---------- palette ----------
+const C = { bg: '#000000', acc: '#46CDAE', pink: '#E2489B', white: '#FFFFFF', grey: '#8F8F8F',
+            f1: '#121212', f2: '#1E1E1E', rule: '#333333' };
+
+// ---------- helpers ----------
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, u) => a + (b - a) * u;
+const ease = u => { u = clamp(u); return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; };
+const backOut = u => { u = clamp(u); const c1 = 1.4, c3 = c1 + 1; return 1 + c3 * Math.pow(u - 1, 3) + c1 * Math.pow(u - 1, 2); };
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const es = (t, a, b) => ease(seg(t, a, b));
+const bell = (t, c, w) => { const u = (t - c) / w; return Math.abs(u) >= 1 ? 0 : 0.5 + 0.5 * Math.cos(Math.PI * u); };
+const f2 = n => Math.round(n * 100) / 100;
+const mix = (h1, h2, u) => { // hex colour blend
+  const a = parseInt(h1.slice(1), 16), b = parseInt(h2.slice(1), 16); u = clamp(u);
+  const c = [16, 8, 0].map(s => Math.round(lerp((a >> s) & 255, (b >> s) & 255, u)));
+  return '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
+};
+const att = o => Object.entries(o).filter(([, v]) => v !== undefined && v !== null)
+  .map(([k, v]) => `${k}="${typeof v === 'number' ? f2(v) : v}"`).join(' ');
+const el = (tag, o, inner) => inner === undefined ? `<${tag} ${att(o)}/>` : `<${tag} ${att(o)}>${inner}</${tag}>`;
+const txt = (x, y, s, o) => el('text', Object.assign({ x, y, 'font-family': 'Montserrat', 'font-weight': 600, 'font-size': 56 }, o), s);
+const mono = (x, y, s, o) => el('text', Object.assign({ x, y, 'font-family': 'JetBrains Mono', 'font-weight': 600, 'font-size': 56 }, o), s);
+
+// ---------- layout ----------
+const N = 8, SW = 164, SG = 18, ROW_W = N * SW + (N - 1) * SG, X0 = (W - ROW_W) / 2;
+const sx = i => X0 + i * (SW + SG);
+const KEY = { y: 350, h: 130 }, TAG = { y: 500, h: 90 };
+const BR_Y = TAG.y + TAG.h + 42;               // bracket
+const SLOTS = [ { k: 42, h: '3A' }, null, { k: 7, h: '71' }, { k: 50, h: '5C' }, null, { k: 91, h: '1F' }, null, { k: 13, h: '6E' } ];
+const HIT = 3, QTAG = '5C';
+const LINE1 = 210;                              // baseline of the top line
+
+// timing
+const T = { q0: 0.2, q1: 0.6, h0: 0.75, h1: 1.05, bar0: 1.3, sw0: 1.42, sw1: 1.9, bar1: 2.05,
+            br0: 1.55, br1: 2.05, m0: 2.0, m1: 2.3, k0: 2.4, k1: 2.75, c0: 2.65, c1: 3.05, out0: 5.3, out1: 5.8 };
+const FLASH_T = lerp(T.sw0, T.sw1, 0.5);       // the bar crosses the middle of every tag cell at once
+
+const DEFS = `<defs>
+  <filter id="glow" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="10"/></filter>
+  <filter id="glowR" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+</defs>`;
+
+function nullMark(x, y, col) {
+  return `<g stroke="${col}" stroke-width="4" fill="none"><circle cx="${x}" cy="${y}" r="16"/>` +
+    `<line x1="${x - 19}" y1="${y + 19}" x2="${x + 19}" y2="${y - 19}" stroke-linecap="round"/></g>`;
+}
+
+function frame(t) {
+  t = ((t % DUR) + DUR) % DUR;
+  const scaff = FULL_FADE ? es(t, 0, 0.3) * (1 - es(t, T.out0, T.out1)) : 1;
+  const dyn = 1 - es(t, T.out0, T.out1);
+  let o = DEFS;
+
+  const flash = bell(t, FLASH_T, 0.32) * dyn;            // all tags at the same instant
+  const match = es(t, T.m0, T.m1) * dyn;                  // the one equal tag stays lit
+  const keyHit = es(t, T.k0, T.k1) * dyn;
+
+  // ---- scaffold: legend + slot rows
+  let s = '';
+  s += txt(X0, LINE1, 'группа: 8 слотов', { fill: C.grey });
+  s += txt(X0, LINE1 + 72, 'на x86 — 16', { fill: C.grey });
+  SLOTS.forEach((sl, i) => {
+    const x = sx(i);
+    if (sl) {
+      s += el('rect', { x, y: KEY.y, width: SW, height: KEY.h, rx: 18, fill: C.f1, stroke: C.white, 'stroke-width': 4 });
+      s += mono(x + SW / 2, KEY.y + KEY.h / 2 + 23, String(sl.k), { 'text-anchor': 'middle', fill: C.white, 'font-size': 64 });
+    } else {
+      s += el('rect', { x, y: KEY.y, width: SW, height: KEY.h, rx: 18, fill: C.f2 });
+    }
+  });
+  o += `<g opacity="${f2(scaff)}">${s}</g>`;
+
+  // ---- tag row (scaffold + flash / match states)
+  let tg = '';
+  SLOTS.forEach((sl, i) => {
+    const x = sx(i);
+    const isHit = i === HIT;
+    const lit = isHit ? Math.max(flash, match) : flash;
+    const fillHit = isHit ? match : 0;
+    const stroke = mix(sl ? C.rule : C.f2, C.acc, lit);
+    const fill = sl ? mix(C.bg, C.acc, Math.max(fillHit, 0.25 * flash)) : mix(C.f2, C.acc, 0.25 * flash);
+    tg += el('rect', { x, y: TAG.y, width: SW, height: TAG.h, rx: 14, fill, stroke, 'stroke-width': 4 });
+    if (sl) tg += mono(x + SW / 2, TAG.y + TAG.h / 2 + 20, sl.h, { 'text-anchor': 'middle', fill: mix(mix(C.grey, C.white, flash), C.bg, fillHit) });
+    else tg += nullMark(x + SW / 2, TAG.y + TAG.h / 2, mix(C.rule, C.grey, 1 - 0.4 * (1 - flash)));
+  });
+  o += `<g opacity="${f2(scaff)}">${tg}</g>`;
+
+  // ---- query: «найти 50» -> tag chip
+  const q = es(t, T.q0, T.q1) * dyn, hq = es(t, T.h0, T.h1) * dyn;
+  const chipW = 132, chipH = 90, chipX = X0 + ROW_W - chipW, chipY = LINE1 - 64;
+  if (q > 0.001) {
+    o += mono(chipX - 120 - 20 * (1 - q), LINE1, 'найти 50', { 'text-anchor': 'end', fill: C.white, opacity: f2(q), 'font-size': 60 });
+  }
+  if (hq > 0.001) {
+    const ax0 = chipX - 98, ax1 = chipX - 22, ay = chipY + chipH / 2;
+    o += `<g opacity="${f2(hq)}">` +
+      el('line', { x1: ax0, y1: ay, x2: lerp(ax0, ax1 - 6, hq), y2: ay, stroke: C.grey, 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+      el('path', { d: `M${ax1 - 18} ${ay - 13} L${ax1} ${ay} L${ax1 - 18} ${ay + 13}`, fill: 'none', stroke: C.grey, 'stroke-width': 5,
+        'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) + '</g>';
+    const sc = lerp(0.7, 1, backOut(seg(t, T.h0, T.h1 + 0.1))), cx = chipX + chipW / 2, cy = chipY + chipH / 2;
+    o += `<g opacity="${f2(hq)}" transform="translate(${f2(cx)} ${f2(cy)}) scale(${f2(sc)}) translate(${f2(-cx)} ${f2(-cy)})">` +
+      el('rect', { x: chipX, y: chipY, width: chipW, height: chipH, rx: 14, fill: C.bg, stroke: C.acc, 'stroke-width': 4 }) +
+      mono(cx, cy + 20, QTAG, { 'text-anchor': 'middle', fill: C.acc }) + '</g>';
+  }
+
+  // ---- the scan bar: one horizontal bar crosses all tags at the same instant
+  const barOp = es(t, T.bar0, T.sw0) * (1 - es(t, T.sw1, T.bar1)) * dyn;
+  if (barOp > 0.001) {
+    const y = lerp(TAG.y - 22, TAG.y + TAG.h + 22, es(t, T.sw0, T.sw1));
+    const bx = X0 - 28, bw = ROW_W + 56;
+    o += `<g opacity="${f2(0.45 * barOp)}" filter="url(#glow)">${el('rect', { x: bx, y: y - 10, width: bw, height: 20, rx: 10, fill: C.acc })}</g>`;
+    o += el('rect', { x: bx, y: y - 4, width: bw, height: 8, rx: 4, fill: C.acc, opacity: f2(barOp) });
+  }
+
+  // ---- bracket «одна SIMD-инструкция» spanning all tags
+  const br = es(t, T.br0, T.br1) * dyn;
+  if (br > 0.001) {
+    const x1 = X0, x2 = X0 + ROW_W, y = BR_Y + 14 * (1 - br), r = 18, mid = (x1 + x2) / 2;
+    const d = `M${x1} ${y - 30} L${x1} ${y - r} Q${x1} ${y} ${x1 + r} ${y} L${mid - 22} ${y} L${mid} ${y + 20} L${mid + 22} ${y} ` +
+              `L${x2 - r} ${y} Q${x2} ${y} ${x2} ${y - r} L${x2} ${y - 30}`;
+    o += el('path', { d, fill: 'none', stroke: C.acc, 'stroke-width': 6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: f2(br) });
+    o += txt(mid, y + 112, 'одна SIMD-инструкция', { 'text-anchor': 'middle', fill: C.acc, opacity: f2(br), 'font-size': 60 });
+  }
+
+  // ---- the hit: key cell outlined turquoise + check mark
+  if (keyHit > 0.001) {
+    const x = sx(HIT);
+    o += `<g opacity="${f2(0.4 * keyHit)}" filter="url(#glowR)">${el('rect', { x, y: KEY.y, width: SW, height: KEY.h, rx: 18, fill: 'none', stroke: C.acc, 'stroke-width': 12 })}</g>`;
+    o += el('rect', { x, y: KEY.y, width: SW, height: KEY.h, rx: 18, fill: 'none', stroke: C.acc, 'stroke-width': 6, opacity: f2(keyHit) });
+    // short link between the matching tag and its key
+    o += el('line', { x1: x + SW / 2, y1: KEY.y + KEY.h + 3, x2: x + SW / 2, y2: TAG.y - 3, stroke: C.acc, 'stroke-width': 6, opacity: f2(keyHit) });
+  }
+  const ck = seg(t, T.c0, T.c1) * dyn;
+  if (ck > 0.001) {
+    const cx = sx(HIT) + SW / 2, cy = KEY.y - 62, sc = lerp(0.5, 1, backOut(ck));
+    const L = 70, drawn = ease(seg(t, T.c0 + 0.08, T.c1 + 0.1));
+    o += `<g opacity="${f2(clamp(ck * 2.5) * dyn)}" transform="translate(${f2(cx)} ${f2(cy)}) scale(${f2(sc)})">` +
+      el('circle', { cx: 0, cy: 0, r: 38, fill: C.acc }) +
+      el('path', { d: 'M-17 1 L-5 13 L18 -12', fill: 'none', stroke: C.bg, 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+        'stroke-dasharray': `${f2(L * drawn)} ${L + 5}` }) + '</g>';
+  }
+  return o;
+}
+
+const stage = document.getElementById('stage');
+window.render = t => { stage.innerHTML = frame(t); };
+window.render(window.CLIP.poster);
+</script>
+</body>
+</html>

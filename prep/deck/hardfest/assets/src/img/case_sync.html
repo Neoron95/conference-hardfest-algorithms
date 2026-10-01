@@ -1,0 +1,147 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- case_sync.png, 1720x1120, black. Local SQLite ids + server delta (with duplicates) -> phone -> unique ids. -->
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  svg { display: block; }
+  .lbl  { font-family: 'Montserrat'; font-weight: 700; font-size: 60px; }
+  .mono { font-family: 'JetBrains Mono'; font-weight: 700; font-size: 60px; }
+</style></head>
+<body>
+<svg id="s" width="1720" height="1120" viewBox="0 0 1720 1120" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+const C = { tq: '#46CDAE', pk: '#E2489B', wh: '#FFFFFF', gr: '#8F8F8F', d1: '#121212', d2: '#1E1E1E', rule: '#333333' };
+const SW = 8;          // line-art stroke
+const AW = 7;          // arrow stroke
+const CH = { w: 150, h: 80, r: 20 };   // id chip
+let out = [];
+const add = s => out.push(s);
+
+// ---------- defs: glows ----------
+add(`<defs>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+  <filter id="glowS" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>`);
+
+function chip(x, y, txt, kind) {
+  const fill = kind === 'tq' ? C.tq : kind === 'pk' ? C.pk : C.d2;
+  const ink  = kind ? '#000' : C.wh;
+  return `<rect x="${x}" y="${y}" width="${CH.w}" height="${CH.h}" rx="${CH.r}" fill="${fill}"/>
+    <text class="mono" x="${x + CH.w / 2}" y="${y + CH.h / 2 + 22}" text-anchor="middle" fill="${ink}">${txt}</text>`;
+}
+function head(x, y, ang, len = 26, spread = 0.72) {   // open chevron arrowhead, tip at (x,y), pointing along ang
+  const a1 = ang + Math.PI - spread, a2 = ang + Math.PI + spread;
+  return `<path d="M ${x + len * Math.cos(a1)} ${y + len * Math.sin(a1)} L ${x} ${y} L ${x + len * Math.cos(a2)} ${y + len * Math.sin(a2)}"
+    fill="none" stroke="${C.gr}" stroke-width="${AW}" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+
+// ---------- layout ----------
+const DY = 40;                                              // global vertical offset
+const PH = { x: 975, y: 270 + DY, w: 260, h: 580, r: 54 };       // phone body
+const PCX = PH.x + PH.w / 2, PCY = PH.y + PH.h / 2;
+const COLX = 375;                                           // chips column x (both sources align here)
+const IN1 = 420 + DY, IN2 = 715 + DY;                                 // y where streams enter the phone
+const TIP = PH.x - 36;                                      // arrow tips stop short of the phone outline
+
+// ===== 1. SQLite cylinder + column =====
+const cy = { cx: 180, rx: 118, ry: 34, top: 130 + DY, bot: 370 + DY };
+add(`<g fill="none" stroke="${C.wh}" stroke-width="${SW}" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M ${cy.cx - cy.rx} ${cy.top} L ${cy.cx - cy.rx} ${cy.bot} A ${cy.rx} ${cy.ry} 0 0 0 ${cy.cx + cy.rx} ${cy.bot} L ${cy.cx + cy.rx} ${cy.top}"/>
+  <ellipse cx="${cy.cx}" cy="${cy.top}" rx="${cy.rx}" ry="${cy.ry}"/>
+  <path d="M ${cy.cx - cy.rx} ${cy.top + 80} A ${cy.rx} ${cy.ry} 0 0 0 ${cy.cx + cy.rx} ${cy.top + 80}"/>
+  <path d="M ${cy.cx - cy.rx} ${cy.top + 160} A ${cy.rx} ${cy.ry} 0 0 0 ${cy.cx + cy.rx} ${cy.top + 160}"/>
+</g>`);
+add(`<text class="lbl" x="${cy.cx}" y="${cy.bot + cy.ry + 100}" text-anchor="middle" fill="${C.wh}">SQLite</text>`);
+
+const local = ['101', '102', '105', '108'];
+const gap = 12;
+const colH = local.length * CH.h + (local.length - 1) * gap;
+const colY = 280 + DY - colH / 2;
+// connector: column -> phone (drawn first, chips cover nothing here)
+{
+  const x0 = COLX + CH.w + 26, y0 = colY + colH / 2;
+  const x1 = TIP, y1 = IN1;
+  add(`<path d="M ${x0} ${y0} C ${x0 + 200} ${y0}, ${x1 - 220} ${y1}, ${x1} ${y1}" fill="none" stroke="${C.gr}" stroke-width="${AW}" stroke-linecap="round"/>`);
+  add(head(x1, y1, 0));
+}
+local.forEach((t, i) => add(chip(COLX, colY + i * (CH.h + gap), t)));
+
+// ===== 2. Server cloud + stream with duplicates =====
+const cl = { cx: 180, base: IN2 + 84 };
+{
+  const b = cl.base, x = cl.cx;
+  const shapes = `
+    <rect x="${x - 80}" y="${b - 97}" width="145" height="97"/>
+    <circle cx="${x - 80}" cy="${b - 48}" r="48"/>
+    <circle cx="${x + 65}" cy="${b - 64}" r="64"/>
+    <circle cx="${x - 11}" cy="${b - 105}" r="74"/>`;
+  // union outline: fat white stroke, then black fill on top
+  add(`<g fill="${C.wh}" stroke="${C.wh}" stroke-width="${SW * 2}" stroke-linejoin="round">${shapes}</g>`);
+  add(`<g fill="#000">${shapes}</g>`);
+  add(`<text class="lbl" x="${x}" y="${b + 98}" text-anchor="middle" fill="${C.wh}">сервер</text>`);
+}
+const delta = [['113', 'pk'], ['113', 'pk'], ['120', null]];
+{
+  const y = IN2, sx = COLX, sy = y - CH.h / 2;
+  const x0 = sx + delta.length * (CH.w + gap) - gap + 26;
+  add(`<path d="M ${x0} ${y} L ${TIP} ${y}" fill="none" stroke="${C.gr}" stroke-width="${AW}" stroke-linecap="round"/>`);
+  add(head(TIP, y, 0));
+  // glow behind duplicates
+  add(`<rect x="${sx}" y="${sy}" width="${2 * CH.w + gap}" height="${CH.h}" rx="${CH.r}" fill="${C.pk}" opacity="0.38" filter="url(#glow)"/>`);
+  delta.forEach(([t, k], i) => add(chip(sx + i * (CH.w + gap), sy, t, k)));
+  // bracket + label under the duplicate pair
+  const bx0 = sx + 6, bx1 = sx + 2 * CH.w + gap - 6, by = sy + CH.h + 24;
+  add(`<path d="M ${bx0} ${by - 14} L ${bx0} ${by} L ${bx1} ${by} L ${bx1} ${by - 14}" fill="none" stroke="${C.pk}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`);
+  add(`<text class="lbl" x="${(bx0 + bx1) / 2}" y="${by + 78}" text-anchor="middle" fill="${C.pk}">дубли</text>`);
+}
+
+// ===== 3. Phone =====
+add(`<rect x="${PH.x}" y="${PH.y}" width="${PH.w}" height="${PH.h}" rx="${PH.r}" fill="#000" stroke="${C.wh}" stroke-width="${SW}"/>`);
+// side buttons
+const btn = (x, y, h) => `<rect x="${x}" y="${y}" width="12" height="${h}" rx="5" fill="${C.wh}"/>`;
+add(btn(PH.x - 12, PH.y + 92, 34));
+add(btn(PH.x - 12, PH.y + 150, 62));
+add(btn(PH.x - 12, PH.y + 228, 62));
+add(btn(PH.x + PH.w, PH.y + 140, 96));
+// dynamic island + home indicator
+add(`<rect x="${PCX - 44}" y="${PH.y + 26}" width="88" height="26" rx="13" fill="${C.wh}"/>`);
+add(`<line x1="${PCX - 46}" y1="${PH.y + PH.h - 30}" x2="${PCX + 46}" y2="${PH.y + PH.h - 30}" stroke="${C.gr}" stroke-width="6" stroke-linecap="round"/>`);
+// sync glyph (two arcs with heads), turquoise with glow
+{
+  const R = 62, cx = PCX, cyy = PCY - 30;
+  const arc = (a0, a1) => {
+    const p = a => [cx + R * Math.cos(a), cyy + R * Math.sin(a)];
+    const [x0, y0] = p(a0), [x1, y1] = p(a1);
+    return `M ${x0} ${y0} A ${R} ${R} 0 0 1 ${x1} ${y1}`;
+  };
+  const d2r = d => d * Math.PI / 180;
+  const a = [d2r(200), d2r(330)], b = [d2r(20), d2r(150)];
+  const tipHead = (ang) => {      // arrowhead at end of clockwise arc, tangent direction = ang + 90deg
+    const x = cx + R * Math.cos(ang), y = cyy + R * Math.sin(ang), t = ang + Math.PI / 2, L = 26;
+    return `M ${x + L * Math.cos(t + Math.PI - 0.75)} ${y + L * Math.sin(t + Math.PI - 0.75)} L ${x} ${y} L ${x + L * Math.cos(t + Math.PI + 0.75)} ${y + L * Math.sin(t + Math.PI + 0.75)}`;
+  };
+  const d = `${arc(a[0], a[1])} ${tipHead(a[1])} ${arc(b[0], b[1])} ${tipHead(b[1])}`;
+  add(`<path d="${d}" fill="none" stroke="${C.tq}" stroke-width="${SW * 2.2}" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" filter="url(#glowS)"/>`);
+  add(`<path d="${d}" fill="none" stroke="${C.tq}" stroke-width="${SW}" stroke-linecap="round" stroke-linejoin="round"/>`);
+  // progress bar
+  const py = cyy + 130, pw = 150;
+  add(`<line x1="${cx - pw / 2}" y1="${py}" x2="${cx + pw / 2}" y2="${py}" stroke="${C.rule}" stroke-width="10" stroke-linecap="round"/>`);
+  add(`<line x1="${cx - pw / 2}" y1="${py}" x2="${cx + pw / 2 - 50}" y2="${py}" stroke="${C.tq}" stroke-width="10" stroke-linecap="round"/>`);
+}
+
+// ===== 4. Output: unique ids =====
+const uniq = ['101', '102', '105', '108', '113', '120'];
+{
+  const ug = 12, ox = 1440 - CH.w / 2;
+  const H = uniq.length * CH.h + (uniq.length - 1) * ug, oy = PCY - H / 2;
+  const x0 = PH.x + PH.w + 26, x1 = ox - 22;
+  add(`<path d="M ${x0} ${PCY} L ${x1} ${PCY}" fill="none" stroke="${C.gr}" stroke-width="${AW}" stroke-linecap="round"/>`);
+  add(head(x1, PCY, 0));
+  add(`<rect x="${ox}" y="${oy}" width="${CH.w}" height="${H}" rx="${CH.r}" fill="${C.tq}" opacity="0.32" filter="url(#glow)"/>`);
+  uniq.forEach((t, i) => add(chip(ox, oy + i * (CH.h + ug), t, 'tq')));
+  add(`<text class="lbl" x="${ox + CH.w / 2}" y="${oy + H + 104}" text-anchor="middle" fill="${C.tq}">уникальные id</text>`);
+}
+
+document.getElementById('s').innerHTML = out.join('\n');
+</script>
+</body></html>

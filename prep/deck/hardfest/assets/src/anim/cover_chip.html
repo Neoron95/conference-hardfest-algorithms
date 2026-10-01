@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>cover_chip</title>
+<!-- HardFest 2026 · cover clip: a task migrates P-core -> E-core -> P-core on a stylised SoC die.
+     1600x1360 px (2x of the on-slide size), 8 s seamless loop. Rendered by render.js via window.render(t). -->
+<style>
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" width="1600" height="1360" viewBox="0 0 1600 1360"></svg>
+<script>
+'use strict';
+const W = 1600, H = 1360, DUR = 8;
+const FULL_FADE = /fullfade/.test(location.search);
+window.CLIP = { duration: DUR, poster: 4.6 };
+
+// ---------- palette ----------
+const C = { bg: '#000000', acc: '#46CDAE', pink: '#E2489B', white: '#FFFFFF', grey: '#8F8F8F',
+            f1: '#121212', f2: '#1E1E1E', rule: '#333333' };
+
+// ---------- helpers ----------
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, u) => a + (b - a) * u;
+const ease = u => { u = clamp(u); return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; };
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const es = (t, a, b) => ease(seg(t, a, b));
+const f2 = n => Math.round(n * 100) / 100;
+const att = o => Object.entries(o).filter(([, v]) => v !== undefined && v !== null)
+  .map(([k, v]) => `${k}="${typeof v === 'number' ? f2(v) : v}"`).join(' ');
+const el = (tag, o, inner) => inner === undefined ? `<${tag} ${att(o)}/>` : `<${tag} ${att(o)}>${inner}</${tag}>`;
+const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${f2(a)})`; };
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+  t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+// ---------- geometry ----------
+const DIE = { x: 140, y: 120, w: 1320, h: 1120, r: 24 };
+const PC = 250, PG = 34, EC = 160, EG = 28;
+const P0 = { x: 260, y: 350 }, E0 = { x: 992, y: 350 };
+const pCores = [0, 1, 2, 3].map(i => ({ x: P0.x + (i % 2) * (PC + PG), y: P0.y + Math.floor(i / 2) * (PC + PG), s: PC }));
+const eCores = [0, 1, 2, 3].map(i => ({ x: E0.x + (i % 2) * (EC + EG), y: E0.y + Math.floor(i / 2) * (EC + EG), s: EC }));
+const pL2 = { x: P0.x, y: P0.y + 2 * PC + PG + 34, w: 2 * PC + PG, h: 170 };
+const eL2 = { x: E0.x, y: E0.y + 2 * EC + EG + 34, w: 2 * EC + EG, h: 140 };
+const misc = { x: E0.x, y: eL2.y + eL2.h + 34, w: eL2.w, h: pL2.y + pL2.h - (eL2.y + eL2.h + 34) };
+
+const SRC_CORE = pCores[1], DST_CORE = eCores[2];
+const cx = c => c.x + c.s / 2, cy = c => c.y + c.s / 2;
+const A = { x: cx(SRC_CORE), y: cy(SRC_CORE) }, B = { x: cx(DST_CORE), y: cy(DST_CORE) };
+const MX = (pCores[1].x + PC + E0.x) / 2, RR = 44;
+const ROUTE = `M${A.x} ${A.y} H${MX - RR} Q${MX} ${A.y} ${MX} ${A.y + RR} V${B.y - RR} Q${MX} ${B.y} ${MX + RR} ${B.y} H${B.x}`;
+
+// measuring path (hidden helper, used only for getPointAtLength)
+const measure = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+measure.setAttribute('d', ROUTE);
+const helper = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+helper.setAttribute('style', 'position:absolute;width:0;height:0;visibility:hidden');
+helper.appendChild(measure); document.body.appendChild(helper);
+const LEN = measure.getTotalLength();
+const at = u => { const p = measure.getPointAtLength(clamp(u) * LEN); return { x: p.x, y: p.y }; };
+
+// ---------- static texture: circuit traces (deterministic) ----------
+function buildTraces() {
+  // hand-routed buses (bundles of parallel traces with 45-degree chamfers) that connect the blocks,
+  // plus a few short stubs with vias; everything ends under a block or in a via
+  const chamfer = (W, c) => {
+    const out = [W[0]];
+    for (let i = 1; i < W.length - 1; i++) {
+      const [px, py] = W[i - 1], [x, y] = W[i], [nx, ny] = W[i + 1];
+      const l1 = Math.hypot(x - px, y - py), l2 = Math.hypot(nx - x, ny - y);
+      const k = Math.min(c, l1 / 2, l2 / 2);
+      out.push([x - (x - px) / l1 * k, y - (y - py) / l1 * k], [x + (nx - x) / l2 * k, y + (ny - y) / l2 * k]);
+    }
+    out.push(W[W.length - 1]);
+    return out;
+  };
+  const pc = i => ({ x: pCores[i].x + PC / 2, y: pCores[i].y + PC / 2 });
+  const BUSES = [
+    { w: [[320, 470], [200, 470], [200, 1003], [320, 1003]], n: 3 },                     // P core -> L2 (left)
+    { w: [[pc(1).x, 420], [pc(1).x, 205], [1404, 205], [1404, 430], [1290, 430]], n: 3 }, // P core -> E core (over the top)
+    { w: [[1290, 802], [1410, 802], [1410, 997], [1290, 997]], n: 2 },                    // E L2 -> block
+    { w: [[420, 1060], [420, 1172], [1166, 1172], [1166, 1060]], n: 3 },                   // P L2 -> block (bottom)
+    { w: [[740, 780], [1040, 780]], n: 2 },                                               // P core -> E L2
+    { w: [[740, 1003], [1040, 1003]], n: 4 },                                             // P L2 -> block
+    // stubs ending in vias
+    { w: [[1290, 600], [1410, 600], [1410, 690]], n: 2, via: 1 },
+    { w: [[520, 1060], [520, 1130], [600, 1130]], n: 2, via: 1 },
+    { w: [[940, 1060], [940, 1120], [880, 1120]], n: 2, via: 1 },
+  ];
+  let s = '';
+  for (const b of BUSES) {
+    if (!b.n) continue;
+    const P = chamfer(b.w, 26);
+    for (let k = 0; k < b.n; k++) {
+      const Q = offsetPolyline(P, (k - (b.n - 1) / 2) * 16);
+      s += el('polyline', { points: Q.map(p => p.map(f2).join(',')).join(' '), fill: 'none', stroke: C.f2,
+        'stroke-width': 4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' });
+      if (b.via) { const e = Q[Q.length - 1]; s += el('circle', { cx: e[0], cy: e[1], r: 7, fill: C.bg, stroke: C.f2, 'stroke-width': 4 }); }
+    }
+  }
+  return s;
+}
+function offsetPolyline(P, d) {
+  if (!d) return P;
+  const N = [];
+  for (let i = 0; i < P.length - 1; i++) {
+    const dx = P[i + 1][0] - P[i][0], dy = P[i + 1][1] - P[i][1], L = Math.hypot(dx, dy) || 1;
+    N.push([-dy / L, dx / L]);
+  }
+  return P.map((p, i) => {
+    if (i === 0) return [p[0] + N[0][0] * d, p[1] + N[0][1] * d];
+    if (i === P.length - 1) return [p[0] + N[i - 1][0] * d, p[1] + N[i - 1][1] * d];
+    const a = N[i - 1], b = N[i]; let mx = a[0] + b[0], my = a[1] + b[1]; const ml = Math.hypot(mx, my) || 1;
+    mx /= ml; my /= ml; const c = mx * a[0] + my * a[1];
+    return [p[0] + mx * d / c, p[1] + my * d / c];
+  });
+}
+const TRACES = buildTraces();
+
+// ---------- frame ----------
+const DEFS = `<defs>
+  <filter id="glow" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="16"/></filter>
+  <filter id="glowS" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="7"/></filter>
+  <clipPath id="dieClip"><rect x="${DIE.x}" y="${DIE.y}" width="${DIE.w}" height="${DIE.h}" rx="${DIE.r}"/></clipPath>
+</defs>`;
+
+function coreDetail(c, big) {
+  // faint internal floor-plan: two sub-blocks along the bottom edge and a register strip
+  const m = big ? 30 : 22, hh = big ? 54 : 34, gap = big ? 16 : 12;
+  const w = (c.s - 2 * m - gap) / 2;
+  let s = '';
+  s += el('rect', { x: c.x + m, y: c.y + c.s - m - hh, width: w, height: hh, rx: 8, fill: 'none', stroke: C.f2, 'stroke-width': 4 });
+  s += el('rect', { x: c.x + m + w + gap, y: c.y + c.s - m - hh, width: w, height: hh, rx: 8, fill: 'none', stroke: C.f2, 'stroke-width': 4 });
+  if (big) s += el('line', { x1: c.x + m, y1: c.y + m + 6, x2: c.x + c.s - m, y2: c.y + m + 6, stroke: C.f2, 'stroke-width': 4, 'stroke-linecap': 'round' });
+  return s;
+}
+
+function frame(t) {
+  t = ((t % DUR) + DUR) % DUR;
+  const scaff = FULL_FADE ? es(t, 0, 0.6) * (1 - es(t, DUR - 0.9, DUR - 0.2)) : 1;
+
+  // task position along the route: P (0) -> E (1) -> P (0)
+  const go = es(t, 2.0, 3.5), back = es(t, 5.7, 7.2);
+  const s = go - back;
+  const moving = Math.max(Math.sin(Math.PI * seg(t, 2.0, 3.5)), Math.sin(Math.PI * seg(t, 5.7, 7.2)));
+  const onP = 1 - ease(clamp(s / 0.22));
+  const onE = ease(clamp((s - 0.78) / 0.22));
+  const p = at(s);
+  const breathe = 0.5 + 0.5 * Math.sin(2 * Math.PI * t / 2); // period 2 s -> loops with 8 s
+
+  let o = DEFS;
+  o += `<g opacity="${f2(scaff)}">`;
+  // die
+  o += el('rect', { x: DIE.x, y: DIE.y, width: DIE.w, height: DIE.h, rx: DIE.r, fill: C.bg });
+  o += `<g clip-path="url(#dieClip)">${TRACES}</g>`;
+  // interconnect route between the clusters
+  o += el('path', { d: ROUTE, fill: 'none', stroke: C.rule, 'stroke-width': 6, 'stroke-linecap': 'round' });
+  // L2 blocks + spare block
+  o += el('rect', { x: pL2.x, y: pL2.y, width: pL2.w, height: pL2.h, rx: 20, fill: C.f1, stroke: C.rule, 'stroke-width': 4 });
+  o += el('rect', { x: eL2.x, y: eL2.y, width: eL2.w, height: eL2.h, rx: 18, fill: C.f1, stroke: C.rule, 'stroke-width': 4 });
+  o += el('text', { x: pL2.x + pL2.w / 2, y: pL2.y + pL2.h / 2 + 20, 'text-anchor': 'middle', 'font-family': 'Montserrat',
+    'font-weight': 600, 'font-size': 56, fill: C.grey }, 'L2 16 МиБ');
+  o += el('text', { x: eL2.x + eL2.w / 2, y: eL2.y + eL2.h / 2 + 20, 'text-anchor': 'middle', 'font-family': 'Montserrat',
+    'font-weight': 600, 'font-size': 56, fill: C.grey }, 'L2 4 МиБ');
+  // spare (unlabelled) block: a small grid, reads as "other IP" on the die
+  o += el('rect', { x: misc.x, y: misc.y, width: misc.w, height: misc.h, rx: 18, fill: C.bg, stroke: C.f2, 'stroke-width': 4 });
+  {
+    const cols = 4, rows = 2, m = 22, g = 14;
+    const cw = (misc.w - 2 * m - (cols - 1) * g) / cols, ch = (misc.h - 2 * m - (rows - 1) * g) / rows;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
+      o += el('rect', { x: misc.x + m + c * (cw + g), y: misc.y + m + r * (ch + g), width: cw, height: ch, rx: 8, fill: C.f2 });
+  }
+  // cores
+  pCores.forEach((c, i) => {
+    const lit = i === 1 ? onP : 0;
+    o += el('rect', { x: c.x, y: c.y, width: c.s, height: c.s, rx: 20, fill: C.bg });
+    if (lit > 0.001) o += el('rect', { x: c.x, y: c.y, width: c.s, height: c.s, rx: 20, fill: rgba(C.acc, 0.25 * lit) });
+    o += coreDetail(c, true);
+    o += el('rect', { x: c.x, y: c.y, width: c.s, height: c.s, rx: 20, fill: 'none', stroke: C.white, 'stroke-width': 6 });
+  });
+  eCores.forEach((c, i) => {
+    const lit = i === 2 ? onE : 0;
+    o += el('rect', { x: c.x, y: c.y, width: c.s, height: c.s, rx: 16, fill: C.bg });
+    if (lit > 0.001) o += el('rect', { x: c.x, y: c.y, width: c.s, height: c.s, rx: 16, fill: rgba(C.pink, 0.25 * lit) });
+    o += coreDetail(c, false);
+    o += el('rect', { x: c.x, y: c.y, width: c.s, height: c.s, rx: 16, fill: 'none', stroke: C.grey, 'stroke-width': 4 });
+  });
+  // die outline on top
+  o += el('rect', { x: DIE.x, y: DIE.y, width: DIE.w, height: DIE.h, rx: DIE.r, fill: 'none', stroke: C.white, 'stroke-width': 6 });
+  // cluster labels
+  o += el('text', { x: P0.x - 4, y: P0.y - 42, 'font-family': 'Montserrat', 'font-weight': 600, 'font-size': 64, fill: C.white }, 'P-ядра');
+  o += el('text', { x: E0.x - 4, y: E0.y - 42, 'font-family': 'Montserrat', 'font-weight': 600, 'font-size': 64, fill: C.grey }, 'E-ядра');
+  o += '</g>';
+
+  // ---- moving task ----
+  const dyn = scaff;
+  // trail along the route while gliding
+  if (moving > 0.01) {
+    const dir = t < 4.6 ? 1 : -1, N = 14, span = 0.22;
+    for (let k = 0; k < N; k++) {
+      const u0 = s - dir * span * (k / N), u1 = s - dir * span * ((k + 1) / N);
+      if ((dir > 0 && u1 < 0) || (dir < 0 && u1 > 1)) break;
+      const a = at(u0), b = at(u1);
+      o += el('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: C.acc, 'stroke-width': 8, 'stroke-linecap': 'round',
+        opacity: f2(0.55 * moving * (1 - k / N) * dyn) });
+    }
+  }
+  const dim = lerp(1, 0.55, ease(s));
+  const size = lerp(92, 80, ease(s));
+  const glowA = (0.30 + 0.10 * breathe) * lerp(1, 0.7, ease(s));
+  const sq = (x, y, sz, extra) => el('rect', Object.assign({ x: x - sz / 2, y: y - sz / 2, width: sz, height: sz, rx: 18 }, extra));
+  o += `<g opacity="${f2(glowA * dyn)}" filter="url(#glow)">${sq(p.x, p.y, size * 1.25, { fill: C.acc })}</g>`;
+  o += `<g opacity="${f2(dim * dyn)}">${sq(p.x, p.y, size, { fill: C.acc })}</g>`;
+  return o;
+}
+
+const stage = document.getElementById('stage');
+window.render = t => { stage.innerHTML = frame(t); };
+window.render(window.CLIP.poster);
+</script>
+</body>
+</html>

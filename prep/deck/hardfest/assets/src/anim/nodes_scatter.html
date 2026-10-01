@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>nodes_scatter</title>
+<!-- HardFest 2026 · std::unordered_set: every key is a separate heap node, lookups chase pointers.
+     1880x1040 px (2x of the on-slide size), 7 s seamless loop. Rendered by render.js via window.render(t). -->
+<style>
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" width="1880" height="1040" viewBox="0 0 1880 1040"></svg>
+<script>
+'use strict';
+const W = 1880, H = 1040, DUR = 7;
+const FULL_FADE = /fullfade/.test(location.search);
+window.CLIP = { duration: DUR, poster: 5.8 };
+
+// ---------- palette ----------
+const C = { bg: '#000000', acc: '#46CDAE', pink: '#E2489B', white: '#FFFFFF', grey: '#8F8F8F',
+            f1: '#121212', f2: '#1E1E1E', rule: '#333333' };
+
+// ---------- helpers ----------
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, u) => a + (b - a) * u;
+const ease = u => { u = clamp(u); return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; };
+const backOut = u => { u = clamp(u); const c1 = 1.4, c3 = c1 + 1; return 1 + c3 * Math.pow(u - 1, 3) + c1 * Math.pow(u - 1, 2); };
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const es = (t, a, b) => ease(seg(t, a, b));
+const f2 = n => Math.round(n * 100) / 100;
+const att = o => Object.entries(o).filter(([, v]) => v !== undefined && v !== null)
+  .map(([k, v]) => `${k}="${typeof v === 'number' ? f2(v) : v}"`).join(' ');
+const el = (tag, o, inner) => inner === undefined ? `<${tag} ${att(o)}/>` : `<${tag} ${att(o)}>${inner}</${tag}>`;
+const txt = (x, y, s, o) => el('text', Object.assign({ x, y, 'font-family': 'Montserrat', 'font-weight': 600, 'font-size': 56 }, o), s);
+
+// rounded orthogonal route through waypoints -> SVG path d
+function route(P, r = 30) {
+  let d = `M${P[0][0]} ${P[0][1]}`;
+  for (let i = 1; i < P.length - 1; i++) {
+    const [px, py] = P[i - 1], [x, y] = P[i], [nx, ny] = P[i + 1];
+    const l1 = Math.hypot(x - px, y - py), l2 = Math.hypot(nx - x, ny - y), k = Math.min(r, l1 / 2, l2 / 2);
+    d += ` L${f2(x - (x - px) / l1 * k)} ${f2(y - (y - py) / l1 * k)} Q${x} ${y} ${f2(x + (nx - x) / l2 * k)} ${f2(y + (ny - y) / l2 * k)}`;
+  }
+  const L = P[P.length - 1];
+  return d + ` L${L[0]} ${L[1]}`;
+}
+const NS = 'http://www.w3.org/2000/svg';
+const helper = document.createElementNS(NS, 'svg');
+helper.setAttribute('style', 'position:absolute;width:0;height:0;visibility:hidden');
+document.body.appendChild(helper);
+function measured(d) {
+  const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); helper.appendChild(p);
+  const L = p.getTotalLength();
+  return { d, L, at: u => { const q = p.getPointAtLength(clamp(u) * L); return { x: q.x, y: q.y }; },
+           atLen: l => { const q = p.getPointAtLength(clamp(l, 0, L)); return { x: q.x, y: q.y }; } };
+}
+
+// ---------- layout ----------
+const CELL = 104, BX = 70, BY = 120, NB = 8;
+const bucketX = i => BX + CELL / 2 + CELL * i, bucketY = BY + CELL / 2;
+const HEAP = { x: 70, y: 290, w: 1740, h: 710 };
+const NW = 236, NH = 104, KW = 144; // node: key part + next part
+const nodes = {
+  42: { x: 130, y: 840 },
+  50: { x: 1520, y: 740 },
+  7:  { x: 1300, y: 400 },
+  91: { x: 480, y: 470 },
+  13: { x: 860, y: 640 },
+};
+const entry = k => ({ x: nodes[k].x + KW / 2, y: nodes[k].y });             // arrows enter the key cell from above
+const keyC = k => ({ x: nodes[k].x + KW / 2, y: nodes[k].y + NH / 2 });
+const nextC = k => ({ x: nodes[k].x + KW + (NW - KW) / 2, y: nodes[k].y + NH / 2 });
+// insertion order; bucket = key mod 8 (std::hash<int> is the identity); 50 collides with 42 -> chain
+const INSERTS = [
+  { key: 42, from: 'b', b: 2, way: [[bucketX(2), BY + CELL], [bucketX(2), 560], [entry(42).x, 560], [entry(42).x, entry(42).y]] },
+  { key: 50, from: 'n', n: 42, way: [[nextC(42).x, nextC(42).y], [1460, nextC(42).y], [1460, keyC(50).y], [nodes[50].x, keyC(50).y]] },
+  { key: 7,  from: 'b', b: 7, way: [[bucketX(7), BY + CELL], [bucketX(7), 330], [entry(7).x, 330], [entry(7).x, entry(7).y]] },
+  { key: 91, from: 'b', b: 3, way: [[bucketX(3), BY + CELL], [bucketX(3), 330], [entry(91).x, 330], [entry(91).x, entry(91).y]] },
+  { key: 13, from: 'b', b: 5, way: [[bucketX(5), BY + CELL], [bucketX(5), 420], [entry(13).x, 420], [entry(13).x, entry(13).y]] },
+];
+const T0 = 0.35, STEP = 0.6;
+INSERTS.forEach((s, i) => { s.t = T0 + STEP * i; s.path = measured(route(s.way)); });
+
+// cursor journey: bucket 2 -> node 42 -> node 50
+const CUR1 = measured(route([[bucketX(2), bucketY], ...INSERTS[0].way]));
+const CUR2 = measured(route([[entry(42).x, entry(42).y], [nextC(42).x, entry(42).y], [nextC(42).x, nextC(42).y], ...INSERTS[1].way.slice(1)], 26));
+const TC = { show: 3.4, go1: 3.55, at1: 4.2, go2: 4.7, at2: 5.55, out0: 6.2, out1: 6.8 };
+
+// ---------- static scaffold ----------
+function dotGrid() {
+  let s = '';
+  const g = 40, x0 = HEAP.x + 30, y0 = HEAP.y + 30;
+  for (let y = y0; y <= HEAP.y + HEAP.h - 24; y += g)
+    for (let x = x0; x <= HEAP.x + HEAP.w - 24; x += g) s += `<circle cx="${x}" cy="${y}" r="3.5"/>`;
+  return `<g fill="${C.f2}">${s}</g>`;
+}
+const GRID = dotGrid();
+
+const DEFS = `<defs>
+  <filter id="glow" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="12"/></filter>
+</defs>`;
+
+function arrowHead(p, ang, size, fill, op) {
+  const a = ang, s = size;
+  const pts = [[0, 0], [-s, -s * 0.55], [-s, s * 0.55]].map(([x, y]) =>
+    [p.x + x * Math.cos(a) - y * Math.sin(a), p.y + x * Math.sin(a) + y * Math.cos(a)]);
+  return el('path', { d: `M${pts.map(q => q.map(f2).join(' ')).join(' L')} Z`, fill, opacity: op, 'stroke-linejoin': 'round', stroke: fill, 'stroke-width': 3 });
+}
+
+function nullMark(x, y, op) {
+  return `<g opacity="${f2(op)}" stroke="${C.grey}" stroke-width="4" fill="none">
+    <circle cx="${x}" cy="${y}" r="15"/><line x1="${x - 17}" y1="${y + 17}" x2="${x + 17}" y2="${y - 17}" stroke-linecap="round"/></g>`;
+}
+
+function frame(t) {
+  t = ((t % DUR) + DUR) % DUR;
+  const scaff = FULL_FADE ? es(t, 0, 0.35) * (1 - es(t, TC.out0, TC.out1)) : 1;
+  const dyn = 1 - es(t, TC.out0, TC.out1);
+  let o = DEFS;
+
+  // --- scaffold: heap region, bucket array, labels
+  o += `<g opacity="${f2(scaff)}">`;
+  o += el('rect', { x: HEAP.x, y: HEAP.y, width: HEAP.w, height: HEAP.h, rx: 24, fill: 'none', stroke: C.f2, 'stroke-width': 4 });
+  o += GRID;
+  // legend «куча» sits on the top border, right side
+  o += el('rect', { x: HEAP.x + HEAP.w - 210, y: HEAP.y - 30, width: 170, height: 60, fill: C.bg });
+  o += txt(HEAP.x + HEAP.w - 60, HEAP.y + 19, 'куча', { 'text-anchor': 'end', fill: C.grey });
+  // bucket array
+  o += el('rect', { x: BX, y: BY, width: CELL * NB, height: CELL, rx: 18, fill: C.bg, stroke: C.pink, 'stroke-width': 4 });
+  for (let i = 1; i < NB; i++) o += el('line', { x1: BX + CELL * i, y1: BY, x2: BX + CELL * i, y2: BY + CELL, stroke: C.pink, 'stroke-width': 4 });
+  o += txt(BX + CELL * NB + 40, bucketY + 20, 'ячейки', { fill: C.grey });
+  o += '</g>';
+
+  // --- dynamic: inserts
+  let arrows = '', nodesS = '', tags = '', dots = '';
+  INSERTS.forEach((s, i) => {
+    const pop = seg(t, s.t, s.t + 0.32);
+    if (pop <= 0) return;
+    const n = nodes[s.key];
+    const sc = lerp(0.6, 1, backOut(pop)), op = clamp(pop * 2.2) * dyn;
+    const cx = n.x + NW / 2, cy = n.y + NH / 2;
+    // arrow from bucket / previous node
+    const pr = es(t, s.t + 0.12, s.t + 0.55);
+    if (pr > 0) {
+      const P = s.path, head = 24, Ld = Math.max(0, P.L * pr - head * 0.6);
+      arrows += el('path', { d: P.d, fill: 'none', stroke: C.pink, 'stroke-width': 6, 'stroke-linejoin': 'round',
+        'stroke-dasharray': `${f2(Ld)} ${f2(P.L + 10)}`, opacity: f2(dyn) });
+      const tip = P.atLen(P.L * pr), back = P.atLen(P.L * pr - 3);
+      arrows += arrowHead(tip, Math.atan2(tip.y - back.y, tip.x - back.x), head, C.pink, f2(dyn * clamp(pr * 8)));
+      // pointer origin dot
+      const src = s.from === 'b' ? { x: bucketX(s.b), y: bucketY } : nextC(s.n);
+      dots += el('circle', { cx: src.x, cy: src.y, r: 10, fill: C.pink, opacity: f2(dyn * clamp(pr * 6)) });
+    }
+    // node box
+    const flash = 1 - seg(t, s.t + 0.05, s.t + 0.6);
+    let g = '';
+    g += el('rect', { x: n.x, y: n.y, width: NW, height: NH, rx: 16, fill: C.f1, stroke: C.pink, 'stroke-width': 4 });
+    g += el('line', { x1: n.x + KW, y1: n.y, x2: n.x + KW, y2: n.y + NH, stroke: C.pink, 'stroke-width': 4 });
+    g += el('text', { x: n.x + KW / 2, y: n.y + NH / 2 + 21, 'text-anchor': 'middle', 'font-family': 'JetBrains Mono',
+      'font-weight': 600, 'font-size': 60, fill: C.white }, String(s.key));
+    // next field: ∅ until something is chained after this node
+    const chained = INSERTS.find(q => q.from === 'n' && q.n === s.key);
+    const chainP = chained ? clamp(seg(t, chained.t + 0.12, chained.t + 0.2)) : 0;
+    const nc = nextC(s.key);
+    g += nullMark(nc.x, nc.y, 1 - chainP);
+    const glowN = flash * 0.5;
+    if (glowN > 0.01) nodesS += `<g opacity="${f2(glowN * dyn)}" filter="url(#glow)">${el('rect', { x: n.x, y: n.y, width: NW, height: NH, rx: 16, fill: C.pink })}</g>`;
+    nodesS += `<g opacity="${f2(op)}" transform="translate(${f2(cx)} ${f2(cy)}) scale(${f2(sc)}) translate(${f2(-cx)} ${f2(-cy)})">${g}</g>`;
+    // «new» tag, flashes above the right part of the node
+    const tIn = es(t, s.t, s.t + 0.12), tOut = es(t, s.t + 0.42, s.t + 0.62);
+    const tagOp = tIn * (1 - tOut) * dyn;
+    if (tagOp > 0.01) {
+      const tw = 132, th = 70, tx = n.x + NW - tw, ty = n.y - th - 16 - 10 * (1 - tIn);
+      tags += `<g opacity="${f2(tagOp)}">` + el('rect', { x: tx, y: ty, width: tw, height: th, rx: 14, fill: C.pink }) +
+        el('text', { x: tx + tw / 2, y: ty + th / 2 + 19, 'text-anchor': 'middle', 'font-family': 'JetBrains Mono',
+          'font-weight': 700, 'font-size': 56, fill: C.bg }, 'new') + '</g>';
+    }
+  });
+  o += arrows + nodesS + dots + tags;
+
+  // --- cursor: bucket -> 42 -> 50, pausing at each node (waiting for memory)
+  const show = es(t, TC.show, TC.show + 0.2) * dyn;
+  if (show > 0.001) {
+    let p, ringT = -1, at = null;
+    if (t < TC.at1) p = CUR1.at(es(t, TC.go1, TC.at1));
+    else if (t < TC.go2) { p = CUR1.at(1); ringT = (t - TC.at1); at = 42; }
+    else if (t < TC.at2) p = CUR2.at(es(t, TC.go2, TC.at2));
+    else { p = CUR2.at(1); ringT = (t - TC.at2); at = 50; }
+    // visited node: outline turns white while the core waits for it, plus an expanding ring
+    for (const [k, a0, a1] of [[42, TC.at1, TC.go2 + 0.25], [50, TC.at2, DUR]]) {
+      const v = es(t, a0 - 0.05, a0 + 0.1) * (1 - es(t, a1 - 0.2, a1)) * show;
+      if (v > 0.01) {
+        const n = nodes[k];
+        o += el('rect', { x: n.x, y: n.y, width: NW, height: NH, rx: 16, fill: 'none', stroke: C.white, 'stroke-width': 4, opacity: f2(v) });
+      }
+    }
+    if (ringT >= 0) {
+      const n = nodes[at];
+      for (const d0 of [0, 0.28]) {
+        const u = clamp((ringT - d0) / 0.55);
+        if (u > 0 && u < 1) {
+          const g = lerp(4, 40, ease(u));
+          o += el('rect', { x: n.x - g, y: n.y - g, width: NW + 2 * g, height: NH + 2 * g, rx: 16 + g, fill: 'none',
+            stroke: C.white, 'stroke-width': 4, opacity: f2((1 - u) * 0.85 * show) });
+        }
+      }
+    }
+    o += `<g opacity="${f2(0.45 * show)}" filter="url(#glow)">${el('circle', { cx: p.x, cy: p.y, r: 22, fill: C.white })}</g>`;
+    o += el('circle', { cx: p.x, cy: p.y, r: 14, fill: C.white, opacity: f2(show) });
+  }
+  return o;
+}
+
+const stage = document.getElementById('stage');
+window.render = t => { stage.innerHTML = frame(t); };
+window.render(window.CLIP.poster);
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{
+ "v": 1,
+ "native": true,
+ "title": "O(n) проиграл O(n log n) — HardFest 2026",
+ "order": [
+  "cover",
+  "diff",
+  "case",
+  "vote",
+  "result",
+  "contract",
+  "curve",
+  "nodes",
+  "memory",
+  "allocs",
+  "flatmin",
+  "flat",
+  "share-q",
+  "share",
+  "outcontract",
+  "inputorder",
+  "merge",
+  "learned",
+  "qos",
+  "x33",
+  "cores",
+  "flip",
+  "prod",
+  "decision",
+  "review",
+  "final",
+  "backup",
+  "nb-where",
+  "nb-kernel",
+  "nb-dense",
+  "nb-merge",
+  "nb-lang",
+  "learned-table",
+  "qos-bg",
+  "systems",
+  "drift",
+  "stdlib",
+  "cachecost",
+  "sortmin",
+  "hashtable",
+  "radixmin",
+  "reserve",
+  "checklist",
+  "sums",
+  "twoways",
+  "bigo",
+  "questions"
+ ],
+ "sections": {
+  "s0": {
+   "description": "Вступление: диф, задача, ставка зала и первый переворот",
+   "start": "cover"
+  },
+  "s1": {
+   "description": "Раунд 1: размер и память",
+   "start": "curve"
+  },
+  "s2": {
+   "description": "Раунд 2: реализация хеша",
+   "start": "flatmin"
+  },
+  "s3": {
+   "description": "Раунд 3: данные и тикет",
+   "start": "share-q"
+  },
+  "s4": {
+   "description": "Мост: бенчмарк врал",
+   "start": "learned"
+  },
+  "s5": {
+   "description": "Раунд 4: процессор",
+   "start": "qos"
+  },
+  "s6": {
+   "description": "Финал: цена, правило выбора, ревью",
+   "start": "prod"
+  },
+  "s7": {
+   "description": "Backup для вопросов",
+   "start": "backup"
+  },
+  "s8": {
+   "description": "Архив: слайды, влитые в другие (скрыты)",
+   "start": "twoways"
+  }
+ }
+}

@@ -1,10 +1,16 @@
 # PPTX в стиле HardFest 2026
 
-`../hardfest2026_deck.pptx` собирается из исходников колоды (`../project/slides/*.html`, порядок и секции —
-`../project/deck.json`) на основе шаблона организаторов `hardfest_template.pptx`: его мастер, тема,
-логотип HARDfest, номер слайда и встроенные шрифты Montserrat.
+Сборщик PPTX на основе шаблона организаторов `hardfest_template.pptx` (его мастер, тема, логотип HARDfest,
+номер слайда и встроенные шрифты Montserrat). Две колоды-источника:
 
-## Что переносится
+- `--deck hardfest` (по умолчанию) — версия 2, `../hardfest/`: слайды написаны сразу в стиле шаблона,
+  с картинками и видео; результат — `../hardfest2026_deck.pptx`. Подробности — `../hardfest/README.md`.
+- `--deck project` — первая версия: автоматический перенос исходной колоды `../project/` с перекраской
+  (описано ниже); результат — `../hardfest2026_project.pptx`.
+
+## Версия 1: перенос колоды `project`
+
+### Что переносится
 
 - Раскладка: каждый HTML-слайд раскладывается в Chromium, координаты блоков переносятся 1:1
   (1920 px = 10 дюймов). Графики из SVG становятся векторными фигурами PowerPoint, таблицы — фигурами с текстом.
@@ -27,17 +33,17 @@
 - Анимации: каждый `data-build-in="… N"` — шаг N «по щелчку» (появление), число шагов совпадает с `[щелчок]` в заметках.
 - Заметки спикера — из `<aside>`, секции PowerPoint — из `deck.json`, `twoways`, `bigo`, `questions` скрыты.
 
-## Пересборка
+### Пересборка
 
 Нужны Node.js с `playwright` (Chromium), Python 3 с `python-pptx`, `lxml`, `Pillow`, и установленные в систему
 шрифты Montserrat, JetBrains Mono, IBM Plex Sans (Google Fonts).
 
 ```bash
-node prep/deck/pptx/extract.js            # раскладка HTML-слайдов -> /tmp/hardfest-pptx/extract/*.json
-python3 prep/deck/pptx/build.py           # -> prep/deck/hardfest2026_deck.pptx
+node prep/deck/pptx/extract.js --deck project         # раскладка HTML-слайдов -> /tmp/hardfest-pptx/extract/*.json
+python3 prep/deck/pptx/build.py --deck project        # -> prep/deck/hardfest2026_project.pptx
 ```
 
-`node extract.js cover diff` и `python3 build.py out.pptx cover diff` — только выбранные слайды.
+`node extract.js --deck X cover diff` и `python3 build.py --deck X out.pptx cover diff` — только выбранные слайды.
 `SHOWALL=1` не скрывает архивные слайды (удобно для проверки). Точечные правки отдельных слайдов
 (обложка, «Уникальные id» бирюзовой карточкой, плашка видео на `x33`, отступ под логотип на `final`) — в `overrides.py`.
 

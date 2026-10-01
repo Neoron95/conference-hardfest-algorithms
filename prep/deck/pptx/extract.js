@@ -6,17 +6,32 @@ catch (e) { ({ chromium } = require(require('child_process').execSync('npm root 
 const fs = require('fs');
 const path = require('path');
 
-const SLIDES = path.join(__dirname, '..', 'project', 'slides');
-const DECK = path.join(__dirname, '..', 'project', 'deck.json');
-const OUT = (process.env.PPTX_WORK || '/tmp/hardfest-pptx') + '/extract';
-const K = parseFloat(process.env.K || '0.92');   // global Montserrat size factor
-
+// usage: node extract.js [--deck project|hardfest] [slide ids...]
+const argv = process.argv.slice(2);
+let deckName = 'project';
+const di = argv.indexOf('--deck');
+if (di >= 0) { deckName = argv[di + 1]; argv.splice(di, 2); }
+const DECKDIR = path.join(__dirname, '..', deckName);
+const SLIDES = path.join(DECKDIR, 'slides');
+const DECK = path.join(DECKDIR, 'deck.json');
 const deck = JSON.parse(fs.readFileSync(DECK, 'utf8'));
+const NATIVE = !!deck.native;          // native decks are written in Montserrat + final palette: no font swap
+const OUT = (process.env.PPTX_WORK || '/tmp/hardfest-pptx') + '/extract' + (deckName === 'project' ? '' : '-' + deckName);
+const K = NATIVE ? 1 : parseFloat(process.env.K || '0.92');   // global Montserrat size factor
+const CSS = NATIVE && fs.existsSync(path.join(DECKDIR, 'hf.css')) ? fs.readFileSync(path.join(DECKDIR, 'hf.css'), 'utf8') : '';
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(OUT + '/orig', { recursive: true });
 fs.mkdirSync(OUT + '/fit', { recursive: true });
 
-const wrap = (sec) => `<!doctype html><html><head><meta charset="utf-8"><style>
+const LOGO = NATIVE && fs.existsSync(path.join(DECKDIR, 'assets', 'hardfest_logo.png')) ? 'file://' + path.join(DECKDIR, 'assets', 'hardfest_logo.png') : '';
+const frame = (sec) => {   // preview-only overlay: template logo + slide number (the builder adds the real ones)
+  if (!LOGO) return '';
+  const big = /data-logo="big"/.test(sec);
+  const lg = big ? 'left:1436px;top:127px;width:380px;height:131px' : 'left:1586px;top:144px;width:230px;height:79px';
+  const num = /data-nonum/.test(sec) ? '' : '<div style="position:absolute;left:1760px;top:960px;width:90px;text-align:right;font:400 26.7px Montserrat;color:#EFEFEF">#</div>';
+  return `<img src="${LOGO}" style="position:absolute;${lg}">${num}`;
+};
+const wrap = (sec) => `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style><style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1920px;height:1080px;background:#777}
 section{position:relative;width:1920px;height:1080px;overflow:hidden}
@@ -24,9 +39,10 @@ aside{display:none}
 x-connector{display:block;position:absolute;width:0;height:0}
 ul,ol{padding-left:1.2em}
 table{border-spacing:0}
-</style></head><body>${sec}</body></html>`;
+</style></head><body>${sec}${frame(sec)}</body></html>`;
 
-function pageScript(K) {
+function pageScript(arg) {
+  const K = arg.K, NATIVE = arg.NATIVE;
   const sec = document.querySelector('section');
   const S = sec.getBoundingClientRect();
   const INLINE = new Set(['span', 'b', 'strong', 'i', 'em', 'code', 'sub', 'sup', 'a', 'u', 's', 'small', 'br', 'mark']);
@@ -155,7 +171,7 @@ function pageScript(K) {
   });
 
   // font swap
-  const all = sec.querySelectorAll('*');
+  const all = NATIVE ? [] : sec.querySelectorAll('*');
   const origSize = new Map();
   const plexEls = [sec, ...all].filter(el => /IBM Plex|Arial/.test(getComputedStyle(el).fontFamily) && !/Mono|Courier/.test(getComputedStyle(el).fontFamily));
   for (const el of plexEls) {
@@ -187,12 +203,26 @@ function pageScript(K) {
   });
 
   // ---- title detection
-  const h = sec.querySelector('h1, h2');
+  const h = NATIVE ? sec.querySelector('h2.t') : sec.querySelector('h1, h2');
   const flowPs = [...sec.querySelectorAll('p')].filter(p => getComputedStyle(p).position !== 'absolute' && !p.closest('[style*="position:absolute"]'));
   let kicker = null;
   const isKick = (p) => p && p.tagName.toLowerCase() === 'p' && (parseFloat(getComputedStyle(p).letterSpacing) >= 1.5) && getComputedStyle(p).position !== 'absolute';
-  if (h) { const prev = h.previousElementSibling; if (isKick(prev)) kicker = prev; }
+  if (NATIVE) kicker = sec.querySelector('p.k');
+  else if (h) { const prev = h.previousElementSibling; if (isKick(prev)) kicker = prev; }
   else { kicker = flowPs.find(isKick) || null; }
+  // overflow report (native decks are hand-sized: text must fit its box)
+  const overflow = [];
+  for (const el of leaves) {
+    const r = el.getBoundingClientRect();
+    const rg = document.createRange(); rg.selectNodeContents(el);
+    for (const q of rg.getClientRects()) {
+      if (q.width < 1) continue;
+      const fsz = parseFloat(getComputedStyle(el).fontSize);
+      if (q.right > r.right + 2 || q.bottom > r.bottom + 3 + 0.16 * fsz || q.right > S.right - 4 || q.bottom > S.bottom - 4) {
+        overflow.push(el.textContent.trim().slice(0, 60)); break;
+      }
+    }
+  }
 
   // ---- items
   const items = [];
@@ -203,6 +233,17 @@ function pageScript(K) {
     const cs = getComputedStyle(el);
     if (cs.display === 'none') return;
     const build = buildOf(el);
+    if (tag === 'img') {
+      items.push({ type: 'img', ...box(el), build, src: decodeURI(el.src.replace('file://', '')), nw: el.naturalWidth, nh: el.naturalHeight,
+        radius: cs.borderTopLeftRadius, fit: cs.objectFit });
+      return;
+    }
+    if (tag === 'video') {
+      items.push({ type: 'video', ...box(el), build, src: decodeURI(el.currentSrc.replace('file://', '') || el.getAttribute('src')),
+        poster: decodeURI((el.poster || '').replace('file://', '')), loop: el.loop, dur: parseFloat(el.dataset.dur || '6'),
+        radius: cs.borderTopLeftRadius });
+      return;
+    }
     if (tag === 'svg') {
       items.push({ type: 'svg', ...box(el), build, viewBox: el.getAttribute('viewBox'), label: el.getAttribute('aria-label') || '', markup: el.outerHTML });
       return;
@@ -244,7 +285,8 @@ function pageScript(K) {
   return {
     id: sec.id, bg: rgb(scs.backgroundColor), color: rgb(scs.color), hidden: sec.hasAttribute('hidden'),
     notes: (sec.querySelector('aside') || { innerHTML: '' }).innerHTML,
-    items, fitLog,
+    logo: sec.dataset.logo || 'small', nonum: sec.hasAttribute('data-nonum'),
+    items, fitLog, overflow,
   };
 }
 
@@ -252,16 +294,20 @@ function pageScript(K) {
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
-  const only = process.argv.slice(2);
+  const only = argv;
   const ids = only.length ? only : deck.order;
   const summary = [];
   for (const id of ids) {
     const html = fs.readFileSync(path.join(SLIDES, id + '.html'), 'utf8');
     // reveal hidden slides for layout
-    await page.setContent(wrap(html.replace(/<section([^>]*)\shidden(\s|>)/, '<section$1 data-was-hidden="1"$2')), { waitUntil: 'load' });
+    let doc = wrap(html.replace(/<section([^>]*)\shidden(\s|>)/, '<section$1 data-was-hidden="1"$2'));
+    const tmp = path.join(SLIDES, `.render-${id}.html`);           // file:// page so relative asset paths resolve
+    fs.writeFileSync(tmp, doc);
+    await page.goto('file://' + tmp, { waitUntil: 'load' });
+    fs.unlinkSync(tmp);
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: `${OUT}/orig/${id}.png` });
-    const data = await page.evaluate(pageScript, K);
+    const data = await page.evaluate(pageScript, { K, NATIVE });
     if (/data-was-hidden/.test(await page.content())) data.hidden = true;
     await page.screenshot({ path: `${OUT}/fit/${id}.png` });
     // QR: rasterise the svg with that label
@@ -272,7 +318,7 @@ function pageScript(K) {
       data.qr = `${OUT}/${id}_qr.png`;
     }
     fs.writeFileSync(`${OUT}/${id}.json`, JSON.stringify(data, null, 1));
-    summary.push(`${id}: items=${data.items.length} fit=${data.fitLog.length} ${data.fitLog.filter(f => f.still).length ? 'STILL-OVER ' + JSON.stringify(data.fitLog.filter(f => f.still)) : ''}`);
+    summary.push(`${id}: items=${data.items.length} fit=${data.fitLog.length} ${data.fitLog.filter(f => f.still).length ? 'STILL-OVER ' + JSON.stringify(data.fitLog.filter(f => f.still)) : ''}${data.overflow.length ? ' OVERFLOW ' + JSON.stringify(data.overflow) : ''}`);
   }
   console.log(summary.join('\n'));
   await browser.close();

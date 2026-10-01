@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>memory_flight</title>
+<!-- HardFest 2026 · memory-level parallelism: known addresses keep many misses in flight,
+     pointer chasing waits for each one. 1720x840 px (2x of the on-slide size), 6 s seamless loop.
+     Rendered by render.js via window.render(t). -->
+<style>
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" width="1720" height="840" viewBox="0 0 1720 840"></svg>
+<script>
+'use strict';
+const W = 1720, H = 840, DUR = 6;
+const FULL_FADE = /fullfade/.test(location.search);
+window.CLIP = { duration: DUR, poster: 3.92 };
+
+// ---------- palette ----------
+const C = { bg: '#000000', acc: '#46CDAE', pink: '#E2489B', white: '#FFFFFF', grey: '#8F8F8F',
+            f1: '#121212', f2: '#1E1E1E', rule: '#333333' };
+
+// ---------- helpers ----------
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, u) => a + (b - a) * u;
+const ease = u => { u = clamp(u); return u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; };
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const es = (t, a, b) => ease(seg(t, a, b));
+const f2 = n => Math.round(n * 100) / 100;
+const att = o => Object.entries(o).filter(([, v]) => v !== undefined && v !== null)
+  .map(([k, v]) => `${k}="${typeof v === 'number' ? f2(v) : v}"`).join(' ');
+const el = (tag, o, inner) => inner === undefined ? `<${tag} ${att(o)}/>` : `<${tag} ${att(o)}>${inner}</${tag}>`;
+const txt = (x, y, s, o) => el('text', Object.assign({ x, y, 'font-family': 'Montserrat', 'font-weight': 600, 'font-size': 56 }, o), s);
+
+// ---------- layout ----------
+const CPU = { x: 60, w: 220, h: 130 }, MEM = { x: 1180, w: 260, h: 130 };
+const RAIL0 = CPU.x + CPU.w, RAIL1 = MEM.x, GAP = 22;      // out on the upper rail, back on the lower
+const LANES = [
+  { y: 275, label: 'адреса известны заранее', color: C.acc },
+  { y: 655, label: 'адрес внутри узла', color: C.pink },
+];
+const CX = 1660; // counters, right-aligned
+
+// timing
+const START = 0.25, RT = 1.6;            // round trip to memory and back
+const TOP_EVERY = 0.12;                  // independent loads: a new one every 0.12 s
+const FADE0 = 5.4, FADE1 = 5.85;
+// path of one load: start hidden inside the core, U-turn hidden inside memory, back into the core
+const X_IN = CPU.x + CPU.w - 70, X_TURN = MEM.x + 70;
+const OUT_LEN = X_TURN - X_IN, TURN_LEN = Math.PI * GAP, PATH_LEN = 2 * OUT_LEN + TURN_LEN;
+const pos = (u, y, eased) => {
+  // independent loads stream at constant speed; the lone dependent load eases (half linear, half cubic)
+  const v = eased ? 0.55 * u + 0.45 * ease(u) : u;
+  let l = v * PATH_LEN;
+  if (l < OUT_LEN) return { x: X_IN + l, y: y - GAP };
+  l -= OUT_LEN;
+  if (l < TURN_LEN) { const a = -Math.PI / 2 + l / GAP; return { x: X_TURN + GAP * Math.cos(a) * 0.9, y: y + GAP * Math.sin(a) }; }
+  l -= TURN_LEN;
+  return { x: X_TURN - l, y: y + GAP };
+};
+// time at which a load launched at t0 is back at the core edge (counts as completed)
+const DONE_U = (() => { // solve pos(u).x == RAIL0 on the return leg
+  const solve = eased => { let lo = 0.5, hi = 1;
+    for (let i = 0; i < 40; i++) { const m = (lo + hi) / 2; if (pos(m, 0, eased).x > RAIL0) lo = m; else hi = m; }
+    return (lo + hi) / 2; };
+  return [solve(false), solve(true)];
+})();
+
+function launches(lane, t) {
+  const out = [];
+  if (lane === 0) { for (let k = 0; ; k++) { const t0 = START + k * TOP_EVERY; if (t0 > t) break; out.push(t0); } }
+  else { for (let k = 0; ; k++) { const t0 = START + k * RT; if (t0 > t) break; out.push(t0); } }
+  return out;
+}
+
+const DEFS = `<defs>
+  <filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="9"/></filter>
+</defs>`;
+
+function frame(t) {
+  t = ((t % DUR) + DUR) % DUR;
+  const scaff = FULL_FADE ? es(t, 0, 0.3) * (1 - es(t, FADE0, FADE1)) : 1;
+  const dyn = es(t, 0, 0.25) * (1 - es(t, FADE0, FADE1));
+  let o = DEFS;
+
+  // ---- scaffold
+  let sc = '';
+  LANES.forEach((L, i) => {
+    const top = L.y - CPU.h / 2;
+    sc += txt(CPU.x, top - 44, L.label, { fill: L.color });
+    // rails with direction chevrons
+    for (const s of [-1, 1]) {
+      sc += el('line', { x1: RAIL0, y1: L.y + s * GAP, x2: RAIL1, y2: L.y + s * GAP, stroke: C.f2, 'stroke-width': 4 });
+    }
+  });
+  o += `<g opacity="${f2(scaff)}">${sc}</g>`;
+
+  // ---- loads in flight (drawn under the blocks so they emerge from / vanish into them)
+  let dots = '', glow = '';
+  LANES.forEach((L, i) => {
+    for (const t0 of launches(i, t)) {
+      const u = (t - t0) / RT;
+      if (u >= 1) continue;
+      const p = pos(u, L.y, i === 1);
+      const r = i === 0 ? 11 : 13;
+      glow += el('circle', { cx: p.x, cy: p.y, r: r * 1.8, fill: L.color });
+      // short motion streak behind the dot
+      const q = pos(Math.max(0, u - 0.035), L.y, i === 1);
+      if (Math.abs(q.y - p.y) < 1 && Math.abs(q.x - p.x) > 2)
+        dots += el('line', { x1: q.x, y1: q.y, x2: p.x, y2: p.y, stroke: L.color, 'stroke-width': r * 1.3, 'stroke-linecap': 'round', opacity: 0.3 });
+      dots += el('circle', { cx: p.x, cy: p.y, r, fill: L.color });
+    }
+  });
+  const dynLayer = `<g opacity="${f2(0.4 * dyn)}" filter="url(#glow)">${glow}</g><g opacity="${f2(dyn)}">${dots}</g>`;
+  // blocks on top of the dots, so loads emerge from the core and vanish into memory
+  let masks = '';
+  LANES.forEach(L => {
+    const top = L.y - CPU.h / 2;
+    masks += el('rect', { x: CPU.x, y: top, width: CPU.w, height: CPU.h, rx: 20, fill: C.bg, stroke: C.white, 'stroke-width': 6 });
+    masks += txt(CPU.x + CPU.w / 2, L.y + 20, 'ядро', { 'text-anchor': 'middle', fill: C.white });
+    masks += el('rect', { x: MEM.x, y: top, width: MEM.w, height: MEM.h, rx: 20, fill: C.bg, stroke: C.grey, 'stroke-width': 4 });
+    masks += txt(MEM.x + MEM.w / 2, L.y + 20, 'память', { 'text-anchor': 'middle', fill: C.grey });
+  });
+  o += dynLayer + `<g opacity="${f2(scaff)}">${masks}</g>`;
+
+  // ---- counters of completed loads
+  LANES.forEach((L, i) => {
+    const tc = Math.min(t, FADE0 - 0.05); // counters freeze once the fade-out starts (top 30, bottom 3)
+    const done = launches(i, tc).filter(t0 => tc - t0 >= DONE_U[i] * RT);
+    const n = done.length;
+    const last = n ? done[n - 1] + DONE_U[i] * RT : -9;
+    const bump = 1 - seg(t, last, last + (i === 0 ? 0.1 : 0.35));
+    const size = 96 + (i === 1 ? 14 * bump : 0);
+    o += el('text', { x: CX, y: L.y + 34 + (size - 96) * 0.35, 'text-anchor': 'end', 'font-family': 'JetBrains Mono', 'font-weight': 700,
+      'font-size': f2(size), fill: L.color, opacity: f2(dyn) }, String(n));
+  });
+  return o;
+}
+
+const stage = document.getElementById('stage');
+window.render = t => { stage.innerHTML = frame(t); };
+window.render(window.CLIP.poster);
+</script>
+</body>
+</html>

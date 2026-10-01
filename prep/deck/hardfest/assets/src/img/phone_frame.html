@@ -1,0 +1,45 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- phone_frame.png, 840x1640, TRANSPARENT. iPhone front outline; the screen rect (opaque #0A0A0A) holds a screen recording.
+     Screen rect: x=100 y=126 w=640 h=1388, corner radius 92 (aspect 0.4611 ~ iPhone 15/16 Pro 1179x2556). -->
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; }
+  svg { display: block; }
+</style></head>
+<body>
+<svg width="840" height="1640" viewBox="0 0 840 1640" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="34"/></filter>
+    <filter id="glowTight" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12"/></filter>
+    <!-- glow only outside the body -->
+    <mask id="outside" maskUnits="userSpaceOnUse" x="0" y="0" width="840" height="1640">
+      <rect width="840" height="1640" fill="#fff"/>
+      <rect x="74" y="100" width="692" height="1440" rx="118" fill="#000"/>
+    </mask>
+  </defs>
+
+  <!-- soft turquoise glow around the body -->
+  <g mask="url(#outside)">
+    <rect x="74" y="100" width="692" height="1440" rx="118" fill="none" stroke="#46CDAE" stroke-width="40" opacity="0.36" filter="url(#glow)"/>
+    <rect x="74" y="100" width="692" height="1440" rx="118" fill="none" stroke="#46CDAE" stroke-width="10" opacity="0.30" filter="url(#glowTight)"/>
+  </g>
+
+  <!-- side buttons (drawn under the body so the outline stays continuous) -->
+  <g fill="#FFFFFF">
+    <rect x="58" y="300" width="20" height="62"  rx="7"/>   <!-- action -->
+    <rect x="58" y="410" width="20" height="118" rx="7"/>   <!-- volume up -->
+    <rect x="58" y="556" width="20" height="118" rx="7"/>   <!-- volume down -->
+    <rect x="762" y="440" width="20" height="186" rx="7"/>  <!-- side / power -->
+  </g>
+
+  <!-- body: opaque black bezel, white outline -->
+  <rect x="74" y="100" width="692" height="1440" rx="118" fill="#000000" stroke="#FFFFFF" stroke-width="8"/>
+
+  <!-- screen (opaque) -->
+  <rect x="100" y="126" width="640" height="1388" rx="92" fill="#0A0A0A"/>
+
+  <!-- dynamic island -->
+  <rect x="316" y="148" width="208" height="60" rx="30" fill="#000000" stroke="#1E1E1E" stroke-width="2"/>
+  <circle cx="490" cy="178" r="11" fill="#121212"/>
+</svg>
+</body></html>

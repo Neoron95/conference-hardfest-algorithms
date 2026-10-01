@@ -8,10 +8,16 @@ from PIL import ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 W = os.environ.get('PPTX_WORK', '/tmp/hardfest-pptx')
-EXT = W + '/extract'
-DECK = os.path.join(HERE, '..', 'project', 'deck.json')
 TEMPLATE = os.path.join(HERE, 'hardfest_template.pptx')
-OUTFILE = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'hardfest2026_deck.pptx')
+# usage: build.py [--deck project|hardfest] [out.pptx] [slide ids...]
+_args = sys.argv[1:]
+DECKNAME = 'hardfest'
+if '--deck' in _args:
+    k = _args.index('--deck'); DECKNAME = _args[k + 1]; del _args[k:k + 2]
+EXT = W + '/extract' + ('' if DECKNAME == 'project' else '-' + DECKNAME)
+DECK = os.path.join(HERE, '..', DECKNAME, 'deck.json')
+OUTFILE = _args[0] if _args else os.path.join(HERE, '..', 'hardfest2026_deck.pptx' if DECKNAME == 'hardfest' else f'hardfest2026_{DECKNAME}.pptx')
+ONLY = _args[1:] or None
 
 NS = {'a': 'http://schemas.openxmlformats.org/drawingml/2006/main',
       'p': 'http://schemas.openxmlformats.org/presentationml/2006/main',
@@ -72,9 +78,12 @@ def lum(hex_):
     r, g, b = (int(hex_[i:i + 2], 16) / 255 for i in (0, 2, 4))
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
+NATIVE = False   # set in main() for decks written directly in the template palette
+
 def map_text(c, placeholder=False, on_bright=False):
     if c is None: return WHITE
     h = c['hex']
+    if NATIVE: return h
     if on_bright:
         return BLACK if h not in ('4A5360', 'C9CED8', '6A7280', '9AA3B2') else '1E1E1E'
     if placeholder and h in AMBER_TEXT: return PLACEHOLDER
@@ -85,6 +94,7 @@ def map_text(c, placeholder=False, on_bright=False):
 def map_fill(c):
     if c is None: return None
     h = c['hex']
+    if NATIVE: return h
     if h in FILL_MAP: return FILL_MAP[h]
     if h == 'FFFFFF' and c['a'] < 1: return None
     return h
@@ -92,6 +102,7 @@ def map_fill(c):
 def map_line(c):
     if c is None: return None
     h = c['hex']
+    if NATIVE: return h
     if h == 'FFFFFF' and c['a'] < 1: return RULE
     return LINE_MAP.get(h, h)
 
@@ -266,12 +277,12 @@ def deco_shapes(ctx, it, tr, bright_fill_out):
     uniform = all(s is not None for s in sides) and len({(round(s['w'], 1), s['c']['hex'], s['style']) for s in sides}) == 1
     out = []
     adj, geom = radius_adj(d['radius'], it['w'], it['h'])
-    if geom == 'ellipse' and d['bg'] and d['bg']['hex'] in AMBER_PALE: fill = TURQ
+    if not NATIVE and geom == 'ellipse' and d['bg'] and d['bg']['hex'] in AMBER_PALE: fill = TURQ
     if fill in BRIGHT_FILLS: bright_fill_out.append((x, y, w, h))
     if uniform:
         s = sides[0]
         col = map_line(s['c'])
-        is_card = (d['bg'] is None or (d['bg']['hex'] in ('FFFFFF', '0F1219'))) and s['c']['hex'] in ('DAD7CE', '2A3040')
+        is_card = (not NATIVE) and (d['bg'] is None or (d['bg']['hex'] in ('FFFFFF', '0F1219'))) and s['c']['hex'] in ('DAD7CE', '2A3040')
         if is_card: col = CARDLINE
         lw = tr.l(s['w'])
         if is_card: lw = max(lw, 1.5)
@@ -470,7 +481,7 @@ def svg_shapes(ctx, it, tr):
         tail = 'arrow' if g('marker-end') else None
         lc = map_line(stroke) if stroke else None
         fc = map_fill(fill) if fill else None
-        if fill and fill['hex'] in ('F5F4EF', 'FFFFFF') and tag in ('circle',): fc = BLACK
+        if not NATIVE and fill and fill['hex'] in ('F5F4EF', 'FFFFFF') and tag in ('circle',): fc = BLACK
         if tag == 'line':
             pts = [(X(parse_len(g('x1'))), Y(parse_len(g('y1')))), (X(parse_len(g('x2'))), Y(parse_len(g('y2'))))]
             out.append(line_shape(ctx, pts, lc, L(sw), dash=dash, cap=cap, tail=tail))
@@ -555,14 +566,28 @@ SLDNUM = ('<p:sp {ns}><p:nvSpPr><p:cNvPr id="{id}" name="Slide Number {id}"/><p:
           '<a:fld id="{{00000000-1234-1234-1234-123412341234}}" type="slidenum"><a:rPr lang="ru"><a:solidFill><a:srgbClr val="EFEFEF"/></a:solidFill><a:latin typeface="Montserrat"/><a:ea typeface="Montserrat"/><a:cs typeface="Montserrat"/><a:sym typeface="Montserrat"/></a:rPr><a:t>‹#›</a:t></a:fld>'
           '<a:endParaRPr><a:solidFill><a:srgbClr val="EFEFEF"/></a:solidFill><a:latin typeface="Montserrat"/><a:ea typeface="Montserrat"/><a:cs typeface="Montserrat"/><a:sym typeface="Montserrat"/></a:endParaRPr></a:p></p:txBody></p:sp>')
 
-def timing_xml(builds):
-    """builds: {order: [(spid, has_text)]} -> <p:timing>"""
-    if not builds: return ''
+def timing_xml(builds, videos=()):
+    """builds: {order: [(spid, has_text)]}, videos: [(spid, dur_ms, loop, order)] -> <p:timing>.
+    Videos without a build order start with the slide; others start on their click. All loop silently."""
     cid = [2]
     def nid():
         cid[0] += 1; return cid[0]
+    def play(spid, dur, node):
+        a, b = nid(), nid()
+        return (f'<p:par><p:cTn id="{a}" presetID="1" presetClass="mediacall" presetSubtype="0" fill="hold" nodeType="{node}">'
+                f'<p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>'
+                f'<p:cmd type="call" cmd="playFrom(0.0)"><p:cBhvr><p:cTn id="{b}" dur="{dur}" fill="hold"/>'
+                f'<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cBhvr></p:cmd></p:childTnLst></p:cTn></p:par>')
     clicks = ''
     bld = ''
+    auto = [v for v in videos if not v[3]]
+    if auto:
+        o1, o2 = nid(), nid()
+        effs = ''.join(play(v[0], v[1], 'afterEffect' if k == 0 else 'withEffect') for k, v in enumerate(auto))
+        clicks += (f'<p:par><p:cTn id="{o1}" fill="hold"><p:stCondLst><p:cond delay="indefinite"/>'
+                   f'<p:cond evt="onBegin" delay="0"><p:tn val="2"/></p:cond></p:stCondLst><p:childTnLst>'
+                   f'<p:par><p:cTn id="{o2}" fill="hold"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>{effs}</p:childTnLst></p:cTn></p:par>'
+                   f'</p:childTnLst></p:cTn></p:par>')
     for order in sorted(builds):
         effs = ''
         for k, (spid, has_text) in enumerate(builds[order]):
@@ -576,15 +601,23 @@ def timing_xml(builds):
                      f'<p:animEffect transition="in" filter="fade"><p:cBhvr><p:cTn id="{c}" dur="400"/><p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cBhvr></p:animEffect>'
                      f'</p:childTnLst></p:cTn></p:par>')
             if has_text: bld += f'<p:bldP spid="{spid}" grpId="0" animBg="1"/>'
+        effs += ''.join(play(v[0], v[1], 'withEffect') for v in videos if v[3] == order)
         o1, o2 = nid(), nid()
         clicks += (f'<p:par><p:cTn id="{o1}" fill="hold"><p:stCondLst><p:cond delay="indefinite"/></p:stCondLst><p:childTnLst>'
                    f'<p:par><p:cTn id="{o2}" fill="hold"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>{effs}</p:childTnLst></p:cTn></p:par>'
                    f'</p:childTnLst></p:cTn></p:par>')
+    media = ''
+    for v in videos:
+        c = nid()
+        rep = ' repeatCount="indefinite"' if v[2] else ''
+        media += (f'<p:video><p:cMediaNode vol="0" mute="1"><p:cTn id="{c}"{rep} fill="hold" display="0">'
+                  f'<p:stCondLst><p:cond delay="indefinite"/></p:stCondLst></p:cTn>'
+                  f'<p:tgtEl><p:spTgt spid="{v[0]}"/></p:tgtEl></p:cMediaNode></p:video>')
     return (f'<p:timing {NSDECL}><p:tnLst><p:par><p:cTn id="1" dur="indefinite" restart="never" nodeType="tmRoot"><p:childTnLst>'
             f'<p:seq concurrent="1" nextAc="seek"><p:cTn id="2" dur="indefinite" nodeType="mainSeq"><p:childTnLst>{clicks}</p:childTnLst></p:cTn>'
             f'<p:prevCondLst><p:cond evt="onPrev" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:prevCondLst>'
             f'<p:nextCondLst><p:cond evt="onNext" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:nextCondLst></p:seq>'
-            f'</p:childTnLst></p:cTn></p:par></p:tnLst>{"<p:bldLst>" + bld + "</p:bldLst>" if bld else ""}</p:timing>')
+            f'{media}</p:childTnLst></p:cTn></p:par></p:tnLst>{"<p:bldLst>" + bld + "</p:bldLst>" if bld else ""}</p:timing>')
 
 import overrides as OV
 
@@ -598,7 +631,8 @@ def build_slide(prs, layout, sid_name, data, report):
     bg = etree.fromstring(f'<p:bg {NSDECL}><p:bgPr><a:solidFill><a:srgbClr val="000000"/></a:solidFill><a:effectLst/></p:bgPr></p:bg>')
     cSld.insert(0, bg)
     ctx = Ctx()
-    ov = OV.get(sid_name)
+    ov = None if NATIVE else OV.get(sid_name)
+    DX = 0 if NATIVE else -11
     items = data['items']
     items = ov.pre(items, data) if ov and hasattr(ov, 'pre') else items
 
@@ -606,10 +640,12 @@ def build_slide(prs, layout, sid_name, data, report):
     title = next((i for i in items if i.get('role') == 'title'), None)
     special = getattr(ov, 'special', None) if ov else None
 
-    shapes = []  # (order, spid, xml, has_text)
+    shapes = []  # (order, spid, xml, has_text) -- appended to the tree immediately, so pictures keep DOM z-order
+    videos = []  # (spid, dur_ms, loop, order)
     def add(lst, build, has_text=False):
         for sid, xml in lst:
             shapes.append((build['order'] if build else 0, sid, xml, has_text))
+            sp_tree.append(etree.fromstring(xml))
 
     # ------------------------------------------------ title block
     title_bottom = 0
@@ -627,7 +663,7 @@ def build_slide(prs, layout, sid_name, data, report):
             kr = []
             for r in use_kicker['runs']:
                 if r.get('br'): continue
-                col = LABEL if r['color']['hex'] in ('6A7280', '9AA3B2') else TURQ
+                col = r['color']['hex'] if NATIVE else (LABEL if r['color']['hex'] in ('6A7280', '9AA3B2') else TURQ)
                 kr.append((r['t'].upper(), rpr_xml(29.3, col, 'Montserrat SemiBold', False, spc_px=2.5)))
             body = txbody_xml([{'align': 'left', 'lh': 36, 'runs': kr}], wrap=True)
             add([sp_xml(ctx, 'Kicker', TITLE_X, KICK_TOP - 2, TITLE_W, 40, txbody=body, txbox=True)], use_kicker.get('build'), True)
@@ -646,7 +682,8 @@ def build_slide(prs, layout, sid_name, data, report):
                     tr_runs.append((' ', rpr_xml(fs, WHITE, 'Montserrat ExtraBold', True))); continue
                 col = WHITE
                 h = r['color']['hex']
-                if h in AMBER_TEXT: col = PLACEHOLDER if '[' in r['t'] else TURQ
+                if NATIVE: col = h
+                elif h in AMBER_TEXT: col = PLACEHOLDER if '[' in r['t'] else TURQ
                 elif h in TEXT_MAP and TEXT_MAP[h] not in (WHITE, TEXT2, LABEL): col = TEXT_MAP[h]
                 tr_runs.append((caps_text(r['t']), rpr_xml(fs, col, 'Montserrat ExtraBold', True)))
             tw = getattr(ov, 'title_w', TITLE_W) if ov else TITLE_W
@@ -675,7 +712,7 @@ def build_slide(prs, layout, sid_name, data, report):
         if i['type'] == 'conn': return max(i['y1'], i['y2'])
         if i['type'] == 'text' and i.get('tr') and not i.get('deco'): return i['tr']['bottom']
         return i['y'] + i['h']
-    tr = T(dx=-11)
+    tr = T(dx=DX)
     if main and special != 'cover':
         btop = min(top_of(i) for i in main)
         bbot = max(bottom_of(i) for i in main)
@@ -692,17 +729,17 @@ def build_slide(prs, layout, sid_name, data, report):
             shift = need - btop
             room = max(0, limit - bbot)
             if shift <= room:
-                tr = T(dx=-11, dy=shift)
+                tr = T(dx=DX, dy=shift)
             else:
                 s = (limit - need) / (bbot - btop)
                 s = min(1.0, s)
                 # uniform scale around left edge of content, top aligned to `need`
-                tr = T(dx=-11, s=s, ox=128, oy=btop, dy=need - btop)
+                tr = T(dx=DX, s=s, ox=128, oy=btop, dy=need - btop)
             report.append(f'   body {btop:.0f}-{bbot:.0f} -> need {need:.0f}: dy={tr.dy:.0f} s={tr.s:.3f}')
     if ov and hasattr(ov, 'transform'): tr = ov.transform(tr)
 
     brights = []
-    ftr = T(dx=-11)
+    ftr = T(dx=DX)
     boxes = [(r['x'], r['y'], r['w'], r['h']) for r in items if r.get('deco') and (r['type'] == 'rect') and r['w'] > 60 and r['h'] > 30]
     for i in items:
         if i['type'] != 'text': continue
@@ -727,6 +764,30 @@ def build_slide(prs, layout, sid_name, data, report):
             members = svg_shapes(ctx, i, tr)
             if members: add([group_xml(ctx, members, 'Chart')], b)
         elif i['type'] == 'conn': add(conn_shapes(ctx, i, tr), b)
+        elif i['type'] in ('img', 'video'):
+            X, Y, Wd, Ht = Emu(E(tr.x(i['x']))), Emu(E(tr.y(i['y']))), Emu(E(tr.l(i['w']))), Emu(E(tr.l(i['h'])))
+            if i['type'] == 'img':
+                pic = slide.shapes.add_picture(i['src'], X, Y, Wd, Ht)
+                if i.get('fit') == 'cover' and i.get('nw') and i.get('nh'):
+                    ar_i, ar_b = i['nw'] / i['nh'], i['w'] / i['h']
+                    if ar_i > ar_b + 1e-3:
+                        c = (1 - ar_b / ar_i) / 2; pic.crop_left = c; pic.crop_right = c
+                    elif ar_b > ar_i + 1e-3:
+                        c = (1 - ar_i / ar_b) / 2; pic.crop_top = c; pic.crop_bottom = c
+            elif not os.path.exists(i['src']):
+                print(f'WARNING {sid_name}: video {i["src"]} is missing, placeholder used')
+                add([sp_xml(ctx, 'Missing video', tr.x(i['x']), tr.y(i['y']), tr.l(i['w']), tr.l(i['h']), geom='roundRect', adj=8000,
+                            fill='1E1E1E', line=ln_xml('F2C14E', 3, dash='dash'))], b)
+                continue
+            else:
+                pic = slide.shapes.add_movie(i['src'], X, Y, Wd, Ht, poster_frame_image=i.get('poster') or None, mime_type='video/mp4')
+                videos.append((pic.shape_id, int(i.get('dur', 6) * 1000), i.get('loop', True), b['order'] if b else 0))
+            ctx.next_id = max(ctx.next_id, pic.shape_id)
+            adj, geom = radius_adj(i.get('radius'), i['w'], i['h'])
+            if geom == 'roundRect':
+                pg = pic._element.find('.//a:prstGeom', NS)
+                pg.set('prst', 'roundRect'); pg.append(etree.fromstring(f'<a:avLst {NSDECL}><a:gd name="adj" fmla="val {int(adj)}"/></a:avLst>')) if pg.find('a:avLst', NS) is None else pg.find('a:avLst', NS).append(etree.fromstring(f'<a:gd {NSDECL} name="adj" fmla="val {int(adj)}"/>'))
+            shapes.append((b['order'] if b else 0, pic.shape_id, None, False))
     for f in (footers if special != 'cover' else []):
         f2 = dict(f)
         f2['w'] = min(f['w'], 1740 - f['x'])
@@ -737,10 +798,8 @@ def build_slide(prs, layout, sid_name, data, report):
 
     if ov and hasattr(ov, 'extra'):
         for order, lst in ov.extra(ctx, tr, data):
-            for sid, xml in lst: shapes.append((order, sid, xml, True))
-
-    for order, sid, xml, _ in shapes:
-        sp_tree.append(etree.fromstring(xml))
+            for sid, xml in lst:
+                shapes.append((order, sid, xml, True)); sp_tree.append(etree.fromstring(xml))
 
     # QR images
     for i in body_items:
@@ -751,18 +810,21 @@ def build_slide(prs, layout, sid_name, data, report):
             if i.get('build'): shapes.append((i['build']['order'], pic.shape_id, None, False))
 
     # logo + slide number
-    big = special in ('cover',)
+    big = special in ('cover',) or data.get('logo') == 'big'
     lx, ly, lw, lh_ = LOGO_BIG if big else LOGO_SMALL
-    slide.shapes.add_picture(LOGO, Emu(E(lx)), Emu(E(ly)), Emu(E(lw)), Emu(E(lh_)))
-    if special != 'cover':
+    if data.get('logo') != 'none':
+        slide.shapes.add_picture(LOGO, Emu(E(lx)), Emu(E(ly)), Emu(E(lw)), Emu(E(lh_)))
+    if special != 'cover' and not data.get('nonum'):
         sp_tree.append(etree.fromstring(SLDNUM.format(ns=NSDECL, id=ctx.nid())))
 
     # builds
     builds = {}
     for order, sid, xml, has_text in shapes:
         if order: builds.setdefault(order, []).append((sid, has_text and xml is not None and '<p:txBody>' in xml))
-    if builds:
-        slide._element.append(etree.fromstring(timing_xml(builds)))
+    for t in slide._element.findall('p:timing', NS):      # python-pptx adds click-to-play timing for movies
+        slide._element.remove(t)
+    if builds or videos:
+        slide._element.append(etree.fromstring(timing_xml(builds, videos)))
     # notes
     nt = notes_text(data['notes'])
     if nt:
@@ -787,7 +849,9 @@ def add_sections(prs, deck, id_by_name):
     ext_lst.append(ext)
 
 def main():
+    global NATIVE
     deck = json.load(open(DECK))
+    NATIVE = bool(deck.get('native'))
     os.makedirs(W, exist_ok=True)
     with zipfile.ZipFile(TEMPLATE) as z, open(LOGO, 'wb') as f:
         f.write(z.read('ppt/media/image1.png'))   # HARDfest logo
@@ -797,7 +861,7 @@ def main():
         prs.part.drop_rel(s.rId); lst.remove(s)
     layout = next(l for l in prs.slide_layouts if l.name == 'TITLE')
     report = []
-    only = sys.argv[2:] if len(sys.argv) > 2 else None
+    only = ONLY
     for name in deck['order']:
         if only and name not in only: continue
         data = json.load(open(f'{EXT}/{name}.json'))
