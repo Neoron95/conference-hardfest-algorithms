@@ -669,17 +669,26 @@ def build_slide(prs, layout, sid_name, data, report):
             add([sp_xml(ctx, 'Kicker', TITLE_X, KICK_TOP - 2, TITLE_W, 40, txbody=body, txbox=True)], use_kicker.get('build'), True)
         if use_title:
             for r in use_title['runs']:
-                if not r.get('br'): r['t'] = r['t'].replace('\u00a0', ' ').replace(' —', '\u00a0—')
-            ttext = ''.join(' ' if r.get('br') else r['t'] for r in use_title['runs'])
-            ctext = caps_text(ttext)
+                if r.get('br'): continue
+                if not NATIVE: r['t'] = r['t'].replace('\u00a0', ' ')     # native decks place their nbsp on purpose
+                r['t'] = r['t'].replace(' —', '\u00a0—')
             sizes = getattr(ov, 'title_sizes', (58.67, 53.33)) if ov else (58.67, 53.33)
-            flat = ctext.replace('\n', ' ')
-            fs, lines = title_plan(flat, sizes=sizes, width=getattr(ov, 'title_w', TITLE_W) if ov else TITLE_W)
+            tw0 = getattr(ov, 'title_w', TITLE_W) if ov else TITLE_W
+            if NATIVE:   # explicit <br> = line break
+                segs = caps_text(''.join('\n' if r.get('br') else r['t'] for r in use_title['runs'])).split('\n')
+                for fs in sizes:
+                    lines = [l for sg in segs for l in wrap_lines(sg.strip(), 800, fs, tw0)]
+                    if len(lines) <= 2: break
+            else:
+                ttext = ''.join(' ' if r.get('br') else r['t'] for r in use_title['runs'])
+                fs, lines = title_plan(caps_text(ttext).replace('\n', ' '), sizes=sizes, width=tw0)
             lh = fs * 1.12
             tr_runs = []
             for r in use_title['runs']:
                 if r.get('br'):
-                    tr_runs.append((' ', rpr_xml(fs, WHITE, 'Montserrat ExtraBold', True))); continue
+                    if NATIVE: tr_runs.append((None, rpr_xml(fs, WHITE, 'Montserrat ExtraBold', True)))
+                    else: tr_runs.append((' ', rpr_xml(fs, WHITE, 'Montserrat ExtraBold', True)))
+                    continue
                 col = WHITE
                 h = r['color']['hex']
                 if NATIVE: col = h
