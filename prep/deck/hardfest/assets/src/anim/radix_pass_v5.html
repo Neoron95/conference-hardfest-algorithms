@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>radix_pass_v5</title>
+<!-- A deterministic decimal teaching example, not benchmark timing.
+     Stable LSD passes: units, then tens. The measured uint64_t implementation uses up to eight byte passes.
+     1800 × 720, silent 17.5 s loop; final result held for more than three seconds. -->
+<style>html,body{margin:0;padding:0;background:#000;overflow:hidden}svg{display:block}</style>
+</head>
+<body>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" width="1800" height="720" viewBox="0 0 1800 720"></svg>
+<script>
+'use strict';
+const DUR = 17.5;
+window.CLIP = { duration: DUR, poster: 14.6 };
+const C = { bg:'#000000', white:'#FFFFFF', grey:'#8F8F8F', rule:'#333333', acc:'#46CDAE', pink:'#E2489B' };
+const clamp = u => Math.max(0, Math.min(1, u));
+const ease = u => { u=clamp(u); return u<.5 ? 4*u*u*u : 1-Math.pow(-2*u+2,3)/2; };
+const progress = (t,a,b) => ease((t-a)/(b-a));
+const lerp = (a,b,u) => a+(b-a)*u;
+const f = n => Math.round(n*100)/100;
+const at = o => Object.entries(o).map(([k,v]) => `${k}="${typeof v==='number'?f(v):v}"`).join(' ');
+const el = (tag,o,s) => s===undefined ? `<${tag} ${at(o)}/>` : `<${tag} ${at(o)}>${s}</${tag}>`;
+const text = (x,y,s,o={}) => el('text',{x,y,'font-family':'Montserrat','font-weight':600,'font-size':56,fill:C.white,...o},s);
+const time = t => ((t%DUR)+DUR)%DUR;
+const KEYS = [21,13,12,21,32,13].map((value,id)=>({id,value}));
+const UNITS = [KEYS[0],KEYS[3],KEYS[2],KEYS[4],KEYS[1],KEYS[5]];
+const SORTED = [KEYS[2],KEYS[1],KEYS[5],KEYS[0],KEYS[3],KEYS[4]];
+const PASSES = [
+  {digit:'единицы', input:KEYS, output:UNITS, start:1.25, gather:5.0, part:k=>k.value%10, color:C.acc},
+  {digit:'десятки', input:UNITS, output:SORTED, start:7.25, gather:11.1, part:k=>Math.floor(k.value/10), color:C.pink}
+];
+const main = i => ({x:70+282*i,y:224,w:230,h:112});
+function bucket(pass,key) {
+  const digit=pass.part(key), before=pass.input.slice(0,pass.input.indexOf(key)).filter(k=>pass.part(k)===digit).length;
+  return {x:70+565*(digit-1)+26+156*before,y:426,w:148,h:112};
+}
+function number(x,y,key,size,pass,final=false) {
+  const digits=String(key.value);
+  const tens=pass===1?C.pink:C.white, units=C.acc;
+  return text(x,y,`<tspan fill="${tens}">${digits[0]}</tspan><tspan fill="${units}">${digits[1]}</tspan>`,{'text-anchor':'middle','font-size':size,'font-weight':700});
+}
+function card(p,key,pass,color=C.white,opacity=1,final=false) {
+  return `<g opacity="${f(opacity)}">`+
+    el('rect',{x:p.x,y:p.y,width:p.w,height:p.h,rx:16,fill:C.bg,stroke:color,'stroke-width':4})+
+    number(p.x+p.w/2,p.y+p.h/2+28,key,80,pass,final)+'</g>';
+}
+function blend(a,b,u) { return {x:lerp(a.x,b.x,u),y:lerp(a.y,b.y,u),w:lerp(a.w,b.w,u),h:lerp(a.h,b.h,u)}; }
+function passState(t) { return t<6.85 ? 0 : 1; }
+window.snapshot = t => {
+  t=time(t); const p=passState(t), pass=PASSES[p];
+  const buckets=[1,2,3].map(d=>pass.input.filter((key,i)=>pass.part(key)===d&&t>=pass.start+i*.56+.5).map(k=>k.value));
+  return {phase:t>=12.5?'sorted':pass.digit,input:pass.input.map(k=>k.value),buckets,
+    output:t>=pass.gather+1.05?pass.output.map(k=>k.value):null,
+    units:UNITS.map(k=>k.value),sorted:SORTED.map(k=>k.value)};
+};
+function frame(t) {
+  t=time(t);
+  const opacity=progress(t,0,.35)*(1-progress(t,16.7,17.2));
+  const p=passState(t), pass=PASSES[p], final=progress(t,12.5,12.85);
+  let out=text(70,61,'Учебный десятичный пример',{fill:C.grey});
+  out+=text(70,121,'В бенчмарке uint64_t: до 8 проходов по байтам',{fill:C.grey});
+  const phase=t>=12.5?'Готово: оба разряда упорядочены':`${p+1}. Проход по ${pass.digit==='единицы'?'единицам':'десяткам'}`;
+  out+=text(70,189,phase,{'font-size':60,fill:t>=12.5?C.acc:pass.color});
+  for(let i=0;i<6;i++) {
+    const m=main(i);
+    out+=el('rect',{x:m.x,y:m.y,width:m.w,height:m.h,rx:16,fill:C.bg,stroke:C.rule,'stroke-width':3});
+  }
+  let bins='';
+  for(let d=1;d<=3;d++) {
+    const x=70+565*(d-1);
+    bins+=text(x+265,393,`${pass.digit}: ${d}`,{'text-anchor':'middle',fill:pass.color});
+    bins+=el('rect',{x,y:404,width:530,height:158,rx:18,fill:C.bg,stroke:C.rule,'stroke-width':3});
+  }
+  out+=`<g opacity="${f(1-final)}">${bins}</g>`;
+  pass.input.forEach((key,i)=>{
+    const source=main(i), dest=bucket(pass,key), rank=pass.output.indexOf(key), target=main(rank);
+    const move=progress(t,pass.start+i*.56,pass.start+i*.56+.5);
+    const collect=progress(t,pass.gather+rank*.05,pass.gather+rank*.05+.75);
+    const point=collect>0?blend(dest,target,collect):blend(source,dest,move);
+    out+=card(point,key,p,move===0?C.white:pass.color,1,final>.5);
+  });
+  if(final>0) {
+    out+=`<g opacity="${f(final)}">`;
+    out+=text(70,435,'В десятках 1 — порядок единиц сохранён',{fill:C.grey});
+    const phrase=[SORTED[0],SORTED[1],SORTED[2]].map((key,i)=>
+      number(550+350*i,548,key,88,1,true)+(i<2?text(725+350*i,548,'→',{'text-anchor':'middle','font-size':80,fill:C.grey}):'')).join('');
+    out+=phrase+'</g>';
+  }
+  let lesson='Начинаем с младшего разряда';
+  if(t>=pass.start&&t<pass.gather) lesson='Равный разряд → прежний порядок сохраняется';
+  if(t>=pass.gather) lesson=p===0?'Собираем группы: 1 → 2 → 3':'Порядок единиц внутри каждой десятки сохранён';
+  if(t>=6.05&&t<7.25) lesson='Теперь читаем десятки в полученном порядке';
+  if(t>=12.5) lesson='Устойчивость сохраняет порядок младших разрядов';
+  out+=text(70,668,lesson,{fill:t>=12.5?C.acc:C.white});
+  return `<g opacity="${f(opacity)}">${out}</g>`;
+}
+const stage=document.getElementById('stage');
+window.render = t => { stage.innerHTML=frame(t); };
+window.render(window.CLIP.poster);
+</script>
+</body>
+</html>

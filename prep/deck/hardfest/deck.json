@@ -11,11 +11,15 @@
     "vote",
     "result",
     "contract",
+    "sort-walk",
+    "hash-walk",
+    "cost-model",
     "curve",
     "nodes",
     "memory",
     "flatmin",
     "flat",
+    "radix-walk",
     "share-q",
     "share",
     "outcontract",
@@ -26,6 +30,7 @@
     "core-model",
     "cores",
     "flip",
+    "merge-walk",
     "merge",
     "prod",
     "platforms",
@@ -62,8 +67,8 @@
       "start": "cover"
     },
     "s1": {
-      "description": "Стоимость операций: размер, память, реализация",
-      "start": "curve"
+      "description": "Как работают алгоритмы: теория и цена операций",
+      "start": "sort-walk"
     },
     "s2": {
       "description": "Условия задачи: повторы, контракт, порядок входа",
@@ -90,7 +95,7 @@
       "start": "twoways"
     }
   },
-  "mainCount": 28,
+  "mainCount": 33,
   "modules": [
     {
       "id": "radixmin",
@@ -108,5 +113,5 @@
       "durationSeconds": 60
     }
   ],
-  "revision": "v4"
+  "revision": "v5"
 }

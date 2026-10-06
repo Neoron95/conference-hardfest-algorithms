@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>sort_unique_v5</title>
+<!-- HardFest V5 · educational bottom-up merge sort, then an adjacent unique scan.
+     This is a merge-sort example, not an illustration of std::sort internals.
+     1800x720; pure, deterministic 18-second loop. All keys retain their identity.
+     Stages: input 0–1.3; singleton groups 1.3–2.2; merge pairs 2.2–3.9;
+     merge 2+2 4.2–6.7; merge 4+2 7.1–10.9; unique 11.2–14.6;
+     final result 14.6–17.25; reset fade 17.25–18. Poster: 16. -->
+<style>html,body{margin:0;padding:0;background:#000;overflow:hidden}svg{display:block}</style>
+</head>
+<body>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" width="1800" height="720" viewBox="0 0 1800 720" role="img" aria-label="Учебная сортировка слиянием и удаление соседних повторов"></svg>
+<script>
+'use strict';
+const W = 1800, H = 720, DUR = 18;
+window.CLIP = { duration: DUR, poster: 16 };
+const C = { bg:'#000000', acc:'#46CDAE', pink:'#E2489B', white:'#FFFFFF', grey:'#8F8F8F', dim:'#333333', fill:'#121212' };
+const clamp = (x,a=0,b=1) => Math.max(a,Math.min(b,x));
+const lerp = (a,b,u) => a+(b-a)*u;
+const ease = u => {u=clamp(u);return u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;};
+const seg = (t,a,b) => clamp((t-a)/(b-a));
+const es = (t,a,b) => ease(seg(t,a,b));
+const n = x => Math.round(x*100)/100;
+const attrs = o => Object.entries(o).filter(([,v])=>v!==undefined).map(([k,v])=>`${k}="${typeof v==='number'?n(v):v}"`).join(' ');
+const el = (tag,o,s) => s===undefined?`<${tag} ${attrs(o)}/>`:`<${tag} ${attrs(o)}>${s}</${tag}>`;
+const txt = (x,y,s,o={}) => el('text',{x,y,fill:C.white,'font-family':'Montserrat','font-size':56,'font-weight':600,...o},s);
+const INPUT = [7,3,7,1,3,9].map((key,id)=>({key,id}));
+const ROW = [500,660,820,980,1140,1300];
+const PAIRS = [[260,420],[820,980],[1380,1540]];
+const CARD_W=124,CARD_H=104;
+function card(token,x,y,color=C.white,opacity=1,filled=false) {
+  return `<g opacity="${n(opacity)}">`+
+    el('rect',{x:x-CARD_W/2,y,width:CARD_W,height:CARD_H,rx:16,fill:filled?C.acc:C.fill,stroke:color,'stroke-width':5})+
+    (token?txt(x,y+74,String(token.key),{'text-anchor':'middle','font-size':76,fill:filled?C.bg:color}):'')+'</g>';
+}
+function mergeTrace(left,right) {
+  let i=0,j=0;const steps=[];
+  while(i<left.length||j<right.length) {
+    const a=left[i],b=right[j];
+    const side=!b||(a&&a.key<=b.key)?'L':'R';
+    const token=side==='L'?a:b;
+    const comparison=a&&b?`${a.key} ${a.key<b.key?'&lt;':a.key>b.key?'&gt;':'='} ${b.key}`:'остаток группы';
+    steps.push({i,j,a,b,side,token,comparison});
+    if(side==='L')i++;else j++;
+  }
+  return {left,right,steps,out:steps.map(s=>s.token)};
+}
+const P = [mergeTrace(INPUT.slice(0,1),INPUT.slice(1,2)),mergeTrace(INPUT.slice(2,3),INPUT.slice(3,4)),mergeTrace(INPUT.slice(4,5),INPUT.slice(5,6))];
+const M = mergeTrace(P[0].out,P[1].out);
+const F = mergeTrace(M.out,P[2].out);
+const UNIQUE = F.out.filter((v,i,a)=>i===0||v.key!==a[i-1].key);
+window.LESSON = { input:INPUT.map(v=>v.key),sorted:F.out.map(v=>v.key),unique:UNIQUE.map(v=>v.key),algorithm:'educational merge sort; measured code uses std::sort' };
+
+function mergeScene(trace,lx,rx,ox,t,start,end,captionX=900,caption=true) {
+  const dt=(end-start)/trace.steps.length;
+  const index=Math.min(trace.steps.length-1,Math.floor(Math.max(0,t-start)/dt));
+  const step=trace.steps[index];
+  const local=(t-start-index*dt)/dt;
+  const travel=es(local,.24,.88);
+  const finished=t>=end;
+  let s='';
+  trace.left.forEach((v,k)=>{
+    const past=finished||k<step.i;
+    const selected=!finished&&k===step.i;
+    const col=past?C.grey:selected?(step.side==='L'?C.acc:C.pink):C.white;
+    s+=card(v,lx[k],250,col,past?.28:1);
+  });
+  trace.right.forEach((v,k)=>{
+    const past=finished||k<step.j;
+    const selected=!finished&&k===step.j;
+    const col=past?C.grey:selected?(step.side==='R'?C.acc:C.pink):C.white;
+    s+=card(v,rx[k],250,col,past?.28:1);
+  });
+  trace.out.forEach((v,k)=>{
+    const committed=finished||k<index;
+    s+=card(committed?v:null,ox[k],480,committed?C.acc:C.dim,1,committed);
+  });
+  if(!finished) {
+    const from=step.side==='L'?lx[step.i]:rx[step.j];
+    s+=card(step.token,lerp(from,ox[index],travel),lerp(250,480,travel),C.acc,1,travel>.98);
+  }
+  if(caption) {
+    const label=finished?'Группа отсортирована':step.comparison==='остаток группы'?'Переносим остаток группы':`${step.comparison} → берём ${step.token.key}`;
+    s+=txt(captionX,668,label,{'text-anchor':'middle',fill:C.acc});
+  }
+  return s;
+}
+
+function frame(t) {
+  t=((t%DUR)+DUR)%DUR;
+  const fade=es(t,0,.22)*(1-es(t,17.25,17.8));
+  let s='',title='',note='Учебная сортировка слиянием · в замерах — std::sort';
+  if(t<2.2) {
+    title=t<1.3?'Вход: шесть ключей, два повтора':'Каждый отдельный ключ уже отсортирован';
+    const split=es(t,1.3,2.1);
+    INPUT.forEach((v,i)=>s+=card(v,lerp(ROW[i],PAIRS[Math.floor(i/2)][i%2],split),270,C.white));
+    s+=txt(900,510,split>.5?'Сливаем соседние группы, сравнивая ключи':'[7, 3, 7, 1, 3, 9]',{'text-anchor':'middle',fill:C.grey});
+  } else if(t<3.9) {
+    title='Слияние: выбираем меньший первый ключ';
+    P.forEach((p,i)=> {
+      s+=mergeScene(p,[PAIRS[i][0]],[PAIRS[i][1]],PAIRS[i],t,2.2,3.9,0,false);
+      const first=t<3.05;
+      s+=txt((PAIRS[i][0]+PAIRS[i][1])/2,668,first?`${p.left[0].key} ${p.left[0].key<=p.right[0].key?'&lt;':'&gt;'} ${p.right[0].key}`:'остаток',{'text-anchor':'middle',fill:C.acc});
+    });
+  } else if(t<4.2) {
+    title='Три отсортированные группы';
+    const u=es(t,3.9,4.2);
+    P.forEach((p,i)=>p.out.forEach((v,k)=>s+=card(v,PAIRS[i][k],lerp(480,250,u),C.acc)));
+  } else if(t<6.7) {
+    title='Сливаем первые две группы';
+    s+=mergeScene(M,PAIRS[0],PAIRS[1],[420,580,740,900],t,4.2,6.7);
+    P[2].out.forEach((v,k)=>s+=card(v,PAIRS[2][k],250,C.white));
+  } else if(t<7.1) {
+    title='Остались две отсортированные группы';
+    const u=es(t,6.7,7.1);
+    M.out.forEach((v,k)=>s+=card(v,lerp([420,580,740,900][k],[260,420,580,740][k],u),lerp(480,250,u),C.acc));
+    P[2].out.forEach((v,k)=>s+=card(v,lerp(PAIRS[2][k],[1240,1400][k],u),250,C.acc));
+  } else if(t<10.9) {
+    title='Снова сравниваем первые оставшиеся ключи';
+    s+=mergeScene(F,[260,420,580,740],[1240,1400],ROW,t,7.1,10.9);
+  } else if(t<11.2) {
+    title='После сортировки равные ключи стоят рядом';
+    const u=es(t,10.9,11.2);
+    F.out.forEach((v,k)=>s+=card(v,ROW[k],lerp(480,250,u),C.acc));
+  } else if(t<14.6) {
+    title='unique: один проход по соседним ключам';
+    const dt=(14.6-11.2)/F.out.length;
+    const i=Math.min(F.out.length-1,Math.floor((t-11.2)/dt));
+    const v=F.out[i],duplicate=i>0&&v.key===F.out[i-1].key;
+    const kept=F.out.slice(0,i).filter((v,k,a)=>k===0||v.key!==a[k-1].key);
+    const travel=es((t-11.2-i*dt)/dt,.22,.88);
+    F.out.forEach((token,k)=>s+=card(token,ROW[k],250,k===i?(duplicate?C.pink:C.acc):k<i?C.grey:C.white,k<i?.4:1));
+    UNIQUE.forEach((token,k)=>s+=card(k<kept.length?token:null,[660,820,980,1140][k],480,k<kept.length?C.acc:C.dim,1,k<kept.length));
+    if(!duplicate)s+=card(v,lerp(ROW[i],[660,820,980,1140][kept.length],travel),lerp(250,480,travel),C.acc,1,travel>.98);
+    else s+=el('line',{x1:ROW[i]-48,y1:270,x2:ROW[i]+48,y2:330,stroke:C.pink,'stroke-width':7,opacity:travel});
+    const action=i===0?'Первый ключ → оставляем':`${v.key} ${duplicate?'=':'≠'} ${F.out[i-1].key} → ${duplicate?'пропускаем':'оставляем'}`;
+    s+=txt(900,668,action,{'text-anchor':'middle',fill:duplicate?C.pink:C.acc});
+  } else {
+    title='Получили четыре разных ключа по порядку';
+    F.out.forEach((v,k)=>s+=card(v,ROW[k],250,k===2||k===4?C.pink:C.grey,.5));
+    [2,4].forEach(k=>s+=el('line',{x1:ROW[k]-48,y1:270,x2:ROW[k]+48,y2:330,stroke:C.pink,'stroke-width':7,opacity:.8}));
+    UNIQUE.forEach((v,k)=>s+=card(v,[660,820,980,1140][k],480,C.acc,1,true));
+    s+=txt(900,425,'unique оставляет одного из соседних повторов',{'text-anchor':'middle',fill:C.acc});
+  }
+  s=txt(80,78,title,{'font-size':64,'font-weight':700})+txt(80,150,note,{fill:C.grey})+s;
+  if(t>=14.6)s+=txt(900,668,'sort: O(n log n) · unique: O(n)',{'text-anchor':'middle',fill:C.grey});
+  return el('rect',{x:0,y:0,width:W,height:H,fill:C.bg})+(fade===1?s:`<g opacity="${n(fade)}">${s}</g>`);
+}
+const stage=document.getElementById('stage');
+window.render=t=>{stage.innerHTML=frame(t);};
+window.render(window.CLIP.poster);
+</script>
+</body>
+</html>

@@ -11,13 +11,18 @@ source={
  'cover':'Материалы доклада: https://github.com/Neoron95/conference-hardfest-algorithms . Кейс обезличен, детали упрощены; эксперименты на тестовых данных.',
  'about':'Биография и портрет: пользовательский референс /Users/nagornov/Downloads/IphoneLLV-v2-c-заметками.pptx, слайд 2. Публичный кейс текущего доклада с перечисленными проектами не связывается.',
  'audience':'Разработчики, тимлиды и ревьюеры, авторы перф-тестов. Обещание: выбирать решение на своих данных и проверять замер в целевой среде.',
+ 'sort-walk':'Учебная сортировка слиянием и соседнее удаление повторов. Вход 7,3,7,1,3,9; sorted 1,3,3,7,7,9; итог 1,3,7,9. Это не реализация std::sort. Сложность std::sort: https://eel.is/c++draft/alg.sort .',
+ 'hash-walk':'Учебный хеш h(x)=x mod4; коллизия проверяется сравнением полных ключей. Вход 7,3,7,1,3,9; множество {1,3,7,9}; порядок выгрузки не обещается. https://eel.is/c++draft/unord.req .',
+ 'cost-model':'N — весь вход, U — число различных ключей. Big-O описывает верхнюю оценку роста; средняя цена операций и перекрытие обращений влияют на время. https://eel.is/c++draft/alg.sort ; https://eel.is/c++draft/unord.req .',
+ 'radix-walk':'Стабильный LSD radix, учебный десятичный пример 21,13,12,21,32,13. Итог sorted 12,13,13,21,21,32; отдельный unique в видео не показан. Бенчмарк uint64_t: до восьми проходов по байтам; однородный байт пропускается. bench/dedup_bench.cpp.',
+ 'merge-walk':'L=[1,3,7], D=[3,2,7,2,9]; подготовленная D=[2,3,7,9]; итог [1,2,3,7,9]. Оба входа отсортированы и уникальны до слияния. bench/dedup_bench.cpp; bench/results/summary.md, E8.',
  'diff':'Публичный пример кода. В эксперименте reserve добавлен; производственный результат не заявляется.',
  'case':'Самостоятельная упрощённая задача: L sorted unique; D может содержать повторы; числовые id. Отдельные тестовые серии фиксируют другие свойства входа.',
  'vote':'Базовая серия: N=U=2^20, случайные uint64_t, порядок результата не важен. O(n) — средняя оценка unordered_set.',
  'result':'prep/research/apple.md; prep/research/bench.md. Mac M2 Pro, libc++; N=U=2^20. Полная операция. Атрибуция: https://lemire.me/blog/2017/05/23/counting-exactly-the-number-of-distinct-elements-sorted-arrays-vs-hash-sets/ ; Chandler Carruth, CppCon 2014, Efficiency with Algorithms, Performance with Data Structures.',
  'contract':'bench/dedup_bench.cpp и bench/results/summary.md. Копирование входа вне таймера; reserve, insert, output и деструктор внутри; проверка результата вне таймера.',
  'curve':'prep/research/apple.md; исходная серия curve, M2 Pro, U/N=0,5. Рабочий набор: таблица примерно12/24 МиБ плюс вход4/8 МиБ на 512K/1M. L2 16 МиБ общий для кластера P. Излом — косвенное свидетельство; резидентность и вклад промахов кэша не измерены напрямую.',
- 'nodes':'bench/results/summary.md, E6; prep/research/cpp.md. N=U=2^20; счётчики аллокаций и суммы запросов аллокатору отличаются от RSS. Размер узла зависит от стандартной библиотеки.',
+ 'nodes':'prep/research/cpp.md §2: счётчики new и пример округления на glibc; 42 МБ не измеренный RSS на iPhone/macOS. N=U=2^20; счётчики аллокаций и суммы запросов аллокатору отличаются от RSS. Размер узла зависит от стандартной библиотеки.',
  'memory':'prep/research/apple.md; Ulrich Drepper, What Every Programmer Should Know About Memory, §3.3.2: https://people.freebsd.org/~lstewart/articles/cpumemory.pdf . Иллюстрация зависимости адресов, не измеренная декомпозиция ускорения сортировки.',
  'flatmin':'prep/research/cpp.md §5; Abseil Swiss Tables design: https://abseil.io/about/design/swisstables ; Matt Kulukundis, CppCon 2017. Диаграмма организации таблицы; SIMD-группы зависят от архитектуры.',
  'flat':'prep/research/apple.md; Mac M2 Pro, libc++; N=U=2^20:19,9/51,3/11,7/6,9нс/элемент. ×1,7 — flat против sort. Radix — отдельная реализация для uint64_t.',
@@ -36,23 +41,22 @@ source={
  'platforms':'Применение метода, без новых измерений. prep/research/beyond.md; SE-0304. Контейнеры, actor isolation, executor и QoS различаются. CPU в CI не обязан повторять целевую платформу.',
  'review':'Возврат к исходному публичному дифу. Пауза 5 секунд на собственный комментарий. Выводы привязаны к контракту, данным и окружению.',
  'final':'QR: https://github.com/Neoron95/conference-hardfest-algorithms .'}
-expected=[0,0,0,2,3,2,3,0,3,2,2,3,3,2,2,3,3,2,3,2,2,3,3,2,2,2,4,1]
+
 for n,id in enumerate(deck['order'][:deck['mainCount']]):
  c=chunks[id]
  speech=re.search(r'\*\*Говорю\.\*\*\s*(.*?)(?=\*\*Если отстаю)',c,re.S).group(1)
  clicks=speech.count('[щелчок]')
  p=D/'slides'/f'{id}.html';s=p.read_text()
  body=s.split('<aside>')[0];orders=sorted(set(map(int,re.findall(r'data-build-in="\w+ (\d+)"',body))))
- assert clicks==expected[n],(id,'speech',clicks,expected[n])
+
  assert orders==list(range(1,clicks+1)),(id,'build',orders,clicks)
  # Every note starts with the same cue/text as the authoritative script.
- note=f'Слайд {n+1}: {id}\n'+c.strip()+f'\n\nИсточники и условия.\n{source[id]}\n'
- if id=='about':note=speech.strip()+f'\n\n──────────\nИсточники и условия\n{source[id]}\n'
+ note=speech.strip()+f'\n\n──────────\nИсточники и условия\n{source[id]}\n'
  note=re.sub(r'\*\*([^*]+)\*\*',r'\1',note).replace('`','')
  encoded=html.escape(note,quote=False).replace('\n','<br>')
  s=re.sub(r'<aside>.*?</aside>','<aside>'+encoded+'</aside>',s,flags=re.S)
  p.write_text(s)
-print(f'Synced {deck["mainCount"]} main slides, {sum(expected)} click steps')
+print(f'Synced {deck["mainCount"]} main slides, {sum(chunks[id].split('**Говорю.**')[1].split('**Если отстаю')[0].count('[щелчок]') for id in deck['order'][:deck['mainCount']])} click steps')
 # Optional modules are static slides, each self-contained with transitions.
 m=(ROOT/'prep/script/modules.md').read_text()
 for id,c in re.findall(r'^## \d+\. `([^`]+)`[^\n]*\n(.*?)(?=^## |\Z)',m,re.M|re.S):

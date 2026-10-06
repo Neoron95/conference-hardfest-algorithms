@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>merge_unique_v5</title>
+<!-- A deterministic algorithm walkthrough, not benchmark timing.
+     L is sorted unique. Delta is sorted and deduplicated before the two-cursor union.
+     Equal keys advance both cursors; a single output key is emitted.
+     1800 × 720, silent 17 s loop; final result held for four seconds. -->
+<style>html,body{margin:0;padding:0;background:#000;overflow:hidden}svg{display:block}</style>
+</head>
+<body>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" width="1800" height="720" viewBox="0 0 1800 720"></svg>
+<script>
+'use strict';
+const DUR=17;
+window.CLIP={duration:DUR,poster:14.3};
+const C={bg:'#000000',white:'#FFFFFF',grey:'#8F8F8F',rule:'#333333',acc:'#46CDAE',pink:'#E2489B'};
+const clamp=u=>Math.max(0,Math.min(1,u));
+const ease=u=>{u=clamp(u);return u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;};
+const progress=(t,a,b)=>ease((t-a)/(b-a));
+const lerp=(a,b,u)=>a+(b-a)*u;
+const f=n=>Math.round(n*100)/100;
+const at=o=>Object.entries(o).map(([k,v])=>`${k}="${typeof v==='number'?f(v):v}"`).join(' ');
+const el=(tag,o,s)=>s===undefined?`<${tag} ${at(o)}/>`:`<${tag} ${at(o)}>${s}</${tag}>`;
+const text=(x,y,s,o={})=>el('text',{x,y,'font-family':'Montserrat','font-weight':600,'font-size':56,fill:C.white,...o},s);
+const time=t=>((t%DUR)+DUR)%DUR;
+const L=[1,3,7], RAW=[3,2,7,2,9], DELTA=[2,3,7,9];
+const ORDER=[1,3,0,2,4], UNIQUE=[1,0,2,4];
+const STEPS=[
+  {start:5.45,end:6.10,next:6.30,l:0,d:0,afterL:1,afterD:0,value:1,kind:'L',label:'1 < 2 → берём 1 из L'},
+  {start:6.65,end:7.30,next:7.50,l:1,d:0,afterL:1,afterD:1,value:2,kind:'D',label:'3 > 2 → берём 2 из Δ'},
+  {start:8.10,end:8.75,next:8.95,l:1,d:1,afterL:2,afterD:2,value:3,kind:'equal',label:'3 = 3 → один id, оба указателя вправо'},
+  {start:9.55,end:10.20,next:10.40,l:2,d:2,afterL:3,afterD:3,value:7,kind:'equal',label:'7 = 7 → один id, оба указателя вправо'},
+  {start:11.10,end:11.75,next:11.95,l:3,d:3,afterL:3,afterD:4,value:9,kind:'D',label:'L закончился → дописываем 9 из Δ'}
+];
+const pos=(i,y)=>({x:480+240*i,y,w:190,h:106});
+function card(p,value,color=C.white,opacity=1,filled=false) {
+  return `<g opacity="${f(opacity)}">`+el('rect',{x:p.x,y:p.y,width:p.w,height:p.h,rx:16,fill:filled?C.acc:C.bg,stroke:color,'stroke-width':4})+
+    text(p.x+p.w/2,p.y+p.h/2+29,String(value),{'text-anchor':'middle','font-size':80,'font-weight':700,fill:filled?C.bg:color})+'</g>';
+}
+function currentStep(t) { return STEPS.find(s=>t<s.next)||null; }
+window.snapshot=t=>{
+  t=time(t);
+  if(t<4.8) return {phase:t<1.35?'input':t<3.1?'sort':'unique',L,delta:t<2.55?RAW:t<4.15?[2,2,3,7,9]:DELTA};
+  const s=currentStep(t);
+  return {phase:t>=12.2?'complete':'merge',L,delta:DELTA,cursors:s?{L:s.l,D:s.d}:{L:3,D:4},
+    output:STEPS.filter(step=>t>=step.end).map(step=>step.value)};
+};
+function prep(t) {
+  let out=text(70,62,t<1.35?'Подготовим дельту':t<3.1?'sort(Δ): ставим ключи по порядку':'unique(Δ): убираем соседние повторы',{'font-size':60,fill:t<3.1?C.white:C.acc});
+  out+=text(70,124,'L = [1, 3, 7] уже отсортирован и уникален',{fill:C.grey});
+  out+=text(70,263,'L',{'font-size':64});
+  L.forEach((value,i)=>out+=card(pos(i,190),value));
+  out+=text(70,463,t<1.35?'Δ вход':t<3.1?'Δ sort':'Δ unique',{'font-size':56,fill:t>=3.1?C.acc:C.white});
+  RAW.forEach((value,id)=>{
+    const original=pos(id,390), sorted=pos(ORDER.indexOf(id),390), uniqueRank=UNIQUE.indexOf(id);
+    const sort=progress(t,1.35,2.55), unique=progress(t,3.2,4.15);
+    let x=lerp(original.x,sorted.x,sort), y=390;
+    if(sort>0&&sort<1) y+=(sorted.x<original.x?-48:48)*Math.sin(Math.PI*sort);
+    if(uniqueRank>=0) x=lerp(x,pos(uniqueRank,390).x,unique);
+    const opacity=id===3?1-progress(t,3.1,3.7):1;
+    const color=value===2&&t>=2.55&&t<3.7?C.pink:t>=4.15?C.acc:C.white;
+    out+=card({x,y,w:190,h:106},value,color,opacity);
+    if(id===3&&t>=3.1&&opacity>0) out+=el('line',{x1:x+24,y1:y+24,x2:x+166,y2:y+82,stroke:C.pink,'stroke-width':6,opacity});
+  });
+  const lesson=t<1.35?'В дельте есть два одинаковых ключа 2':t<3.1?'После sort одинаковые ключи стоят рядом':'До слияния: оба входа отсортированы и уникальны';
+  out+=text(70,678,lesson,{fill:t>=3.1?C.acc:C.white});
+  return out;
+}
+function cursor(index,y,color) {
+  const x=575+240*index;
+  return el('path',{d:`M${f(x)} ${y+120} L${f(x-19)} ${y+146} L${f(x+19)} ${y+146} Z`,fill:color});
+}
+function merge(t) {
+  const step=currentStep(t), final=t>=12.2, equal=step&&step.kind==='equal';
+  const advance=step?progress(t,step.end,step.next):1;
+  const ci=step?lerp(step.l,step.afterL,advance):3, cj=step?lerp(step.d,step.afterD,advance):4;
+  const active=equal?C.pink:C.acc;
+  let out=text(70,62,'Слияние: выбираем меньший ключ',{'font-size':60});
+  out+=text(70,129,final?'Готово: [1, 2, 3, 7, 9]':step?step.label:'Все ключи обработаны',{fill:final?C.acc:equal?C.pink:C.white});
+  out+=text(70,263,'L',{'font-size':64});
+  out+=text(70,423,'Δ',{'font-size':64});
+  out+=text(70,592,'выход');
+  [[L,190,ci,'L'],[DELTA,350,cj,'D']].forEach(([values,y,index,name])=>{
+    values.forEach((value,i)=>{
+      const selected=step&&i===(name==='L'?step.l:step.d)&&advance<.95;
+      const consumed=i<Math.floor(index+.01);
+      out+=card(pos(i,y),value,selected?active:C.white,consumed?.3:1);
+    });
+    out+=cursor(index,y,final?C.grey:active);
+    if(index>=values.length-.05) out+=text(575+240*values.length,y+70,`конец ${name==='L'?'L':'Δ'}`,{'text-anchor':'middle',fill:C.grey});
+  });
+  for(let i=0;i<5;i++) {
+    const p=pos(i,520);
+    out+=el('rect',{x:p.x,y:p.y,width:p.w,height:p.h,rx:16,fill:C.bg,stroke:C.rule,'stroke-width':3});
+  }
+  STEPS.forEach((s,i)=>{
+    const move=progress(t,s.start,s.end);
+    if(move===0)return;
+    const target=pos(i,520);
+    if(t<s.end&&s.kind==='equal') {
+      const a=pos(s.l,190),b=pos(s.d,350);
+      out+=el('line',{x1:a.x+95,y1:a.y+106,x2:b.x+95,y2:b.y,stroke:C.pink,'stroke-width':4});
+    }
+    if(t<s.end) {
+      const x=target.x+95;
+      out+=el('path',{d:`M${x} 478 L${x} 506 M${x-12} 494 L${x} 508 L${x+12} 494`,fill:'none',stroke:C.acc,'stroke-width':5,opacity:1-move,'stroke-linecap':'round','stroke-linejoin':'round'});
+    }
+    // Write the chosen key into its output slot without covering either input row.
+    out+=card(target,s.value,C.acc,move,true);
+  });
+  out+=text(70,692,final?'sort(Δ) → unique(Δ) → слияние':equal?'При равенстве продвигаем оба указателя':'Меньший id — в выход; равные — один раз',{fill:final?C.acc:C.white});
+  return out;
+}
+function frame(t) {
+  t=time(t);
+  const opacity=progress(t,0,.35)*(1-progress(t,16.2,16.7)), switchPhase=progress(t,4.45,4.9);
+  let out='';
+  if(switchPhase<1)out+=`<g opacity="${f(1-switchPhase)}">${prep(t)}</g>`;
+  if(switchPhase>0)out+=`<g opacity="${f(switchPhase)}">${merge(t)}</g>`;
+  return `<g opacity="${f(opacity)}">${out}</g>`;
+}
+const stage=document.getElementById('stage');
+window.render=t=>{stage.innerHTML=frame(t);};
+window.render(window.CLIP.poster);
+</script>
+</body>
+</html>

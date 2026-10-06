@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>hash_insert_v5</title>
+<!-- HardFest V5 · pedagogical chained set, h(x)=x mod 4, not the real std::hash.
+     1800x720; pure deterministic 18-second loop. Input: [7,3,7,1,3,9].
+     Stages: intro 0–1; each input occupies 2.25 s: 7 at 1; 3 at 3.25;
+     repeated 7 at 5.5; 1 at 7.75; repeated 3 at 10; 9 at 12.25.
+     Final result 14.5–17.25; reset fade 17.25–18. Poster: 16. -->
+<style>html,body{margin:0;padding:0;background:#000;overflow:hidden}svg{display:block}</style>
+</head>
+<body>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" width="1800" height="720" viewBox="0 0 1800 720" role="img" aria-label="Вставка в учебную хеш-таблицу: коллизия и дубликат"></svg>
+<script>
+'use strict';
+const W=1800,H=720,DUR=18;
+window.CLIP={duration:DUR,poster:16};
+const C={bg:'#000000',acc:'#46CDAE',pink:'#E2489B',white:'#FFFFFF',grey:'#8F8F8F',dim:'#333333',fill:'#121212'};
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const lerp=(a,b,u)=>a+(b-a)*u;
+const ease=u=>{u=clamp(u);return u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;};
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const es=(t,a,b)=>ease(seg(t,a,b));
+const n=x=>Math.round(x*100)/100;
+const attrs=o=>Object.entries(o).filter(([,v])=>v!==undefined).map(([k,v])=>`${k}="${typeof v==='number'?n(v):v}"`).join(' ');
+const el=(tag,o,s)=>s===undefined?`<${tag} ${attrs(o)}/>`:`<${tag} ${attrs(o)}>${s}</${tag}>`;
+const txt=(x,y,s,o={})=>el('text',{x,y,fill:C.white,'font-family':'Montserrat','font-size':56,'font-weight':600,...o},s);
+const INPUT=[7,3,7,1,3,9],SX=[430,590,750,910,1070,1230];
+const BY=[352,440,528,616];
+const NX=[440,760];
+function box(key,x,y,color=C.white,opacity=1,filled=false,w=126,h=80){
+  return `<g opacity="${n(opacity)}">`+el('rect',{x:x-w/2,y,width:w,height:h,rx:14,fill:filled?C.acc:C.fill,stroke:color,'stroke-width':5})+
+    txt(x,y+h/2+23,String(key),{'text-anchor':'middle','font-size':72,fill:filled?C.bg:color})+'</g>';
+}
+function arrow(x1,y,x2,color=C.grey,opacity=1){
+  return `<g opacity="${n(opacity)}">`+el('line',{x1,y1:y,x2:x2-12,y2:y,stroke:color,'stroke-width':5})+
+    el('path',{d:`M ${x2-23} ${y-14} L ${x2} ${y} L ${x2-23} ${y+14}`,fill:'none',stroke:color,'stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round'})+'</g>';
+}
+// The trace is computed from exactly the algorithm shown: scan this bucket with equality;
+// append only if no stored key is equal. A collision alone never causes a key to be skipped.
+const TRACE=[];let buckets=[[],[],[],[]];
+INPUT.forEach(key=>{
+  const bucket=key%4,before=buckets.map(a=>a.slice()),comparisons=[];
+  let duplicate=false;
+  for(const stored of buckets[bucket]){comparisons.push({stored,equal:key===stored});if(key===stored){duplicate=true;break;}}
+  if(!duplicate)buckets[bucket].push(key);
+  TRACE.push({key,bucket,before,comparisons,duplicate,after:buckets.map(a=>a.slice())});
+});
+window.LESSON={input:INPUT,trace:TRACE,result:[1,3,7,9],buckets,hash:'toy x mod 4; not std::hash',iterationOrderPromised:false};
+
+function frame(t){
+  t=((t%DUR)+DUR)%DUR;
+  const fade=es(t,0,.22)*(1-es(t,17.25,17.8));
+  const started=t>=1,finished=t>=14.5;
+  const index=finished?5:Math.max(0,Math.min(5,Math.floor((t-1)/2.25)));
+  const step=TRACE[index],local=t-(1+index*2.25);
+  const committed=finished||local>=1.85;
+  const shown=started?(committed?step.after:step.before):[[],[],[],[]];
+  const comparing=started&&!finished&&local>=.5&&local<1.35;
+  const compareIndex=step.comparisons.length>1&&local>=.92?1:0;
+  const comparison=step.comparisons[compareIndex];
+  let s=txt(80,78,finished?'Коллизия ≠ дубликат':'Вставляем ключи по одному',{'font-size':64,'font-weight':700});
+  s+=txt(80,150,'Учебный хеш: h(x) = x mod 4 · четыре ячейки',{fill:C.grey});
+  s+=txt(80,246,'вход',{'font-size':56,fill:C.grey});
+  INPUT.forEach((key,i)=>{
+    const past=finished||started&&i<index;
+    const active=started&&!finished&&i===index;
+    s+=box(key,SX[i],183,active?C.acc:past?C.grey:C.white,past?.45:1,false,126,92);
+  });
+  s+=txt(80,325,'ячейка',{fill:C.grey});
+  s+=txt(365,325,'стрелки — адрес следующего узла',{fill:C.grey});
+  for(let b=0;b<4;b++){
+    const target=started&&!finished&&step.bucket===b;
+    s+=box(b,156,BY[b],target?C.acc:C.grey,1,false,140,80);
+    if(!shown[b].length)s+=txt(290,BY[b]+61,'—',{fill:C.dim,'font-size':64});
+    shown[b].forEach((key,k)=>{
+      const hit=comparing&&step.bucket===b&&comparison&&comparison.stored===key;
+      const col=hit?(comparison.equal?C.pink:C.acc):C.white;
+      s+=arrow(k===0?228:NX[k-1]+63,BY[b]+40,NX[k]-75,hit?col:C.grey);
+      s+=box(key,NX[k],BY[b],col);
+    });
+  }
+  if(started&&!finished&&!step.duplicate&&local>=1.35&&local<1.85){
+    const u=es(local,1.35,1.85),dest=NX[step.before[step.bucket].length];
+    s+=box(step.key,lerp(SX[index],dest,u),lerp(183,BY[step.bucket],u),C.acc,1,u>.98);
+  }
+  if(!started){
+    s+=txt(1050,410,'Хеш выбирает ячейку',{fill:C.white});
+    s+=txt(1050,495,'Проверяем равенство',{fill:C.acc});
+  } else if(finished){
+    s+=txt(1050,411,'Четыре разных ключа',{fill:C.acc});
+    s+=txt(1050,498,'{1, 3, 7, 9}',{'font-size':76,'font-weight':700});
+    s+=txt(1050,593,'Порядок обхода',{fill:C.grey});
+    s+=txt(1050,665,'не обещан',{fill:C.grey});
+  } else {
+    s+=txt(1050,410,`h(${step.key}) = ${step.bucket}`,{fill:C.acc,'font-size':64});
+    if(local<.5){
+      s+=txt(1050,490,`Переходим в ячейку ${step.bucket}`,{fill:C.white});
+    } else if(!step.comparisons.length){
+      s+=txt(1050,490,'Ячейка пуста',{fill:C.white});
+      s+=txt(1050,585,`Добавляем ${step.key}`,{fill:C.acc});
+    } else if(local<1.35){
+      s+=txt(1050,490,`${step.key} ${comparison.equal?'=':'≠'} ${comparison.stored}`,{fill:comparison.equal?C.pink:C.white,'font-size':64});
+      s+=txt(1050,585,comparison.equal?'Это дубликат':'Это коллизия',{fill:comparison.equal?C.pink:C.grey});
+    } else {
+      s+=txt(1050,490,step.duplicate?'Равный ключ уже есть':'Равного ключа нет',{fill:C.white});
+      s+=txt(1050,585,step.duplicate?'Пропускаем повтор':`Добавляем ${step.key} в цепочку`,{fill:step.duplicate?C.pink:C.acc});
+    }
+  }
+  return el('rect',{x:0,y:0,width:W,height:H,fill:C.bg})+(fade===1?s:`<g opacity="${n(fade)}">${s}</g>`);
+}
+const stage=document.getElementById('stage');
+window.render=t=>{stage.innerHTML=frame(t);};
+window.render(window.CLIP.poster);
+</script>
+</body>
+</html>
