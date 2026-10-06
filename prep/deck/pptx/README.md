@@ -1,50 +1,35 @@
-# PPTX в стиле HardFest 2026
+# Сборка PowerPoint в стиле HardFest
 
-Сборщик PPTX на основе шаблона организаторов `hardfest_template.pptx` (его мастер, тема, логотип HARDfest,
-номер слайда и встроенные шрифты Montserrat). Две колоды-источника:
+Актуальный путь собирает редактируемый PPTX из HTML-источников `../hardfest` с помощью JavaScript и `@oai/artifact-tool`. Формат 1920×1080 соответствует 10×5,625 дюйма. Шаблон организаторов задаёт оформление, палитру, логотип и встроенные шрифты Montserrat.
 
-- `--deck hardfest` (по умолчанию) — версия 2, `../hardfest/`: слайды написаны сразу в стиле шаблона,
-  с картинками и видео; результат — `../hardfest2026_deck.pptx`. Подробности — `../hardfest/README.md`.
-- `--deck project` — первая версия: автоматический перенос исходной колоды `../project/` с перекраской
-  (описано ниже); результат — `../hardfest2026_project.pptx`.
+1. `sync_notes.py` переносит сценическую речь и короткие версии из `../../script/full_script.md` в HTML-заметки и проверяет щелчки.
+2. `extract.js` получает раскладку в Chromium: точные строки, стили, геометрию и элементы SVG.
+3. `build_artifact.mjs` создаёт нативные редактируемые тексты, полосы графиков и диаграммы. Постеры и логотипы остаются изображениями.
+4. `finish_package.py` сохраняет встроенные шрифты шаблона, добавляет существующую схему щелчков, настоящие MP4-анимации, разделы и скрытие дополнительных слайдов.
+5. `export_pdf.js` делает резервную версию из той же HTML-раскладки с постерами вместо видео.
 
-## Версия 1: перенос колоды `project`
+## Команды
 
-### Что переносится
-
-- Раскладка: каждый HTML-слайд раскладывается в Chromium, координаты блоков переносятся 1:1
-  (1920 px = 10 дюймов). Графики из SVG становятся векторными фигурами PowerPoint, таблицы — фигурами с текстом.
-- Стиль шаблона: чёрный фон, заголовки Montserrat ExtraBold капсом (код и латиница — как в исходнике: `unordered_set`,
-  `O(n log n)`), надзаголовок-раунд над ним, логотип справа вверху, номер слайда справа внизу. Шрифт текста —
-  Montserrat (кегль ×0,92 к IBM Plex, блоки, которые не влезли, ужаты точечно), код — JetBrains Mono.
-- Цвета:
-
-  | Роль | Было | Стало |
-  |---|---|---|
-  | sort + unique | синий `#2F6FDB` | бирюзовый `#46CDAE` |
-  | unordered_set | оранжевый `#D9622B` | розовый `#E2489B` |
-  | flat_hash_set | зелёный `#13806C` | белый `#FFFFFF` |
-  | radix + unique | фиолетовый `#7B5CC4` | лавандовый `#9B87F5` |
-  | акцент («ваш ход», номер раунда, ①②③) | янтарный | бирюзовый `#46CDAE` |
-  | подсветка строки/карточки | бледно-янтарная | тёмно-бирюзовая `#0B2B26` |
-  | заглушки `[…]`, которые надо заполнить | янтарный | жёлтый `#F2C14E` |
-  | карточки | белые на светлом | чёрные с белой рамкой, как в шаблоне |
-
-- Анимации: каждый `data-build-in="… N"` — шаг N «по щелчку» (появление), число шагов совпадает с `[щелчок]` в заметках.
-- Заметки спикера — из `<aside>`, секции PowerPoint — из `deck.json`, `twoways`, `bigo`, `questions` скрыты.
-
-### Пересборка
-
-Нужны Node.js с `playwright` (Chromium), Python 3 с `python-pptx`, `lxml`, `Pillow`, и установленные в систему
-шрифты Montserrat, JetBrains Mono, IBM Plex Sans (Google Fonts).
+Из корня репозитория:
 
 ```bash
-node prep/deck/pptx/extract.js --deck project         # раскладка HTML-слайдов -> /tmp/hardfest-pptx/extract/*.json
-python3 prep/deck/pptx/build.py --deck project        # -> prep/deck/hardfest2026_project.pptx
+python3 prep/deck/pptx/sync_notes.py
+export PPTX_WORK=/tmp/hardfest-pptx
+export CHROME_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+node prep/deck/pptx/extract.js --deck hardfest
+node prep/deck/pptx/build_artifact.mjs
+python3 prep/deck/pptx/finish_package.py /tmp/hardfest-pptx/candidate.pptx
+node prep/deck/pptx/export_pdf.js prep/deck/hardfest2026_deck.pdf
 ```
 
-`node extract.js --deck X cover diff` и `python3 build.py --deck X out.pptx cover diff` — только выбранные слайды.
-`SHOWALL=1` не скрывает архивные слайды (удобно для проверки). Точечные правки отдельных слайдов
-(обложка, «Уникальные id» бирюзовой карточкой, плашка видео на `x33`, отступ под логотип на `final`) — в `overrides.py`.
+Зависимости: Node.js, Playwright/Chromium, `@oai/artifact-tool`, Python 3 с lxml и pypdf. При необходимости укажите `NODE_PATH` для Playwright и `ARTIFACT_TOOL_PATH` к `dist/artifact_tool.mjs`. Шрифты Montserrat и Menlo должны разрешаться при раскладке HTML. Montserrat из шаблона также встроен в итоговый PPTX.
 
-Проверка вёрстки делалась рендером LibreOffice; в PowerPoint строки могут переноситься на пару пикселей иначе.
+`extract.js --deck hardfest cover diff` и `build_artifact.mjs cover diff` поддерживают сборку выбранных слайдов для проверки. Рабочие JSON и PNG находятся в `$PPTX_WORK`, а не среди итоговых материалов.
+
+Для рендера в комплектном LibreOffice задайте `FONTCONFIG_FILE`, включающий системные каталоги шрифтов: без него этот runtime может подставить другой шрифт. Рендер LibreOffice и геометрические проверки не заменяют проверку анимаций в PowerPoint.
+
+## Сценарий и дополнительные модули
+
+В `deck.json` первые 26 слайдов образуют основной показ; все последующие скрыты и доступны для ручного перехода. Три модуля (`radixmin`, `learned-table`, `nb-lang`) можно вставить в обозначенные точки. Их текст, входные и выходные переходы находятся в `../../script/modules.md`.
+
+Исторический `build.py` оставлен для архивной колоды `project` и как источник проверенной OpenXML-схемы анимаций. Для актуальной колоды используйте JavaScript-сборку выше.

@@ -227,6 +227,33 @@ function pageScript(arg) {
   // ---- items
   const items = [];
   const leafSet = new Set(leaves);
+  // Preserve the browser's line breaks as editable text, including mixed styles.
+  const visualLines = (el) => {
+    const lines = [];
+    const walk = (node) => {
+      if (node.nodeType === 3) {
+        const cs = getComputedStyle(node.parentElement);
+        for (let i = 0; i < node.textContent.length; i++) {
+          const range = document.createRange(); range.setStart(node, i); range.setEnd(node, i + 1);
+          const q = range.getBoundingClientRect();
+          if (q.width < .1 || q.height < .1) continue;
+          let t = node.textContent[i];
+          if (!/pre/.test(cs.whiteSpace) && /\s/.test(t)) t = ' ';
+          if (cs.textTransform === 'uppercase') t = t.toUpperCase();
+          const mid = q.top + q.height / 2;
+          let line = lines.find(l => Math.abs(l.mid - mid) < 5);
+          if (!line) { line = { mid, x:q.left-S.left, y:q.top-S.top, w:0, h:q.height, runs:[] }; lines.push(line); }
+          line.w = Math.max(line.w, q.right - S.left - line.x);
+          const style = { color:rgb(cs.color), weight:+cs.fontWeight, italic:cs.fontStyle==='italic', family:cs.fontFamily, size:parseFloat(cs.fontSize), ls:parseFloat(cs.letterSpacing)||0 };
+          const last=line.runs.at(-1);
+          if (last && JSON.stringify(last.style)===JSON.stringify(style)) last.t+=t;
+          else line.runs.push({t,style});
+        }
+      } else for (const n of node.childNodes) walk(n);
+    };
+    walk(el);
+    return lines.sort((a,b)=>a.mid-b.mid);
+  };
   const visit = (el) => {
     const tag = el.tagName.toLowerCase();
     if (tag === 'aside') return;
@@ -245,7 +272,22 @@ function pageScript(arg) {
       return;
     }
     if (tag === 'svg') {
-      items.push({ type: 'svg', ...box(el), build, viewBox: el.getAttribute('viewBox'), label: el.getAttribute('aria-label') || '', markup: el.outerHTML });
+      const elements=[];
+      for (const n of el.querySelectorAll('line,rect,circle,ellipse,polygon,polyline,path,text')) {
+        if(n.closest('defs')) continue;
+        const csn=getComputedStyle(n), ctm=n.getScreenCTM();
+        const xy=(x,y)=>({x:ctm.a*x+ctm.c*y+ctm.e-S.left,y:ctm.b*x+ctm.d*y+ctm.f-S.top});
+        const attr=k=>parseFloat(n.getAttribute(k)||0);
+        const e={kind:n.tagName,fill:rgb(csn.fill),stroke:rgb(csn.stroke),strokeWidth:parseFloat(csn.strokeWidth)*Math.hypot(ctm.a,ctm.b),dash:csn.strokeDasharray,build:buildOf(n)};
+        if(n.tagName==='text') { const q=n.getBoundingClientRect();e.x=q.left-S.left;e.y=q.top-S.top;e.w=q.width;e.h=q.height;e.text=n.textContent;e.size=parseFloat(csn.fontSize)*Math.hypot(ctm.a,ctm.b);e.weight=+csn.fontWeight;e.family=csn.fontFamily; }
+        else if(n.tagName==='line') e.points=[xy(attr('x1'),attr('y1')),xy(attr('x2'),attr('y2'))];
+        else if(n.tagName==='rect') {e.points=[xy(attr('x'),attr('y')),xy(attr('x')+attr('width'),attr('y')+attr('height'))];e.radius=attr('rx');}
+        else if(n.tagName==='circle'||n.tagName==='ellipse') {const rx=attr(n.tagName==='circle'?'r':'rx'),ry=attr(n.tagName==='circle'?'r':'ry');e.points=[xy(attr('cx')-rx,attr('cy')-ry),xy(attr('cx')+rx,attr('cy')+ry)];}
+        else if(n.tagName==='path') {const len=n.getTotalLength();e.points=Array.from({length:65},(_,i)=>{const p=n.getPointAtLength(len*i/64);return xy(p.x,p.y);});e.closed=/z\s*$/i.test(n.getAttribute('d'));}
+        else {e.points=Array.from(n.points,p=>xy(p.x,p.y));e.closed=n.tagName==='polygon';}
+        elements.push(e);
+      }
+      items.push({ type: 'svg', ...box(el), build, viewBox: el.getAttribute('viewBox'), label: el.getAttribute('aria-label') || '', markup: el.outerHTML, elements });
       return;
     }
     if (tag === 'x-connector') {
@@ -273,7 +315,7 @@ function pageScript(arg) {
         lines: lineCount(el), runs, list: tag === 'li' ? (el.parentElement.tagName.toLowerCase()) : null,
         liIndex: tag === 'li' ? [...el.parentElement.children].indexOf(el) + 1 : null,
         display: cs.display, alignItems: cs.alignItems, justify: cs.justifyContent,
-        inFlow: cs.position !== 'absolute' });
+        inFlow: cs.position !== 'absolute', visualLines: visualLines(el) });
       return;
     }
     if (d) items.push({ type: 'rect', ...box(el), build, deco: d, tag });
@@ -291,7 +333,7 @@ function pageScript(arg) {
 }
 
 (async () => {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
   const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   const only = argv;

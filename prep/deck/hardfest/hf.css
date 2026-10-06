@@ -23,15 +23,15 @@ aside { display: none; }
 .lead { font-weight: 600; font-size: 48px; line-height: 1.25; }
 .body { font-weight: 400; font-size: 40px; line-height: 1.3; }
 .sm   { font-weight: 400; font-size: 34px; line-height: 1.3; }
-.lbl  { font-weight: 600; font-size: 32px; line-height: 1.25; color: #8F8F8F; }
+.lbl  { font-weight: 600; font-size: 32px; line-height: 1.25; color: #BDBDBD; }
 .num  { font-weight: 800; font-size: 80px; line-height: 1; color: #46CDAE; }
-.mono { font-family: 'JetBrains Mono'; }
+.mono { font-family: 'Menlo', 'Courier New', monospace; }
 .b { font-weight: 700; }
 .c { text-transform: none; }
 
 /* colours */
 .sort { color: #46CDAE; } .hash { color: #E2489B; } .flat { color: #FFFFFF; } .radix { color: #9B87F5; }
-.acc { color: #46CDAE; } .mut { color: #8F8F8F; } .sec { color: #C8C8C8; } .ph { color: #F2C14E; } .ink { color: #000; }
+.acc { color: #46CDAE; } .mut { color: #BDBDBD; } .sec { color: #C8C8C8; } .ph { color: #F2C14E; } .ink { color: #000; }
 .bg-sort { background: #46CDAE; } .bg-hash { background: #E2489B; } .bg-flat { background: #FFFFFF; } .bg-radix { background: #9B87F5; }
 .pale-sort { background: #174F45; } .pale-hash { background: #5E1C42; } .hl { background: #0B2B26; }
 
