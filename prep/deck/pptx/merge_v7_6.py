@@ -137,6 +137,13 @@ for name in order:
         ts = shape.findall('.//a:t', NS)
         if off is not None and int(off.get('x')) > 8000000 and int(off.get('y')) > 4500000 and len(ts) == 1 and (ts[0].text or '').isdigit():
             ts[0].text = str(topic_numbers[topic])
+    if name == 'backup':
+        # The index's native labels also refer to topic numbers, not physical
+        # positions. Eight inserted transitions shift every backup topic.
+        labels = [t for t in root.findall('.//a:t', NS) if (t.text or '').isdigit()]
+        assert len(labels) == 18  # 17 index labels, then the slide footer
+        for t in labels[:-1]:
+            t.text = str(int(t.text) + 8)
     data[part] = serial(root)
 
 # Rebuild section membership using existing section boundaries and stable IDs.
