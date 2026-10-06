@@ -8,6 +8,15 @@ text=(ROOT/'prep/script/full_script.md').read_text()
 chunks=re.findall(r'^### \d+\. `([^`]+)`[^\n]*\n(.*?)(?=^### \d+\. |\Z)',text,re.M|re.S)
 chunks=dict(chunks)
 source={
+ 'meme-approve':'Оригинальная иллюстрация ImageGen, V6; assets/src/img/memes_v6_early_prompts.txt. Мем №31: импульсивный approve после слов о линейной сложности. Технические условия исходного дифа остаются на diff/contract.',
+ 'meme-boxing':'Оригинальная иллюстрация ImageGen, V6; assets/src/img/memes_v6_early_prompts.txt. Мем №32: число операций не задаёт одинаковую стоимость разных операций. O(n) для таблицы — средняя оценка. Победитель раскрывается только на следующем result.',
+ 'meme-trailer':'Оригинальная иллюстрация ImageGen, V6; assets/src/img/memes_v6_early_prompts.txt. Мем №33: цена действий в измеренной реализации. Это метафора после result, не новая модель задержек и не утверждение, что все хеш-таблицы медленнее сортировки.',
+ 'meme-receipt':'Оригинальная иллюстрация ImageGen, V6; assets/src/img/memes_v6_early_prompts.txt. Мем №34: reserve, вставки, выгрузка и уничтожение входят в полный замер. Закрывающая скобка обозначает вызов деструктора временной таблицы.',
+ 'meme-quest':'Оригинальная иллюстрация ImageGen, V6; assets/src/img/memes_v6_late_prompts.txt. Мем №42: адрес следующего чтения зависит от предыдущего. Метафора механизма, не измеренная декомпозиция коэффициента ускорения.',
+ 'meme-spiders':'Шаблон Spider-Man Pointing at Spider-Man: https://magicmeme.com/meme/spiderman-pointing-at-spiderman ; файл https://cdn.magicmeme.com/templates/spiderman-pointing-at-spiderman.png . Изображение персонажей Marvel, не генерация ImageGen. Собственные редактируемые подписи V6. Мем №45. O(n) относится к средней оценке на рассматриваемой задаче, а не ко времени в наносекундах. Сравнение узловой unordered_set и Abseil flat_hash_set на flat.',
+ 'meme-comma':'Оригинальная иллюстрация ImageGen, V6; assets/src/img/memes_v6_late_prompts.txt. Мем №54. ×3,3 относится к серии x33: iPhone 14 Pro, utility, N=2^20. Значение ×33 не является результатом измерений.',
+ 'meme-address':'Оригинальная иллюстрация ImageGen, V6; assets/src/img/memes_v6_late_prompts.txt. Мем №83 преобразован из диалога в посылку с неполным адресом. Модель чипа не определяет тип ядра для конкретного запуска. QoS не закрепляет поток за ядром; на cores показаны косвенные признаки отдельной нагрузки.',
+ 'meme-weather':'Оригинальная иллюстрация ImageGen, V6; assets/src/img/memes_v6_late_prompts.txt. Мем №57. CI отвечает про своё окружение. Погода — метафора различия окружений, не утверждение об измерении погоды или ненадёжности CI.',
  'cover':'Материалы доклада: https://github.com/Neoron95/conference-hardfest-algorithms . Кейс обезличен, детали упрощены; эксперименты на тестовых данных.',
  'about':'Биография и портрет: пользовательский референс /Users/nagornov/Downloads/IphoneLLV-v2-c-заметками.pptx, слайд 2. Публичный кейс текущего доклада с перечисленными проектами не связывается.',
  'audience':'Разработчики, тимлиды и ревьюеры, авторы перф-тестов. Обещание: выбирать решение на своих данных и проверять замер в целевой среде.',

@@ -7,18 +7,24 @@
     "about",
     "audience",
     "diff",
+    "meme-approve",
     "case",
     "vote",
+    "meme-boxing",
     "result",
+    "meme-trailer",
     "contract",
+    "meme-receipt",
     "sort-walk",
     "hash-walk",
     "cost-model",
     "curve",
     "nodes",
     "memory",
+    "meme-quest",
     "flatmin",
     "flat",
+    "meme-spiders",
     "radix-walk",
     "share-q",
     "share",
@@ -27,9 +33,12 @@
     "learned",
     "qos",
     "x33",
+    "meme-comma",
     "core-model",
+    "meme-address",
     "cores",
     "flip",
+    "meme-weather",
     "merge-walk",
     "merge",
     "prod",
@@ -95,11 +104,11 @@
       "start": "twoways"
     }
   },
-  "mainCount": 33,
+  "mainCount": 42,
   "modules": [
     {
       "id": "radixmin",
-      "after": "flat",
+      "after": "meme-spiders",
       "durationSeconds": 60
     },
     {
@@ -113,5 +122,5 @@
       "durationSeconds": 60
     }
   ],
-  "revision": "v5"
+  "revision": "v6"
 }
