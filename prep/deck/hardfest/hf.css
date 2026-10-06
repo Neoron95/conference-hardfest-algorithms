@@ -44,7 +44,7 @@ aside { display: none; }
 .bar { position: absolute; border-radius: 10px; }
 .rule { position: absolute; height: 0; border-top: 3px solid #333; }
 
-/* V6: short comic interludes. Captions remain native editable PPTX text. */
+/* V7: transparent paper-collage interludes. Captions remain native editable PPTX text. */
 .meme-art { position: absolute; left: 117px; top: 256px; width: 1686px; height: 624px; object-fit: contain; }
 .meme-caption { position: absolute; left: 117px; top: 904px; width: 1686px; font-size: 46px; font-weight: 700; line-height: 1.15; text-align: center; }
 .meme-label { position: absolute; font-family: 'Menlo', 'Courier New', monospace; font-size: 42px; font-weight: 700; line-height: 1.2; text-align: center; }
