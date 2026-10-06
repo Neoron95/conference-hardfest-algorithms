@@ -4,6 +4,8 @@
   "title": "O(n) проиграл O(n log n) — HardFest 2026",
   "order": [
     "cover",
+    "about",
+    "audience",
     "diff",
     "case",
     "vote",
@@ -88,7 +90,7 @@
       "start": "twoways"
     }
   },
-  "mainCount": 26,
+  "mainCount": 28,
   "modules": [
     {
       "id": "radixmin",
@@ -105,5 +107,6 @@
       "after": "platforms",
       "durationSeconds": 60
     }
-  ]
+  ],
+  "revision": "v4"
 }

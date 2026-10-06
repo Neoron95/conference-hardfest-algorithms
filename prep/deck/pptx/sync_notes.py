@@ -9,6 +9,8 @@ chunks=re.findall(r'^### \d+\. `([^`]+)`[^\n]*\n(.*?)(?=^### \d+\. |\Z)',text,re
 chunks=dict(chunks)
 source={
  'cover':'Материалы доклада: https://github.com/Neoron95/conference-hardfest-algorithms . Кейс обезличен, детали упрощены; эксперименты на тестовых данных.',
+ 'about':'Биография и портрет: пользовательский референс /Users/nagornov/Downloads/IphoneLLV-v2-c-заметками.pptx, слайд 2. Публичный кейс текущего доклада с перечисленными проектами не связывается.',
+ 'audience':'Разработчики, тимлиды и ревьюеры, авторы перф-тестов. Обещание: выбирать решение на своих данных и проверять замер в целевой среде.',
  'diff':'Публичный пример кода. В эксперименте reserve добавлен; производственный результат не заявляется.',
  'case':'Самостоятельная упрощённая задача: L sorted unique; D может содержать повторы; числовые id. Отдельные тестовые серии фиксируют другие свойства входа.',
  'vote':'Базовая серия: N=U=2^20, случайные uint64_t, порядок результата не важен. O(n) — средняя оценка unordered_set.',
@@ -34,7 +36,7 @@ source={
  'platforms':'Применение метода, без новых измерений. prep/research/beyond.md; SE-0304. Контейнеры, actor isolation, executor и QoS различаются. CPU в CI не обязан повторять целевую платформу.',
  'review':'Возврат к исходному публичному дифу. Пауза 5 секунд на собственный комментарий. Выводы привязаны к контракту, данным и окружению.',
  'final':'QR: https://github.com/Neoron95/conference-hardfest-algorithms .'}
-expected=[0,2,3,2,3,0,3,2,2,3,3,2,2,3,3,2,3,2,2,3,3,2,2,2,4,1]
+expected=[0,0,0,2,3,2,3,0,3,2,2,3,3,2,2,3,3,2,3,2,2,3,3,2,2,2,4,1]
 for n,id in enumerate(deck['order'][:deck['mainCount']]):
  c=chunks[id]
  speech=re.search(r'\*\*Говорю\.\*\*\s*(.*?)(?=\*\*Если отстаю)',c,re.S).group(1)
@@ -45,6 +47,7 @@ for n,id in enumerate(deck['order'][:deck['mainCount']]):
  assert orders==list(range(1,clicks+1)),(id,'build',orders,clicks)
  # Every note starts with the same cue/text as the authoritative script.
  note=f'Слайд {n+1}: {id}\n'+c.strip()+f'\n\nИсточники и условия.\n{source[id]}\n'
+ if id=='about':note=speech.strip()+f'\n\n──────────\nИсточники и условия\n{source[id]}\n'
  note=re.sub(r'\*\*([^*]+)\*\*',r'\1',note).replace('`','')
  encoded=html.escape(note,quote=False).replace('\n','<br>')
  s=re.sub(r'<aside>.*?</aside>','<aside>'+encoded+'</aside>',s,flags=re.S)
