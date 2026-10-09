@@ -6,3 +6,4 @@ bench/build/
 # deck build temp files
 prep/deck/*/slides/.render-*.html
 __pycache__/
+prep/.v8-build/

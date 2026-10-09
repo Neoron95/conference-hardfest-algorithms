@@ -1,0 +1,50 @@
+/* HardFest 2026 deck, v2 (native Montserrat, template palette). Canvas 1920x1080 = 10" x 5.625".
+   The PPTX builder reads computed layout from Chromium, so anything expressible here ends up on the slide.
+   Frame (do not put content there): logo x 1586-1816 / y 144-223, slide number x 1760-1868 / y 934-1017.
+   Content area: x 117-1803, y 300-960 (y 250-960 under a one-line title). */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+section { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; color: #fff;
+  font-family: 'Montserrat'; font-weight: 400; }
+aside { display: none; }
+.abs { position: absolute; }
+
+/* title block (the builder re-sets these two in template style; keep them as written here) */
+.k { position: absolute; left: 117px; top: 72px; width: 1400px; font-size: 29.3px; font-weight: 600; line-height: 36px;
+  letter-spacing: 2.5px; text-transform: uppercase; color: #8F8F8F; }
+.k b, .k .a { color: #46CDAE; font-weight: 600; }
+.t { position: absolute; left: 117px; top: 115px; width: 1424px; font-size: 58.67px; font-weight: 800; line-height: 1.12; color: #fff; }
+.t.nok { top: 103px; }
+
+/* type scale (px at 1920 wide; pt = px * 0.375) */
+.hero { font-weight: 800; font-size: 240px; line-height: 1; letter-spacing: -4px; }
+.huge { font-weight: 800; font-size: 160px; line-height: 1; letter-spacing: -3px; }
+.big  { font-weight: 800; font-size: 96px; line-height: 1.05; letter-spacing: -1px; }
+.xl   { font-weight: 700; font-size: 64px; line-height: 1.15; }
+.lead { font-weight: 600; font-size: 48px; line-height: 1.25; }
+.body { font-weight: 400; font-size: 40px; line-height: 1.3; }
+.sm   { font-weight: 400; font-size: 34px; line-height: 1.3; }
+.lbl  { font-weight: 600; font-size: 32px; line-height: 1.25; color: #BDBDBD; }
+.num  { font-weight: 800; font-size: 80px; line-height: 1; color: #46CDAE; }
+.mono { font-family: 'Menlo', 'Courier New', monospace; }
+.b { font-weight: 700; }
+.c { text-transform: none; }
+
+/* colours */
+.sort { color: #46CDAE; } .hash { color: #E2489B; } .flat { color: #FFFFFF; } .radix { color: #9B87F5; }
+.acc { color: #46CDAE; } .mut { color: #BDBDBD; } .sec { color: #C8C8C8; } .ph { color: #F2C14E; } .ink { color: #000; }
+.bg-sort { background: #46CDAE; } .bg-hash { background: #E2489B; } .bg-flat { background: #FFFFFF; } .bg-radix { background: #9B87F5; }
+.pale-sort { background: #174F45; } .pale-hash { background: #5E1C42; } .hl { background: #0B2B26; }
+
+/* template shapes */
+.card { position: absolute; background: #000; border: 4px solid #fff; border-radius: 24px; }
+.card.fill { background: #46CDAE; border-color: #fff; color: #000; }
+.card.thin { border-width: 3px; }
+.pill { position: absolute; border-radius: 16px; text-align: center; font-weight: 700; }
+.panel { position: absolute; background: #121212; border-radius: 24px; }
+.bar { position: absolute; border-radius: 10px; }
+.rule { position: absolute; height: 0; border-top: 3px solid #333; }
+
+/* V7: transparent paper-collage interludes. Captions remain native editable PPTX text. */
+.meme-art { position: absolute; left: 117px; top: 256px; width: 1686px; height: 624px; object-fit: contain; }
+.meme-caption { position: absolute; left: 117px; top: 904px; width: 1686px; font-size: 46px; font-weight: 700; line-height: 1.15; text-align: center; }
+.meme-label { position: absolute; font-family: 'Menlo', 'Courier New', monospace; font-size: 42px; font-weight: 700; line-height: 1.2; text-align: center; }

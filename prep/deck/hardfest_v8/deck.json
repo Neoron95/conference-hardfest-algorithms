@@ -1,0 +1,125 @@
+{
+  "v": 1,
+  "native": true,
+  "title": "O(n) проиграл O(n log n) — HardFest 2026 · V8",
+  "order": [
+    "cover",
+    "about",
+    "audience",
+    "diff",
+    "case",
+    "vote",
+    "meme-boxing",
+    "result",
+    "platform-map",
+    "meme-trailer",
+    "contract",
+    "meme-receipt",
+    "sort-short",
+    "hash-short",
+    "cost-model",
+    "curve",
+    "nodes",
+    "language-layout",
+    "memory",
+    "cpu-loads",
+    "xeon-cache",
+    "meme-quest",
+    "flatmin",
+    "flat",
+    "meme-spiders",
+    "share-q",
+    "share",
+    "outcontract",
+    "inputorder",
+    "speculation",
+    "learned",
+    "qos",
+    "x33",
+    "meme-comma",
+    "core-model",
+    "cache-path",
+    "meme-address",
+    "cores",
+    "flip",
+    "meme-weather",
+    "merge-short",
+    "merge",
+    "prod",
+    "platforms",
+    "review",
+    "final",
+    "backup",
+    "radixmin",
+    "learned-table",
+    "nb-lang",
+    "allocs",
+    "decision",
+    "share-full",
+    "nb-where",
+    "nb-kernel",
+    "nb-dense",
+    "nb-merge",
+    "qos-bg",
+    "systems",
+    "drift",
+    "stdlib",
+    "cachecost",
+    "sortmin",
+    "hashtable",
+    "reserve",
+    "checklist",
+    "sums",
+    "twoways",
+    "bigo",
+    "questions",
+    "sort-walk",
+    "hash-walk",
+    "radix-walk",
+    "merge-walk"
+  ],
+  "sections": {
+    "s0": {
+      "description": "Задача и три среды",
+      "start": "cover"
+    },
+    "s1": {
+      "description": "Цена операций, память и реализация",
+      "start": "sort-short"
+    },
+    "s2": {
+      "description": "Данные и контракт",
+      "start": "share-q"
+    },
+    "s3": {
+      "description": "Спекуляция и модель опыта",
+      "start": "speculation"
+    },
+    "s4": {
+      "description": "Ядра, кэши и среда исполнения",
+      "start": "qos"
+    },
+    "s5": {
+      "description": "Решение и ревью",
+      "start": "merge-short"
+    },
+    "s6": {
+      "description": "Дополнительные материалы",
+      "start": "backup"
+    }
+  },
+  "mainCount": 46,
+  "modules": [
+    {
+      "id": "learned-table",
+      "after": "learned",
+      "durationSeconds": 60
+    },
+    {
+      "id": "nb-lang",
+      "after": "platforms",
+      "durationSeconds": 60
+    }
+  ],
+  "revision": "v8"
+}

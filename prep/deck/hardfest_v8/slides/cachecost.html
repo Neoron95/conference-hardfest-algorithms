@@ -1,0 +1,40 @@
+<section id="cachecost">
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">ОТ 512K К 1M ХЕШ ДОРОЖАЕТ В 1,4 РАЗА, СОРТИРОВКА — НА 3%</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:290px;width:960px">нс на элемент · U = N/2 · M2 Pro</p>
+<p class="abs lbl" style="left:117px;top:340px;width:260px">N</p>
+<p class="abs lbl sort" style="left:380px;top:340px;width:300px;text-align:right">sort + unique</p>
+<p class="abs lbl hash" style="left:670px;top:340px;width:300px;text-align:right">unordered_set</p>
+<div class="rule" style="left:117px;top:392px;width:883px"></div>
+<div class="bar hl" style="left:117px;top:562px;width:883px;height:156px;border:3px solid #46CDAE;border-radius:16px"></div>
+<p class="abs" style="left:145px;top:406px;width:240px;font-size:44px;font-weight:600;line-height:72px">1K</p>
+<p class="abs" style="left:380px;top:406px;width:300px;font-size:44px;font-weight:600;line-height:72px;text-align:right">14,4</p>
+<p class="abs" style="left:700px;top:406px;width:270px;font-size:44px;font-weight:600;line-height:72px;text-align:right">13,3</p>
+<p class="abs" style="left:145px;top:486px;width:240px;font-size:44px;font-weight:600;line-height:72px">64K</p>
+<p class="abs" style="left:380px;top:486px;width:300px;font-size:44px;font-weight:600;line-height:72px;text-align:right">17,8</p>
+<p class="abs" style="left:700px;top:486px;width:270px;font-size:44px;font-weight:600;line-height:72px;text-align:right">17,5</p>
+<p class="abs" style="left:145px;top:566px;width:240px;font-size:44px;font-weight:700;line-height:72px">512K</p>
+<p class="abs sort" style="left:380px;top:566px;width:300px;font-size:44px;font-weight:700;line-height:72px;text-align:right">19,6</p>
+<p class="abs hash" style="left:700px;top:566px;width:270px;font-size:44px;font-weight:700;line-height:72px;text-align:right">18,7</p>
+<p class="abs" style="left:145px;top:642px;width:240px;font-size:44px;font-weight:700;line-height:72px">1M</p>
+<p class="abs sort" style="left:380px;top:642px;width:300px;font-size:44px;font-weight:700;line-height:72px;text-align:right">20,1</p>
+<p class="abs hash" style="left:700px;top:642px;width:270px;font-size:44px;font-weight:700;line-height:72px;text-align:right">26,3</p>
+<p class="abs" style="left:145px;top:726px;width:240px;font-size:44px;font-weight:600;line-height:72px">4M</p>
+<p class="abs" style="left:380px;top:726px;width:300px;font-size:44px;font-weight:600;line-height:72px;text-align:right">21,5</p>
+<p class="abs" style="left:700px;top:726px;width:270px;font-size:44px;font-weight:600;line-height:72px;text-align:right">55,7</p>
+<div class="rule" style="left:117px;top:812px;width:883px"></div>
+<p class="abs lbl" style="left:145px;top:860px;width:240px;line-height:40px">512K → 1M</p>
+<p class="abs big sort" style="left:380px;top:826px;width:300px;text-align:right">+3%</p>
+<p class="abs big hash" style="left:640px;top:826px;width:330px;text-align:right">×1,4</p>
+<div class="card" style="left:1100px;top:300px;width:703px;height:600px"></div>
+<p class="abs lbl" style="left:1152px;top:344px;width:600px">рабочий набор хеша</p>
+<p class="abs" style="left:1152px;top:392px;width:600px;font-size:60px;font-weight:800;line-height:72px">32·U + 8·N</p>
+<p class="abs" style="left:1152px;top:510px;width:620px;font-size:42px;font-weight:700;line-height:56px"><span class="mut">512K</span>  ≈12 МиБ <span class="sort">&lt; L2</span></p>
+<p class="abs" style="left:1152px;top:590px;width:620px;font-size:42px;font-weight:700;line-height:56px"><span class="mut">1M</span>  ≈24 МиБ <span class="hash">&gt; L2</span></p>
+<p class="abs lbl" style="left:1152px;top:676px;width:620px">L2 P-кластера M2 Pro = 16 МиБ</p>
+<div class="rule" style="left:1152px;top:752px;width:600px"></div>
+<p class="abs sm sec" style="left:1152px;top:776px;width:620px;line-height:44px">Арифметика, а не счётчики:<br>причина — гипотеза</p>
+<!-- /body -->
+<aside>Backup, вне тайминга. Таблица за графиком curve.<br>Q&amp;A: «Почему ступенька именно там? Откуда двенадцать и двадцать четыре мегабайта?»<br>Ответ: сортировка дорожает плавно — плюс один уровень логарифма на каждое удвоение. Хеш-таблица почти не дорожает до полумиллиона, а между 512K и миллионом — ступенька: 18,7 → 26,3, на четырёх миллионах 55,7. Посчитаем рабочий набор. Узел в libc++ — 24 байта, аллокатор Apple округляет его до 32; заголовка перед блоком нет. Плюс по 8 байт на ячейку, а ячеек после reserve(N) — N, вдвое больше, чем ключей. На полумиллионе входа таблица занимает около 12 МиБ, это меньше паспортных 16 МиБ L2. Одновременно вход добавляет ещё 4 МиБ, а кэш занят и другой работой. На миллионе таблица около 24 МиБ, больше L2. Само размещение в кэше здесь не измерено. Это арифметика, а не измерение причины: чтобы сказать «промахи», нужны счётчики, и это следующий шаг. У сортировки тоже есть цена памяти. В этой серии её время растёт более плавно.<br>━━━━━━━━━━━━━━━━━━━━━━━━<br>Щелчки: нет, всё на экране сразу.<br>Под рукой:<br>— 32·U + 8·N (apple.md §3.3, cpp.md §2.4, errata P0-5): 512K (U = 256K): 8 + 4 = 12 МиБ (12,6 МБ); 1M: 16 + 8 = 24 МиБ (25,2 МБ). «А вход?» — ещё 8·N, на 512K это 4 МиБ. Его читают один раз подряд, префетчер ведёт поток, поэтому считаю таблицу. Но 12 + 4 = 16 — впритык, ещё одна причина говорить «гипотеза».<br>— «Почему нет счётчиков?» (qa H1): «Согласен, это гипотеза. Следующий шаг — Instruments → CPU Counters, L1D Cache Miss Sampling».<br>— «А TLB?» (qa H2): не исключал; 24 МиБ — около 1 500 страниц по 16 КБ. SLC 24 МБ не называть: sysctl его не отдаёт.<br>— «22,6 или 26,3?» (qa M3): разные сессии; хеш на этой точке гуляет на 16%, сортировка — на полпроцента. Здесь сессия А, как на curve.<br>— 1,4 раза: 26,3 / 18,7 = 1,41; сортировка 20,1 / 19,6 = +2,6%. На 4M сортировка быстрее в 2,6 раза (55,7 / 21,5).<br>Условия и источники (были в подвале слайда): нс на элемент · U = N/2 · M2 Pro, macOS, libc++, userInitiated · id — случайные 64-битные · медиана 4 блоков · сессия А  · unordered_set на 1M между сессиями: 22,6–26,3 нс/эл<br>С экрана убрано: сортировка дорожает плавно: +1 уровень log N на каждое удвоение. Рабочий набор ≈ 32·U + 8·N: узел libc++ 24 Б, malloc округляет до 32 Б (квант 16 Б, без заголовка), плюс 8 Б на ячейку, а ячеек после reserve(N) — N. 512K (U = 256K) → ≈12 МиБ — меньше 16 МиБ L2 P-кластера по sysctl, но с входом уже впритык; 1M → ≈24 МиБ — больше L2; ступенька — между этими точками. Это арифметика, а не счётчики промахов: причина не измерена напрямую, счётчики — следующий шаг. Альтернативы: TLB, аллокатор.</aside>
+</section>

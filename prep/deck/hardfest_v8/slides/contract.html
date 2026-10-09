@@ -1,0 +1,16 @@
+<section id="contract">
+<p class="k">Условия сравнения</p>
+<h2 class="t">ПРАВИЛО: В ТАЙМЕРЕ ВСЯ ОПЕРАЦИЯ</h2>
+<!-- body -->
+<div class="panel" style="left:117px;top:300px;width:1686px;height:300px"></div>
+<p class="abs mono" style="left:165px;top:340px;width:1600px;font-size:40px;line-height:72px;white-space:pre">auto v = input;                <span class="mut">// вне таймера</span><br><span class="acc">timer.start();</span> alg(v); <span class="acc">timer.stop();</span><br>if (sorted(v) != ref) abort();  <span class="mut">// и в релизе</span></p>
+<p class="abs lbl" style="left:117px;top:652px;width:360px;line-height:64px">в таймере:</p>
+<p class="pill" style="left:400px;top:644px;width:270px;height:76px;border:3px solid #fff;font-size:36px;line-height:70px;font-weight:600">reserve</p>
+<p class="pill" style="left:700px;top:644px;width:270px;height:76px;border:3px solid #fff;font-size:36px;line-height:70px;font-weight:600">вставки</p>
+<p class="pill" style="left:1000px;top:644px;width:300px;height:76px;border:3px solid #fff;font-size:36px;line-height:70px;font-weight:600">выгрузка</p>
+<p class="pill" style="left:1330px;top:644px;width:330px;height:76px;border:3px solid #fff;font-size:36px;line-height:70px;font-weight:600">деструктор</p>
+<svg style="position:absolute;left:117px;top:780px;width:40px;height:150px" width="40" height="150" viewBox="0 0 40 150"><polyline points="6,0 6,48 34,75 6,102 6,150" fill="none" stroke="#46CDAE" stroke-width="8" stroke-linejoin="round"/></svg>
+<p class="abs lead" style="left:190px;top:790px;width:1500px;font-size:56px;line-height:68px;font-weight:700">Быстрое, но неправильное решение<br>в турнире не участвует</p>
+<!-- /body -->
+<aside>Уточним секундомер. Вход готов, на выходе нужен массив тех же значений без повторов. Сейчас его порядок не важен.<br><br>В таймере вся операция. Для таблицы это reserve, вставки, выгрузка в массив и уничтожение. Закрывающая скобка тоже стоит времени.<br><br>Свежую копию входа готовим заранее. После замера сверяем результат с эталоном, в том числе в релизе. Быстрое решение с потерянными id к сравнению не допускаем.<br><br>Reserve добавили намеренно, чтобы сравнивать нормальную реализацию. Теперь коротко посмотрим, что каждый вариант делает с числами.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>bench/dedup_bench.cpp и bench/results/summary.md. Копирование входа вне таймера, полный alg внутри, проверка после. Базовый контракт unordered unique.</aside>
+</section>

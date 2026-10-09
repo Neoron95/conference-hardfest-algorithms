@@ -1,0 +1,27 @@
+<section id="qos">
+<p class="k">Раунд <b>4</b> из 4 · процессор</p>
+<h2 class="t">МЕНЯЕМ QoS ПОТОКА, МЕНЯЕТСЯ РЕЗУЛЬТАТ</h2>
+<!-- body -->
+<p class="abs mono acc" style="left:117px;top:292px;width:1686px;font-size:40px;">pthread_set_qos_class_self_np(QOS_CLASS_UTILITY, 0);</p>
+<p class="abs lbl" style="left:117px;top:364px;width:1686px;font-size:36px;">N = 512K · U = N/2 · sort / unordered_set, нс на элемент</p>
+<p class="abs lead" style="left:658px;top:432px;width:545px;font-size:40px;text-align:center;">userInitiated</p>
+<p class="abs lead acc" style="left:1260px;top:432px;width:543px;font-size:40px;text-align:center;">utility</p>
+<div class="rule" style="left:117px;top:478px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:506px;width:515px;font-size:42px;">M2 Pro</p>
+<p class="abs lbl" style="left:117px;top:557px;width:515px;font-size:30px;">libc++</p>
+<p data-build-in="fade 1" class="abs lead" style="left:658px;top:506px;width:545px;font-size:50px;text-align:center;">19,6 / 18,7</p>
+<p data-build-in="fade 1" class="abs lead" style="left:1260px;top:506px;width:543px;font-size:50px;text-align:center;">20,1 / 21,0</p>
+<div class="rule" style="left:117px;top:610px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:638px;width:515px;font-size:42px;">Xeon VM</p>
+<p class="abs lbl" style="left:117px;top:689px;width:515px;font-size:30px;">Linux</p>
+<p data-build-in="fade 1" class="abs body sec" style="left:658px;top:638px;width:1145px;font-size:35px;">Apple QoS не применим</p>
+<p data-build-in="fade 1" class="abs lbl" style="left:658px;top:686px;width:1145px;font-size:30px;">см. сравнение сред</p>
+<div class="rule" style="left:117px;top:742px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:770px;width:515px;font-size:42px;">iPhone 14 Pro</p>
+<p class="abs lbl" style="left:117px;top:821px;width:515px;font-size:30px;">A16 Bionic</p>
+<p data-build-in="fade 1" class="abs lead" style="left:658px;top:770px;width:545px;font-size:50px;text-align:center;">19,6 / 18,2</p>
+<p data-build-in="fade 2" class="abs lead acc" style="left:1260px;top:770px;width:543px;font-size:50px;text-align:center;">55,3 / 105,3</p>
+<p data-build-in="fade 3" class="abs body" style="left:117px;top:876px;width:1686px;font-size:32px;">M2 Pro, 1M: преимущество sort выросло с ×1,3 до ×1,8</p>
+<!-- /body -->
+<aside>Раунд четвёртый. Код и входы прежние. Возвращается несрочная работа. Бенчмарк выставляет QoS C++ потоку через этот API. Мы сообщаем системе срочность, а планировщик выбирает исполнение. На Linux этого Apple API нет.<br><br>[щелчок] Полмиллиона id, половина уникальных. M2 Pro при обоих режимах даёт близкие результаты. На iPhone при высоком QoS тоже близко.<br><br>[щелчок] А iPhone в utility: сортировка около пятидесяти пяти наносекунд, таблица около ста пяти. Лидер поменялся, sort быстрее почти вдвое. [пауза 2 с]<br><br>Мы поменяли режим потока. Он повлиял на алгоритмы по-разному. [щелчок] На миллионе разрыв вырос и у M2 Pro. Поэтому универсальное правило про utility не выводим. На следующем слайде тот же телефон и больший вход, потом разберём процессор.<br><br>──────────<br>Источники и условия<br>prep/research/apple.md §5–6 и V7.6. Apple libc++, N=2^19,U/N=0,5. M2userInitiated19,6/18,7,utility20,1/21,0;iPhone14ProA16userInitiated19,6/18,2,utility55,3/105,3нс на элемент. Mac1M коэффициенты×1,3/×1,8. Нет эквивалентного AppleQoS в Linux, Xeon рейтинг позжеflip. SwiftTask(priority:) не измерен. QoS влияет на выбор, не гарантирует тип ядра. Apple https://developer.apple.com/news/?id=vk3m204o ; SwiftSE-0304 https://github.com/swiftlang/swift-evolution/blob/main/proposals/0304-structured-concurrency.md .</aside>
+</section>

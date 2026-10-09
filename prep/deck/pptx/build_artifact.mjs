@@ -3,9 +3,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 const pkg=process.env.ARTIFACT_TOOL_PATH || createRequire(import.meta.url).resolve('@oai/artifact-tool');
 const {Presentation,PresentationFile}=await import(pathToFileURL(pkg).href);
-const root=path.resolve(import.meta.dirname,'../hardfest');
+const deckName=process.env.HARDFEST_DECK || 'hardfest';
+const root=path.resolve(import.meta.dirname,'..',deckName);
 const work=process.env.PPTX_WORK || '/tmp/hardfest-pptx';
 const deck=JSON.parse(await fs.readFile(path.join(root,'deck.json'),'utf8'));
 const ids=process.argv.slice(2).length?process.argv.slice(2):deck.order;
@@ -16,7 +18,11 @@ const color=c=>c?('#'+c.hex+(c.a<1?'/'+Math.round(c.a*100):'')):'none';
 const position=i=>({left:i.x/2,top:i.y/2,width:Math.max(.1,i.w/2),height:Math.max(.1,i.h/2)});
 const font=s=>/Menlo|Mono|Courier/.test(s.family||'')?'Menlo':s.weight>=800?'Montserrat ExtraBold':s.weight>=600&&s.weight<700?'Montserrat SemiBold':'Montserrat';
 for (const [index,id] of ids.entries()) {
-  const data=JSON.parse(await fs.readFile(path.join(work,'extract-hardfest',id+'.json'),'utf8'));
+  const data=JSON.parse(await fs.readFile(path.join(work,'extract-'+deckName,id+'.json'),'utf8'));
+  if(deck.revision==='v8' || data.sourceSha256){
+    const actual=createHash('sha256').update(await fs.readFile(path.join(root,'slides',id+'.html'))).digest('hex');
+    if(data.sourceSha256!==actual)throw new Error(`${id}: extraction is stale; run extract.js again`);
+  }
   const slide=p.slides.add();slide.background.fill='#000000';
   const entry={id,index,hidden:index>=deck.mainCount,objects:[]};manifest.push(entry);
   const tag=(build,type,extra={})=>{const name=`hf-${++serial}`;entry.objects.push({name,build:build?.order||0,type,...extra});return name;};

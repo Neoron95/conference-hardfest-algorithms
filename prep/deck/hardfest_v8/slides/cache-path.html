@@ -1,0 +1,29 @@
+<section id="cache-path">
+<p class="k">Раунд <b>4</b> из 4 · процессор</p>
+<h2 class="t">ТИП ЯДРА И ПУТЬ ДАННЫХ</h2>
+<!-- body -->
+<p data-build-in="fade 1" class="abs " style="left:117px;top:306px;width:1686px;font-size:40px;font-weight:600;line-height:1.3">Упрощённый путь чтения при промахах</p>
+<div data-build-in="fade 1" class="card thin" style="left:117px;top:410px;width:212px;height:116px;border-radius:12px"></div>
+<p data-build-in="fade 1" class="abs " style="left:134px;top:440px;width:178px;font-size:39px;font-weight:700;line-height:1.1">Ядро</p>
+<div data-build-in="fade 1" class="card thin" style="left:411px;top:410px;width:212px;height:116px;border-radius:12px"></div>
+<p data-build-in="fade 1" class="abs " style="left:428px;top:440px;width:178px;font-size:39px;font-weight:700;line-height:1.1">L1</p>
+<div data-build-in="fade 1" class="card thin" style="left:705px;top:410px;width:212px;height:116px;border-radius:12px"></div>
+<p data-build-in="fade 1" class="abs " style="left:722px;top:440px;width:178px;font-size:39px;font-weight:700;line-height:1.1">L2</p>
+<div data-build-in="fade 1" class="card thin" style="left:999px;top:410px;width:430px;height:116px;border-radius:12px"></div>
+<p data-build-in="fade 1" class="abs " style="left:1016px;top:440px;width:396px;font-size:39px;font-weight:700;line-height:1.1">Дальше</p>
+<div data-build-in="fade 1" class="card thin" style="left:1529px;top:410px;width:274px;height:116px;border-radius:12px"></div>
+<p data-build-in="fade 1" class="abs " style="left:1546px;top:440px;width:240px;font-size:39px;font-weight:700;line-height:1.1">DRAM</p>
+<svg data-build-in="fade 1" class="abs" style="left:329px;top:462px" xmlns="http://www.w3.org/2000/svg" width="82" height="12" viewBox="0 0 82 12" aria-label="Путь чтения"><line x1="0" y1="6" x2="82" y2="6" stroke="#BDBDBD" stroke-width="4"/></svg>
+<svg data-build-in="fade 1" class="abs" style="left:623px;top:462px" xmlns="http://www.w3.org/2000/svg" width="82" height="12" viewBox="0 0 82 12" aria-label="Путь чтения"><line x1="0" y1="6" x2="82" y2="6" stroke="#BDBDBD" stroke-width="4"/></svg>
+<svg data-build-in="fade 1" class="abs" style="left:917px;top:462px" xmlns="http://www.w3.org/2000/svg" width="82" height="12" viewBox="0 0 82 12" aria-label="Путь чтения"><line x1="0" y1="6" x2="82" y2="6" stroke="#BDBDBD" stroke-width="4"/></svg>
+<svg data-build-in="fade 1" class="abs" style="left:1429px;top:462px" xmlns="http://www.w3.org/2000/svg" width="100" height="12" viewBox="0 0 100 12" aria-label="Путь чтения"><line x1="0" y1="6" x2="100" y2="6" stroke="#BDBDBD" stroke-width="4"/></svg>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:638px;width:510px;font-size:40px;font-weight:700;line-height:1.3">M2 Pro</p>
+<p data-build-in="fade 2" class="abs " style="left:705px;top:638px;width:510px;font-size:40px;font-weight:700;line-height:1.3">Xeon VM</p>
+<p data-build-in="fade 2" class="abs " style="left:1293px;top:638px;width:510px;font-size:40px;font-weight:700;line-height:1.3">iPhone 14 Pro</p>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:708px;width:510px;font-size:38px;font-weight:400;line-height:1.4">L1 ядра<br>L2 кластера</p>
+<p data-build-in="fade 2" class="abs " style="left:705px;top:708px;width:510px;font-size:35px;font-weight:400;line-height:1.45">L1, L2, L3 видны гостю<br>Доля кэша неизвестна</p>
+<p data-build-in="fade 2" class="abs " style="left:1293px;top:708px;width:510px;font-size:38px;font-weight:400;line-height:1.4">Свою топологию<br>проверяем на A16</p>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:879px;width:1686px;font-size:36px;font-weight:600;line-height:1.3">Большая таблица чаще уходит дальше. Цепочка складывает задержки</p>
+<!-- /body -->
+<aside>Как тип ядра связан с нашей таблицей?<br><br>[щелчок] Нужный адрес может попасть в ближайший L1. При промахе запрос ищет данные дальше: L2, другие доступные уровни, в конце оперативная память. Это упрощённая схема. Между L2 и памятью у разных чипов разное устройство, а иногда данные может отдать кэш другого ядра.<br><br>[щелчок] На M2 L1 относится к ядру, L2 разделяет кластер. У P- и E-кластеров разные параметры. В Xeon VM гость показывает L1, L2 и L3, но доступную долю общих ресурсов мы не знаем. Ёмкости Mac на A16 переносить нельзя.<br><br>Растёт рабочий набор таблицы, растёт риск уйти на более далёкий уровень. При цепочке узлов задержки складываются. Отдельный тест со ступеньками поможет проверить это объяснение для конкретного режима.<br><br>──────────<br>Источники и условия<br>Схема упрощённая, без претензии на полную когерентную топологию. L1/L2 и цена промаха Apple Silicon: https://developer.apple.com/videos/play/wwdc2025/308/ . Кластерные ресурсы Apple Silicon: https://developer.apple.com/videos/play/tech-talks/110147/ . Xeon L1/L2/L3 из bench/results/env.txt. Конфигурация гостя и размеры lscpu: https://man7.org/linux/man-pages/man1/lscpu.1.html . Точные ёмкости A16 и SLC M2 не заявлены. Путь чтения конкретного дедупа не измерен.</aside>
+</section>

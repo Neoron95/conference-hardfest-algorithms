@@ -1,0 +1,22 @@
+<section id="outcontract">
+<p class="k">Раунд <b>3</b> из 4 · данные и тикет</p>
+<h2 class="t">ТРЕБОВАНИЕ В ТИКЕТЕ МЕНЯЕТ ПОБЕДИТЕЛЯ</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:289px;width:1686px;font-size:40px">M2 Pro · libc++ · N = 2²⁰ · U = N/2 · нс на элемент</p>
+<div data-build-in="fade 1" class="rule" style="left:117px;top:344px;width:1686px"></div>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:360px;width:1100px;font-size:48px">Уникальные, порядок любой</p>
+<p data-build-in="fade 1" class="abs body sec" style="left:117px;top:422px;width:1100px">sort 20,2 · хеш 22,6</p>
+<p data-build-in="fade 1" class="pill" style="left:1383px;top:368px;width:420px;height:96px;border:3px solid #fff;font-size:48px;line-height:90px">≈ близко</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:488px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs lead" style="left:117px;top:504px;width:1100px;font-size:48px">Отсортированные</p>
+<p data-build-in="fade 2" class="abs body sec" style="left:117px;top:566px;width:1100px">sort 20,2 · хеш 32,6</p>
+<p data-build-in="fade 2" class="pill pale-sort" style="left:1383px;top:512px;width:420px;height:96px;border:3px solid #46CDAE;font-size:48px;line-height:90px">sort ×1,6</p>
+<div data-build-in="fade 3" class="rule" style="left:117px;top:632px;width:1686px"></div>
+<p data-build-in="fade 3" class="abs lead" style="left:117px;top:648px;width:1100px;font-size:48px">В порядке первого появления</p>
+<p data-build-in="fade 3" class="abs body sec" style="left:117px;top:710px;width:1100px">sort 74,6 · хеш 22,0</p>
+<p data-build-in="fade 3" class="pill pale-hash" style="left:1383px;top:656px;width:420px;height:96px;border:3px solid #E2489B;font-size:48px;line-height:90px">хеш ×3,4</p>
+<p data-build-in="fade 3" class="abs lead acc" style="left:117px;top:803px;width:1686px;font-size:37px;">«Порядок любой» допускает разный порядок при каждом запуске</p>
+<p class="abs lbl" style="left:117px;top:881px;width:1686px;font-size:30px;line-height:38px;">M2 Pro: эта серия&nbsp;&nbsp;&nbsp; Xeon VM: не измерено&nbsp;&nbsp;&nbsp; iPhone 14 Pro: не измерено</p>
+<!-- /body -->
+<aside>Фраза «массив без повторов» задаёт разные задачи. Посмотрим на обещанный результат, или контракт.<br><br>[щелчок] Любой порядок: в этой серии подходы близки. [щелчок] Отсортированный результат: таблица дополнительно сортирует уникальные ключи и отстаёт. В нашем дифе старый код возвращал отсортированный массив, новый молча изменил это свойство.<br><br>[щелчок] Сохраняем первое появление: здесь хеш впереди больше чем втрое. Таблица отвечает, встречался ли id, а мы записываем результат по порядку входа. Сортировка в измеренном варианте восстанавливает исходные позиции.<br><br>Условие «без повторов» одинаковое. Требование к порядку меняет работу. И «любой порядок» должен допускать разные последовательности при разных запусках. Иначе скрытое требование живёт в следующем этапе или тесте. Эти числа относятся к M2. Такой же тройки контрактов на Xeon и телефоне здесь нет.<br><br>──────────<br>Источники и условия<br>prep/research/apple.md и cpp.md §9; M2 Pro/libc++, N=2^20,U/N=0,5. Любой порядок sort20,2/uset22,6;sorted20,2/32,6;first74,6/22,0нс на элемент. First дляsort:пары(ключ,индекс), затем вторая сортировка, не нижняя граница. Xeon/iPhone эта тройка не измерена. Порядок обходаSet/map не обещан; конкретная последовательность не гарантирует смену при каждом запуске, но контракт это допускает.</aside>
+</section>

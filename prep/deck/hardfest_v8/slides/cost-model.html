@@ -1,0 +1,12 @@
+<section id="cost-model">
+<h2 class="t nok">ЧТО ГОВОРИТ ОЦЕНКА СЛОЖНОСТИ</h2>
+<!-- body -->
+<p class="abs lead sort" style="left:117px;top:314px;width:750px;font-size:64px">O(N log N)</p>
+<p class="abs body" style="left:117px;top:414px;width:750px;font-size:44px;line-height:60px">Сравниваем ключи<br>Перемещаем элементы</p>
+<p class="abs lead hash" style="left:1020px;top:314px;width:780px;font-size:64px">В среднем O(N)</p>
+<p class="abs body" style="left:1020px;top:414px;width:780px;font-size:44px;line-height:60px">Считаем хеш<br>Ищем ключ в таблице</p>
+<p class="abs body sec" style="left:117px;top:620px;width:1686px;font-size:44px;line-height:60px">N — весь вход<br>U — сколько среди них разных</p>
+<p data-build-in="fade 1" class="abs acc" style="left:117px;top:824px;width:1686px;font-size:54px;line-height:70px">Цена сравнения ≠ цена вставки</p>
+<!-- /body -->
+<aside>N — весь вход, U — число разных значений. Здесь шесть и четыре.<br><br>Сортировка делает O(N log N) сравнений. Таблица выполняет в среднем O(N) операций при подходящем распределении хеша.<br><br>[щелчок] Но сравнение и вставка стоят по-разному. Оценка описывает рост работы. Время зависит ещё и от цены шага. Посмотрим на неё.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>N — весь вход, U — число различных ключей. Big-O не задаёт время на конкретной машине. https://eel.is/c++draft/alg.sort ; https://eel.is/c++draft/unord.req .</aside>
+</section>

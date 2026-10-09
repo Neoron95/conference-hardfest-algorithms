@@ -1,7 +1,7 @@
 // A static emergency version of the same 26-slide HTML source.
 const fs=require('fs'),path=require('path');
 const {chromium}=require('playwright');
-const root=path.resolve(__dirname,'../hardfest');
+const root=path.resolve(__dirname,'..',process.env.HARDFEST_DECK || 'hardfest');
 const deck=JSON.parse(fs.readFileSync(path.join(root,'deck.json')));
 const out=path.resolve(process.argv[2]||path.join(root,'../hardfest2026_deck.pdf'));
 const work=process.env.PPTX_WORK||'/tmp/hardfest-pptx';

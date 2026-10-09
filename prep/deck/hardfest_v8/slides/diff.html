@@ -1,0 +1,12 @@
+<section id="diff">
+<h2 class="t nok">КОД-РЕВЬЮ, ВТОРНИК, 17:40</h2>
+<!-- body -->
+<div class="panel" style="left:117px;top:250px;width:1686px;height:400px"></div>
+<p class="abs mono" style="left:165px;top:290px;width:1600px;font-size:40px;line-height:64px;white-space:nowrap"><span class="mut">// dedup ids after offline sync</span><br><span style="color:#F08A7A">- std::sort(ids.begin(), ids.end());</span><br><span style="color:#F08A7A">- ids.erase(std::unique(ids.begin(), ids.end()), ids.end());</span><br><span style="color:#7BD88F">+ std::unordered_set&lt;uint64_t&gt; s(ids.begin(), ids.end());</span><br><span style="color:#7BD88F">+ ids.assign(s.begin(), s.end());</span></p>
+<p data-build-in="fade 1" class="abs" style="left:117px;top:748px;width:1180px;font-size:56px;font-weight:700;line-height:72px"><span class="mut" style="font-weight:400">Коллега:</span> «Линейно вместо n log n»</p>
+<p data-build-in="fade 2" class="pill bg-sort ink" style="left:1343px;top:722px;width:460px;height:116px;font-size:60px;line-height:116px;font-weight:800">Approve ✓</p>
+<img data-build-in="fade 2" class="abs" style="left:1110px;top:812px;width:310px;height:155px;object-fit:contain" src="../assets/meme_approve_v7.png" alt="Бумажный курсор с тормозным следом спешит к кнопке Approve">
+<p data-build-in="fade 2" class="abs" style="left:117px;top:886px;width:1050px;font-size:38px;font-weight:600;line-height:50px">Мозг ещё читает. <span class="sort">Рука уже согласна.</span></p>
+<!-- /body -->
+<aside>Вторник, семнадцать сорок. На ревью маленький диф. Было: отсортировать массив и убрать повторы. Стало: сложить в хеш-таблицу и выгрузить обратно.<br><br>[щелчок] Подпись: «Линейно вместо n log n». Кто потянулся бы к approve? [поднимаю руку, пауза 4 с] Я бы потянулся.<br><br>[щелчок] [пауза 2 с, даю прочитать подпись]<br>Проверим это решение на M2 Pro, Xeon VM и iPhone. Но сначала разберём задачу: что приходит на устройство и какой результат нужен?<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Публичный учебный диф. В эксперименте добавлен reserve. Производственный результат не заявляется. Бумажный курсор ImageGen V7, assets/src/img/memes_v7_root_prompts.txt. Иллюстрация, кнопка и подпись вместе на втором щелчке.</aside>
+</section>

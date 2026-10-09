@@ -5,6 +5,7 @@ try { ({ chromium } = require('playwright')); }
 catch (e) { ({ chromium } = require(require('child_process').execSync('npm root -g').toString().trim() + '/playwright')); }
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 // usage: node extract.js [--deck project|hardfest] [slide ids...]
 const argv = process.argv.slice(2);
@@ -350,6 +351,7 @@ function pageScript(arg) {
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: `${OUT}/orig/${id}.png` });
     const data = await page.evaluate(pageScript, { K, NATIVE });
+    data.sourceSha256 = crypto.createHash('sha256').update(html).digest('hex');
     if (/data-was-hidden/.test(await page.content())) data.hidden = true;
     await page.screenshot({ path: `${OUT}/fit/${id}.png` });
     // QR: rasterise the svg with that label

@@ -1,0 +1,15 @@
+<section id="case">
+<p class="k">С чего всё началось</p>
+<h2 class="t">ЗАДАЧА: СКЛЕИТЬ ЛОКАЛЬНЫЕ id И ДЕЛЬТУ С СЕРВЕРА БЕЗ ПОВТОРОВ</h2>
+<!-- body -->
+<img src="../assets/case_sync.png" style="position:absolute;left:117px;top:320px;width:860px;height:560px;object-fit:contain">
+<p data-build-in="fade 1" class="abs num" style="left:1060px;top:340px;width:90px">1</p>
+<p data-build-in="fade 1" class="abs body" style="left:1160px;top:340px;width:640px">Локальные id отсортированы<br>и уникальны</p>
+<p data-build-in="fade 2" class="abs num" style="left:1060px;top:540px;width:90px">2</p>
+<p data-build-in="fade 2" class="abs body" style="left:1160px;top:552px;width:640px">Ключ — <span class="mono">uint64_t</span></p>
+<p data-build-in="fade 3" class="abs num" style="left:1060px;top:720px;width:90px">3</p>
+<p data-build-in="fade 3" class="abs mono acc" style="left:1160px;top:722px;width:640px;font-size:40px;line-height:52px;font-weight:600">QoS utility</p>
+<p data-build-in="fade 3" class="abs lbl" style="left:1160px;top:836px;width:640px">«не срочно»</p>
+<!-- /body -->
+<aside>На устройстве есть локальные id записей. Id — просто число, по которому мы узнаём запись. С сервера приходит дельта: новая порция таких чисел. Из-за повторных запросов или пересечения страниц один id может прийти несколько раз.<br><br>На входе есть повторы. На выходе каждое значение должно остаться один раз. Это удаление повторов, или дедупликация; дальше я иногда буду говорить коротко: дедуп. Самих записей мы здесь не касаемся, работаем только с числами.<br><br>Три свойства нашей задачи. [щелчок] Локальная часть уже отсортирована и уникальна. [щелчок] Ключ — шестидесятичетырёхбитное число. [щелчок] Работа несрочная, в режиме utility.<br><br>Каждая деталь ещё изменит решение. В тестовых сериях id случайные; для последовательных чисел ответ может отличаться. Сначала сравним два привычных способа убрать повторы.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Самостоятельная упрощённая задача: L sorted unique; D может содержать повторы; числовые id. Отдельные тестовые серии фиксируют другие свойства входа.</aside>
+</section>

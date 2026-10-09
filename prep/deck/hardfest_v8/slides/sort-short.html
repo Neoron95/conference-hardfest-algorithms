@@ -1,0 +1,16 @@
+<section id="sort-short">
+<p class="k">Маленький пример · N = 6, U = 4</p>
+<h2 class="t">СОРТИРОВКА СОБИРАЕТ ПОВТОРЫ РЯДОМ</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:329px;width:330px;font-size:40px">Вход</p>
+<p class="abs mono" style="left:500px;top:315px;width:1303px;font-size:68px;letter-spacing:22px">7  3  7  1  3  9</p>
+<div data-build-in="fade 1" class="rule" style="left:117px;top:441px;width:1686px"></div>
+<p data-build-in="fade 1" class="abs lead sort" style="left:117px;top:493px;width:340px">sort</p>
+<p data-build-in="fade 1" class="abs mono sort" style="left:500px;top:477px;width:1303px;font-size:68px;letter-spacing:22px">1  3  3  7  7  9</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:606px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs lead sort" style="left:117px;top:655px;width:340px">unique</p>
+<p data-build-in="fade 2" class="abs mono sort" style="left:500px;top:640px;width:1303px;font-size:68px;letter-spacing:22px">1  3     7     9</p>
+<p data-build-in="fade 2" class="abs lead" style="left:117px;top:825px;width:1686px;font-size:48px">Один проход оставляет по одному из соседних равных</p>
+<!-- /body -->
+<aside>Есть шесть чисел: семь, три, семь, один, три, девять. Нужно оставить четыре разных значения.<br><br>[щелчок] Сортировка ставит равные ключи рядом. Теперь две тройки соседствуют, две семёрки тоже. В замере это std::sort, который переставляет числа в исходном массиве.<br><br>[щелчок] Затем один проход: сохраняем число, если оно отличается от последнего сохранённого. Это unique. В C++ он сдвигает результат в начало, а хвост удаляем отдельно.<br><br>Получили один, три, семь и девять. Основная работа здесь приходится на сравнения и перемещения. Посмотрим, что вместо них делает таблица.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Учебный пример N=6, U=4, вход [7,3,7,1,3,9], sorted [1,3,3,7,7,9], результат [1,3,7,9]. Сравнения std::sort: https://eel.is/c++draft/alg.sort . Unique: https://eel.is/c++draft/alg.unique . Полная учебная демонстрация доступна в архиве sort-walk.</aside>
+</section>
