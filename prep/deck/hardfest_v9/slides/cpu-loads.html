@@ -1,0 +1,19 @@
+<section id="cpu-loads">
+<p class="k">Раунд <b>1</b> из 4 · размер и память</p>
+<h2 class="t">ЗАВИСИМОСТЬ ВИДНА В ИНСТРУКЦИЯХ</h2>
+<!-- body -->
+<p data-build-in="fade 1" class="abs " style="left:117px;top:310px;width:795px;font-size:46px;font-weight:700;line-height:1.3">Независимые адреса</p>
+<p data-build-in="fade 1" class="abs " style="left:1008px;top:300px;width:795px;font-size:42px;font-weight:700;line-height:1.3">Следующий адрес зависит<br>от первой загрузки</p>
+<div data-build-in="fade 1" class="rule" style="left:117px;top:413px;width:1686px"></div>
+<p data-build-in="fade 1" class="abs mut" style="left:117px;top:448px;width:230px;font-size:34px;font-weight:600;line-height:1.3">x86-64</p>
+<p data-build-in="fade 1" class="abs mut" style="left:1008px;top:448px;width:230px;font-size:34px;font-weight:600;line-height:1.3">x86-64</p>
+<p data-build-in="fade 1" class="abs mono" style="left:117px;top:503px;width:795px;font-size:40px;font-weight:400;line-height:1.4">mov rax, qword ptr [rdi]<br>mov rdx, qword ptr [rsi]</p>
+<p data-build-in="fade 1" class="abs mono" style="left:1008px;top:503px;width:795px;font-size:40px;font-weight:400;line-height:1.4">mov rax, qword ptr [rdi]<br>mov rax, qword ptr [<span class="acc">rax</span>]</p>
+<p data-build-in="fade 1" class="abs mut" style="left:117px;top:654px;width:230px;font-size:34px;font-weight:600;line-height:1.3">AArch64</p>
+<p data-build-in="fade 1" class="abs mut" style="left:1008px;top:654px;width:230px;font-size:34px;font-weight:600;line-height:1.3">AArch64</p>
+<p data-build-in="fade 1" class="abs mono" style="left:117px;top:706px;width:795px;font-size:42px;font-weight:400;line-height:1.4">ldr x0, [x0]<br>ldr x1, [x1]</p>
+<p data-build-in="fade 1" class="abs mono" style="left:1008px;top:706px;width:795px;font-size:42px;font-weight:400;line-height:1.4">ldr x8, [x0]<br>ldr x0, [<span class="acc">x8</span>]</p>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:870px;width:1686px;font-size:38px;font-weight:600;line-height:1.3">Слева ожидания можно перекрыть. Справа второй адрес ещё неизвестен</p>
+<!-- /body -->
+<aside>Спустимся на два чтения. Это короткий C-пример, который я скомпилировал для двух архитектур.<br><br>[щелчок] Слева указатели уже известны. Первая загрузка не сообщает адрес второй. На ядре с выполнением вне порядка эти ожидания можно перекрыть.<br><br>Справа первая загрузка приносит указатель. Во второй инструкции адрес берётся из её результата: rax на x86 и x8 на ARM. Пока результата нет, следующую загрузку по этому адресу начать нельзя.<br><br>[щелчок] Названия инструкций различаются, зависимость остаётся. Xeon, M2 и A16 умеют смотреть вперёд, но возможности конкретных ядер различаются. Перед нами учебные функции. Это не трасса измеренной дедупликации. Теперь вернёмся к Xeon и его огромному L3.<br><br>──────────<br>Источники и условия<br>Компиляция минимального C: Apple clang 21.0.0, -O3, targets x86_64-unknown-linux-gnu и aarch64-unknown-linux-gnu. Показаны точные инструкции загрузки без ret и служебных директив. Исходник и команды: notes/research_v8_hardware.md. Это иллюстрация, не дизассемблер измеренного дедупа. Механизм выполнения вне порядка: https://www.intel.com/content/www/us/en/developer/articles/technical/intel64-and-ia32-architectures-optimization.html ; https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/memory-access-ordering---an-introduction ; Apple Silicon: https://developer.apple.com/videos/play/wwdc2025/308/</aside>
+</section>

@@ -1,0 +1,15 @@
+<section id="speculation">
+<p class="k">Эксперимент · повторяемый вход</p>
+<h2 class="t">ПРЕДСКАЗАНИЕ ВЕТВЛЕНИЙ</h2>
+<!-- body -->
+<p class="abs " style="left:117px;top:323px;width:1686px;font-size:46px;font-weight:700;line-height:1.3">Условие ещё не готово</p>
+<p data-build-in="fade 1" class="abs acc" style="left:117px;top:445px;width:1686px;font-size:56px;font-weight:700;line-height:1.25">Процессор предсказывает путь<br>и начинает выполнять его заранее</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:619px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:671px;width:795px;font-size:48px;font-weight:700;line-height:1.3">Угадал</p>
+<p data-build-in="fade 2" class="abs " style="left:1008px;top:671px;width:795px;font-size:48px;font-weight:700;line-height:1.3">Ошибся</p>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:745px;width:795px;font-size:40px;font-weight:400;line-height:1.3">Работа пригодилась</p>
+<p data-build-in="fade 2" class="abs " style="left:1008px;top:745px;width:795px;font-size:40px;font-weight:400;line-height:1.3">Часть работы отбросил</p>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:867px;width:1686px;font-size:38px;font-weight:600;line-height:1.3">История ветвлений и данные в кэше требуют разных контролей</p>
+<!-- /body -->
+<aside>Есть ещё одна причина, почему повтор может ускориться. Представьте условие внутри сортировки: это число меньше опорного или больше?<br><br>[щелчок] Пока результат сравнения не готов, процессор предсказывает направление ветвления и начинает выполнять предполагаемый путь. Это спекулятивное выполнение. По истории программы некоторые ветвления угадывать легче, другие труднее.<br><br>[щелчок] Если прогноз правильный, работа пригодилась. Если нет, часть работы пришлось отбросить и продолжить по правильному пути. Сложность алгоритма при этом та же, цена выполнения меняется.<br><br>На одинаковых входах последовательность условий повторяется. Одновременно могут прогреваться данные в кэше. Это разные механизмы, и быстрый повтор сам по себе их не различает. Дальше нужен эксперимент, который меняет рисунок входов отдельно от адресов.<br><br>──────────<br>Источники и условия<br>Механизм conditional branch prediction и squashing: https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/hardware-behavior-related-to-speculative-execution.html . Выполнение вне порядка и предсказание в Apple Silicon: https://developer.apple.com/videos/play/wwdc2025/308/ . Это объясняющая модель, не доказательство причины конкретного бенчмарка.</aside>
+</section>

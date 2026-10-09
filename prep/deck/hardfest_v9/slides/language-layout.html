@@ -1,0 +1,19 @@
+<section id="language-layout">
+<p class="k">Раунд <b>1</b> из 4 · представление данных</p>
+<h2 class="t">ЧТО ЛЕЖИТ ВНУТРИ КОЛЛЕКЦИИ</h2>
+<!-- body -->
+<p class="abs lead" style="left:117px;top:296px;width:1686px;font-size:52px;">Добавить в конец или вставить в середину?</p>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:405px;width:690px;font-size:40px;">C++ vector&lt;uint64_t&gt;</p>
+<p data-build-in="fade 1" class="abs body" style="left:850px;top:405px;width:953px;font-size:40px;">Числа лежат подряд</p>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:492px;width:690px;font-size:40px;">Java ArrayList&lt;Long&gt;</p>
+<p data-build-in="fade 1" class="abs body" style="left:850px;top:492px;width:953px;font-size:40px;">Ссылки на объекты Long, боксинг</p>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:579px;width:690px;font-size:40px;">CPython list[int]</p>
+<p data-build-in="fade 1" class="abs body" style="left:850px;top:579px;width:953px;font-size:40px;">Указатели на объекты int</p>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:666px;width:690px;font-size:40px;">Swift Array&lt;UInt64&gt;</p>
+<p data-build-in="fade 1" class="abs body" style="left:850px;top:666px;width:953px;font-size:40px;">Числа подряд, COW при общем буфере</p>
+<p data-build-in="fade 1" class="abs acc" style="left:117px;top:759px;width:1686px;font-size:38px;">Swift Set&lt;UInt64&gt; уже использует открытую адресацию</p>
+<p data-build-in="fade 2" class="abs body" style="left:117px;top:825px;width:1686px;font-size:34px;">В конец: обычно одна запись, при росте копия буфера</p>
+<p data-build-in="fade 2" class="abs body sec" style="left:117px;top:874px;width:1686px;font-size:32px;">В середину: сдвиг хвоста. Swift при общем буфере добавляет COW</p>
+<!-- /body -->
+<aside>Короткая ставка про знакомую операцию. Добавляем число в динамический список: в конец или в середину. Сколько памяти придётся тронуть? [пауза 3 с]<br><br>[щелчок] Сначала посмотрим, что хранится внутри. В C++ vector числовые значения лежат подряд. В Java ArrayList с Long лежат ссылки на объекты. В CPython список целых тоже хранит указатели. Swift Array с UInt64 хранит значения, но разделяет буфер до изменения. А Swift Set уже использует открытую адресацию, рисунок узловой C++ таблицы к нему не переносится.<br><br>[щелчок] Добавление в конец обычно делает одну запись. Рост может скопировать буфер. Вставка в середину сдвигает хвост. У Swift изменение общего буфера может сначала создать копию. Одно слово «вставка» скрывает разный объём работы. Дальше именно эту работу и цену чтения памяти будем считать.<br><br>──────────<br>Источники и условия<br>C++: contiguous vector, https://eel.is/c++draft/vector.overview (проект стандарта, проверено 07.10.2026). OpenJDK21+35: ArrayList.elementData Object[], add(index,E) System.arraycopy, https://github.com/openjdk/jdk/blob/jdk-21%2B35/src/java.base/share/classes/java/util/ArrayList.java . Boxing Long: JLS21 §5.1.7, https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html#jls-5.1.7 . CPython3.13.0: PyObject** ob_item и ins1, https://github.com/python/cpython/blob/v3.13.0/Objects/listobject.c . Swift6.0-RELEASE Array: contiguous integer storage, growth, COW, https://github.com/swiftlang/swift/blob/swift-6.0-RELEASE/stdlib/public/core/Array.swift . Swift NativeSet: main, проверено 07.10.2026, find() probes wrappedAfter, https://raw.githubusercontent.com/swiftlang/swift/main/stdlib/public/core/NativeSet.swift . Представления по исходникам, без замеров языков. Boxing не означает новую аллокацию на каждое обращение: возможны кэш Long и оптимизации JIT. Сдвиг хвоста описывает массивный список; рост и COW добавляют работу. Append амортизированно O(1) при уникальном буфере, вставка в середину O(N).</aside>
+</section>

@@ -1,0 +1,26 @@
+<section id="share">
+<p class="k">Раунд <b>3</b> из 4 · данные и тикет</p>
+<h2 class="t">ПОБЕДИТЕЛЯ НАЗНАЧАЮТ ДАННЫЕ</h2>
+<!-- body -->
+<p class="abs sec" style="left:117px;top:280px;width:1686px;font-size:40px;line-height:52px">нс на элемент · N = 2²⁰ · M2 Pro · меньше — лучше</p>
+
+<p data-build-in="fade 1" class="abs" style="left:117px;top:353px;width:900px;font-size:52px;font-weight:700;line-height:64px">1% уникальных</p>
+<p data-build-in="fade 1" class="abs hash" style="left:117px;top:420px;width:350px;font-size:40px;font-weight:600;line-height:64px">unordered_set</p>
+<div data-build-in="fade 1" class="bar bg-hash" style="left:500px;top:420px;width:57.6px;height:64px"></div>
+<p data-build-in="fade 1" class="abs" style="left:582px;top:420px;width:220px;font-size:52px;font-weight:700;line-height:64px">3,2</p>
+<p data-build-in="fade 1" class="abs sort" style="left:117px;top:506px;width:350px;font-size:40px;font-weight:600;line-height:64px">sort + unique</p>
+<div data-build-in="fade 1" class="bar bg-sort" style="left:500px;top:506px;width:216px;height:64px"></div>
+<p data-build-in="fade 1" class="abs" style="left:740px;top:506px;width:220px;font-size:52px;font-weight:700;line-height:64px">12,0</p>
+<p data-build-in="fade 1" class="abs hash" style="left:1080px;top:410px;width:720px;font-size:100px;font-weight:800;line-height:120px;text-align:right">хеш ×3,7</p>
+<p data-build-in="fade 2" class="abs" style="left:117px;top:599px;width:900px;font-size:52px;font-weight:700;line-height:64px">100% уникальных</p>
+<p data-build-in="fade 2" class="abs sort" style="left:117px;top:673px;width:350px;font-size:40px;font-weight:600;line-height:64px">sort + unique</p>
+<div data-build-in="fade 2" class="bar bg-sort" style="left:500px;top:673px;width:356.4px;height:64px"></div>
+<p data-build-in="fade 2" class="abs" style="left:880px;top:673px;width:220px;font-size:52px;font-weight:700;line-height:64px">19,8</p>
+<p data-build-in="fade 2" class="abs hash" style="left:117px;top:760px;width:350px;font-size:40px;font-weight:600;line-height:64px">unordered_set</p>
+<div data-build-in="fade 2" class="bar bg-hash" style="left:500px;top:760px;width:928.8px;height:64px"></div>
+<p data-build-in="fade 2" class="abs" style="left:1453px;top:760px;width:220px;font-size:52px;font-weight:700;line-height:64px">51,6</p>
+<p data-build-in="fade 2" class="abs sort" style="left:1080px;top:599px;width:720px;font-size:100px;font-weight:800;line-height:120px;text-align:right">sort ×2,6</p>
+<p class="abs lbl" style="left:117px;top:881px;width:1686px;font-size:30px;line-height:38px;">M2 Pro: эта серия&nbsp;&nbsp;&nbsp; Xeon VM: отдельная серия&nbsp;&nbsp;&nbsp; iPhone 14 Pro: не измерено</p>
+<!-- /body -->
+<aside>[щелчок] Хеш быстрее в три и семь десятых раза. [пауза 2 с] Новых узлов теперь около десяти тысяч, а не миллион. Те же ключи снова проверяются. Массив ячеек при этом резервируем под весь миллион.<br><br>[щелчок] А здесь все id разные. Сортировка снова быстрее примерно в два с половиной раза. Размер входа тот же, число создаваемых узлов выросло в сто раз.<br><br>Сортировка обрабатывает весь миллион. Узловая таблица выделяет память для каждого нового значения. Важны два размера: N элементов входа и U разных ключей. Миллион попыток вставки не означает миллион новых узлов. Для Xeon есть отдельный контроль доли уникальных, телефон такой серией не покрыт. Следующее условие лежит в самом требовании к результату.<br><br>──────────<br>Источники и условия<br>Исходная Apple серия доли уникальных: M2 Pro/libc++, N=2^20. U/N=1%:sort12,0,uset3,2;100%:sort19,8,uset51,6нс на элемент. Отношение×3,7 округлено по исходной серии; округлённые подписи12,0/3,2 дают3,75. Reserve(N) фиксирован. Полная серия share-full. Xeon E3 отдельная, bench/results/summary.md; iPhone не измерено. Общая линейная шкала всех полос0–60нс на элемент.</aside>
+</section>

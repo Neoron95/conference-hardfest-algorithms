@@ -1,0 +1,10 @@
+<section id="memory">
+<p class="k">Раунд <b>1</b> из 4 · размер и память</p>
+<h2 class="t">ПРОЦЕССОР МОЖЕТ ЖДАТЬ КАЖДЫЙ ШАГ</h2>
+<!-- body -->
+<p class="abs " style="left:117px;top:291px;width:1686px;font-size:46px;font-weight:700;line-height:1.3">Время ≈ N × шагов на элемент × <span class="acc">цена шага</span></p>
+<video data-build-in="fade 1" data-dur="6" loop src="../assets/memory_flight.mp4" poster="../assets/memory_flight.png" style="position:absolute;left:267px;top:380px;width:1386px;height:490px"></video>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:877px;width:1686px;font-size:40px;font-weight:600;line-height:1.3">Независимые чтения перекрываются. Зависимые ждут друг друга</p>
+<!-- /body -->
+<aside>Теперь те же два пути в памяти. Цена шага зависит от того, где находятся данные и сколько ожиданий удаётся перекрыть.<br><br>[щелчок] Сверху адреса известны заранее. Процессор может держать несколько запросов в работе. Компактный массив тоже помогает: одна строка кэша приносит соседние значения.<br><br>Снизу следующий адрес лежит внутри текущего узла. Сначала дождались данных, затем узнали адрес. Кэш сокращает каждое ожидание, а зависимость всё равно остаётся.<br><br>[щелчок] Даже одинаковое число промахов может стоить по-разному: ожидания либо накладываются, либо складываются. Сортировка тоже делает сложные обращения. Эта схема объясняет возможность, а долю её вклада нужно измерять отдельно. Посмотрим, как это ограничение видно в машинных инструкциях.<br><br>──────────<br>Источники и условия<br>Иллюстрация зависимости адресов. Не измеренная декомпозиция ускорения сортировки. Существующий ролик memory_flight сохранён. Выполнение вне порядка и строки кэша: https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/memory-access-ordering---an-introduction ; https://developer.apple.com/videos/play/wwdc2025/308/ .</aside>
+</section>

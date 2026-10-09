@@ -1,0 +1,23 @@
+<section id="nb-lang">
+<p class="k">Архив · для вопросов</p>
+<h2 class="t">КОНТЕЙНЕРЫ В РАЗНЫХ ЯЗЫКАХ</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:278px;width:1686px;font-size:34px;">Устройство реализаций по исходникам. Бенчмарков языков здесь нет</p>
+<p class="abs lead" style="left:117px;top:353px;width:680px;font-size:37px;">C++ unordered_set</p>
+<p class="abs body sec" style="left:837px;top:353px;width:966px;font-size:36px;">libc++ / libstdc++: отдельные узлы</p>
+<p class="abs lead" style="left:117px;top:429px;width:680px;font-size:37px;">Java HashSet&lt;Long&gt;</p>
+<p class="abs body sec" style="left:837px;top:429px;width:966px;font-size:36px;">Узлы HashMap и боксинг Long</p>
+<p class="abs lead" style="left:117px;top:505px;width:680px;font-size:37px;">Swift Set&lt;UInt64&gt;</p>
+<p class="abs body sec" style="left:837px;top:505px;width:966px;font-size:36px;">Открытая адресация, линейное пробирование</p>
+<p class="abs lead" style="left:117px;top:581px;width:680px;font-size:37px;">Go map, с 1.24</p>
+<p class="abs body sec" style="left:837px;top:581px;width:966px;font-size:36px;">Swiss table, группы слотов</p>
+<p class="abs lead" style="left:117px;top:657px;width:680px;font-size:37px;">Rust HashSet / HashMap</p>
+<p class="abs body sec" style="left:837px;top:657px;width:966px;font-size:36px;">Swiss table через hashbrown</p>
+<p class="abs lead" style="left:117px;top:733px;width:680px;font-size:37px;">CPython set[int]</p>
+<p class="abs body sec" style="left:837px;top:733px;width:966px;font-size:36px;">Открытая адресация, ключи как объекты</p>
+<p class="abs lead" style="left:117px;top:809px;width:680px;font-size:37px;">C# HashSet&lt;long&gt;</p>
+<p class="abs body sec" style="left:837px;top:809px;width:966px;font-size:36px;">Цепочки индексами внутри массивов</p>
+<p class="abs acc" style="left:117px;top:883px;width:1686px;font-size:32px;">Тип ключа, хешер и версия меняют работу контейнера</p>
+<!-- /body -->
+<aside>Вот несколько способов хранить одно множество. В измеренных libc++ и libstdc++ unordered_set использует отдельные узлы. В Java HashSet опирается на узлы HashMap, а Long добавляет боксинг числового ключа. Число новых объектов зависит от значения и оптимизаций, поэтому «два всегда» не обещаем.<br><br>Swift Set использует открытую адресацию. Go с версии один двадцать четыре и Rust используют Swiss tables. Python set тоже хранит записи в таблице, но int остаётся объектом. C# HashSet хранит цепочки индексами в массивах, без отдельного объекта узла на каждый числовой ключ.<br><br>Тип ключа и хешер меняют цену. Эти исходники дают кандидатов для проверки, а коэффициенты получаем на своём входе и в своей среде. Название Set начинает разговор об устройстве, но не заканчивает его.<br><br>──────────<br>Источники и условия<br>C++: contiguous vector, https://eel.is/c++draft/vector.overview (проект стандарта, проверено 07.10.2026). OpenJDK21+35: ArrayList.elementData Object[], add(index,E) System.arraycopy, https://github.com/openjdk/jdk/blob/jdk-21%2B35/src/java.base/share/classes/java/util/ArrayList.java . Boxing Long: JLS21 §5.1.7, https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html#jls-5.1.7 . CPython3.13.0: PyObject** ob_item и ins1, https://github.com/python/cpython/blob/v3.13.0/Objects/listobject.c . Swift6.0-RELEASE Array: contiguous integer storage, growth, COW, https://github.com/swiftlang/swift/blob/swift-6.0-RELEASE/stdlib/public/core/Array.swift . Swift NativeSet: main, проверено 07.10.2026, find() probes wrappedAfter, https://raw.githubusercontent.com/swiftlang/swift/main/stdlib/public/core/NativeSet.swift . Представления по исходникам, без замеров языков. Boxing не означает новую аллокацию на каждое обращение: возможны кэш Long и оптимизации JIT. Сдвиг хвоста описывает массивный список; рост и COW добавляют работу. Append амортизированно O(1) при уникальном буфере, вставка в середину O(N).<br>OpenJDK21+35 HashMap.Node/TreeNode: https://github.com/openjdk/jdk/blob/jdk-21%2B35/src/java.base/share/classes/java/util/HashMap.java . Go1.24: https://go.dev/blog/swisstable (26.02.2025). Ruststd docs,проверено07.10.2026: https://doc.rust-lang.org/std/collections/struct.HashMap.html (SwissTable,HashSet черезHashMap). CPython3.13.0: https://github.com/python/cpython/blob/v3.13.0/Objects/setobject.c . .NET8.0.0HashSet Entry[],int[]buckets: https://raw.githubusercontent.com/dotnet/runtime/v8.0.0/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/HashSet.cs . Javaчисловойключ не всегда новаяаллокация, возможныLongcache/JIT. Kotlin distinct() восновнойконтраст не включён без конкретногоoverload. Не переноситьC++ множители.</aside>
+</section>

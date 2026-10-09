@@ -1,0 +1,24 @@
+<section id="inputorder">
+<p class="k">Раунд <b>3</b> из 4 · данные и тикет</p>
+<h2 class="t">ПОРЯДОК ТОГО ЖЕ ВХОДА</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:289px;width:1686px;font-size:40px">M2 Pro · libc++ · N = 2²⁰ · U = N/2 · нс на элемент</p>
+<div data-build-in="fade 1" class="rule" style="left:117px;top:350px;width:1686px"></div>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:374px;width:1100px;font-size:48px">Случайный</p>
+<p data-build-in="fade 1" class="abs body sec" style="left:117px;top:436px;width:1100px">sort 20,2 · хеш 22,6</p>
+<p data-build-in="fade 1" class="pill" style="left:1383px;top:382px;width:420px;height:96px;border:3px solid #fff;font-size:48px;line-height:90px">≈ близко</p>
+<div data-build-in="fade 1" class="rule" style="left:117px;top:514px;width:1686px"></div>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:538px;width:1100px;font-size:48px">Сериями одинаковых</p>
+<p data-build-in="fade 1" class="abs body sec" style="left:117px;top:600px;width:1100px">sort 20,5 · хеш 15,5</p>
+<p data-build-in="fade 1" class="pill pale-hash" style="left:1383px;top:546px;width:420px;height:96px;border:3px solid #E2489B;font-size:48px;line-height:90px">хеш ×1,3</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:678px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs lead" style="left:117px;top:702px;width:900px;font-size:48px">Уже отсортированный</p>
+<p data-build-in="fade 2" class="abs" style="left:770px;top:704px;width:64px;height:64px;border-radius:50%;background:#46CDAE;color:#000;font-size:40px;font-weight:800;line-height:64px;text-align:center">1</p>
+<p data-build-in="fade 2" class="abs body sec" style="left:117px;top:764px;width:1100px">sort 2,0 · хеш 16,5</p>
+<p data-build-in="fade 2" class="pill bg-sort ink" style="left:1383px;top:710px;width:420px;height:96px;font-size:56px;line-height:96px;font-weight:800">sort ×8</p>
+<p data-build-in="fade 2" class="abs body" style="left:117px;top:826px;width:1140px">libc++: ≈2 сравнения вместо ≈22 на элемент</p>
+<p data-build-in="fade 3" class="abs body acc" style="left:1270px;top:826px;width:533px;text-align:right">libstdc++ так не делает</p>
+<p class="abs lbl" style="left:117px;top:881px;width:1686px;font-size:30px;line-height:38px;">M2 Pro: эта серия&nbsp;&nbsp;&nbsp; Xeon VM: отдельная серия&nbsp;&nbsp;&nbsp; iPhone 14 Pro: не измерено</p>
+<!-- /body -->
+<aside>Меняем только последовательность тех же ключей.<br><br>[щелчок] Случайный порядок даёт знакомую картину. Серии одинаковых значений помогают хешу в этом опыте M2 Pro. Размер и число разных ключей прежние.<br><br>Локальная часть нашей задачи уже отсортирована. Что будет на полностью отсортированном входе? [пауза 2 с] [щелчок] Sort плюс unique обгоняет хеш примерно в восемь раз. Libc++ замечает, что большая часть работы готова, и быстро заканчивает оставшиеся небольшие части.<br><br>[щелчок] У libstdc++ этой эвристики нет. На Xeon мы проверили обе библиотеки, выигрыш отсортированного входа различается. «Вызвали sort» тоже не полное описание опыта. Собираем точный вопрос: данные, результат, реализация. Скоро используем готовый порядок в решении задачи.<br><br>──────────<br>Источники и условия<br>M2 Pro/libc++ исходная V7.6, N=2^20,U/N=0,5. random20,2/22,6;runs20,5/15,5;sorted2,0/16,5нс на элемент. ×8 округлено. ≈2/≈22 сравнения: исходная серия. Xeon E4, bench/results/summary.md:sorted libstdc++18,9/84,8,libc++6,3/78,9. Не утверждать «libstdc++ не выигрывает на sorted»: там отсутствует именно обсуждаемая ранняя эвристика. iPhone серия порядка не измерена.</aside>
+</section>

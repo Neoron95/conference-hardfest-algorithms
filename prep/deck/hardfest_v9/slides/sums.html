@@ -1,0 +1,20 @@
+<section id="sums">
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">ШАГОВ У ХЕША МЕНЬШЕ, НО КАЖДЫЙ&nbsp;— АЛЛОКАЦИЯ ИЛИ ПРЫЖОК ПО УЗЛУ</h2>
+<!-- body -->
+<div class="bar bg-sort" style="left:117px;top:300px;width:800px;height:10px;border-radius:5px"></div>
+<p class="abs lead sort" style="left:117px;top:334px;width:800px">sort + unique</p>
+<p class="abs sort" style="left:117px;top:416px;width:110px;font-size:120px;font-weight:800;line-height:120px">0</p>
+<p class="abs" style="left:240px;top:448px;width:660px;font-size:44px;font-weight:700;line-height:56px">аллокаций</p>
+<p class="abs body" style="left:117px;top:570px;width:800px;line-height:56px">~N·log₂N сравнений и перестановок<br>один плотный буфер</p>
+<div class="bar bg-hash" style="left:1003px;top:300px;width:800px;height:10px;border-radius:5px"></div>
+<p class="abs lead hash" style="left:1003px;top:334px;width:800px">unordered_set</p>
+<p class="abs hash" style="left:1003px;top:416px;width:110px;font-size:120px;font-weight:800;line-height:120px">U</p>
+<p class="abs" style="left:1126px;top:420px;width:677px;font-size:44px;font-weight:700;line-height:56px">аллокаций<br>и U освобождений</p>
+<p class="abs body" style="left:1003px;top:570px;width:800px;line-height:56px">хеш, ячейки, узлы, сравнения<br>обход таблицы при выгрузке</p>
+<div class="rule" style="left:117px;top:724px;width:1686px"></div>
+<p class="abs lbl" style="left:117px;top:752px;width:1500px">N — сколько элементов на входе, U — сколько из них уникальных</p>
+<p class="abs" style="left:117px;top:816px;width:1686px;font-size:52px;font-weight:800;line-height:72px">log₂ 10⁶ ≈ 20: <span style="font-weight:600">вопрос не в числе шагов, а </span><span class="acc">в цене каждого</span></p>
+<!-- /body -->
+<aside>Backup, вне тайминга. В основном потоке эту мысль несёт формула на memory.<br>Q&amp;A: «Из чего складывается работа каждого?»<br>Ответ: N — сколько чисел на входе, U — сколько разных. Сортировка — около N·log N сравнений и перестановок в одном плотном буфере, без единой аллокации. Хеш — хеши, обращения к ячейкам и узлам, проверки равенства, U аллокаций и U освобождений, обход при выгрузке. Шагов меньше — но какие это шаги.<br>━━━━━━━━━━━━━━━━━━━━━━━━<br>Щелчки: нет, всё на экране сразу.<br>Под рукой:<br>— Точное число действий хеша зависит от коллизий и дублей.<br>— Счётчик аллокаций (allocs): при N = U = 2^20 — 1 048 577 вызовов new, запрошено 33,6 МБ в libc++ и 25,2 МБ в libstdc++; с округлением malloc ≈ 42 МБ. Плюс миллион delete в деструкторе.<br>— Фазы на x86 (bench.md E11, U = N): reserve и вставки ≈43%, выгрузка ≈26%, деструктор 28–30%.<br>С экрана убрано: хеширование, обращения к ячейкам и узлам, проверки равенства (на экране — «хеш, ячейки, узлы, сравнения»); 0 аллокаций — в этой реализации; log₂(1 000 000) ≈ 20.</aside>
+</section>

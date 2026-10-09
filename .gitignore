@@ -7,3 +7,4 @@ bench/build/
 prep/deck/*/slides/.render-*.html
 __pycache__/
 prep/.v8-build/
+prep/.v9-build/

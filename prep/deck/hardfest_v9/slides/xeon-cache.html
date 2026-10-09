@@ -1,0 +1,16 @@
+<section id="xeon-cache">
+<p class="k">Раунд <b>1</b> из 4 · размер и память</p>
+<h2 class="t">БОЛЬШОЙ L3 НЕ ГАРАНТИРУЕТ БЫСТРЫЙ ШАГ</h2>
+<!-- body -->
+<p data-build-in="fade 1" class="abs " style="left:117px;top:310px;width:795px;font-size:42px;font-weight:700;line-height:1.3">Паспорт VM</p>
+<p data-build-in="fade 1" class="abs " style="left:1008px;top:310px;width:795px;font-size:42px;font-weight:700;line-height:1.3">Зависимое чтение</p>
+<p data-build-in="fade 1" class="abs acc" style="left:117px;top:397px;width:580px;font-size:166px;font-weight:800;line-height:1">260</p>
+<p data-build-in="fade 1" class="abs " style="left:117px;top:589px;width:795px;font-size:40px;font-weight:600;line-height:1.3">МиБ L3 по lscpu</p>
+<p data-build-in="fade 1" class="abs " style="left:1008px;top:397px;width:795px;font-size:166px;font-weight:800;line-height:1">140,8</p>
+<p data-build-in="fade 1" class="abs " style="left:1008px;top:589px;width:795px;font-size:38px;font-weight:600;line-height:1.3">нс на чтение при наборе 64 МиБ</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:703px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:750px;width:1686px;font-size:42px;font-weight:700;line-height:1.3">Паспорт гостя не гарантирует доступную ёмкость и задержку</p>
+<p data-build-in="fade 2" class="abs mut" style="left:117px;top:831px;width:1686px;font-size:36px;font-weight:400;line-height:1.3">Доля общего кэша и точный источник чтения здесь неизвестны</p>
+<!-- /body -->
+<aside>А на Xeon ведь огромный кэш. Почему цепочка указателей вообще должна ждать?<br><br>[щелчок] В паспорте этой VM lscpu показывает двести шестьдесят мебибайт L3. Но в отдельном тесте на случайную цепочку адресов набор шестьдесят четыре мебибайта даёт сто сорок наносекунд на чтение.<br><br>[щелчок] Эти две цифры измеряют разные вещи. lscpu описывает топологию, которую видит гость. Он не выдаёт каждому vCPU личный кэш такого размера и не обещает задержку для конкретного доступа.<br><br>Общий кэш, конкуренция и размещение памяти могут влиять на результат. Какой из факторов сработал здесь, мы не установили. Счётчиков в VM нет. Из этого опыта также нельзя точно сказать, какой уровень обслужил каждую загрузку. Для нашей цепочки важна наблюдаемая задержка. Паспорт нужен, но опыт он не заменяет.<br><br>──────────<br>Источники и условия<br>bench/results/env.txt: L3 cache 260 MiB (1 instance), 4 vCPU, KVM. bench/results/probe.txt: latency_ns,65536 KB,140.8. bench/probe.cpp: отдельная случайная зависимая цепочка по страницам 4 КиБ. Это не измерение промахов дедупа. PMU отсутствует: bench/results/perf_probe.txt. lscpu сообщает конфигурацию гостя и суммарные размеры: https://man7.org/linux/man-pages/man1/lscpu.1.html . Причины высокой задержки не установлены. Intel optimisation reference: https://www.intel.com/content/www/us/en/developer/articles/technical/intel64-and-ia32-architectures-optimization.html</aside>
+</section>

@@ -1,0 +1,17 @@
+<section id="result">
+<p class="k">Ставка №1 · что показал секундомер</p>
+<h2 class="t">ПЕРВЫЙ ЗАМЕР</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:290px;width:1686px;font-size:40px">нс на элемент · N = U = 2²⁰ · M2 Pro · libc++ · меньше — лучше</p>
+<p data-build-in="fade 1" class="abs lead sort" style="left:117px;top:372px;width:600px">sort + unique</p>
+<div data-build-in="fade 1" class="bar bg-sort" style="left:117px;top:440px;width:425px;height:96px"></div>
+<p data-build-in="fade 1" class="abs xl" style="left:570px;top:448px;width:300px">19,9</p>
+<p data-build-in="fade 2" class="abs lead hash" style="left:117px;top:572px;width:600px">unordered_set</p>
+<div data-build-in="fade 2" class="bar bg-hash" style="left:117px;top:640px;width:1096px;height:96px"></div>
+<p data-build-in="fade 2" class="abs xl" style="left:1241px;top:648px;width:300px">51,3</p>
+<p data-build-in="fade 3" class="abs hero" style="left:1180px;top:330px;width:620px;text-align:right">×2,6</p>
+<p data-build-in="fade 3" class="abs lead" style="left:117px;top:796px;width:1686px;font-size:42px;">Четыре раунда: память, реализация, данные, процессор</p>
+<p class="abs lbl" style="left:117px;top:881px;width:1686px;font-size:30px;line-height:38px;">M2 Pro: эта серия&nbsp;&nbsp;&nbsp; Xeon VM: отдельная серия&nbsp;&nbsp;&nbsp; iPhone 14 Pro: не измерено</p>
+<!-- /body -->
+<aside>Первую ставку снимаем на M2 Pro. Все id разные: U равно N. Полоски показывают наносекунды на элемент, короче лучше.<br><br>[щелчок] Сортировка около двадцати. [щелчок] Узловая таблица около пятидесяти одной. [пауза 2 с] [щелчок] Сортировка быстрее в два и шесть десятых раза. Линейная оценка осталась, дороже оказался шаг.<br><br>Это известный эффект. Похожие опыты есть у Даниэля Лемира, причины разбирал Чендлер Каррут. Здесь будем проверять его на своих данных и дойдём до телефона. Дальше четыре раунда: память, реализация, данные и процессор.<br><br>──────────<br>Источники и условия<br>Исходная Apple серия: prep/research/apple.md и V7.6. M2 Pro/libc++, N=U=2^20, полная операция: sort19,9/uset51,3нс на элемент. Xeon VM имеет отдельную E1: GCC13/libstdc++13 и Clang18/libc++18.1.3; значения не подмешаны в Apple полосы. Парной iPhone серии U=N здесь нет. Атрибуция: https://lemire.me/blog/2017/05/23/counting-exactly-the-number-of-distinct-elements-sorted-arrays-vs-hash-sets/ ; Chandler Carruth, CppCon2014, Efficiency with Algorithms, Performance with Data Structures.</aside>
+</section>

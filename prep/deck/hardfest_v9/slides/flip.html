@@ -1,0 +1,36 @@
+<section id="flip">
+<p class="k">Раунд <b>4</b> из 4 · процессор</p>
+<h2 class="t">ОДИН БЕНЧМАРК, РАЗНЫЕ ПОБЕДИТЕЛИ</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:277px;width:1686px;font-size:34px;">sort + unique против unordered_set · U = N/2 · × выигрыш по времени</p>
+<p class="abs lead" style="left:117px;top:347px;width:300px;font-size:44px;">N</p>
+<p class="abs lead" style="left:525px;top:339px;width:408px;font-size:40px;">M2 Pro</p>
+<p class="abs lbl" style="left:525px;top:397px;width:408px;font-size:29px;">userInitiated · libc++</p>
+<p class="abs lead" style="left:960px;top:339px;width:408px;font-size:40px;">Xeon VM</p>
+<p class="abs lbl" style="left:960px;top:397px;width:408px;font-size:29px;">Linux · libstdc++ 13</p>
+<p class="abs lead" style="left:1395px;top:339px;width:408px;font-size:40px;">iPhone 14 Pro</p>
+<p class="abs lbl" style="left:1395px;top:397px;width:408px;font-size:29px;">A16 Bionic · utility</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:462px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs lead" style="left:117px;top:480px;width:300px;font-size:48px;">64K</p>
+<p data-build-in="fade 2" class="abs lead mut" style="left:525px;top:480px;width:408px;font-size:42px;">≈ близко</p>
+<p data-build-in="fade 2" class="abs lead hash" style="left:960px;top:480px;width:408px;font-size:42px;">хеш ×1,64</p>
+<p data-build-in="fade 2" class="abs lead mut" style="left:1395px;top:480px;width:408px;font-size:42px;">≈ близко</p>
+<div data-build-in="fade 1" class="rule" style="left:117px;top:563px;width:1686px"></div>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:581px;width:300px;font-size:48px;">256K</p>
+<p data-build-in="fade 1" class="abs lead mut" style="left:525px;top:581px;width:408px;font-size:42px;">≈ близко</p>
+<p data-build-in="fade 1" class="abs lead hash" style="left:960px;top:581px;width:408px;font-size:42px;">хеш ×1,29</p>
+<p data-build-in="fade 1" class="abs lead sort" style="left:1395px;top:581px;width:408px;font-size:42px;">sort ×1,3</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:664px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs lead" style="left:117px;top:682px;width:300px;font-size:48px;">512K</p>
+<p data-build-in="fade 2" class="abs lead mut" style="left:525px;top:682px;width:408px;font-size:42px;">≈ близко</p>
+<p data-build-in="fade 2" class="abs lead hash" style="left:960px;top:682px;width:408px;font-size:42px;">хеш ×1,12</p>
+<p data-build-in="fade 2" class="abs lead sort" style="left:1395px;top:682px;width:408px;font-size:42px;">sort ×1,9</p>
+<div data-build-in="fade 1" class="rule" style="left:117px;top:765px;width:1686px"></div>
+<p data-build-in="fade 1" class="abs lead" style="left:117px;top:783px;width:300px;font-size:48px;">1M</p>
+<p data-build-in="fade 1" class="abs lead sort" style="left:525px;top:783px;width:408px;font-size:42px;">sort ×1,3</p>
+<p data-build-in="fade 1" class="abs lead mut" style="left:960px;top:783px;width:408px;font-size:42px;">≈ близко</p>
+<p data-build-in="fade 1" class="abs lead sort" style="left:1395px;top:783px;width:408px;font-size:42px;">sort ×3,3</p>
+<p data-build-in="fade 3" class="abs body" style="left:117px;top:874px;width:1686px;font-size:34px;">CI отвечает про свою среду. Рейтинг переносим после проверки</p>
+<!-- /body -->
+<aside>Вот три среды вместе. Везде половина id уникальна. Коэффициент сравнивает два алгоритма внутри машины, не скорость самих машин.<br><br>[щелчок] Сначала двести пятьдесят шесть тысяч и миллион. M2 Pro на среднем входе даёт близкие времена, на миллионе sort впереди. Xeon на среднем помогает хешу, на миллионе близко. iPhone в utility помогает сортировке, а на миллионе разрыв уже три и три.<br><br>[щелчок] Ещё два размера подтверждают различие. На Xeon таблица сохраняет преимущество в середине, на телефоне сортировка получает его с ростом входа.<br><br>[щелчок] CI честно отвечает про свою среду. Отличаются кэши, библиотека и режим выполнения. Сто процентов опрошенных раннеров рекомендуют эту оптимизацию. Опрошен один раннер. [пауза 2 с]<br><br>Перф-тест полезен для изменений в контролируемой среде. Рейтинг для пользователя проверяем на его устройстве.<br><br>──────────<br>Источники и условия<br>Xeon: bench/results/summary.md E2,gcc13-libstdc++13,повторный облачный запуск, sort/uset1,64/1,29/1,12/1,02 на64K/256K/512K/1M. Для1M±2% в этом наборе «≈близко», неуниверсальная статистическая граница. M2Pro/libc++/userInitiated иiPhone14Pro/A16/libc++/utility:исходнаяV7.6. УсловияN,U,полная операция сопоставлены, OS/library/QoS намеренно различаются. Это сравнение алгоритмов внутри сред, не пропускной способности устройств. Ни одна цифра изresult сU=N сюда не перенесена.</aside>
+</section>
