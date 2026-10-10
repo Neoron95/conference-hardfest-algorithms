@@ -1,0 +1,39 @@
+<section id="speculation">
+<p class="k">Подозреваемый <b>№3</b> · отмена</p>
+<h2 class="t">ПРЕДСКАЗАЛ — НАЧАЛ РАНЬШЕ</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">3</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Отмена</p>
+<!-- /board -->
+<!-- слева: видео «турникет-предсказатель» (пока панель-заглушка) -->
+<div class="panel" style="left:117px;top:270px;width:860px;height:440px"></div>
+<p class="abs sec" style="left:150px;top:300px;width:800px;font-size:32px;font-weight:600;line-height:42px">видео · турникет-предсказатель</p>
+<p class="abs mut" style="left:150px;top:356px;width:800px;font-size:24px;line-height:32px">вахтёр пропускает «налево», не дождавшись ответа<br>за ним серым строится работа: угадал — становится<br>цветной, ошибся — стирается<br>сортировка: монетка · хеш: «следующий узел есть?» — «нет»</p>
+
+<p class="abs" style="left:1020px;top:276px;width:783px;font-size:30px;font-weight:700;line-height:40px">Ответ ещё не готов —<br>процессор выбрал сторону и начал работу</p>
+
+<p data-build-in="fade 1" class="abs sort" style="left:1020px;top:390px;width:783px;font-size:32px;font-weight:700;line-height:40px">Угадал — работа пригодилась</p>
+<p data-build-in="fade 1" class="abs hash" style="left:1020px;top:440px;width:783px;font-size:30px;font-weight:700;line-height:38px">Ошибся — всё на неверной ветке<br>выброшено: <span style="color:#fff">15–20 тактов</span></p>
+
+<div data-build-in="fade 2" class="rule" style="left:1020px;top:530px;width:783px"></div>
+<p data-build-in="fade 2" class="abs" style="left:1020px;top:546px;width:783px;font-size:28px;line-height:36px"><span class="sort" style="font-weight:700">Сортировка:</span> «меньше опорного?» — монетка,<br>ошибается примерно на трети сравнений</p>
+<p data-build-in="fade 2" class="abs" style="left:1020px;top:630px;width:783px;font-size:28px;line-height:36px"><span class="hash" style="font-weight:700">Хеш:</span> «ячейка пуста?», «узел есть?» —<br>почти всегда один ответ, вахтёр его выучил</p>
+
+<p data-build-in="fade 3" class="abs lbl" style="left:117px;top:740px;width:1200px;font-size:28px;color:#C8C8C8">Промахов предсказателя на элемент · Xeon VM, cachegrind · N = 2²⁰, U = N/2</p>
+<p data-build-in="fade 3" class="abs sort" style="left:117px;top:790px;width:420px;font-size:88px;font-weight:800;line-height:96px">9,2 <span style="font-size:36px;font-weight:600">sort</span></p>
+<p data-build-in="fade 3" class="abs hash" style="left:560px;top:790px;width:420px;font-size:88px;font-weight:800;line-height:96px">0,9 <span style="font-size:36px;font-weight:600">хеш</span></p>
+<p data-build-in="fade 3" class="abs radix" style="left:1000px;top:826px;width:300px;font-size:36px;font-weight:700;line-height:44px">radix 0,4</p>
+<div data-build-in="fade 3" class="card" style="left:1283px;top:772px;width:520px;height:120px;border-color:#F2C14E;transform:rotate(-3deg)"></div>
+<p data-build-in="fade 3" class="abs ph" style="left:1283px;top:790px;width:520px;font-size:26px;font-weight:800;line-height:34px;text-align:center;letter-spacing:0px;text-transform:uppercase;transform:rotate(-3deg)">Отмена: виновна<br><span style="font-size:24px;font-weight:700">— у сортировки</span></p>
+<p class="abs lbl" style="left:117px;top:922px;width:1630px;font-size:22px;line-height:28px;">Xeon VM: cachegrind (модель предсказателя); цена ошибки — слайд 34&nbsp;&nbsp;&nbsp; M2 Pro, iPhone 14 Pro: счётчиков нет, механизм тот же</p>
+<!-- /body -->
+<aside>Третий подозреваемый. Внутри сортировки на каждом шаге вопрос: это число меньше опорного или больше? Ответ ещё не готов, а процессор уже выбрал сторону и начал работу. [щелчок] Угадал — работа пригодилась. Ошибся — всё, что сделано на неверной ветке, выбрасывается: полтора-два десятка тактов.<br>На случайных числах «меньше или больше» — честная монетка. Сортировка ошибается примерно на трети сравнений. [щелчок] А у хеш-таблицы ветвления скучные: «ячейка пуста?», «следующий узел есть?» — почти всегда одинаковый ответ, вахтёр его выучил.<br>[щелчок] Счётчик: девять промахов предсказания на элемент у сортировки, меньше одного у хеша. [пауза 2 с]<br>Это переворот. Отмена — реальная статья расходов, но платит по ней сортировка, не хеш. Сортировка выигрывает не потому, что у неё всё гладко, а потому что хеш ждёт память дольше, чем она ждёт вахтёра. И отсюда же — почему мой бенчмарк на одном входе врал: вахтёр выучил экзамен.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Xeon VM, симулятор ветвлений cachegrind (двухуровневый, 2004 г., не настоящий TAGE): абсолютные числа завышены, порядок между алгоритмами устойчив; N = 2^20, U = N/2 (counters.md §2). Из 31 условного ветвления у сортировки промахиваются 9 (30 %); у хеша из 80 (U = N) — 1,3, из 51 (U = N/2) — 0,9; у flat из 12,5 — 1,5; у radix — 0. Штраф на современных ядрах Intel 15–20 тактов [П]; 9 × 20 ≈ 176 из 235 тактов на элемент при 2,81 ГГц — около трёх четвертей времени sort на x86 (оценка; часть ошибок перекрывается). Измеренная цена промаха — на следующем слайде: 18 тактов. Миф «хеш постоянно сбрасывает конвейер» — опровергнут этим числом. Механизм: Intel, «Hardware behavior related to speculative execution»; Apple WWDC25 308.</aside>
+</section>

@@ -1,0 +1,34 @@
+<section id="nodes">
+<p class="k">Раунд <b>1</b> из 4 · размер и память</p>
+<h2 class="t">АДРЕС СЛЕДУЮЩЕГО УЗЛА ЛЕЖИТ ВНУТРИ ТЕКУЩЕГО</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">2</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#000;border:3px solid #555;color:#8F8F8F"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">3</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">Отмена</p>
+<!-- /board -->
+<p class="abs sort" style="left:117px;top:270px;width:700px;font-size:44px;font-weight:700;line-height:56px">sort + unique</p>
+<p class="abs sec" style="left:117px;top:324px;width:700px;font-size:40px;line-height:50px">vector&lt;uint64_t&gt;</p>
+<svg style="position:absolute;left:117px;top:390px;width:648px;height:84px" width="648" height="84" viewBox="0 0 648 84"><rect x="2" y="2" width="644" height="80" rx="10" fill="#174F45" stroke="#46CDAE" stroke-width="4"/><line x1="82.5" y1="2" x2="82.5" y2="82" stroke="#46CDAE" stroke-width="3"/><line x1="163" y1="2" x2="163" y2="82" stroke="#46CDAE" stroke-width="3"/><line x1="243.5" y1="2" x2="243.5" y2="82" stroke="#46CDAE" stroke-width="3"/><line x1="324" y1="2" x2="324" y2="82" stroke="#46CDAE" stroke-width="3"/><line x1="404.5" y1="2" x2="404.5" y2="82" stroke="#46CDAE" stroke-width="3"/><line x1="485" y1="2" x2="485" y2="82" stroke="#46CDAE" stroke-width="3"/><line x1="565.5" y1="2" x2="565.5" y2="82" stroke="#46CDAE" stroke-width="3"/></svg>
+<p class="abs body" style="left:117px;top:480px;width:700px;font-size:44px;line-height:58px">8 Б на ключ, подряд</p>
+<video data-build-in="fade 1" data-dur="7" loop src="../assets/nodes_scatter.mp4" poster="../assets/nodes_scatter.png" style="position:absolute;left:920px;top:300px;width:850px;height:470px"></video>
+<p data-build-in="fade 1" class="abs hash" style="left:920px;top:270px;width:850px;font-size:44px;font-weight:700;line-height:56px">unordered_set</p>
+<p data-build-in="fade 1" class="abs sec" style="left:117px;top:600px;width:740px;font-size:44px;line-height:58px">Узлы: адрес следующего<br>узнаём после чтения текущего</p>
+<p data-build-in="fade 2" class="abs sort" style="left:117px;top:770px;width:700px;font-size:80px;font-weight:800;line-height:90px">0 new</p>
+<p data-build-in="fade 2" class="abs hash" style="left:920px;top:770px;width:850px;font-size:80px;font-weight:800;line-height:90px">≈1 млн new</p>
+<p data-build-in="fade 2" class="abs sec" style="left:117px;top:862px;width:780px;font-size:30px;line-height:38px">Вход готов. N = U = 2²⁰, libc++</p>
+<p data-build-in="fade 2" class="abs sec" style="left:920px;top:862px;width:860px;font-size:30px;line-height:38px">и ≈1 млн delete в конце · glibc: ≈42 МБ узлов</p>
+<div data-build-in="fade 3" class="rule" style="left:117px;top:904px;width:1686px"></div>
+<p data-build-in="fade 3" class="abs" style="left:117px;top:914px;width:760px;font-size:28px;font-weight:600;line-height:40px;color:#C8C8C8">Промахов ближайшего кэша на элемент:</p>
+<p data-build-in="fade 3" class="abs" style="left:760px;top:912px;width:300px;font-size:36px;font-weight:800;line-height:44px"><span class="sort">sort 0,7</span></p>
+<p data-build-in="fade 3" class="abs" style="left:1040px;top:912px;width:360px;font-size:36px;font-weight:800;line-height:44px"><span class="hash">узловая 2,8</span></p>
+<p data-build-in="fade 3" class="abs ph" style="left:1360px;top:912px;width:380px;font-size:36px;font-weight:800;line-height:44px;text-align:right">×4 чаще · Xeon VM</p>
+<!-- /body -->
+<aside>Слева вектор, наш массив чисел: ключи рядом, по восемь байт. В замере std::sort и unique работают на этом буфере, отдельный узел им не нужен.<br>[щелчок] Справа узловая таблица. Массив ячеек хранит адреса отдельных узлов. По адресу находим узел: ключ, следующий адрес, служебные данные. Если случилась коллизия, адрес следующего узла узнаём только после чтения текущего.<br>[щелчок] Каждый новый ключ — отдельное выделение памяти. На миллионе — миллион выделений, потом миллион освобождений. Узлы существуют по причине: стандарт обещает, что ссылки на элементы переживут рост таблицы. Для временного множества мы платим за гарантию, которой не пользуемся.<br>[щелчок] Счётчик подтверждает: на каждый элемент сортировка промахивается мимо ближайшего кэша меньше раза, узловая таблица — почти три. Вчетверо чаще. Теперь — сколько стоит один промах.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Промахи L1 на элемент: Xeon VM, cachegrind, N = 2^20, U = N/2 (counters.md §2, D1m). Размер узла: libc++ 24 Б → 32 Б у malloc; libstdc++ 16 Б → тот же чанк 32 Б. Ссылки переживают rehash, итераторы — нет. Детальные счётчики аллокаций — backup allocs.</aside>
+</section>

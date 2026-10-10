@@ -1,0 +1,12 @@
+<section id="cost-model">
+<h2 class="t nok">ОЦЕНКА СЧИТАЕТ ШАГИ, А НЕ ИХ ЦЕНУ</h2>
+<!-- body -->
+<p class="abs lead sort" style="left:117px;top:314px;width:750px;font-size:64px">O(N log N)</p>
+<p class="abs body" style="left:117px;top:414px;width:750px;font-size:44px;line-height:60px">Сравниваем ключи<br>Перемещаем элементы</p>
+<p class="abs lead hash" style="left:1020px;top:314px;width:780px;font-size:64px">В среднем O(N)</p>
+<p class="abs body" style="left:1020px;top:414px;width:780px;font-size:44px;line-height:60px">Считаем хеш<br>Ищем ключ в таблице</p>
+<p class="abs body sec" style="left:117px;top:620px;width:1686px;font-size:44px;line-height:60px">N — весь вход<br>U — сколько среди них разных</p>
+<p data-build-in="fade 1" class="abs acc" style="left:117px;top:824px;width:1686px;font-size:54px;line-height:70px">Цена сравнения ≠ цена вставки</p>
+<!-- /body -->
+<aside>N — размер входа, U — число разных значений. Здесь шесть и четыре. Сортировка делает порядка N log N сравнений. Таблица — в среднем N операций при хорошем хеше.<br>[щелчок] Но сравнение и вставка стоят по-разному. Оценка описывает рост работы, а время зависит ещё и от цены шага. Насколько — сейчас узнаем.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>В заметках прежней версии было «N — константа»; правильно «N — размер входа». Big-O не задаёт время на конкретной машине.</aside>
+</section>

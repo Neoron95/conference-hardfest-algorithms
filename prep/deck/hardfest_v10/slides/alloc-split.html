@@ -1,0 +1,49 @@
+<section id="alloc-split">
+<p class="k">Подозреваемый <b>№2</b> · ожидание</p>
+<h2 class="t">ИЗ ЧЕГО СОСТОИТ ХЕШ: ДВА ВИНОВНИКА</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">2</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#000;border:3px solid #555;color:#8F8F8F"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">3</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">Отмена</p>
+<!-- /board -->
+<p class="abs lbl" style="left:117px;top:268px;width:1630px;font-size:28px;color:#C8C8C8">unordered_set, та же программа, один опыт · нс на элемент · N = U = 2²⁰ · Xeon VM, libstdc++</p>
+
+<!-- масштаб: 432 нс -> 1100 px (2,546 px/нс) -->
+<p data-build-in="fade 1" class="abs hash" style="left:117px;top:330px;width:420px;font-size:36px;font-weight:600;line-height:80px">glibc · std::allocator</p>
+<div data-build-in="fade 1" class="bar bg-hash" style="left:560px;top:330px;width:379px;height:80px;border-radius:10px 0 0 10px"></div>
+<div data-build-in="fade 1" class="bar" style="left:939px;top:330px;width:308px;height:80px;background:#C13A82;border-radius:0"></div>
+<div data-build-in="fade 1" class="bar" style="left:1247px;top:330px;width:374px;height:80px;background:#8E2A60;border-radius:0 10px 10px 0"></div>
+<p data-build-in="fade 1" class="abs ink" style="left:575px;top:330px;width:360px;font-size:28px;font-weight:700;line-height:80px">вставки 149</p>
+<p data-build-in="fade 1" class="abs" style="left:954px;top:330px;width:290px;font-size:28px;font-weight:700;line-height:80px">выгрузка 121</p>
+<p data-build-in="fade 1" class="abs" style="left:1262px;top:330px;width:360px;font-size:28px;font-weight:700;line-height:80px">деструктор 147</p>
+<p data-build-in="fade 1" class="abs" style="left:1645px;top:330px;width:160px;font-size:64px;font-weight:800;line-height:80px">432</p>
+
+<p data-build-in="fade 2" class="abs hash" style="left:117px;top:450px;width:420px;font-size:36px;font-weight:600;line-height:80px">jemalloc · <span class="mono" style="font-size:30px">LD_PRELOAD</span></p>
+<div data-build-in="fade 2" class="bar bg-hash" style="left:560px;top:450px;width:321px;height:80px"></div>
+<p data-build-in="fade 2" class="abs" style="left:905px;top:450px;width:200px;font-size:64px;font-weight:800;line-height:80px">126</p>
+<p data-build-in="fade 2" class="abs sec" style="left:1110px;top:450px;width:700px;font-size:30px;line-height:80px">код не менялся · ×3,4</p>
+
+<p data-build-in="fade 3" class="abs hash" style="left:117px;top:570px;width:420px;font-size:36px;font-weight:600;line-height:80px">арена, без free</p>
+<div data-build-in="fade 3" class="bar bg-hash" style="left:560px;top:570px;width:272px;height:80px"></div>
+<p data-build-in="fade 3" class="abs" style="left:856px;top:570px;width:200px;font-size:64px;font-weight:800;line-height:80px">107</p>
+<p data-build-in="fade 3" class="abs sec" style="left:1110px;top:570px;width:700px;font-size:30px;line-height:80px">аллокатора нет совсем · ×4</p>
+
+<p data-build-in="fade 4" class="abs flat" style="left:117px;top:690px;width:420px;font-size:36px;font-weight:600;line-height:80px">flat_hash_set</p>
+<div data-build-in="fade 4" class="bar bg-flat" style="left:560px;top:690px;width:112px;height:80px"></div>
+<p data-build-in="fade 4" class="abs" style="left:696px;top:690px;width:200px;font-size:64px;font-weight:800;line-height:80px">44</p>
+<div data-build-in="fade 4" class="card thin" style="left:1110px;top:682px;width:693px;height:96px;border-color:#8F8F8F"></div>
+<p data-build-in="fade 4" class="abs sec" style="left:1130px;top:690px;width:660px;font-size:28px;line-height:40px">контроль: те же узлы без аллокатора,<br>но обход вразнобой — <b style="color:#fff">390</b></p>
+
+<p data-build-in="fade 4" class="abs" style="left:117px;top:792px;width:1686px;font-size:34px;font-weight:700;line-height:42px">Аллокатор — половина времени и 70 % инструкций.<br>Без него узловая всё ещё в 2,4 раза медленнее плоской: остальное — прыжки</p>
+<p data-build-in="fade 4" class="abs ph" style="left:117px;top:882px;width:1630px;font-size:30px;font-weight:600;line-height:36px">Ожидание: виновно. Аллокатор: соучастник. Убрать узлы — убрать обоих сразу</p>
+<p class="abs lbl" style="left:117px;top:924px;width:1630px;font-size:22px;line-height:28px;">Xeon VM: эта серия, медианы; уровень выше E1 (прогон делил VM), сравнивать полосы между собой&nbsp;&nbsp;&nbsp; M2 Pro, iPhone 14 Pro: не измерено</p>
+<!-- /body -->
+<aside>Разложим узловую таблицу тем же секундомером, в одном опыте.<br>[щелчок] Вставки, выгрузка, уничтожение — три примерно равные части. Миллион delete за закрывающей скобкой стоит столько же, сколько миллион вставок. И это не только delete: когда таблица освобождает массив ячеек, glibc заодно проходит по всем миллиону освобождённых узлов, чтобы склеить их обратно, — ещё один полный обход.<br>[щелчок] Меняем аллокатор на jemalloc — через LD_PRELOAD, код не трогаем. В три с половиной раза быстрее. Та же таблица, тот же процессор.<br>[щелчок] Убираем аллокатор совсем: узлы кладём подряд в готовый буфер и ничего не освобождаем. Сто семь. Аллокатор был половиной времени — и семьюдесятью процентами инструкций с прошлого слайда.<br>[щелчок] Но плоская таблица — сорок четыре. Даже без единого malloc узловая в два с половиной раза медленнее. Остаток — прыжки: контроль справа — те же узлы, без аллокатора, но порядок обхода не совпадает с порядком адресов, — триста девяносто.<br>Вердикт: ожидание виновно, аллокатор — соучастник. Убрать узлы — значит убрать обоих сразу. Сейчас так и сделаем.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Xeon VM, N = U = 2^20, libstdc++ 13, glibc 2.39 / jemalloc 5.3, один харнесс, медианы (prep/research/deep/alloc.md §1); абсолютные значения выше E1 (прогон делил VM с другими задачами) — сравнивать только полосы между собой. Полная таблица: pool_seq (узлы подряд, без malloc/free) 186, pool_shuf (вразнобой) 390, pmr monotonic_buffer_resource 174, absl::node_hash_set 271, flat под jemalloc 39. libc++: 441 → jemalloc 149 → арена 230 (эффект слабее: узел 24 Б, другой список; блок шумный — alloc.md §2). U = N/2: 139 → 52 → 70 → 40. Деструктор (alloc.md §4): free пишет в освобождаемый блок, tcache держит 7 чанков, остальное в fastbin, а free массива ячеек (8 МБ) запускает malloc_consolidate по всем 1M чанкам: первый вызов без консолидации — 47 нс/эл, следующие — 147. Почему «std не платит за разброс»: glibc раздаёт чанки подряд, разбросан порядок обхода (у арены лишь треть шагов итератора — в соседнюю строку, 73 % — назад); в живом приложении с перемешанной кучей malloc сам становится pointer chasing (75 нс вместо 4,5 на вызов) — гипотеза. Ответ на C9 «пул-аллокатор или pmr?»: pmr ×2,5, арена ×4, но до flat ещё ×2,4–4; до сортировки при U = N не дотягивает. Скрытый второй обход в assign (E10: −13 %) — если спросят, где ещё прячется работа. На M2 не мерил — та же программа.</aside>
+</section>

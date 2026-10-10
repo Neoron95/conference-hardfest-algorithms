@@ -1,0 +1,42 @@
+<section id="work">
+<p class="k">Подозреваемый <b>№1</b> · работа</p>
+<h2 class="t">ШАГОВ МЕНЬШЕ, ИНСТРУКЦИЙ БОЛЬШЕ</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">1</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#000;border:3px solid #555;color:#8F8F8F"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">2</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#000;border:3px solid #555;color:#8F8F8F"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">3</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">Отмена</p>
+<!-- /board -->
+<p class="abs lbl" style="left:117px;top:268px;width:1630px;font-size:26px;color:#C8C8C8">Машинных инструкций на один элемент входа · N = U = 2²⁰ · Xeon VM · cachegrind, детерминированный счётчик</p>
+
+<p data-build-in="fade 1" class="abs sort" style="left:117px;top:340px;width:360px;font-size:40px;font-weight:600;line-height:80px">sort + unique</p>
+<div data-build-in="fade 1" class="bar bg-sort" style="left:500px;top:340px;width:378px;height:80px"></div>
+<p data-build-in="fade 1" class="abs" style="left:902px;top:340px;width:240px;font-size:64px;font-weight:800;line-height:80px">151</p>
+
+<p data-build-in="fade 2" class="abs hash" style="left:117px;top:470px;width:360px;font-size:40px;font-weight:600;line-height:80px">unordered_set</p>
+<div data-build-in="fade 2" class="bar bg-hash" style="left:500px;top:470px;width:1148px;height:80px"></div>
+<p data-build-in="fade 2" class="abs" style="left:1672px;top:470px;width:130px;font-size:64px;font-weight:800;line-height:80px">459</p>
+
+<div data-build-in="fade 3" class="bar pale-hash" style="left:500px;top:470px;width:805px;height:80px;border-radius:10px 0 0 10px"></div>
+<p data-build-in="fade 3" class="abs" style="left:520px;top:470px;width:770px;font-size:34px;font-weight:700;line-height:80px">322 — внутри malloc и free</p>
+<p data-build-in="fade 3" class="abs ink" style="left:1310px;top:470px;width:230px;font-size:30px;font-weight:700;line-height:80px">≈95 таблица</p>
+<p data-build-in="fade 3" class="abs hash" style="left:500px;top:562px;width:1148px;font-size:32px;font-weight:600;line-height:40px">70 % работы «хеш-таблицы» делает аллокатор</p>
+
+<p data-build-in="fade 4" class="abs flat" style="left:117px;top:640px;width:360px;font-size:40px;font-weight:600;line-height:80px">flat_hash_set</p>
+<div data-build-in="fade 4" class="bar bg-flat" style="left:500px;top:640px;width:323px;height:80px"></div>
+<p data-build-in="fade 4" class="abs" style="left:847px;top:640px;width:240px;font-size:64px;font-weight:800;line-height:80px">129</p>
+
+<div data-build-in="fade 4" class="rule" style="left:117px;top:756px;width:1686px"></div>
+<p data-build-in="fade 4" class="abs" style="left:117px;top:772px;width:1686px;font-size:36px;font-weight:700;line-height:46px">Инструкций в <span class="hash">3 раза</span> больше, времени — в 2,6–3 раза:<br>обе программы исполняют по ⅔ инструкции за такт</p>
+<p data-build-in="fade 4" class="abs ph" style="left:117px;top:874px;width:1630px;font-size:32px;font-weight:600;line-height:40px">Одинаково медленно — по разным причинам. Работа: виновна, подозреваемый — аллокатор</p>
+
+<p class="abs lbl" style="left:117px;top:922px;width:1630px;font-size:22px;line-height:28px;">Xeon VM: эта серия, libstdc++ 13 (libc++: 136 / 539 / 117)&nbsp;&nbsp;&nbsp; M2 Pro, iPhone 14 Pro: инструкции те же — программа одна, меняется их цена</p>
+<!-- /body -->
+<aside>Подозреваемый номер один. На бумаге у хеша в двадцать раз меньше шагов. Считаем не шаги, а машинные инструкции на один элемент — не секундомером, а детерминированным счётчиком: он не зависит ни от шума, ни от машины.<br>[щелчок] Сортировка: сто пятьдесят одна инструкция на элемент. Логарифм миллиона — двадцать, по семь-восемь инструкций на уровень.<br>[щелчок] Узловая таблица: четыреста пятьдесят девять. В три раза больше, чем у сортировки, — при «в двадцать раз меньше шагов».<br>[щелчок] Откуда? Разрежем полосу. Сама таблица — хеш, ячейка, сравнение ключа — около девяноста пяти инструкций. Триста двадцать — внутри malloc и free. Семьдесят процентов работы «хеш-таблицы» делает аллокатор.<br>[щелчок] Плоская таблица — сто двадцать девять: ни одного malloc на ключ.<br>Работа виновна, и мы знаем, кто именно. Но вот странность: инструкций у хеша в три раза больше, а времени — в два и шесть на Mac и в три на Xeon. То есть обе программы исполняют за такт одинаково мало — примерно по две трети инструкции. Одинаково медленно — по разным причинам. Эти причины и есть следующие два подозреваемых.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Xeon VM, cachegrind, инструкций на элемент входа, N = U = 2^20, случайные 64-битные id, libstdc++ 13; libc++: 136 / 539 / 117. Из 459: вставки 319 (operator new 208), выгрузка 10, деструктор 130 (operator delete 114); libc++ — 539, в malloc/free 405 (75 %). При U = N/2 (общая серия): sort 153, uset 264 (61 % в аллокаторе), flat 100, radix 126 — там время равное, потому что половина вставок попадает в уже существующий узел. IPC на Xeon при 2,81 ГГц у sort и uset одинаковый ≈0,63: у sort такты уходят в промахи предсказателя (9 на элемент, около трёх четвертей тактов — оценка), у uset — в промахи памяти; radix без ветвлений по данным — IPC вдвое выше (counters.md §2). Инструкции на элемент не зависят от машины: та же программа на M2 исполнит те же 459. «Почему flat 129, а не меньше» — absl::Hash перемешивает, плюс метки и зондирование. Источник: prep/research/deep/counters.md §2–3.</aside>
+</section>

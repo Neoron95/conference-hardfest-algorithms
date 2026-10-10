@@ -1,0 +1,63 @@
+<section id="window">
+<p class="k">Подозреваемый <b>№2</b> · ожидание</p>
+<h2 class="t">ОКНО В ПЯТЬСОТ ИНСТРУКЦИЙ</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">2</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#000;border:3px solid #555;color:#8F8F8F"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">3</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">Отмена</p>
+<!-- /board -->
+<!-- статично: две пары загрузок (из V9 cpu-loads) -->
+<p class="abs" style="left:117px;top:280px;width:400px;font-size:34px;font-weight:700;line-height:44px">Адреса известны</p>
+<p class="abs" style="left:540px;top:280px;width:400px;font-size:34px;font-weight:700;line-height:44px">Адрес — из ответа</p>
+<p class="abs mono" style="left:117px;top:334px;width:400px;font-size:30px;line-height:40px">mov rax, [rdi]<br>mov rdx, [rsi]</p>
+<p class="abs mono" style="left:540px;top:334px;width:400px;font-size:30px;line-height:40px">mov rax, [rdi]<br>mov rax, [<span class="acc">rax</span>]</p>
+<p class="abs mono mut" style="left:117px;top:424px;width:400px;font-size:30px;line-height:40px">ldr x0, [x0]<br>ldr x1, [x1]</p>
+<p class="abs mono mut" style="left:540px;top:424px;width:400px;font-size:30px;line-height:40px">ldr x8, [x0]<br>ldr x0, [<span class="acc">x8</span>]</p>
+
+<!-- билд 1: конвейер с окном (пока панель-заглушка под видео) -->
+<div data-build-in="fade 1" class="panel" style="left:117px;top:530px;width:820px;height:300px"></div>
+<p data-build-in="fade 1" class="abs sec" style="left:150px;top:556px;width:760px;font-size:32px;font-weight:600;line-height:42px">видео · конвейер и окно ≈500 слотов</p>
+<p data-build-in="fade 1" class="abs mut" style="left:150px;top:612px;width:760px;font-size:24px;line-height:32px">красная плитка — промах памяти, ждёт ~100 нс<br>два промаха в одном окне ждут вместе<br>кирпич «malloc + узел» выталкивает следующий промах</p>
+
+<!-- билд 2: график nops -> нс на пару промахов; x = 100 + 0.6*n (0..1024 -> 100..714), y = 340 - 0.88*ns (0..350 -> 340..32) -->
+<p class="abs lbl" style="left:1000px;top:268px;width:803px;font-size:28px;color:#C8C8C8">нс на два промаха · N инструкций между ними</p>
+<svg class="abs" style="left:1000px;top:320px" xmlns="http://www.w3.org/2000/svg" width="803" height="400" viewBox="0 0 803 400">
+  <line x1="100" y1="20" x2="100" y2="340" stroke="#333333" stroke-width="2"/>
+  <line x1="100" y1="340" x2="780" y2="340" stroke="#8F8F8F" stroke-width="2"/>
+  <line x1="100" y1="76" x2="780" y2="76" stroke="#333333" stroke-width="2"/>
+  <line x1="100" y1="164" x2="780" y2="164" stroke="#333333" stroke-width="2"/>
+  <line x1="100" y1="252" x2="780" y2="252" stroke="#333333" stroke-width="2"/>
+</svg>
+<p class="abs lbl" style="left:1000px;top:382px;width:90px;text-align:right;font-size:28px;color:#C8C8C8">300</p>
+<p class="abs lbl" style="left:1000px;top:470px;width:90px;text-align:right;font-size:28px;color:#C8C8C8">200</p>
+<p class="abs lbl" style="left:1000px;top:558px;width:90px;text-align:right;font-size:28px;color:#C8C8C8">100</p>
+<p class="abs lbl" style="left:1070px;top:668px;width:80px;text-align:center;font-size:28px;color:#C8C8C8">0</p>
+<p class="abs lbl" style="left:1214px;top:668px;width:100px;text-align:center;font-size:28px;color:#C8C8C8">256</p>
+<p class="abs lbl" style="left:1367px;top:668px;width:100px;text-align:center;font-size:28px;color:#C8C8C8">512</p>
+<p class="abs lbl" style="left:1521px;top:668px;width:100px;text-align:center;font-size:28px;color:#C8C8C8">768</p>
+<p class="abs lbl" style="left:1674px;top:668px;width:110px;text-align:center;font-size:28px;color:#C8C8C8">1024</p>
+<p class="abs lbl" style="left:1150px;top:704px;width:600px;text-align:center;font-size:26px;color:#C8C8C8">инструкций между промахами · Xeon VM</p>
+<svg data-build-in="fade 2" class="abs" style="left:1000px;top:320px" xmlns="http://www.w3.org/2000/svg" width="803" height="400" viewBox="0 0 803 400">
+  <line x1="407" y1="30" x2="407" y2="340" stroke="#F2C14E" stroke-width="3" stroke-dasharray="12 10"/>
+  <polyline fill="none" stroke="#E2489B" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" points="100,331 119,329 138,316 177,296 254,249 330,199 407,80 561,56 714,51"/>
+  <circle cx="100" cy="331" r="10" fill="#E2489B"/>
+  <circle cx="254" cy="249" r="10" fill="#E2489B"/>
+  <circle cx="407" cy="80" r="12" fill="#E2489B"/>
+  <circle cx="714" cy="51" r="10" fill="#E2489B"/>
+</svg>
+<p data-build-in="fade 2" class="abs ph" style="left:1220px;top:330px;width:180px;font-size:56px;font-weight:800;line-height:64px;text-align:right">≈500</p>
+<p data-build-in="fade 2" class="abs" style="left:1105px;top:586px;width:140px;font-size:30px;font-weight:700;line-height:36px">10 нс</p>
+<p data-build-in="fade 2" class="abs" style="left:1430px;top:400px;width:200px;font-size:30px;font-weight:700;line-height:36px">296 нс</p>
+
+<p data-build-in="fade 2" class="abs" style="left:117px;top:838px;width:1686px;font-size:30px;font-weight:700;line-height:38px">Ключ в узловой таблице ≈260 инструкций → в окне 1–2 вставки. В плоской ≈100 → 4–5<br>Модель «ячейка → узел + malloc»: 92 нс на итерацию · фаза вставок настоящей таблицы: 92–103</p>
+<p class="abs lbl" style="left:117px;top:922px;width:1630px;font-size:22px;line-height:28px;">Xeon VM: эта серия (rob_window); инструкций на вставку — cachegrind; ROB 512&nbsp;&nbsp;&nbsp; M2 Pro, iPhone 14 Pro: окно не измерено</p>
+<!-- /body -->
+<aside>Вот две пары чтений — x86 и ARM. Слева оба адреса известны сразу, справа второй адрес приходит из первого ответа. Это уровень инструкций: зависимость видна в самом коде.<br>[щелчок] Процессор смотрит вперёд по программе и запускает всё, что уже можно, — но не бесконечно далеко. У этого Xeon окно примерно пятьсот инструкций. Опыт: два независимых промаха, между ними вставляем пустые инструкции. Пока их меньше трёхсот — оба промаха ждут вместе, десять наносекунд. При пятистах — уже триста: окно кончилось, ждём по очереди.<br>[щелчок] Теперь вспомним счёт из первого допроса. Один ключ в узловой таблице — около двухсот шестидесяти инструкций, и большая часть — аллокатор. В окно помещается одна-две вставки: следующий промах процессор просто не видит. У плоской таблицы ключ — сто инструкций, в окне четыре-пять вставок, их промахи летят вместе.<br>Проверка: модель из трёх строк — прочитать ячейку, прочитать узел, позвать malloc — даёт девяносто два наносекунды на итерацию. Фаза вставок настоящей таблицы на той же машине — от девяноста двух до ста трёх. Совпало. А одна независимая загрузка — тринадцать, ровно как вставка в плоскую.<br>Так лишняя работа и ожидание оказываются одним подозреваемым: лишние инструкции заслоняют процессору следующий адрес.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>bench/deep/mlp/results/rob_window.csv, mlp.md §2: 0…32 nop — 10 нс, 64 — 27, 128 — 50, 256 — 103, 512 — 296, 768/1024 — 323/328 (плато). Сходится с ROB 512 ядер Golden/Redwood Cove [П]. Строки mode: одна загрузка 13,3; только malloc 21,3; загрузка + malloc 59,6 — больше суммы, malloc заслоняет следующий промах; «ячейка → узел + malloc» 91,5 ≈ фаза вставок unordered_set в E11 (92–103 нс/эл); malloc + free подряд из tcache — 12,8, бесплатно. «Это ROB?» — окно складывается из буфера переупорядочивания, буферов загрузок и очередей; померили результат, не регистр. На M2 окно больше (≈630 [П]), на E-ядре меньше — гипотеза. Колонки инструкций: Apple clang 21, -O3, x86_64 и aarch64 (research_v8_hardware.md).</aside>
+</section>

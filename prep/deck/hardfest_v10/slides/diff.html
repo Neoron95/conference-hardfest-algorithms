@@ -1,0 +1,11 @@
+<section id="diff">
+<h2 class="t nok">КОД-РЕВЬЮ, ВТОРНИК, 17:40</h2>
+<!-- body -->
+<div class="panel" style="left:117px;top:250px;width:1686px;height:400px"></div>
+<p class="abs mono" style="left:165px;top:290px;width:1600px;font-size:40px;line-height:64px;white-space:nowrap"><span class="mut">// dedup ids after offline sync</span><br><span style="color:#F08A7A">- std::sort(ids.begin(), ids.end());</span><br><span style="color:#F08A7A">- ids.erase(std::unique(ids.begin(), ids.end()), ids.end());</span><br><span style="color:#7BD88F">+ std::unordered_set&lt;uint64_t&gt; s(ids.begin(), ids.end());</span><br><span style="color:#7BD88F">+ ids.assign(s.begin(), s.end());</span></p>
+<p data-build-in="fade 1" class="abs" style="left:117px;top:748px;width:1180px;font-size:56px;font-weight:700;line-height:72px"><span class="mut" style="font-weight:400">Коллега:</span> «Линейно вместо n log n»</p>
+<img data-build-in="fade 2" class="abs" style="left:1329.767px;top:698.922px;width:486.017px;height:162.604px;object-fit:contain" src="../assets_v9/approve_paper_v1.png" alt="Бумажная бирюзовая кнопка Approve ✓">
+<img data-build-in="fade 2" class="abs" style="left:1110px;top:812px;width:310px;height:155px;object-fit:contain" src="../assets/meme_approve_v7.png" alt="Бумажный курсор с тормозным следом спешит к кнопке Approve">
+<!-- /body -->
+<aside>Представьте, вам на ревью прилетает маленький диф.<br><br>Было: отсортировать массив и убрать повторы. <br>Стало: сложить в хеш-таблицу и выгрузить обратно.<br><br>[щелчок] <br><br>Подпись: «Линейно вместо n log n». Кто потянулся бы к approve? Я поставил апрув почти не глядя.</aside>
+</section>

@@ -1,0 +1,60 @@
+<section id="boxes">
+<p class="k">Подозреваемый <b>№2</b> · на другом ядре</p>
+<h2 class="t">ТА ЖЕ ПРОГРАММА, ТРИ КЭША</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">2</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Отмена</p>
+<!-- /board -->
+<p class="abs lbl" style="left:117px;top:268px;width:800px;font-size:28px;color:#C8C8C8">Последний кэш перед памятью, в масштабе</p>
+<!-- коробки по ширине: 16 МиБ = 256 px, 4 = 64, 2 = 32; таблицы: 12 МиБ = 192, 24 = 384; граница 16 МиБ — пунктир x = 258 -->
+<svg class="abs" style="left:117px;top:320px" xmlns="http://www.w3.org/2000/svg" width="820" height="440" viewBox="0 0 820 440">
+  <rect x="2" y="2" width="256" height="80" rx="12" fill="none" stroke="#46CDAE" stroke-width="4"/>
+  <rect x="2" y="100" width="64" height="80" rx="10" fill="none" stroke="#F2C14E" stroke-width="4"/>
+  <rect x="2" y="198" width="32" height="80" rx="8" fill="none" stroke="#8F8F8F" stroke-width="4"/>
+  <rect x="2" y="300" width="192" height="50" rx="8" fill="#5E1C42" stroke="#E2489B" stroke-width="3"/>
+  <rect x="2" y="370" width="384" height="50" rx="8" fill="#5E1C42" stroke="#E2489B" stroke-width="3"/>
+  <line x1="258" y1="2" x2="258" y2="430" stroke="#F2C14E" stroke-width="3" stroke-dasharray="10 8"/>
+</svg>
+<p class="abs sort" style="left:391px;top:342px;width:500px;font-size:28px;font-weight:700;line-height:36px">16 МиБ · L2 P-кластера M2 Pro</p>
+<p class="abs ph" style="left:199px;top:440px;width:500px;font-size:28px;font-weight:700;line-height:36px">4 МиБ · L2 E-кластера</p>
+<p class="abs mut" style="left:167px;top:538px;width:500px;font-size:28px;font-weight:700;line-height:36px">2 МиБ · L2 Xeon</p>
+<p class="abs" style="left:325px;top:626px;width:560px;font-size:26px;font-weight:700;line-height:38px">таблица 512K · <span class="hash">12 МиБ</span> — входит</p>
+<p class="abs" style="left:517px;top:696px;width:420px;font-size:26px;font-weight:700;line-height:38px">1M · <span class="hash">24 МиБ</span> — не входит</p>
+
+<p class="abs lbl" style="left:1000px;top:268px;width:803px;font-size:26px;color:#C8C8C8">Промахов последнего кэша на элемент<br>та же программа в симуляторе · N = 2²⁰, U = N/2</p>
+<p class="abs sec" style="left:1270px;top:344px;width:170px;font-size:30px;font-weight:600;line-height:40px;text-align:center">sort</p>
+<p class="abs hash" style="left:1450px;top:344px;width:170px;font-size:30px;font-weight:600;line-height:40px;text-align:center">узловая</p>
+<p class="abs flat" style="left:1630px;top:344px;width:170px;font-size:30px;font-weight:600;line-height:40px;text-align:center">плоская</p>
+<div class="rule" style="left:1000px;top:392px;width:803px"></div>
+
+<p data-build-in="fade 1" class="abs sort" style="left:1000px;top:410px;width:260px;font-size:34px;font-weight:700;line-height:64px">16 МиБ</p>
+<p data-build-in="fade 1" class="abs" style="left:1270px;top:410px;width:170px;font-size:48px;font-weight:700;line-height:64px;text-align:center">0</p>
+<p data-build-in="fade 1" class="abs hash" style="left:1450px;top:410px;width:170px;font-size:48px;font-weight:700;line-height:64px;text-align:center">0,9</p>
+<p data-build-in="fade 1" class="abs" style="left:1630px;top:410px;width:170px;font-size:48px;font-weight:700;line-height:64px;text-align:center">0,4</p>
+<p data-build-in="fade 1" class="abs sec" style="left:1000px;top:476px;width:803px;font-size:26px;line-height:34px">на 512K у узловой было 0,23 — ступенька слайда 18</p>
+
+<p data-build-in="fade 2" class="abs ph" style="left:1000px;top:530px;width:260px;font-size:34px;font-weight:700;line-height:64px">4 МиБ</p>
+<p data-build-in="fade 2" class="abs" style="left:1270px;top:530px;width:170px;font-size:48px;font-weight:700;line-height:64px;text-align:center">0,2</p>
+<p data-build-in="fade 2" class="abs hash" style="left:1450px;top:520px;width:170px;font-size:72px;font-weight:800;line-height:84px;text-align:center">2,5</p>
+<p data-build-in="fade 2" class="abs" style="left:1630px;top:530px;width:170px;font-size:48px;font-weight:700;line-height:64px;text-align:center">1,3</p>
+
+<p data-build-in="fade 2" class="abs mut" style="left:1000px;top:630px;width:260px;font-size:34px;font-weight:700;line-height:64px">2 МиБ</p>
+<p data-build-in="fade 2" class="abs" style="left:1270px;top:630px;width:170px;font-size:48px;font-weight:700;line-height:64px;text-align:center">0,7</p>
+<p data-build-in="fade 2" class="abs hash" style="left:1450px;top:630px;width:170px;font-size:48px;font-weight:700;line-height:64px;text-align:center">3,6</p>
+<p data-build-in="fade 2" class="abs" style="left:1630px;top:630px;width:170px;font-size:48px;font-weight:700;line-height:64px;text-align:center">2,0</p>
+
+<p data-build-in="fade 2" class="abs" style="left:1000px;top:716px;width:803px;font-size:28px;font-weight:700;line-height:36px">Ступенька ходит за размером коробки:<br><span class="sort">16 МиБ</span>: между 512K и 1M · <span class="ph">4 МиБ</span>: 128K и 256K<br><span class="mut">2 МиБ</span>: между 64K и 128K</p>
+
+<p data-build-in="fade 2" class="abs" style="left:117px;top:838px;width:1686px;font-size:32px;font-weight:700;line-height:38px">Коробка вчетверо меньше — промахов у хеша втрое больше, у сортировки почти столько же.<br>И каждый промах ждёт по одному</p>
+<p class="abs lbl" style="left:117px;top:924px;width:1630px;font-size:22px;line-height:28px;">cachegrind на Xeon VM: та же программа, кэш 16 / 4 / 2 МиБ; считает промахи, не время · ёмкости — L2 M2 Pro по sysctl, у A16 свои</p>
+<!-- /body -->
+<aside>Как проверить, что дело в коробке, если на телефоне нет счётчиков? Прогнать ту же программу через модель кэша разного размера. Это симулятор, не телефон, — но программа та же до инструкции.<br>[щелчок] Коробка шестнадцать, как у производительного кластера: сортировка не промахивается вовсе, узловая таблица — почти раз на элемент. На полумиллионе было четверть — вот та самая ступенька с восемнадцатого слайда, теперь посчитанная.<br>[щелчок] Коробка четыре, как у энергоэффективного кластера: у узловой таблицы два с половиной промаха на элемент, у сортировки — ноль целых две. В двенадцать раз. И ступенька переехала: в коробке шестнадцать она была между полумиллионом и миллионом, в коробке четыре — между ста двадцатью восемью и двумястами пятьюдесятью шестью тысячами, в коробке два — ещё раньше. Ступенька ходит за размером коробки. А каждый промах, вспомним, ждёт по одному.<br>Вот арифметика utility: та же программа, коробка вчетверо меньше, промахов у хеша втрое больше, у сортировки — почти столько же. Осталось убедиться, что телефон действительно сменил коробку.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Симуляция cachegrind на Xeon VM, та же программа, LL = 16 / 4 / 2 МиБ (строка 128 / 128 / 64 Б), N = 2^20, U = N/2 (counters.md §1–2). Полный ряд uset: при 16 МиБ 0,19 · 0,19 · 0,19 · 0,23 (512K) → 0,94 (1M) → 1,91 (2M); при 4 МиБ 0,22 → 0,97 между 128K и 256K; при 2 МиБ 0,43 → 1,63 между 64K и 128K; sort при 16 МиБ — 0,00 до 1M, 0,04 на 2M. Рабочий набор 32·U + 8·N + 8·N входа. Не замер на A16: ёмкости 16 и 4 МиБ — M2 Pro по sysctl; у A16 свои (из sysctl телефона). Симулятор не знает префетчера и перекрытия — считает промахи, не время; «втрое больше промахов» ≠ «втрое медленнее». Мост к ×5,8 на iPhone: промахи ×3, плюс меньше курьеров на E-ядре (гипотеза), плюс частота.</aside>
+</section>

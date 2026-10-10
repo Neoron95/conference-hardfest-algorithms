@@ -25,3 +25,6 @@ bench/deep/sort/results/cg/
 bench/deep/isa/asm/libcxx_so_full.txt
 bench/deep/langs/cpp/ptrsort
 bench/deep/langs/cpp/listvec
+
+# V10 deck previews (rendered locally with tools/preview.js)
+prep/deck/hardfest_v10/preview/

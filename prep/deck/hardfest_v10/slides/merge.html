@@ -1,0 +1,24 @@
+<section id="merge">
+<p class="k">Развязка · исходная задача</p>
+<h2 class="t">ИСПОЛЬЗОВАТЬ УЖЕ СДЕЛАННУЮ РАБОТУ</h2>
+<!-- body -->
+<svg style="position:absolute;left:117px;top:310px;width:1686px;height:130px" width="1686" height="130" viewBox="0 0 1686 130">
+<polygon points="0,0 360,0 410,65 360,130 0,130" fill="#46CDAE"/>
+<polygon points="396,0 756,0 806,65 756,130 396,130 446,65" fill="#46CDAE"/>
+<polygon points="792,0 1212,0 1262,65 1212,130 792,130 842,65" fill="#46CDAE"/>
+</svg>
+<p class="abs ink" style="left:150px;top:322px;width:360px;font-size:40px;font-weight:800;line-height:48px">sort<br><span style="font-weight:600;font-size:40px">дельты 64K</span></p>
+<p class="abs ink" style="left:585px;top:350px;width:300px;font-size:40px;font-weight:800;line-height:52px">unique</p>
+<p class="abs ink" style="left:985px;top:322px;width:400px;font-size:40px;font-weight:800;line-height:48px">слить<br><span style="font-weight:600;font-size:40px">с локальными 1M</span></p>
+<div class="card fill" style="left:1413px;top:310px;width:390px;height:130px"></div>
+<p class="abs ink" style="left:1413px;top:345px;width:390px;font-size:40px;font-weight:800;line-height:56px;text-align:center">Уникальные id</p>
+<div data-build-in="fade 1" class="panel" style="left:117px;top:490px;width:1686px;height:260px"></div>
+<div data-build-in="fade 1" class="bar hl" style="left:141px;top:578px;width:1300px;height:58px;border-radius:8px"></div>
+<p data-build-in="fade 1" class="abs mono" style="left:165px;top:520px;width:1600px;font-size:36px;line-height:58px;white-space:pre">std::sort(D.begin(), D.end());<br><span class="acc">D.erase(std::unique(D.begin(), D.end()), D.end());</span><br>std::set_union(L.begin(), L.end(), D.begin(), D.end(), out);</p>
+<p data-build-in="fade 1" class="abs sm acc" style="left:980px;top:698px;width:800px;font-size:32px;text-align:right">unique обязателен: дубли есть и внутри дельты</p>
+<p data-build-in="fade 2" class="abs huge sort" style="left:117px;top:755px;width:900px;font-size:112px">×3,5–6,6</p>
+<p data-build-in="fade 2" class="abs body" style="left:1000px;top:768px;width:800px">быстрее полной сортировки<br><span class="sec">Xeon VM · Linux</span></p>
+<p class="abs lbl" style="left:117px;top:881px;width:1686px;font-size:30px;line-height:38px;">M2 Pro: не измерено&nbsp;&nbsp;&nbsp; Xeon VM: эта серия&nbsp;&nbsp;&nbsp; iPhone 14 Pro: не измерено</p>
+<!-- /body -->
+<aside>Полчаса выбираем, чем быстрее пересортировать готовые данные. Решение оказалось неприлично простым: перестать пересортировывать готовые данные. [пауза 2 с]<br>Локальные id уже отсортированы и уникальны. [щелчок] Сортируем дельту, убираем повторы и сливаем две готовые последовательности. Unique по дельте обязателен: set_union ожидает отсортированные входы, но повторы внутри одного входа не схлопывает.<br>[щелчок] На Xeon в двух библиотечных связках это быстрее полной сортировки в три с половиной — шесть и шесть десятых раза. Для M2 и iPhone серию не снимали.<br>Для нашей задачи я начал бы со слияния: используем готовый порядок и сортируем только новое. Сначала сокращаем работу, потом проверяем цену в целевой среде.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>bench/results/summary.md E8: L = 2^20 sorted unique, D = 2^16, U/N дельты 0,5; libstdc++ 42,4 → 6,4 (×6,6), libc++ 31,2 → 8,9 (×3,5). Важно: ни std::sort, ни pdqsort, ни SIMD-сортировка не распознают «почти отсортированный» вход этого сценария (21 / 25 / 19 нс/эл против 0,7 / 7 на полностью отсортированном) — выигрыш даёт только слияние, а не «умная сортировка» (sort.md §0 п. 6). std::flat_set::insert(range) в libc++ — тот же рецепт в стандартной библиотеке (на вопрос).</aside>
+</section>

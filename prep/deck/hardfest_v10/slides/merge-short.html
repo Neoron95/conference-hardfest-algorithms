@@ -1,0 +1,17 @@
+<section id="merge-short">
+<p class="k">Готовый порядок уже есть в данных</p>
+<h2 class="t">СЛИЯНИЕ ДВУХ ГОТОВЫХ ПОРЯДКОВ</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:322px;width:420px;font-size:40px">Локальные</p>
+<p class="abs mono sort" style="left:600px;top:307px;width:1203px;font-size:62px;letter-spacing:18px">1  3  7</p>
+<p class="abs lbl" style="left:117px;top:442px;width:420px;font-size:40px">Дельта</p>
+<p class="abs mono sec" style="left:600px;top:427px;width:1203px;font-size:62px;letter-spacing:18px">3  2  7  2  9</p>
+<p data-build-in="fade 1" class="abs lead sort" style="left:117px;top:562px;width:445px;font-size:44px">sort + unique дельты</p>
+<p data-build-in="fade 1" class="abs mono sort" style="left:600px;top:547px;width:1203px;font-size:62px;letter-spacing:18px">2  3  7  9</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:671px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs lead sort" style="left:117px;top:727px;width:445px">Слияние</p>
+<p data-build-in="fade 2" class="abs mono sort" style="left:600px;top:710px;width:1203px;font-size:62px;letter-spacing:18px">1  2  3  7  9</p>
+<p data-build-in="fade 2" class="abs lead" style="left:117px;top:858px;width:1686px;font-size:48px">Локальную часть повторно не сортируем</p>
+<!-- /body -->
+<aside>Вернёмся к условию задачи. Локально один, три, семь: уже отсортированы, без повторов. Новая дельта — три, два, семь, два, девять.<br>[щелчок] Сортируем только дельту и убираем её повторы. Две отсортированные последовательности, каждая уникальна.<br>Держим по позиции в каждой. Меньшее число записываем и двигаем его позицию. При равенстве записываем один раз и двигаем обе.<br>[щелчок] Один, два, три, семь, девять. Позиции идут только вперёд, слияние линейно по общей длине. Локальную часть повторно не сортировали. Проверим рецепт на больших данных.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Учебный L = [1, 3, 7], D = [3, 2, 7, 2, 9]. Уникальность каждого входа обязательна для двухпозиционного алгоритма. Полная демонстрация merge-walk — в архиве.</aside>
+</section>

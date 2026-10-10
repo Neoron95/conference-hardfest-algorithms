@@ -1,0 +1,45 @@
+<section id="sortfamily">
+<p class="k">Подозреваемый <b>№3</b> · отмена</p>
+<h2 class="t">ОДНА НОТАЦИЯ — ТРИ СКОРОСТИ</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">3</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Отмена</p>
+<!-- /board -->
+<p class="abs lbl" style="left:117px;top:268px;width:1630px;font-size:24px;color:#C8C8C8">Три реализации O(n log n) · 1M случайных uint64 · нс на элемент · Xeon VM · под полосой — промахи предсказателя</p>
+
+<!-- масштаб: 58 нс -> 1100 px (18,97 px/нс) -->
+<p class="abs sort" style="left:117px;top:330px;width:420px;font-size:36px;font-weight:600;line-height:80px">std::sort</p>
+<div class="bar bg-sort" style="left:560px;top:330px;width:1100px;height:80px"></div>
+<p class="abs" style="left:1684px;top:330px;width:120px;font-size:64px;font-weight:800;line-height:80px">58</p>
+<p class="abs sec" style="left:560px;top:416px;width:800px;font-size:30px;line-height:38px">промахов предсказателя на элемент: <b style="color:#fff">7,9</b></p>
+
+<p data-build-in="fade 1" class="abs sort" style="left:117px;top:480px;width:440px;font-size:30px;font-weight:600;line-height:40px">разбиение без ветвлений</p>
+<p data-build-in="fade 1" class="abs sec" style="left:117px;top:524px;width:420px;font-size:28px;line-height:36px">pdqsort_branchless</p>
+<div data-build-in="fade 1" class="bar bg-sort" style="left:560px;top:480px;width:417px;height:80px"></div>
+<p data-build-in="fade 1" class="abs" style="left:1001px;top:480px;width:160px;font-size:64px;font-weight:800;line-height:80px">22</p>
+<p data-build-in="fade 1" class="abs sec" style="left:560px;top:566px;width:800px;font-size:30px;line-height:38px">промахов <b style="color:#fff">2,3</b> · инструкций на треть больше</p>
+<p data-build-in="fade 1" class="abs ph" style="left:1200px;top:470px;width:600px;font-size:72px;font-weight:800;line-height:80px;text-align:right">×2,6</p>
+<p data-build-in="fade 1" class="abs sec" style="left:1500px;top:556px;width:300px;font-size:26px;line-height:32px;text-align:right">(58 − 22) / (7,9 − 2,3)<br>≈ 18 тактов за ошибку</p>
+
+<p data-build-in="fade 2" class="abs sort" style="left:117px;top:630px;width:420px;font-size:30px;font-weight:600;line-height:40px">SIMD-сортировка</p>
+<p data-build-in="fade 2" class="abs sec" style="left:117px;top:674px;width:420px;font-size:28px;line-height:36px">x86-simd-sort, AVX-512</p>
+<div data-build-in="fade 2" class="bar bg-sort" style="left:560px;top:630px;width:114px;height:80px"></div>
+<p data-build-in="fade 2" class="abs" style="left:698px;top:630px;width:160px;font-size:64px;font-weight:800;line-height:80px">6</p>
+<p data-build-in="fade 2" class="abs sec" style="left:560px;top:716px;width:800px;font-size:30px;line-height:38px">промахов <b style="color:#fff">0,3</b> · по восемь ключей за инструкцию</p>
+<p data-build-in="fade 2" class="abs ph" style="left:1200px;top:620px;width:600px;font-size:72px;font-weight:800;line-height:80px;text-align:right">×9,7</p>
+
+<div data-build-in="fade 2" class="rule" style="left:117px;top:790px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs" style="left:117px;top:808px;width:1686px;font-size:32px;font-weight:700;line-height:40px">Все три — та же O(n log n). Один алгоритм на бумаге — три скорости на одном процессоре</p>
+<p data-build-in="fade 2" class="abs sec" style="left:117px;top:858px;width:1630px;font-size:24px;line-height:32px">Так уже сортируют JDK 23 на x86 и NumPy · хеш против сортировки — спор реализаций за то, чего ждать: памяти или вахтёра</p>
+<p class="abs lbl" style="left:117px;top:922px;width:1630px;font-size:22px;line-height:28px;">Xeon VM (AVX-512): эта серия, libstdc++ (libc++ 60 / 46 / 7); промахи — cachegrind на 2¹⁸&nbsp;&nbsp;&nbsp; M2 Pro, iPhone 14 Pro: не измерено, AVX-512 там нет</p>
+<!-- /body -->
+<aside>Проверим вахтёра от обратного. [щелчок] Та же сортировка, но разбиение переписано так, чтобы сравнение не выбирало ветку: результат записывается как бит, элементы переставляются потом. Инструкций стало даже больше — на треть. А времени в два и шесть десятых раза меньше, потому что промахов вахтёра втрое меньше. Делим разницу во времени на разницу в промахах: восемнадцать тактов за ошибку. Это цена отменённой работы, измеренная.<br>[щелчок] Третий вариант сортирует векторными инструкциями, по восемь ключей за раз, без единого ветвления по данным: почти в десять раз быстрее стандартной. Все три — та же O(n log n). Один алгоритм на бумаге — три скорости на одном процессоре.<br>Хеш против сортировки — это не спор нотаций. Это спор реализаций за то, чего ждать: память или вахтёра.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Xeon VM 10.10 (graniterapids, AVX-512), libstdc++, N = 2^20 случайных uint64, чистые окна (sort.md §1): std::sort 58 (libc++ 60), pdqsort_branchless (orlp) 22, x86-simd-sort AVX-512 6,0 (AVX2 — 14); промахи — cachegrind на 2^18: 7,9 / 2,3 / 0,3 при 131 / 172 / 121 инструкциях; цена промаха (58 − 22)/(7,9 − 2,3) ≈ 6,4 нс ≈ 18 тактов. Ранние 172 / 67 — шумное окно при 1,0 ГГц. Сюрприз: безветвенное разбиение в libc++ 18 — мёртвый код (признак «простого компаратора» объявлен для ссылочных типов, диспетчер проверяет нессылочный; доказано nm, дизассемблером libc++.so и callgrind; в main исправлено) — поэтому libc++ = libstdc++ на случайных данных, и «×2,6» говорим про pdqsort. Сама сортировка не упирается в память: ≈3 нс на «уровень» от 1K до 4M. На ARM у JDK — скалярный quicksort (beyond.md §2.3). Radix на этой VM 13,7 нс/эл, пока 16 МБ живут в кэше, и 41 в сентябре, когда жили в DRAM (sort.md §4).</aside>
+</section>

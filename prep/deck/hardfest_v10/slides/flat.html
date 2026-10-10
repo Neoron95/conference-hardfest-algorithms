@@ -1,0 +1,22 @@
+<section id="flat">
+<p class="k">Раунд <b>2</b> из 4 · реализация хеша</p>
+<h2 class="t">ТРИ РЕАЛИЗАЦИИ, ОДИН ВХОД</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:270px;width:1600px;font-size:40px;color:#C8C8C8">нс на элемент · N = U = 2²⁰ · M2 Pro · libc++ · меньше — лучше</p>
+<p data-build-in="fade 1" class="abs lead hash" style="left:117px;top:376px;width:360px;font-size:40px;line-height:80px">unordered_set</p>
+<div data-build-in="fade 1" class="bar bg-hash" style="left:490px;top:376px;width:820px;height:80px"></div>
+<p data-build-in="fade 1" class="abs xl" style="left:1334px;top:376px;width:240px;font-size:56px;line-height:80px">51,3</p>
+<p data-build-in="fade 1" class="abs lead sort" style="left:117px;top:486px;width:360px;font-size:40px;line-height:80px">sort + unique</p>
+<div data-build-in="fade 1" class="bar bg-sort" style="left:490px;top:486px;width:318px;height:80px"></div>
+<p data-build-in="fade 1" class="abs xl" style="left:832px;top:486px;width:240px;font-size:56px;line-height:80px">19,9</p>
+<p data-build-in="fade 2" class="abs lead" style="left:117px;top:596px;width:360px;font-size:40px;line-height:80px">flat_hash_set</p>
+<div data-build-in="fade 2" class="bar bg-flat" style="left:490px;top:596px;width:187px;height:80px"></div>
+<p data-build-in="fade 2" class="abs xl" style="left:701px;top:596px;width:240px;font-size:56px;line-height:80px">11,7</p>
+<p data-build-in="fade 3" class="abs hero" style="left:1110px;top:540px;width:690px;text-align:right;font-size:200px">×1,7</p>
+<p data-build-in="fade 3" class="abs lbl" style="left:1110px;top:760px;width:690px;text-align:right;font-size:40px;color:#C8C8C8">flat против sort + unique</p>
+
+
+<p class="abs lbl" style="left:117px;top:881px;width:1630px;font-size:26px;line-height:34px;">M2 Pro: эта серия&nbsp;&nbsp;&nbsp; Xeon VM: отдельная серия — unordered_set 260 · sort 84 · flat 43&nbsp;&nbsp;&nbsp; iPhone 14 Pro: не измерено</p>
+<!-- /body -->
+<aside>Вернёмся к первой ставке: M2 Pro, миллион уникальных числовых id.<br>[щелчок] Знакомые столбцы: сортировка и стандартная узловая таблица. [щелчок] А вот плоская — около двенадцати наносекунд на элемент.<br>[щелчок] Быстрее сортировки в один и семь десятых раза. [пауза 2 с] Другая организация памяти поменяла победителя на том же входе. На Xeon отдельный опыт даёт то же направление. Телефон для этой тройки не измеряли. Название контейнера само по себе не предсказывает его цену.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>M2 Pro/libc++, N = U = 2^20: sort 19,9, unordered_set 51,3, flat_hash_set 11,7; ×1,7 = 19,9/11,7. Xeon E1 (bench/results/summary.md): 260 / 83,5 / 42,6 (libstdc++). Radix — в архиве.</aside>
+</section>

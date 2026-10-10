@@ -1,0 +1,33 @@
+<section id="learned">
+<h2 class="t nok">ПОВТОРЯЕМЫЙ ВХОД УСКОРЯЕТ БЕНЧМАРК</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">3</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Отмена</p>
+<!-- /board -->
+<p class="abs mut" style="left:117px;top:282px;width:1686px;font-size:32px;font-weight:600;line-height:1.3">sort + unique · N=1024 · нс/элемент</p>
+<p data-build-in="fade 1" class="abs " style="left:580px;top:358px;width:370px;font-size:38px;font-weight:700;line-height:1.3">M2 Pro</p>
+<p data-build-in="fade 1" class="abs " style="left:987px;top:358px;width:370px;font-size:38px;font-weight:700;line-height:1.3">Xeon VM</p>
+<p data-build-in="fade 1" class="abs " style="left:1394px;top:358px;width:409px;font-size:38px;font-weight:700;line-height:1.3">iPhone 14 Pro</p>
+<div data-build-in="fade 1" class="rule" style="left:117px;top:424px;width:1686px"></div>
+<p data-build-in="fade 1" class="abs " style="left:117px;top:469px;width:420px;font-size:40px;font-weight:600;line-height:1.3">Один вход</p>
+<p data-build-in="fade 1" class="abs " style="left:117px;top:573px;width:420px;font-size:40px;font-weight:600;line-height:1.3">64 разных</p>
+<p data-build-in="fade 1" class="abs " style="left:580px;top:459px;width:370px;font-size:56px;font-weight:700;line-height:1.3">6,8</p>
+<p data-build-in="fade 1" class="abs " style="left:580px;top:563px;width:370px;font-size:56px;font-weight:700;line-height:1.3">14,4</p>
+<p data-build-in="fade 1" class="abs " style="left:987px;top:459px;width:370px;font-size:56px;font-weight:700;line-height:1.3">9,7</p>
+<p data-build-in="fade 1" class="abs " style="left:987px;top:563px;width:370px;font-size:56px;font-weight:700;line-height:1.3">46,9</p>
+<p data-build-in="fade 1" class="abs " style="left:1394px;top:459px;width:409px;font-size:34px;font-weight:700;line-height:1.3">нет серии</p>
+<p data-build-in="fade 1" class="abs " style="left:1394px;top:563px;width:409px;font-size:34px;font-weight:700;line-height:1.3">нет серии</p>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:717px;width:360px;font-size:36px;font-weight:700;line-height:1.3">Контроль Xeon</p>
+<p data-build-in="fade 2" class="abs " style="left:580px;top:708px;width:1223px;font-size:36px;font-weight:400;line-height:1.4">64 копии одного входа: 9,6<br>64 входа через один буфер 8 КиБ: 46,8</p>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:871px;width:1686px;font-size:38px;font-weight:600;line-height:1.3">На Xeon важен рисунок входа. Механизм на M2 не установлен</p>
+<!-- /body -->
+<aside>Здесь я сам наступил на грабли. Вход перед каждым вызовом восстанавливается, поэтому мы каждый раз сортируем исходные данные.<br>[щелчок] На M2 один и тот же вход даёт шесть целых восемь десятых наносекунды на элемент, шестьдесят четыре разных входа — четырнадцать целых четыре. На Xeon контраст сильнее: девять целых семь и сорок шесть целых девять. Для iPhone этой серии нет.<br>Маленький повторяемый экзамен процессору достаётся снова и снова. Но одной пары чисел для объяснения мало.<br>[щелчок] На Xeon шестьдесят четыре одинаковые копии по разным адресам остаются быстрыми. А шестьдесят четыре разных входа через один буфер в восемь кибибайт — медленными. Значит, важен рисунок входа, а не адреса.<br>Это поддерживает гипотезу предсказателя; аппаратных счётчиков в виртуалке нет, а на нативной macOS механизм пока не разделён. Пора допросить третьего подозреваемого.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>N = 1024, U = 512 (Xeon E5: один вход 9,7, 64 разных 46,9, 64 копии 9,6, 64 через один буфер 46,8). M2 native 6,8 / 14,4 — сохранённое наблюдение V9; контроль с копиями на M2 шёл в Linux VM и с нативным опытом не объединяется. Симулятор кэша на x86 исключает объяснение через кэш: промахов D1 и LL нет ни в одном варианте; предсказатель-симулятор вход не «выучивает» (4,96 = 4,96 = 5,00), потому что проще настоящего (counters.md §5 п. 3). Идея: Lemire, «Benchmarking is hard: processors learn to predict branches», 2019.</aside>
+</section>

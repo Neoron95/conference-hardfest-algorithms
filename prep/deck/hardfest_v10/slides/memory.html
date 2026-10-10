@@ -1,0 +1,58 @@
+<section id="memory">
+<p class="k">Раунд <b>1</b> из 4 · размер и память</p>
+<h2 class="t">ЛЕСТНИЦА: ОДИН, ЧЕТЫРЕ, СОРОК, ДВЕСТИ</h2>
+<!-- body -->
+<!-- board -->
+<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#174F45;border:3px solid #46CDAE;color:#46CDAE"></div>
+<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#46CDAE">✓</p>
+<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#46CDAE">Работа</p>
+<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
+<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">2</p>
+<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Ожидание</p>
+<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#000;border:3px solid #555;color:#8F8F8F"></div>
+<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">3</p>
+<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">Отмена</p>
+<!-- /board -->
+<p class="abs" style="left:117px;top:268px;width:1686px;font-size:40px;font-weight:700;line-height:50px">Время ≈ N × шагов на элемент × <span class="acc">цена шага</span></p>
+
+<!-- лестница: ширина = 100 + 170·log10(нс): 1,3 → 119 · 4 → 202 · 40 → 372 · 200 → 491 -->
+<p class="abs lbl" style="left:117px;top:340px;width:900px;font-size:28px;color:#C8C8C8">Цена зависимого чтения · Xeon VM · объём растёт</p>
+<p data-build-in="fade 1" class="abs" style="left:117px;top:390px;width:170px;font-size:34px;font-weight:700;line-height:64px">L1</p>
+<div data-build-in="fade 1" class="bar" style="left:300px;top:390px;width:119px;height:64px;background:#46CDAE"></div>
+<p data-build-in="fade 1" class="abs" style="left:434px;top:390px;width:200px;font-size:40px;font-weight:800;line-height:64px">1,3 нс</p>
+<p data-build-in="fade 1" class="abs" style="left:117px;top:470px;width:170px;font-size:34px;font-weight:700;line-height:64px">L2</p>
+<div data-build-in="fade 1" class="bar" style="left:300px;top:470px;width:202px;height:64px;background:#3AA98F"></div>
+<p data-build-in="fade 1" class="abs" style="left:517px;top:470px;width:200px;font-size:40px;font-weight:800;line-height:64px">4 нс</p>
+<p data-build-in="fade 1" class="abs" style="left:117px;top:550px;width:170px;font-size:34px;font-weight:700;line-height:64px">L3</p>
+<div data-build-in="fade 1" class="bar" style="left:300px;top:550px;width:372px;height:64px;background:#F2C14E"></div>
+<p data-build-in="fade 1" class="abs" style="left:687px;top:550px;width:240px;font-size:40px;font-weight:800;line-height:64px">≈40 нс</p>
+<p data-build-in="fade 1" class="abs" style="left:117px;top:630px;width:170px;font-size:34px;font-weight:700;line-height:64px">память</p>
+<div data-build-in="fade 1" class="bar bg-hash" style="left:300px;top:630px;width:491px;height:64px"></div>
+<p data-build-in="fade 1" class="abs" style="left:806px;top:630px;width:240px;font-size:40px;font-weight:800;line-height:64px">≈200 нс</p>
+<p data-build-in="fade 1" class="abs ph" style="left:700px;top:386px;width:300px;font-size:64px;font-weight:800;line-height:72px">×150</p>
+<p data-build-in="fade 1" class="abs sec" style="left:700px;top:462px;width:360px;font-size:26px;line-height:32px">верх ↔ низ · log₂ 10⁶ = 20</p>
+<p data-build-in="fade 1" class="abs sec" style="left:117px;top:712px;width:1686px;font-size:28px;line-height:36px">M2 Pro, та же лестница: <b style="color:#fff">1,7 · 6,5 · 100 нс</b> · iPhone 14 Pro — слайд 39</p>
+
+<!-- строка кэша: 16 ячеек по 8 Б, строка 64 Б = 8 ячеек -->
+<p data-build-in="fade 2" class="abs" style="left:1080px;top:340px;width:723px;font-size:34px;font-weight:700;line-height:44px">Память приходит строками</p>
+<svg data-build-in="fade 2" class="abs" style="left:1080px;top:400px" xmlns="http://www.w3.org/2000/svg" width="723" height="64" viewBox="0 0 723 64">
+  <rect x="2" y="2" width="640" height="56" rx="8" fill="#0B2B26" stroke="#2E6B5C" stroke-width="3"/>
+  <line x1="42" y1="2" x2="42" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="82" y1="2" x2="82" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="122" y1="2" x2="122" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="162" y1="2" x2="162" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="202" y1="2" x2="202" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="242" y1="2" x2="242" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="282" y1="2" x2="282" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="322" y1="2" x2="322" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="362" y1="2" x2="362" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="402" y1="2" x2="402" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="442" y1="2" x2="442" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="482" y1="2" x2="482" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="522" y1="2" x2="522" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="562" y1="2" x2="562" y2="58" stroke="#2E6B5C" stroke-width="2"/><line x1="602" y1="2" x2="602" y2="58" stroke="#2E6B5C" stroke-width="2"/>
+  <rect x="162" y="2" width="320" height="56" rx="8" fill="#174F45" stroke="#46CDAE" stroke-width="4"/>
+  <line x1="202" y1="2" x2="202" y2="58" stroke="#46CDAE" stroke-width="3"/><line x1="242" y1="2" x2="242" y2="58" stroke="#46CDAE" stroke-width="3"/><line x1="282" y1="2" x2="282" y2="58" stroke="#46CDAE" stroke-width="3"/><line x1="322" y1="2" x2="322" y2="58" stroke="#46CDAE" stroke-width="3"/><line x1="362" y1="2" x2="362" y2="58" stroke="#46CDAE" stroke-width="3"/><line x1="402" y1="2" x2="402" y2="58" stroke="#46CDAE" stroke-width="3"/><line x1="442" y1="2" x2="442" y2="58" stroke="#46CDAE" stroke-width="3"/>
+</svg>
+<p data-build-in="fade 2" class="abs sort" style="left:1080px;top:472px;width:723px;font-size:30px;font-weight:700;line-height:38px">64 Б = 8 ключей, приехали вместе</p>
+<p data-build-in="fade 2" class="abs sec" style="left:1080px;top:514px;width:723px;font-size:26px;line-height:34px">64 Б на x86, 128 Б на Apple —<br>с одним ключом ещё 7 или 15, бесплатно</p>
+<svg data-build-in="fade 2" class="abs" style="left:1080px;top:600px" xmlns="http://www.w3.org/2000/svg" width="723" height="64" viewBox="0 0 723 64">
+  <rect x="2" y="2" width="320" height="56" rx="8" fill="#000" stroke="#555" stroke-width="3"/>
+  <rect x="122" y="2" width="80" height="56" rx="8" fill="#5E1C42" stroke="#E2489B" stroke-width="4"/>
+</svg>
+<p data-build-in="fade 2" class="abs hash" style="left:1420px;top:600px;width:383px;font-size:30px;font-weight:700;line-height:38px">узел: один ключ</p>
+<p data-build-in="fade 2" class="abs sec" style="left:1420px;top:640px;width:383px;font-size:26px;line-height:34px">соседи не нужны,<br>он приезжает один</p>
+
+<div data-build-in="fade 3" class="card" style="left:117px;top:770px;width:1686px;height:124px;border-color:#8F8F8F"></div>
+<p data-build-in="fade 3" class="abs" style="left:150px;top:786px;width:1620px;font-size:32px;font-weight:700;line-height:42px">«У Xeon же L3 на сотни мегабайт» — по паспорту да. На наборе 256 МиБ: <span class="hash">200 нс</span><br><span class="sec" style="font-weight:400;font-size:28px">кэш общий на весь сокет; сколько его достаётся одной виртуалке, паспорт не говорит</span></p>
+<p class="abs lbl" style="left:117px;top:922px;width:1630px;font-size:24px;line-height:30px;">Xeon VM: эта серия (зависимое чтение)&nbsp;&nbsp;&nbsp; M2 Pro: та же программа&nbsp;&nbsp;&nbsp; iPhone 14 Pro: лестница на слайде 39</p>
+<!-- /body -->
+<aside>Цена шага — это лестница. Я померил её на всех трёх машинах одним способом: каждое чтение приносит адрес следующего, а объём, по которому ходим, растёт.<br>[щелчок] Xeon: пока всё помещается в ближайший кэш — около наносекунды. Второй уровень — четыре. Третий — около сорока. Память — двести. Между верхней и нижней ступенькой — в сто пятьдесят раз. Логарифм миллиона, напомню, двадцать.<br>[щелчок] Память приходит строками: по шестьдесят четыре байта на x86, по сто двадцать восемь на Apple. Сортировка читает подряд — вместе с одним ключом приезжают ещё семь или пятнадцать, бесплатно. Узлу соседи не нужны: он приезжает один.<br>[щелчок] «У Xeon же кэш на сотни мегабайт». По паспорту — да. Но на наборе в двести пятьдесят шесть мегабайт зависимое чтение стоит двести наносекунд: кэш общий на весь сокет, и сколько его достаётся одной виртуалке, паспорт не говорит.<br>Но лестница — не весь ответ. Вопрос не только «сколько стоит шаг», а «сколько шагов можно делать одновременно».<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Xeon VM 10.10: bench/deep/xeon, зависимое чтение по строкам 64 Б, страницы 4 КиБ, медианы: 1,3 нс до 48 КБ (L1D 48 КБ), 4,1 до 1 МБ, 36–45 на 4–32 МБ, 65 на 64 МБ, 125–153 на 96–128 МБ, 184–233 на 256 МБ–1 ГБ. VM 10.10 — не та, что в E1–E11 (lscpu: L3 480 МиБ, 3,8 ГГц против 260 МиБ, 2,1 ГГц); в футере — паспорт именно этой VM. Память сервера медленнее ноутбучной: ≈200 против ≈100 нс у M2. «А TLB?» — при шаге в страницу 64 МБ стоят 42 нс на 4К-страницах и 15 на больших (lat_page_*.csv); у Apple страницы 16 КБ. M2 Pro плато — лестница слайда 39, ±10 %.</aside>
+</section>

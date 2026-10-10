@@ -1,0 +1,18 @@
+<section id="hash-short">
+<p class="k">Маленький пример · одна вставка, одна коллизия, один повтор</p>
+<h2 class="t">ХЕШ ВЫБИРАЕТ МЕСТО, РАВЕНСТВО ПРОВЕРЯЕТ КЛЮЧ</h2>
+<!-- body -->
+<p class="abs mono sec" style="left:117px;top:305px;width:1686px;font-size:46px">Учебный хеш: h(x) = x mod 4</p>
+<p data-build-in="fade 1" class="abs lead hash" style="left:117px;top:426px;width:680px;font-size:52px">7 выбирает бакет 3</p>
+<p data-build-in="fade 2" class="abs lead hash" style="left:117px;top:566px;width:680px;font-size:52px">3 выбирает тот же бакет</p>
+<p class="abs lbl" style="left:1000px;top:419px;width:660px;font-size:40px">Бакет 3</p>
+<div data-build-in="fade 1" class="card" style="left:1000px;top:493px;width:200px;height:148px;border-color:#E2489B"></div>
+<p data-build-in="fade 1" class="abs mono hash" style="left:1030px;top:510px;width:140px;text-align:center;font-size:88px;font-weight:700">7</p>
+<div data-build-in="fade 2" class="card" style="left:1320px;top:493px;width:200px;height:148px;border-color:#E2489B"></div>
+<p data-build-in="fade 2" class="abs mono hash" style="left:1350px;top:510px;width:140px;text-align:center;font-size:88px;font-weight:700">3</p>
+<div data-build-in="fade 2" class="rule" style="left:1200px;top:567px;width:120px;border-color:#E2489B"></div>
+<p data-build-in="fade 3" class="abs lead" style="left:117px;top:742px;width:1686px;font-size:52px">Вторая 7: ключ уже есть, вставка не нужна</p>
+<p data-build-in="fade 3" class="abs lead hash" style="left:117px;top:845px;width:1686px;font-size:48px">Коллизия: один бакет. Повтор: равные полные ключи.</p>
+<!-- /body -->
+<aside>Таблица отвечает: встречалось ли такое число? Для примера хешом будет остаток от деления на четыре. Реальный хеш в замере другой.<br>[щелчок] Семь даёт три. В бакете номер три пусто, сохраняем семь.<br>[щелчок] Число три тоже выбирает этот бакет. Это коллизия, но три не равно семи. Сохраняем оба ключа. Один адрес ещё не означает одинаковые значения.<br>[щелчок] Приходит вторая семёрка. Находим полный ключ семь и ничего не добавляем. Вот это повтор.<br>Цена вставки — хеш, поиск, проверка равенства и иногда выделение памяти. И запомните: ячейка хранит не само число, а адрес, где число лежит. Через несколько минут этот адрес станет главным героем.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Учебный h(x) = x mod 4, не хеш измеряемого std::unordered_set. Полная демонстрация — в архиве hash-walk.</aside>
+</section>

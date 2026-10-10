@@ -1,0 +1,18 @@
+<section id="core-model">
+<p class="k">Раунд <b>4</b> из 4 · процессор</p>
+<h2 class="t">ТИП ЯДРА МЕНЯЕТ ЦЕНУ ЧТЕНИЯ</h2>
+<!-- body -->
+<p data-build-in="fade 1" class="abs " style="left:117px;top:344px;width:180px;font-size:142px;font-weight:800;line-height:1">P</p>
+<p data-build-in="fade 1" class="abs " style="left:332px;top:368px;width:560px;font-size:46px;font-weight:700;line-height:1.2">Производительное<br>ядро</p>
+<p data-build-in="fade 1" class="abs acc" style="left:1008px;top:344px;width:180px;font-size:142px;font-weight:800;line-height:1">E</p>
+<p data-build-in="fade 1" class="abs " style="left:1223px;top:368px;width:580px;font-size:42px;font-weight:700;line-height:1.2">Энергоэффективное<br>ядро</p>
+<p data-build-in="fade 1" class="abs " style="left:117px;top:568px;width:795px;font-size:42px;font-weight:400;line-height:1.3">Своя частота и ресурсы</p>
+<p data-build-in="fade 1" class="abs " style="left:1008px;top:568px;width:795px;font-size:42px;font-weight:400;line-height:1.3">Своя частота и ресурсы</p>
+<p data-build-in="fade 1" class="abs " style="left:117px;top:638px;width:795px;font-size:42px;font-weight:400;line-height:1.3">Свои ближайшие кэши</p>
+<p data-build-in="fade 1" class="abs " style="left:1008px;top:638px;width:795px;font-size:42px;font-weight:400;line-height:1.3">Свои ближайшие кэши</p>
+<div data-build-in="fade 2" class="rule" style="left:117px;top:748px;width:1686px"></div>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:791px;width:1686px;font-size:46px;font-weight:700;line-height:1.3">QoS сообщает намерение системе</p>
+<p data-build-in="fade 2" class="abs " style="left:117px;top:863px;width:1686px;font-size:38px;font-weight:400;line-height:1.3">Где выполняется поток, проверяем отдельным опытом</p>
+<!-- /body -->
+<aside>Когда мы говорим «мой процессор», легко представить одинаковые ядра с разной частотой.<br><br>[щелчок] У наших M2 Pro и A16 есть производительные P-ядра и энергоэффективные E-ядра. Они выполняют те же инструкции, но ресурсы, частоты и ближайшие кэши различаются. Поэтому один и тот же цикл может получить другую цену чтения.<br><br>[щелчок] QoS сообщает системе характер работы. Само слово utility не закрепляет поток за E-ядром. Планировщик и контроллер производительности принимают решение с учётом нагрузки.<br><br>В нашей Xeon VM этой пары P и E мы не измеряли. Там другой источник неопределённости: гостевая топология и доступ к общим ресурсам хоста. Сейчас разберём, куда может идти чтение после промаха ближайшего кэша. Это связывает тип ядра с размером таблицы.<br><br>──────────<br>Источники и условия<br>P/E на A16: https://support.apple.com/en-my/111849 . Различие Apple Silicon P/E и кластерные ресурсы: https://developer.apple.com/videos/play/tech-talks/110147/ . Edge принимает рекомендации контроллера по QoS: https://github.com/apple-oss-distributions/xnu/blob/main/doc/scheduler/sched_clutch_edge.md . Утверждение utility=E универсально неверно. Схема показывает наши M2 Pro/A16, не все поколения Apple Silicon. Xeon VM здесь не приписывается P/E.</aside>
+</section>

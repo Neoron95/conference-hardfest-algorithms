@@ -1,0 +1,23 @@
+<section id="review">
+<p class="k">Возвращаемся к дифу</p>
+<h2 class="t">КОД-РЕВЬЮ, ВТОРНИК, 17:40</h2>
+<!-- body -->
+<div class="panel" style="left:117px;top:260px;width:1130px;height:352px"></div>
+<p class="abs mono" style="left:155px;top:292px;width:1060px;font-size:34px;line-height:58px;white-space:nowrap"><span class="sec">// dedup ids after offline sync</span><br><span style="color:#F08A7A">- std::sort(ids.begin(), ids.end());</span><br><span style="color:#F08A7A">- ids.erase(std::unique(…), ids.end());</span><br><span style="color:#7BD88F">+ std::unordered_set&lt;uint64_t&gt; s(…);</span><br><span style="color:#7BD88F">+ ids.assign(s.begin(), s.end());</span></p>
+<p class="abs lead" style="left:1300px;top:316px;width:503px">Какой комментарий<br>вы оставите?</p>
+<p data-build-in="fade 1" class="abs lead hash" style="left:1300px;top:540px;width:503px">Changes requested</p>
+<p data-build-in="fade 2" class="abs num" style="left:117px;top:716px;width:100px">1</p>
+<p data-build-in="fade 2" class="abs lead" style="left:227px;top:722px;width:450px">Контракт</p>
+<p data-build-in="fade 2" class="abs body" style="left:227px;top:802px;width:450px">Какой выход нужен?</p>
+<p data-build-in="fade 3" class="abs num" style="left:690px;top:716px;width:100px">2</p>
+<p data-build-in="fade 3" class="abs lead" style="left:800px;top:722px;width:430px">Данные</p>
+<p data-build-in="fade 3" class="abs body" style="left:800px;top:802px;width:430px">Размер, повторы,<br>порядок входа?</p>
+<p data-build-in="fade 4" class="abs num" style="left:1260px;top:716px;width:100px">3</p>
+<p data-build-in="fade 4" class="abs lead" style="left:1370px;top:722px;width:433px">Исполнение</p>
+<p data-build-in="fade 4" class="abs body" style="left:1370px;top:802px;width:433px">CPU, контейнер,<br>библиотека, QoS?</p>
+<p data-build-in="fade 3" class="abs ph" style="left:800px;top:908px;width:430px;font-size:24px;font-weight:700;line-height:30px;letter-spacing:1px;text-transform:uppercase">✓ №1 работа · ✓ №3 отмена</p>
+<p data-build-in="fade 4" class="abs ph" style="left:1370px;top:908px;width:380px;font-size:24px;font-weight:700;line-height:30px;letter-spacing:1px;text-transform:uppercase">✓ №2 ожидание</p>
+<p data-build-in="fade 2" class="abs mut" style="left:227px;top:908px;width:450px;font-size:24px;font-weight:700;line-height:30px;letter-spacing:1px;text-transform:uppercase">слайд 30</p>
+<!-- /body -->
+<aside>Снова вторник, семнадцать сорок. Тот же диф. За пять секунд сформулируйте один комментарий коллеге. [пауза 5 с, смотрю в зал]<br>[щелчок] Я бы попросил уточнения: фраза «стало линейно» ещё не отвечает на вопрос задачи.<br>[щелчок] Контракт. Выход раньше был отсортирован. Теперь это порядок обхода таблицы. Кто использует прежнее свойство?<br>[щелчок] Данные. Какие размеры и повторы? Локальная часть уже sorted unique. Можем ли отсортировать только дельту и слить?<br>[щелчок] Исполнение. На какой из трёх платформ получен замер? Какой контейнер, какая библиотека и какой режим? Соответствует ли это месту, где живёт этап?<br>Три вопроса к дифу — это три подозреваемых, которых мы допрашивали. Вспомните свою первую букву. Теперь у варианта C есть конкретные вопросы. Приложим ответы и повторяемый опыт к описанию PR.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Возврат к публичному дифу. Производственный результат не заявляется.</aside>
+</section>

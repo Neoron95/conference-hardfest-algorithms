@@ -1,0 +1,31 @@
+<section id="stdlib">
+<p class="k">Backup · для вопросов</p>
+<h2 class="t">ТА ЖЕ МАШИНА, ДРУГАЯ БИБЛИОТЕКА</h2>
+<!-- body -->
+<p class="abs lbl" style="left:117px;top:262px;width:1300px">один x86 · одинаковые входы · N = 2^20 · нс на элемент</p>
+<p class="abs lead" style="left:860px;top:318px;width:450px;text-align:center">libstdc++</p>
+<p class="abs lbl" style="left:860px;top:380px;width:450px;text-align:center">GCC · Linux</p>
+<p class="abs lead" style="left:1353px;top:318px;width:450px;text-align:center">libc++</p>
+<p class="abs lbl" style="left:1353px;top:380px;width:450px;text-align:center">Apple · Android NDK</p>
+<div class="rule" style="left:117px;top:436px;width:1686px"></div>
+<p class="abs lead" style="left:117px;top:482px;width:720px;font-size:44px;line-height:54px"><span class="sort">sort</span>, все ключи равны</p>
+<p class="abs big" style="left:860px;top:462px;width:450px;text-align:center">7,8</p>
+<div class="card fill" style="left:1353px;top:450px;width:450px;height:126px"></div>
+<p class="abs big ink" style="left:1353px;top:462px;width:450px;text-align:center">1,2</p>
+<div class="rule" style="left:117px;top:592px;width:1686px"></div>
+<p class="abs body" style="left:117px;top:610px;width:740px"><span class="hash">unordered_set</span>, 1M уникальных</p>
+<p class="abs lead" style="left:860px;top:604px;width:450px;text-align:center">146</p>
+<p class="abs lead" style="left:1353px;top:604px;width:450px;text-align:center">139</p>
+<div class="rule" style="left:117px;top:682px;width:1686px"></div>
+<p class="abs body" style="left:117px;top:700px;width:740px">узел <span class="hash">unordered_set</span></p>
+<p class="abs lead" style="left:860px;top:694px;width:450px;text-align:center">16 Б</p>
+<p class="abs lead" style="left:1353px;top:694px;width:450px;text-align:center">24 Б</p>
+<div class="rule" style="left:117px;top:772px;width:1686px"></div>
+<p class="abs body" style="left:117px;top:790px;width:740px">std::sort</p>
+<p class="abs body" style="left:860px;top:790px;width:450px;text-align:center">introsort</p>
+<p class="abs body" style="left:1353px;top:790px;width:450px;text-align:center">+ идеи pdqsort</p>
+<div class="card" style="left:117px;top:868px;width:1686px;height:92px;border-radius:20px"></div>
+<p class="abs body" style="left:157px;top:886px;width:1620px;line-height:52px">На Apple <span class="sort">std::sort</span> — из системной libc++: <b>алгоритм выбирает версия ОС</b></p>
+<!-- /body -->
+<aside>Backup, вне тайминга.<br>Q&amp;A: «Это же разница Linux против Apple?»<br>Ответ: одна машина x86, одинаковые входы, две стандартные библиотеки. Сортировка одинаковых чисел: libstdc++ — восемь наносекунд на элемент, libc++ — одна. Идеи pdqsort пришли в libc++ в LLVM 16, а одинаковые ключи она проходила за линейное время и раньше. Узел unordered_set: 16 байт против 24 — libc++ хранит в узле хеш. macOS, iOS и Android NDK — на libc++; отличается GCC на Linux. Алгоритм выбрали вы, библиотеку — тулчейн.<br>И на Apple этот std::sort живёт в системной библиотеке: какой алгоритм исполнится, решает версия ОС, а не Xcode.<br>━━━━━━━━━━━━━━━━━━━━━━━━<br>Щелчки: нет, всё на экране сразу.<br>Под рукой:<br>— Числа воспроизведены при проверке: 8,19 против 0,94 нс/эл (на слайде 7,8 и 1,2 — пилот). unordered_set на 1M уникальных — 146 против 139, разница 5%: в хеше библиотека почти ничего не решает, решают узлы.<br>— «libstdc++ экономнее: 16 байт против 24?» (qa C7): по запрошенным байтам да, 25 МБ против 34; по куче нет — glibc кладёт оба узла в чанк 32 Б, у Apple 24 Б тоже округляются до 32.<br>— «Какая libc++ сортирует на телефоне — та, что в Xcode?» (qa C4): нет, std::sort для uint64_t со стандартным компаратором вызывает уже инстанцированный __sort из libc++.dylib, а она — часть iOS.<br>— Версию, «с которой libc++ распознаёт паттерны», не называть: эвристика «разбиение без обменов → досортировать вставками» есть ещё до LLVM 14, BlockQuickSort и идеи pdqsort — LLVM 16 (errata P0-11).<br>Условия и источники (были в подвале слайда): Пилот · один x86, одинаковые входы · GCC 13 / libstdc++ против Clang 18 / libc++ · N = 2^20 · id для unordered_set — случайные 64-битные<br>С экрана убрано: Пилот · один x86, одинаковые входы · GCC 13 / libstdc++ против Clang 18 / libc++ · N = 2^20 · id для unordered_set — случайные 64-битные; sort на равных ключах — 7,8 против 1,2 нс/эл; unordered_set — 1M уникальных; узел unordered_set&lt;uint64_t&gt;: 16 Б против 24 Б; macOS, iOS и Android NDK используют libc++; GCC на Linux — libstdc++; версии, флаги и аллокатор тоже часть связки</aside>
+</section>
