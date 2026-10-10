@@ -1,0 +1,14 @@
+==7984== Callgrind, a call-graph generating cache profiler
+==7984== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==7984== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7984== Command: build/isa_clang_libcxx --alg uset --n 1048576 --u 524288 --calls 3
+==7984== 
+==7984== For interactive control, run 'callgrind_control -h'.
+==7984== brk segment overflow in thread #1: can't grow to 0x484a000
+==7984== (see section Limitations in user manual)
+==7984== NOTE: further instances of this message will not be shown
+==7984== 
+==7984== Events    : Ir
+==7984== Collected : 705154712
+==7984== 
+==7984== I   refs:      705,154,712

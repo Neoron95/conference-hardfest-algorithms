@@ -1,0 +1,18 @@
+[08:48:39] probe (как 29.09)
+[08:48:49] lat A: line stride, no THP
+[08:49:26] lat B: line stride, THP
+[08:49:45] lat C: page stride, no THP
+[08:49:57] lat D: page stride, THP
+[08:50:03] lat E: line stride, no THP, повтор больших точек
+[08:50:14] bw
+[08:50:46] E9 повтор: flat/uset/sort, N=U=2^20, default против glibc.malloc.hugetlb=1, с minflt и vmstat
+[08:51:12] callgrind: промахи D1 и L2 (как LL) на элемент, N=2^20
+[08:51:17]   cg sort U=1048576:   158,783,070 (34.88%)  32,858,370 (39.08%) 12,748,285 (25.73%)     8 ( 0.31%) 1,530,535 (30.20%)   2,618 ( 0.36%)     8 ( 0.32%)   632,181 (23.78%)      97 ( 0.01%)  ???:alg_sort(std::vector<unsigned long, std::allocator<unsigned long> >&, Ctx const&) [/home/user/conference-hardfest-algorithms/bench/build/bench_gcc]
+[08:51:29]   cg uset U=1048576:   454,040,597 (46.18%) 106,286,621 (50.38%)  65,429,503 (50.15%)    61 ( 2.36%)  4,905,592 (41.57%)   919,599 (55.79%)    61 ( 2.37%) 4,634,880 (52.66%)   919,537 (55.98%)  ???:alg_uset(std::vector<unsigned long, std::allocator<unsigned long> >&, Ctx const&) [/home/user/conference-hardfest-algorithms/bench/build/bench_gcc]
+[08:51:38]   cg radix U=1048576: 131,087,080 (30.66%)  19,925,470 (28.00%) 25,169,172 (40.62%)    26 ( 1.02%) 1,310,939 (27.04%) 1,121,098 (60.69%)    26 ( 1.02%) 1,301,619 (39.11%) 1,041,068 (59.02%)  ???:alg_radix(std::vector<unsigned long, std::allocator<unsigned long> >&, Ctx const&) [/home/user/conference-hardfest-algorithms/bench/build/bench_gcc]
+[08:51:51]   cg flat U=1048576:   146,040,580 (24.63%)  26,390,965 (24.31%) 14,738,403 (22.98%)    74 ( 2.85%) 1,525,701 (23.52%) 1,201,568 (62.24%)    74 ( 2.85%) 1,094,384 (29.69%) 1,141,529 (61.22%)  ???:alg_flat(std::vector<unsigned long, std::allocator<unsigned long> >&, Ctx const&) [/home/user/conference-hardfest-algorithms/bench/build/bench_gcc]
+[08:52:02]   cg sort U=524288:   160,457,839 (38.26%)  31,844,175 (42.47%) 12,939,000 (31.95%)     9 ( 0.36%) 1,579,968 (32.43%)    67,736 ( 5.61%)     9 ( 0.36%)   687,427 (27.83%)  43,229 ( 6.70%)  ???:alg_sort(std::vector<unsigned long, std::allocator<unsigned long> >&, Ctx const&) [/home/user/conference-hardfest-algorithms/bench/build/bench_gcc]
+[08:52:21]   cg uset U=524288: 245,582,833 (39.69%)  56,143,562 (44.67%) 41,322,232 (49.80%)    39 ( 1.52%) 3,539,849 (43.59%)   591,866 (34.16%)    39 ( 1.52%) 3,217,869 (56.92%)   591,805 (49.56%)  ???:alg_uset(std::vector<unsigned long, std::allocator<unsigned long> >&, Ctx const&) [/home/user/conference-hardfest-algorithms/bench/build/bench_gcc]
+[08:52:31]   cg radix U=524288: 132,659,466 (33.88%)  18,876,779 (30.44%) 25,693,384 (48.24%)    14 ( 0.56%) 1,310,979 (28.48%) 1,240,923 (52.13%)    14 ( 0.56%) 1,297,749 (42.13%) 1,084,576 (64.30%)  ???:alg_radix(std::vector<unsigned long, std::allocator<unsigned long> >&, Ctx const&) [/home/user/conference-hardfest-algorithms/bench/build/bench_gcc]
+[08:52:42]   cg flat U=524288: 114,496,102 (25.88%)  19,478,301 (25.38%) 10,514,784 (23.78%)    63 ( 2.46%) 1,995,041 (34.12%)   620,846 (35.24%)    63 ( 2.46%) 1,496,143 (44.12%)   590,402 (49.50%)  ???:alg_flat(std::vector<unsigned long, std::allocator<unsigned long> >&, Ctx const&) [/home/user/conference-hardfest-algorithms/bench/build/bench_gcc]
+[08:52:42] done

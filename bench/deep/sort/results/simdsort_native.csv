@@ -1,0 +1,15 @@
+lib,isa,alg,input,N,ns_sort,ns_sort_unique
+libstdc++,native,std::sort,random,65536,46.301,46.467
+libstdc++,native,pdqsort_branchless,random,65536,18.910,19.171
+libstdc++,native,std::sort,random,262144,51.734,52.019
+libstdc++,native,pdqsort_branchless,random,262144,20.212,20.594
+libstdc++,native,std::sort,random,1048576,57.527,57.730
+libstdc++,native,pdqsort_branchless,random,1048576,21.524,22.066
+libstdc++,native,std::sort,sorted,1048576,6.799,7.737
+libstdc++,native,pdqsort_branchless,sorted,1048576,0.672,1.070
+libstdc++,native,std::sort,equal,1048576,6.022,6.400
+libstdc++,native,pdqsort_branchless,equal,1048576,0.634,0.950
+libstdc++,native,std::sort,runs,1048576,53.960,56.896
+libstdc++,native,pdqsort_branchless,runs,1048576,21.760,25.025
+libstdc++,native,std::sort,random,4194304,62.707,63.453
+libstdc++,native,pdqsort_branchless,random,4194304,24.382,24.246

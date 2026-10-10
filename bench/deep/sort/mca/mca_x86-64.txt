@@ -1,0 +1,410 @@
+
+[0] Code Region - scatter
+
+Iterations:        200
+Instructions:      9400
+Total Cycles:      3614
+Total uOps:        10600
+
+Dispatch Width:    6
+uOps Per Cycle:    2.93
+IPC:               2.60
+Block RThroughput: 8.8
+
+
+Instruction Info:
+[1]: #uOps
+[2]: Latency
+[3]: RThroughput
+[4]: MayLoad
+[5]: MayStore
+[6]: HasSideEffects (U)
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      2     0.20                        testq	%rdx, %rdx
+ 1      1     0.50                        je	.LBB0_5
+ 1      0     0.20                        movl	%ecx, %ecx
+ 1      1     0.20                        cmpq	$1, %rdx
+ 1      1     0.50                        jne	.LBB0_6
+ 1      2     0.20                        xorl	%eax, %eax
+ 1      2     0.20                        testb	$1, %dl
+ 1      1     0.50                        jne	.LBB0_4
+ 0      0     0.00                        jmp	.LBB0_5
+ 2      1     0.50           *            pushq	%rbp
+ 2      1     0.50           *            pushq	%r14
+ 2      1     0.50           *            pushq	%rbx
+ 0      1     0.00                        movq	%rdx, %r9
+ 1      2     0.20                        andq	$-2, %r9
+ 1      2     0.20                        xorl	%eax, %eax
+ 1      5     0.33    *                   movq	(%rdi,%rax,8), %r10
+ 0      1     0.00                        movq	%r10, %r11
+ 2      2     1.00                        shrq	%cl, %r11
+ 1      0     0.20                        movzbl	%r11b, %r11d
+ 1      5     0.33    *                   movl	(%r8,%r11,4), %ebx
+ 1      1     1.00                        leal	1(%rbx), %ebp
+ 2      12    0.50           *            movl	%ebp, (%r8,%r11,4)
+ 1      5     0.33    *                   movq	8(%rdi,%rax,8), %r11
+ 0      1     0.00                        movq	%r11, %r14
+ 2      2     1.00                        shrq	%cl, %r14
+ 2      12    0.50           *            movq	%r10, (%rsi,%rbx,8)
+ 1      0     0.20                        movzbl	%r14b, %r10d
+ 1      5     0.33    *                   movl	(%r8,%r10,4), %ebx
+ 1      1     1.00                        leal	1(%rbx), %ebp
+ 2      12    0.50           *            movl	%ebp, (%r8,%r10,4)
+ 2      12    0.50           *            movq	%r11, (%rsi,%rbx,8)
+ 0      1     0.00                        addq	$2, %rax
+ 1      1     0.20                        cmpq	%rax, %r9
+ 1      1     0.50                        jne	.LBB0_7
+ 1      5     0.33    *                   popq	%rbx
+ 1      5     0.33    *                   popq	%r14
+ 1      5     0.33    *                   popq	%rbp
+ 1      2     0.20                        testb	$1, %dl
+ 1      1     0.50                        je	.LBB0_5
+ 1      5     0.33    *                   movq	(%rdi,%rax,8), %rax
+ 0      1     0.00                        movq	%rax, %rdx
+ 2      2     1.00                        shrq	%cl, %rdx
+ 1      0     0.20                        movzbl	%dl, %ecx
+ 1      5     0.33    *                   movl	(%r8,%rcx,4), %edx
+ 1      1     1.00                        leal	1(%rdx), %edi
+ 2      12    0.50           *            movl	%edi, (%r8,%rcx,4)
+ 2      12    0.50           *            movq	%rax, (%rsi,%rdx,8)
+
+
+Resources:
+[0]   - SPRPort00
+[1]   - SPRPort01
+[2]   - SPRPort02
+[3]   - SPRPort03
+[4]   - SPRPort04
+[5]   - SPRPort05
+[6]   - SPRPort06
+[7]   - SPRPort07
+[8]   - SPRPort08
+[9]   - SPRPort09
+[10]  - SPRPort10
+[11]  - SPRPort11
+[12]  - SPRPortInvalid
+
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12]   
+6.54   5.07   3.00   3.00   4.50   3.90   6.56   4.50   4.50   4.50   3.95   3.00    -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12]   Instructions:
+0.07    -      -      -      -     0.10   0.01    -      -      -     0.83    -      -     testq	%rdx, %rdx
+0.49    -      -      -      -      -     0.52    -      -      -      -      -      -     je	.LBB0_5
+0.01   0.06    -      -      -     0.45   0.44    -      -      -     0.05    -      -     movl	%ecx, %ecx
+0.05    -      -      -      -     0.02   0.82    -      -      -     0.12    -      -     cmpq	$1, %rdx
+0.89    -      -      -      -      -     0.11    -      -      -      -      -      -     jne	.LBB0_6
+ -     0.94    -      -      -      -      -      -      -      -     0.06    -      -     xorl	%eax, %eax
+0.01    -      -      -      -     0.82   0.12    -      -      -     0.06    -      -     testb	$1, %dl
+0.52    -      -      -      -      -     0.49    -      -      -      -      -      -     jne	.LBB0_4
+ -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB0_5
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     pushq	%rbp
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     pushq	%r14
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     pushq	%rbx
+ -      -      -      -      -      -      -      -      -      -      -      -      -     movq	%rdx, %r9
+ -     0.01    -      -      -     0.06    -      -      -      -     0.94    -      -     andq	$-2, %r9
+0.39   0.05    -      -      -     0.45    -      -      -      -     0.12    -      -     xorl	%eax, %eax
+ -      -     0.05   0.08    -      -      -      -      -      -      -     0.88    -     movq	(%rdi,%rax,8), %r10
+ -      -      -      -      -      -      -      -      -      -      -      -      -     movq	%r10, %r11
+0.98    -      -      -      -      -     1.02    -      -      -      -      -      -     shrq	%cl, %r11
+ -     0.05    -      -      -     0.13    -      -      -      -     0.83    -      -     movzbl	%r11b, %r11d
+ -      -     0.82   0.08    -      -      -      -      -      -      -     0.11    -     movl	(%r8,%r11,4), %ebx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leal	1(%rbx), %ebp
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     movl	%ebp, (%r8,%r11,4)
+ -      -     0.08   0.88    -      -      -      -      -      -      -     0.05    -     movq	8(%rdi,%rax,8), %r11
+ -      -      -      -      -      -      -      -      -      -      -      -      -     movq	%r11, %r14
+1.02    -      -      -      -      -     0.98    -      -      -      -      -      -     shrq	%cl, %r14
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     movq	%r10, (%rsi,%rbx,8)
+ -     0.13    -      -      -     0.83    -      -      -      -     0.05    -      -     movzbl	%r14b, %r10d
+ -      -     0.08   0.11    -      -      -      -      -      -      -     0.82    -     movl	(%r8,%r10,4), %ebx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leal	1(%rbx), %ebp
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     movl	%ebp, (%r8,%r10,4)
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     movq	%r11, (%rsi,%rbx,8)
+ -      -      -      -      -      -      -      -      -      -      -      -      -     addq	$2, %rax
+ -     0.06    -      -      -     0.94    -      -      -      -     0.01    -      -     cmpq	%rax, %r9
+0.51    -      -      -      -      -     0.50    -      -      -      -      -      -     jne	.LBB0_7
+ -      -     0.81    -      -      -      -      -      -      -      -     0.19    -     popq	%rbx
+ -      -      -     0.97    -      -      -      -      -      -      -     0.03    -     popq	%r14
+ -      -     0.98   0.03    -      -      -      -      -      -      -      -      -     popq	%rbp
+0.10   0.77    -      -      -     0.07   0.05    -      -      -     0.02    -      -     testb	$1, %dl
+0.50    -      -      -      -      -     0.51    -      -      -      -      -      -     je	.LBB0_5
+ -      -     0.10   0.05    -      -      -      -      -      -      -     0.86    -     movq	(%rdi,%rax,8), %rax
+ -      -      -      -      -      -      -      -      -      -      -      -      -     movq	%rax, %rdx
+0.98    -      -      -      -      -     1.02    -      -      -      -      -      -     shrq	%cl, %rdx
+0.05   0.02    -      -      -     0.06    -      -      -      -     0.89    -      -     movzbl	%dl, %ecx
+ -      -     0.10   0.83    -      -      -      -      -      -      -     0.08    -     movl	(%r8,%rcx,4), %edx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leal	1(%rdx), %edi
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     movl	%edi, (%r8,%rcx,4)
+ -      -      -      -     0.50    -      -     0.50   0.50   0.50    -      -      -     movq	%rax, (%rsi,%rdx,8)
+
+[1] Code Region - populate
+
+Iterations:        200
+Instructions:      5800
+Total Cycles:      2481
+Total uOps:        8000
+
+Dispatch Width:    6
+uOps Per Cycle:    3.22
+IPC:               2.34
+Block RThroughput: 8.5
+
+
+Instruction Info:
+[1]: #uOps
+[2]: Latency
+[3]: RThroughput
+[4]: MayLoad
+[5]: MayStore
+[6]: HasSideEffects (U)
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      2     0.20                        xorl	%eax, %eax
+ 1      2     0.20                        xorl	%r9d, %r9d
+ 1      2     0.20                        xorl	%r8d, %r8d
+ 2      6     0.33    *                   cmpq	%rsi, (%rdi,%rax,8)
+ 2      2     1.00                        setae	%r8b
+ 1      0     0.20                        movl	%eax, %ecx
+ 2      2     1.00                        shlq	%cl, %r8
+ 1      2     0.20                        orq	%r9, %r8
+ 1      2     0.20                        xorl	%r9d, %r9d
+ 2      6     0.33    *                   cmpq	%rsi, 8(%rdi,%rax,8)
+ 2      2     1.00                        setae	%r9b
+ 1      1     1.00                        leal	1(%rax), %ecx
+ 2      2     1.00                        shlq	%cl, %r9
+ 1      2     0.20                        xorl	%r10d, %r10d
+ 2      6     0.33    *                   cmpq	%rsi, 16(%rdi,%rax,8)
+ 2      2     1.00                        setae	%r10b
+ 1      1     1.00                        leal	2(%rax), %ecx
+ 2      2     1.00                        shlq	%cl, %r10
+ 1      2     0.20                        orq	%r9, %r10
+ 1      2     0.20                        orq	%r8, %r10
+ 1      2     0.20                        xorl	%r9d, %r9d
+ 2      6     0.33    *                   cmpq	%rsi, 24(%rdi,%rax,8)
+ 2      2     1.00                        setae	%r9b
+ 1      1     1.00                        leal	3(%rax), %ecx
+ 2      2     1.00                        shlq	%cl, %r9
+ 1      2     0.20                        orq	%r10, %r9
+ 0      1     0.00                        addq	$4, %rax
+ 1      1     0.20                        cmpq	$64, %rax
+ 1      1     0.50                        jne	.LBB1_1
+
+
+Resources:
+[0]   - SPRPort00
+[1]   - SPRPort01
+[2]   - SPRPort02
+[3]   - SPRPort03
+[4]   - SPRPort04
+[5]   - SPRPort05
+[6]   - SPRPort06
+[7]   - SPRPort07
+[8]   - SPRPort08
+[9]   - SPRPort09
+[10]  - SPRPort10
+[11]  - SPRPort11
+[12]  - SPRPortInvalid
+
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12]   
+9.34   6.01   1.33   1.34    -     5.05   9.95    -      -      -     5.66   1.34    -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12]   Instructions:
+ -     0.03    -      -      -     0.03    -      -      -      -     0.95    -      -     xorl	%eax, %eax
+0.01   0.01    -      -      -     0.64   0.02    -      -      -     0.33    -      -     xorl	%r9d, %r9d
+ -     0.01    -      -      -     0.35    -      -      -      -     0.65    -      -     xorl	%r8d, %r8d
+ -     0.34   0.33   0.34    -     0.65    -      -      -      -     0.02   0.34    -     cmpq	%rsi, (%rdi,%rax,8)
+0.66    -      -      -      -      -     1.34    -      -      -      -      -      -     setae	%r8b
+0.01   0.65    -      -      -     0.02    -      -      -      -     0.33    -      -     movl	%eax, %ecx
+0.70    -      -      -      -      -     1.30    -      -      -      -      -      -     shlq	%cl, %r8
+0.31   0.01    -      -      -     0.35    -      -      -      -     0.34    -      -     orq	%r9, %r8
+0.31   0.04    -      -      -     0.02   0.32    -      -      -     0.32    -      -     xorl	%r9d, %r9d
+ -     0.33   0.34   0.34    -     0.33   0.01    -      -      -     0.34   0.33    -     cmpq	%rsi, 8(%rdi,%rax,8)
+1.27    -      -      -      -      -     0.73    -      -      -      -      -      -     setae	%r9b
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leal	1(%rax), %ecx
+0.75    -      -      -      -      -     1.25    -      -      -      -      -      -     shlq	%cl, %r9
+0.01   0.33    -      -      -     0.33    -      -      -      -     0.34    -      -     xorl	%r10d, %r10d
+0.31    -     0.34   0.33    -     0.03   0.30    -      -      -     0.37   0.34    -     cmpq	%rsi, 16(%rdi,%rax,8)
+1.34    -      -      -      -      -     0.66    -      -      -      -      -      -     setae	%r10b
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leal	2(%rax), %ecx
+0.69    -      -      -      -      -     1.31    -      -      -      -      -      -     shlq	%cl, %r10
+0.03   0.01    -      -      -     0.63   0.02    -      -      -     0.31    -      -     orq	%r9, %r10
+ -     0.02    -      -      -     0.34   0.60    -      -      -     0.04    -      -     orq	%r8, %r10
+0.01   0.02    -      -      -     0.33   0.01    -      -      -     0.64    -      -     xorl	%r9d, %r9d
+ -     0.01   0.33   0.34    -     0.65    -      -      -      -     0.35   0.34    -     cmpq	%rsi, 24(%rdi,%rax,8)
+0.09    -      -      -      -      -     1.91    -      -      -      -      -      -     setae	%r9b
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leal	3(%rax), %ecx
+1.88    -      -      -      -      -     0.12    -      -      -      -      -      -     shlq	%cl, %r9
+0.02   0.32    -      -      -     0.34   0.02    -      -      -     0.32    -      -     orq	%r10, %r9
+ -      -      -      -      -      -      -      -      -      -      -      -      -     addq	$4, %rax
+ -     0.92    -      -      -     0.06   0.01    -      -      -     0.03    -      -     cmpq	$64, %rax
+0.97    -      -      -      -      -     0.04    -      -      -      -      -      -     jne	.LBB1_1
+
+[2] Code Region - swapmask
+
+Iterations:        200
+Instructions:      4000
+Total Cycles:      1021
+Total uOps:        4000
+
+Dispatch Width:    6
+uOps Per Cycle:    3.92
+IPC:               3.92
+Block RThroughput: 4.0
+
+
+Instruction Info:
+[1]: #uOps
+[2]: Latency
+[3]: RThroughput
+[4]: MayLoad
+[5]: MayStore
+[6]: HasSideEffects (U)
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      2     0.20                        testq	%rdx, %rdx
+ 1      1     0.50                        je	.LBB2_4
+ 1      2     0.20                        testq	%rcx, %rcx
+ 1      1     0.50                        je	.LBB2_4
+ 0      1     0.00                        movq	%rdx, %rax
+ 1      3     1.00                        rep		bsfq	%rdx, %rdx
+ 1      3     1.00                        rep		bsfq	%rcx, %r8
+ 1      1     0.50                        shll	$3, %r8d
+ 0      1     0.00                        movq	%rsi, %r9
+ 1      1     0.20                        subq	%r8, %r9
+ 1      5     0.33    *                   movq	(%rdi,%rdx,8), %r8
+ 1      5     0.33    *                   movq	(%r9), %r10
+ 2      12    0.50           *            movq	%r10, (%rdi,%rdx,8)
+ 1      1     1.00                        leaq	-1(%rax), %rdx
+ 2      12    0.50           *            movq	%r8, (%r9)
+ 1      2     0.20                        andq	%rax, %rdx
+ 1      1     0.50                        je	.LBB2_4
+ 1      1     1.00                        leaq	-1(%rcx), %rax
+ 1      2     0.20                        andq	%rax, %rcx
+ 1      1     0.50                        jne	.LBB2_2
+
+
+Resources:
+[0]   - SPRPort00
+[1]   - SPRPort01
+[2]   - SPRPort02
+[3]   - SPRPort03
+[4]   - SPRPort04
+[5]   - SPRPort05
+[6]   - SPRPort06
+[7]   - SPRPort07
+[8]   - SPRPort08
+[9]   - SPRPort09
+[10]  - SPRPort10
+[11]  - SPRPort11
+[12]  - SPRPortInvalid
+
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12]   
+2.50   4.00   0.67   0.67   1.00   2.50   2.51   1.00   1.00   1.00   2.50   0.67    -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12]   Instructions:
+ -      -      -      -      -     0.50    -      -      -      -     0.51    -      -     testq	%rdx, %rdx
+0.50    -      -      -      -      -     0.50    -      -      -      -      -      -     je	.LBB2_4
+ -      -      -      -      -     0.50   0.01    -      -      -     0.50    -      -     testq	%rcx, %rcx
+0.50    -      -      -      -      -     0.50    -      -      -      -      -      -     je	.LBB2_4
+ -      -      -      -      -      -      -      -      -      -      -      -      -     movq	%rdx, %rax
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     rep		bsfq	%rdx, %rdx
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     rep		bsfq	%rcx, %r8
+0.50    -      -      -      -      -     0.50    -      -      -      -      -      -     shll	$3, %r8d
+ -      -      -      -      -      -      -      -      -      -      -      -      -     movq	%rsi, %r9
+ -      -      -      -      -     0.50    -      -      -      -     0.50    -      -     subq	%r8, %r9
+ -      -     0.34   0.33    -      -      -      -      -      -      -     0.34    -     movq	(%rdi,%rdx,8), %r8
+ -      -     0.33   0.34    -      -      -      -      -      -      -     0.34    -     movq	(%r9), %r10
+ -      -      -      -      -      -      -      -     1.00   1.00    -      -      -     movq	%r10, (%rdi,%rdx,8)
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leaq	-1(%rax), %rdx
+ -      -      -      -     1.00    -      -     1.00    -      -      -      -      -     movq	%r8, (%r9)
+ -      -      -      -      -     0.50    -      -      -      -     0.50    -      -     andq	%rax, %rdx
+0.50    -      -      -      -      -     0.50    -      -      -      -      -      -     je	.LBB2_4
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leaq	-1(%rcx), %rax
+ -      -      -      -      -     0.50    -      -      -      -     0.50    -      -     andq	%rax, %rcx
+0.50    -      -      -      -      -     0.50    -      -      -      -      -      -     jne	.LBB2_2
+
+[3] Code Region - hoare
+
+Iterations:        200
+Instructions:      3000
+Total Cycles:      485
+Total uOps:        2800
+
+Dispatch Width:    6
+uOps Per Cycle:    5.77
+IPC:               6.19
+Block RThroughput: 2.3
+
+
+Instruction Info:
+[1]: #uOps
+[2]: Latency
+[3]: RThroughput
+[4]: MayLoad
+[5]: MayStore
+[6]: HasSideEffects (U)
+
+[1]    [2]    [3]    [4]    [5]    [6]    Instructions:
+ 1      5     0.33    *                   movq	(%rdx), %r8
+ 1      5     0.33    *                   movq	(%rdi), %rcx
+ 0      1     0.00                        addq	$8, %rdi
+ 1      1     0.20                        cmpq	%r8, %rcx
+ 1      1     0.50                        jb	.LBB3_2
+ 1      1     1.00                        leaq	-8(%rdi), %rax
+ 1      5     0.33    *                   movq	-8(%rsi), %r9
+ 0      1     0.00                        addq	$-8, %rsi
+ 1      1     0.20                        cmpq	%r9, %r8
+ 1      1     0.50                        jb	.LBB3_4
+ 1      1     0.20                        cmpq	%rsi, %rax
+ 1      1     0.50                        jae	.LBB3_7
+ 2      12    0.50           *            movq	%r9, (%rax)
+ 2      12    0.50           *            movq	%rcx, (%rsi)
+ 0      0     0.00                        jmp	.LBB3_1
+
+
+Resources:
+[0]   - SPRPort00
+[1]   - SPRPort01
+[2]   - SPRPort02
+[3]   - SPRPort03
+[4]   - SPRPort04
+[5]   - SPRPort05
+[6]   - SPRPort06
+[7]   - SPRPort07
+[8]   - SPRPort08
+[9]   - SPRPort09
+[10]  - SPRPort10
+[11]  - SPRPort11
+[12]  - SPRPortInvalid
+
+
+Resource pressure per iteration:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12]   
+1.67   1.34   1.00   1.00   1.00   1.33   1.67   1.00   1.00   1.00   1.00   1.00    -     
+
+Resource pressure by instruction:
+[0]    [1]    [2]    [3]    [4]    [5]    [6]    [7]    [8]    [9]    [10]   [11]   [12]   Instructions:
+ -      -      -      -      -      -      -      -      -      -      -     1.00    -     movq	(%rdx), %r8
+ -      -      -     1.00    -      -      -      -      -      -      -      -      -     movq	(%rdi), %rcx
+ -      -      -      -      -      -      -      -      -      -      -      -      -     addq	$8, %rdi
+0.01    -      -      -      -     0.34    -      -      -      -     0.66    -      -     cmpq	%r8, %rcx
+0.67    -      -      -      -      -     0.34    -      -      -      -      -      -     jb	.LBB3_2
+ -     1.00    -      -      -      -      -      -      -      -      -      -      -     leaq	-8(%rdi), %rax
+ -      -     1.00    -      -      -      -      -      -      -      -      -      -     movq	-8(%rsi), %r9
+ -      -      -      -      -      -      -      -      -      -      -      -      -     addq	$-8, %rsi
+ -     0.34    -      -      -     0.66    -      -      -      -     0.01    -      -     cmpq	%r9, %r8
+0.34    -      -      -      -      -     0.67    -      -      -      -      -      -     jb	.LBB3_4
+ -      -      -      -      -     0.34   0.33    -      -      -     0.34    -      -     cmpq	%rsi, %rax
+0.66    -      -      -      -      -     0.34    -      -      -      -      -      -     jae	.LBB3_7
+ -      -      -      -      -      -      -      -     1.00   1.00    -      -      -     movq	%r9, (%rax)
+ -      -      -      -     1.00    -      -     1.00    -      -      -      -      -     movq	%rcx, (%rsi)
+ -      -      -      -      -      -      -      -      -      -      -      -      -     jmp	.LBB3_1

@@ -1,0 +1,11 @@
+==7683== Callgrind, a call-graph generating cache profiler
+==7683== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==7683== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7683== Command: build/isa_gcc --alg sort --n 1048576 --u 524288 --calls 3
+==7683== 
+==7683== For interactive control, run 'callgrind_control -h'.
+==7683== 
+==7683== Events    : Ir
+==7683== Collected : 387375808
+==7683== 
+==7683== I   refs:      387,375,808

@@ -1,0 +1,15 @@
+threads=1,read,1024 MB per thread,10.8 GB/s total,10.8 GB/s per thread
+threads=1,write,1024 MB per thread,12.3 GB/s total,12.3 GB/s per thread
+threads=1,copy,1024 MB per thread,14.1 GB/s total,14.1 GB/s per thread
+threads=4,read,768 MB per thread,24.1 GB/s total,6.0 GB/s per thread
+threads=4,write,768 MB per thread,29.8 GB/s total,7.5 GB/s per thread
+threads=4,copy,768 MB per thread,32.8 GB/s total,8.2 GB/s per thread
+threads=1,read,64 MB per thread,15.1 GB/s total,15.1 GB/s per thread
+threads=1,write,64 MB per thread,17.4 GB/s total,17.4 GB/s per thread
+threads=1,copy,64 MB per thread,19.5 GB/s total,19.5 GB/s per thread
+threads=4,read,64 MB per thread,35.5 GB/s total,8.9 GB/s per thread
+threads=4,write,64 MB per thread,40.2 GB/s total,10.1 GB/s per thread
+threads=4,copy,64 MB per thread,46.4 GB/s total,11.6 GB/s per thread
+threads=2,read,768 MB per thread,20.3 GB/s total,10.1 GB/s per thread
+threads=2,write,768 MB per thread,17.2 GB/s total,8.6 GB/s per thread
+threads=2,copy,768 MB per thread,25.2 GB/s total,12.6 GB/s per thread

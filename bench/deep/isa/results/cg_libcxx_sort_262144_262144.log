@@ -1,0 +1,14 @@
+==7855== Callgrind, a call-graph generating cache profiler
+==7855== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==7855== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7855== Command: build/isa_clang_libcxx --alg sort --n 262144 --u 262144 --calls 3
+==7855== 
+==7855== For interactive control, run 'callgrind_control -h'.
+==7855== brk segment overflow in thread #1: can't grow to 0x495b000
+==7855== (see section Limitations in user manual)
+==7855== NOTE: further instances of this message will not be shown
+==7855== 
+==7855== Events    : Ir
+==7855== Collected : 69874617
+==7855== 
+==7855== I   refs:      69,874,617

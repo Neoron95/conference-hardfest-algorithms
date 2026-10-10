@@ -1,0 +1,1056 @@
+000000000003ff20 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base>:
+   3ff20:	endbr64
+   3ff24:	push   %rbp
+   3ff25:	mov    %rsp,%rbp
+   3ff28:	mov    %rsi,%rax
+   3ff2b:	sub    %rdi,%rax
+   3ff2e:	sar    $0x3,%rax
+   3ff32:	je     3ff3e <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1e>
+   3ff34:	bsr    %rax,%rax
+   3ff38:	xor    $0x3f,%rax
+   3ff3c:	jmp    3ff43 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x23>
+   3ff3e:	mov    $0x40,%eax
+   3ff43:	add    %rax,%rax
+   3ff46:	mov    $0x7e,%edx
+   3ff4b:	sub    %rax,%rdx
+   3ff4e:	mov    $0x1,%ecx
+   3ff53:	pop    %rbp
+   3ff54:	jmp    3ff60 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x40>
+   3ff59:	nopl   0x0(%rax)
+   3ff60:	endbr64
+   3ff64:	push   %rbp
+   3ff65:	mov    %rsp,%rbp
+   3ff68:	push   %r15
+   3ff6a:	push   %r14
+   3ff6c:	push   %r13
+   3ff6e:	push   %r12
+   3ff70:	push   %rbx
+   3ff71:	sub    $0x28,%rsp
+   3ff75:	mov    %ecx,-0x38(%rbp)
+   3ff78:	mov    %rdx,%r15
+   3ff7b:	mov    %rsi,%rbx
+   3ff7e:	mov    %rdi,%r14
+   3ff81:	mov    %fs:0x28,%rax
+   3ff8a:	mov    %rax,-0x30(%rbp)
+   3ff8e:	mov    %r14,%r11
+   3ff91:	mov    %rbx,%rsi
+   3ff94:	sub    %r14,%rsi
+   3ff97:	sar    $0x3,%rsi
+   3ff9b:	cmp    $0x5,%rsi
+   3ff9f:	jbe    403da <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x4ba>
+   3ffa5:	cmp    $0x17,%rsi
+   3ffa9:	jle    404b4 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x594>
+   3ffaf:	test   %r15,%r15
+   3ffb2:	je     4053d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x61d>
+   3ffb8:	mov    %rsi,%rdx
+   3ffbb:	shr    $1,%rdx
+   3ffbe:	lea    (%r11,%rdx,8),%rax
+   3ffc2:	mov    -0x8(%rbx),%rcx
+   3ffc6:	cmp    $0x81,%rsi
+   3ffcd:	jb     3fff0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0xd0>
+   3ffcf:	mov    (%rax),%rdi
+   3ffd2:	mov    (%r11),%rsi
+   3ffd5:	cmp    %rsi,%rdi
+   3ffd8:	jae    4000c <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0xec>
+   3ffda:	cmp    %rdi,%rcx
+   3ffdd:	jae    40055 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x135>
+   3ffdf:	mov    %rcx,(%r11)
+   3ffe2:	jmp    40067 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x147>
+   3ffe7:	nopw   0x0(%rax,%rax,1)
+   3fff0:	mov    (%r11),%rsi
+   3fff3:	mov    (%rax),%rdx
+   3fff6:	cmp    %rdx,%rsi
+   3fff9:	jae    4002b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x10b>
+   3fffb:	cmp    %rsi,%rcx
+   3fffe:	jae    400b1 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x191>
+   40004:	mov    %rcx,(%rax)
+   40007:	jmp    400c7 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1a7>
+   4000c:	cmp    %rdi,%rcx
+   4000f:	jae    4006b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x14b>
+   40011:	mov    %rcx,(%rax)
+   40014:	mov    %rdi,-0x8(%rbx)
+   40018:	mov    (%rax),%rcx
+   4001b:	mov    (%r11),%rsi
+   4001e:	cmp    %rsi,%rcx
+   40021:	jae    4006b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x14b>
+   40023:	mov    %rcx,(%r11)
+   40026:	mov    %rsi,(%rax)
+   40029:	jmp    4006b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x14b>
+   4002b:	cmp    %rsi,%rcx
+   4002e:	jae    40196 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x276>
+   40034:	mov    %rcx,(%r11)
+   40037:	mov    %rsi,-0x8(%rbx)
+   4003b:	mov    (%r11),%rcx
+   4003e:	mov    (%rax),%rdx
+   40041:	cmp    %rdx,%rcx
+   40044:	jae    40196 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x276>
+   4004a:	mov    %rcx,(%rax)
+   4004d:	mov    %rdx,(%r11)
+   40050:	jmp    40196 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x276>
+   40055:	mov    %rdi,(%r11)
+   40058:	mov    %rsi,(%rax)
+   4005b:	mov    -0x8(%rbx),%rcx
+   4005f:	cmp    %rsi,%rcx
+   40062:	jae    4006b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x14b>
+   40064:	mov    %rcx,(%rax)
+   40067:	mov    %rsi,-0x8(%rbx)
+   4006b:	lea    (%r11,%rdx,8),%rcx
+   4006f:	add    $0xfffffffffffffff8,%rcx
+   40073:	mov    -0x8(%r11,%rdx,8),%rdi
+   40078:	mov    0x8(%r11),%rsi
+   4007c:	mov    -0x10(%rbx),%r8
+   40080:	cmp    %rsi,%rdi
+   40083:	jae    40090 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x170>
+   40085:	cmp    %rdi,%r8
+   40088:	jae    400d0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1b0>
+   4008a:	mov    %r8,0x8(%r11)
+   4008e:	jmp    400e3 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1c3>
+   40090:	cmp    %rdi,%r8
+   40093:	jae    400e7 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1c7>
+   40095:	mov    %r8,(%rcx)
+   40098:	mov    %rdi,-0x10(%rbx)
+   4009c:	mov    (%rcx),%rsi
+   4009f:	mov    0x8(%r11),%rdi
+   400a3:	cmp    %rdi,%rsi
+   400a6:	jae    400e7 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1c7>
+   400a8:	mov    %rsi,0x8(%r11)
+   400ac:	mov    %rdi,(%rcx)
+   400af:	jmp    400e7 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1c7>
+   400b1:	mov    %rsi,(%rax)
+   400b4:	mov    %rdx,(%r11)
+   400b7:	mov    -0x8(%rbx),%rax
+   400bb:	cmp    %rdx,%rax
+   400be:	jae    40196 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x276>
+   400c4:	mov    %rax,(%r11)
+   400c7:	mov    %rdx,-0x8(%rbx)
+   400cb:	jmp    40196 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x276>
+   400d0:	mov    %rdi,0x8(%r11)
+   400d4:	mov    %rsi,(%rcx)
+   400d7:	mov    -0x10(%rbx),%rdi
+   400db:	cmp    %rsi,%rdi
+   400de:	jae    400e7 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1c7>
+   400e0:	mov    %rdi,(%rcx)
+   400e3:	mov    %rsi,-0x10(%rbx)
+   400e7:	lea    (%r11,%rdx,8),%rsi
+   400eb:	add    $0x8,%rsi
+   400ef:	mov    0x8(%r11,%rdx,8),%rdi
+   400f4:	mov    0x10(%r11),%rdx
+   400f8:	mov    -0x18(%rbx),%r8
+   400fc:	cmp    %rdx,%rdi
+   400ff:	jae    4010c <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x1ec>
+   40101:	cmp    %rdi,%r8
+   40104:	jae    4012d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x20d>
+   40106:	mov    %r8,0x10(%r11)
+   4010a:	jmp    40140 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x220>
+   4010c:	cmp    %rdi,%r8
+   4010f:	jae    40144 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x224>
+   40111:	mov    %r8,(%rsi)
+   40114:	mov    %rdi,-0x18(%rbx)
+   40118:	mov    (%rsi),%rdx
+   4011b:	mov    0x10(%r11),%rdi
+   4011f:	cmp    %rdi,%rdx
+   40122:	jae    40144 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x224>
+   40124:	mov    %rdx,0x10(%r11)
+   40128:	mov    %rdi,(%rsi)
+   4012b:	jmp    40144 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x224>
+   4012d:	mov    %rdi,0x10(%r11)
+   40131:	mov    %rdx,(%rsi)
+   40134:	mov    -0x18(%rbx),%rdi
+   40138:	cmp    %rdx,%rdi
+   4013b:	jae    40144 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x224>
+   4013d:	mov    %rdi,(%rsi)
+   40140:	mov    %rdx,-0x18(%rbx)
+   40144:	mov    (%rax),%rdx
+   40147:	mov    (%rcx),%rdi
+   4014a:	mov    (%rsi),%r8
+   4014d:	cmp    %rdi,%rdx
+   40150:	jae    4016d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x24d>
+   40152:	cmp    %rdx,%r8
+   40155:	jb     40187 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x267>
+   40157:	mov    %rdx,(%rcx)
+   4015a:	mov    %rdi,(%rax)
+   4015d:	mov    %rax,%rcx
+   40160:	mov    %r8,%rdx
+   40163:	cmp    %rdi,%r8
+   40166:	jb     40187 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x267>
+   40168:	mov    %rdi,%rdx
+   4016b:	jmp    4018d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x26d>
+   4016d:	cmp    %rdx,%r8
+   40170:	jae    4018d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x26d>
+   40172:	mov    %r8,(%rax)
+   40175:	mov    %rdx,(%rsi)
+   40178:	mov    %rax,%rsi
+   4017b:	mov    %rdi,%rdx
+   4017e:	cmp    %rdi,%r8
+   40181:	jae    403b9 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x499>
+   40187:	mov    %r8,(%rcx)
+   4018a:	mov    %rdi,(%rsi)
+   4018d:	mov    (%r11),%rcx
+   40190:	mov    %rdx,(%r11)
+   40193:	mov    %rcx,(%rax)
+   40196:	dec    %r15
+   40199:	mov    (%r11),%rax
+   4019c:	cmpb   $0x0,-0x38(%rbp)
+   401a0:	jne    401ac <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x28c>
+   401a2:	cmp    %rax,-0x8(%r11)
+   401a6:	jae    4026d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x34d>
+   401ac:	mov    $0x8,%ecx
+   401b1:	xor    %esi,%esi
+   401b3:	data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   401c0:	mov    (%r11,%rcx,1),%rdx
+   401c4:	add    $0xfffffffffffffff8,%rsi
+   401c8:	add    $0x8,%rcx
+   401cc:	cmp    %rax,%rdx
+   401cf:	jb     401c0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x2a0>
+   401d1:	mov    %r11,%rcx
+   401d4:	sub    %rsi,%rcx
+   401d7:	mov    %rbx,%rdi
+   401da:	cmp    $0xfffffffffffffff8,%rsi
+   401de:	je     401f0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x2d0>
+   401e0:	lea    -0x8(%rdi),%rsi
+   401e4:	cmp    %rax,-0x8(%rdi)
+   401e8:	mov    %rsi,%rdi
+   401eb:	jae    401e0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x2c0>
+   401ed:	jmp    40220 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x300>
+   401ef:	nop
+   401f0:	mov    %rbx,%rdi
+   401f3:	data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   40200:	cmp    %rdi,%rcx
+   40203:	jae    40292 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x372>
+   40209:	lea    -0x8(%rdi),%rsi
+   4020d:	cmp    %rax,-0x8(%rdi)
+   40211:	mov    %rsi,%rdi
+   40214:	jae    40200 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x2e0>
+   40216:	cs nopw 0x0(%rax,%rax,1)
+   40220:	cmp    %rsi,%rcx
+   40223:	jae    402a0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x380>
+   40225:	mov    (%rsi),%r8
+   40228:	mov    %rcx,%r13
+   4022b:	mov    %rsi,%rdi
+   4022e:	xchg   %ax,%ax
+   40230:	mov    %r8,0x0(%r13)
+   40234:	mov    %rdx,(%rdi)
+   40237:	nopw   0x0(%rax,%rax,1)
+   40240:	mov    0x8(%r13),%rdx
+   40244:	add    $0x8,%r13
+   40248:	cmp    %rax,%rdx
+   4024b:	jb     40240 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x320>
+   4024d:	nopl   (%rax)
+   40250:	mov    -0x8(%rdi),%r8
+   40254:	add    $0xfffffffffffffff8,%rdi
+   40258:	cmp    %rax,%r8
+   4025b:	jae    40250 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x330>
+   4025d:	cmp    %rdi,%r13
+   40260:	jb     40230 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x310>
+   40262:	add    $0xfffffffffffffff8,%r13
+   40266:	cmp    %r11,%r13
+   40269:	jne    402a9 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x389>
+   4026b:	jmp    402b0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x390>
+   4026d:	cmp    -0x8(%rbx),%rax
+   40271:	jae    40324 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x404>
+   40277:	mov    %r11,%rcx
+   4027a:	nopw   0x0(%rax,%rax,1)
+   40280:	lea    0x8(%rcx),%r14
+   40284:	cmp    0x8(%rcx),%rax
+   40288:	mov    %r14,%rcx
+   4028b:	jae    40280 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x360>
+   4028d:	jmp    40341 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x421>
+   40292:	mov    %rdi,%rsi
+   40295:	cmp    %rsi,%rcx
+   40298:	jb     40225 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x305>
+   4029a:	nopw   0x0(%rax,%rax,1)
+   402a0:	lea    -0x8(%rcx),%r13
+   402a4:	cmp    %r11,%r13
+   402a7:	je     402b0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x390>
+   402a9:	mov    0x0(%r13),%rdx
+   402ad:	mov    %rdx,(%r11)
+   402b0:	mov    %rax,0x0(%r13)
+   402b4:	cmp    %rsi,%rcx
+   402b7:	jb     402fa <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x3da>
+   402b9:	mov    %rbx,%r12
+   402bc:	mov    %r15,-0x48(%rbp)
+   402c0:	mov    %r11,-0x40(%rbp)
+   402c4:	mov    %r11,%rdi
+   402c7:	mov    %r13,%rsi
+   402ca:	call   467d0 <void std::__1::__sort<std::__1::__less<long double, long double>&, long double*>(long double*, long double*, std::__1::__less<long double, long double>&)@@Base+0x42f0>
+   402cf:	mov    %eax,%r15d
+   402d2:	lea    0x8(%r13),%r14
+   402d6:	mov    %r14,%rdi
+   402d9:	mov    %rbx,%rsi
+   402dc:	call   467d0 <void std::__1::__sort<std::__1::__less<long double, long double>&, long double*>(long double*, long double*, std::__1::__less<long double, long double>&)@@Base+0x42f0>
+   402e1:	test   %al,%al
+   402e3:	jne    403c1 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x4a1>
+   402e9:	test   %r15b,%r15b
+   402ec:	mov    -0x48(%rbp),%r15
+   402f0:	mov    -0x40(%rbp),%r11
+   402f4:	jne    3ff8e <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6e>
+   402fa:	xor    %ecx,%ecx
+   402fc:	cmpb   $0x0,-0x38(%rbp)
+   40300:	setne  %cl
+   40303:	mov    %r11,%rdi
+   40306:	mov    %r13,%rsi
+   40309:	mov    %r15,%rdx
+   4030c:	call   3ff60 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x40>
+   40311:	add    $0x8,%r13
+   40315:	movl   $0x0,-0x38(%rbp)
+   4031c:	mov    %r13,%r14
+   4031f:	jmp    3ff8e <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6e>
+   40324:	lea    0x8(%r11),%rcx
+   40328:	nopl   0x0(%rax,%rax,1)
+   40330:	mov    %rcx,%r14
+   40333:	cmp    %rbx,%rcx
+   40336:	jae    40341 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x421>
+   40338:	lea    0x8(%r14),%rcx
+   4033c:	cmp    (%r14),%rax
+   4033f:	jae    40330 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x410>
+   40341:	mov    %rbx,%rcx
+   40344:	cmp    %rbx,%r14
+   40347:	jae    4035d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x43d>
+   40349:	mov    %rbx,%rdx
+   4034c:	nopl   0x0(%rax)
+   40350:	lea    -0x8(%rdx),%rcx
+   40354:	cmp    -0x8(%rdx),%rax
+   40358:	mov    %rcx,%rdx
+   4035b:	jb     40350 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x430>
+   4035d:	cmp    %rcx,%r14
+   40360:	jae    403a2 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x482>
+   40362:	mov    (%r14),%rdx
+   40365:	mov    (%rcx),%rsi
+   40368:	nopl   0x0(%rax,%rax,1)
+   40370:	mov    %rsi,(%r14)
+   40373:	mov    %rdx,(%rcx)
+   40376:	cs nopw 0x0(%rax,%rax,1)
+   40380:	mov    0x8(%r14),%rdx
+   40384:	add    $0x8,%r14
+   40388:	cmp    %rdx,%rax
+   4038b:	jae    40380 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x460>
+   4038d:	nopl   (%rax)
+   40390:	mov    -0x8(%rcx),%rsi
+   40394:	add    $0xfffffffffffffff8,%rcx
+   40398:	cmp    %rsi,%rax
+   4039b:	jb     40390 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x470>
+   4039d:	cmp    %rcx,%r14
+   403a0:	jb     40370 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x450>
+   403a2:	lea    -0x8(%r14),%rcx
+   403a6:	cmp    %r11,%rcx
+   403a9:	je     403b1 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x491>
+   403ab:	mov    (%rcx),%rdx
+   403ae:	mov    %rdx,(%r11)
+   403b1:	mov    %rax,(%rcx)
+   403b4:	jmp    3ff8e <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6e>
+   403b9:	mov    %r8,%rdx
+   403bc:	jmp    4018d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x26d>
+   403c1:	mov    %r13,%rbx
+   403c4:	test   %r15b,%r15b
+   403c7:	mov    -0x48(%rbp),%r15
+   403cb:	mov    -0x40(%rbp),%r14
+   403cf:	je     3ff8e <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6e>
+   403d5:	jmp    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   403da:	lea    0x72487(%rip),%rax        # b2868 <std::__1::__fs::filesystem::__weakly_canonical(std::__1::__fs::filesystem::path const&, std::__1::error_code*)@@Base+0x11e8>
+   403e1:	movslq (%rax,%rsi,4),%rcx
+   403e5:	add    %rax,%rcx
+   403e8:	notrack jmp *%rcx
+   403eb:	mov    -0x8(%rbx),%rax
+   403ef:	mov    (%r11),%rcx
+   403f2:	cmp    %rcx,%rax
+   403f5:	jae    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   403fb:	mov    %rax,(%r11)
+   403fe:	mov    %rcx,-0x8(%rbx)
+   40402:	jmp    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   40407:	mov    (%r11),%rax
+   4040a:	mov    0x8(%r11),%rcx
+   4040e:	mov    -0x8(%rbx),%rdx
+   40412:	cmp    %rax,%rcx
+   40415:	jae    4055d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x63d>
+   4041b:	cmp    %rcx,%rdx
+   4041e:	jae    40615 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6f5>
+   40424:	mov    %rdx,(%r11)
+   40427:	jmp    40629 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x709>
+   4042c:	mov    %fs:0x28,%rax
+   40435:	cmp    -0x30(%rbp),%rax
+   40439:	jne    4064b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x72b>
+   4043f:	lea    0x8(%r11),%rsi
+   40443:	lea    0x10(%r11),%rdx
+   40447:	lea    0x18(%r11),%rcx
+   4044b:	add    $0xfffffffffffffff8,%rbx
+   4044f:	mov    %r11,%rdi
+   40452:	mov    %rbx,%r8
+   40455:	add    $0x28,%rsp
+   40459:	pop    %rbx
+   4045a:	pop    %r12
+   4045c:	pop    %r13
+   4045e:	pop    %r14
+   40460:	pop    %r15
+   40462:	pop    %rbp
+   40463:	jmp    46a30 <void std::__1::__sort<std::__1::__less<long double, long double>&, long double*>(long double*, long double*, std::__1::__less<long double, long double>&)@@Base+0x4550>
+   40468:	lea    0x8(%r11),%rax
+   4046c:	lea    0x10(%r11),%rcx
+   40470:	mov    (%r11),%rdx
+   40473:	mov    0x8(%r11),%rsi
+   40477:	mov    0x10(%r11),%rdi
+   4047b:	cmp    %rdx,%rsi
+   4047e:	jae    40577 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x657>
+   40484:	mov    %r11,%r8
+   40487:	mov    %rcx,%r9
+   4048a:	mov    %rdx,%r10
+   4048d:	cmp    %rsi,%rdi
+   40490:	jb     40590 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x670>
+   40496:	mov    %rsi,(%r11)
+   40499:	mov    %rdx,0x8(%r11)
+   4049d:	mov    %rax,%r8
+   404a0:	mov    %rcx,%r9
+   404a3:	mov    %rdx,%r10
+   404a6:	cmp    %rdx,%rdi
+   404a9:	jb     40590 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x670>
+   404af:	jmp    4059b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x67b>
+   404b4:	cmp    %rbx,%r11
+   404b7:	sete   %dl
+   404ba:	lea    0x8(%r11),%rcx
+   404be:	cmp    %rbx,%rcx
+   404c1:	sete   %al
+   404c4:	or     %dl,%al
+   404c6:	cmpb   $0x0,-0x38(%rbp)
+   404ca:	je     405d6 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6b6>
+   404d0:	test   %al,%al
+   404d2:	jne    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   404d8:	mov    $0x8,%eax
+   404dd:	mov    %r11,%rdx
+   404e0:	jmp    40507 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x5e7>
+   404e2:	data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   404f0:	mov    %r11,%rcx
+   404f3:	mov    %rsi,(%rcx)
+   404f6:	lea    0x8(%rdx),%rcx
+   404fa:	add    $0x8,%rax
+   404fe:	cmp    %rbx,%rcx
+   40501:	je     4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   40507:	mov    (%rdx),%rdi
+   4050a:	mov    0x8(%rdx),%rsi
+   4050e:	mov    %rcx,%rdx
+   40511:	cmp    %rdi,%rsi
+   40514:	jae    404f6 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x5d6>
+   40516:	mov    %rax,%rcx
+   40519:	nopl   0x0(%rax)
+   40520:	mov    %rdi,(%r11,%rcx,1)
+   40524:	cmp    $0x8,%rcx
+   40528:	je     404f0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x5d0>
+   4052a:	mov    -0x10(%r11,%rcx,1),%rdi
+   4052f:	add    $0xfffffffffffffff8,%rcx
+   40533:	cmp    %rdi,%rsi
+   40536:	jb     40520 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x600>
+   40538:	add    %r11,%rcx
+   4053b:	jmp    404f3 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x5d3>
+   4053d:	cmp    %rbx,%r11
+   40540:	je     4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   40546:	lea    -0x31(%rbp),%rcx
+   4054a:	mov    %r11,%rdi
+   4054d:	mov    %rbx,%rsi
+   40550:	mov    %rbx,%rdx
+   40553:	call   46b10 <void std::__1::__sort<std::__1::__less<long double, long double>&, long double*>(long double*, long double*, std::__1::__less<long double, long double>&)@@Base+0x4630>
+   40558:	jmp    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   4055d:	cmp    %rcx,%rdx
+   40560:	jae    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   40566:	mov    %rdx,0x8(%r11)
+   4056a:	mov    %rcx,-0x8(%rbx)
+   4056e:	mov    (%r11),%rax
+   40571:	mov    0x8(%r11),%rcx
+   40575:	jmp    405c8 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6a8>
+   40577:	cmp    %rsi,%rdi
+   4057a:	jae    4059b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x67b>
+   4057c:	mov    %rdi,(%rax)
+   4057f:	mov    %rsi,(%rcx)
+   40582:	mov    %r11,%r8
+   40585:	mov    %rax,%r9
+   40588:	mov    %rsi,%r10
+   4058b:	cmp    %rdx,%rdi
+   4058e:	jae    4059e <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x67e>
+   40590:	mov    %rdi,(%r8)
+   40593:	mov    %rdx,(%r9)
+   40596:	mov    %r10,%rsi
+   40599:	jmp    4059e <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x67e>
+   4059b:	mov    %rdi,%rsi
+   4059e:	mov    -0x8(%rbx),%rdx
+   405a2:	cmp    %rsi,%rdx
+   405a5:	jae    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   405ab:	mov    %rdx,(%rcx)
+   405ae:	mov    %rsi,-0x8(%rbx)
+   405b2:	mov    (%rcx),%rcx
+   405b5:	mov    (%rax),%rax
+   405b8:	cmp    %rax,%rcx
+   405bb:	jae    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   405bd:	mov    %rcx,0x8(%r11)
+   405c1:	mov    %rax,0x10(%r11)
+   405c5:	mov    (%r11),%rax
+   405c8:	cmp    %rax,%rcx
+   405cb:	jae    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   405cd:	mov    %rcx,(%r11)
+   405d0:	mov    %rax,0x8(%r11)
+   405d4:	jmp    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   405d6:	test   %al,%al
+   405d8:	je     405e9 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6c9>
+   405da:	jmp    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   405dc:	nopl   0x0(%rax)
+   405e0:	lea    0x8(%r11),%rcx
+   405e4:	cmp    %rbx,%rcx
+   405e7:	je     4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   405e9:	mov    (%r11),%rdx
+   405ec:	mov    0x8(%r11),%rax
+   405f0:	mov    %rcx,%r11
+   405f3:	cmp    %rdx,%rax
+   405f6:	jae    405e0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6c0>
+   405f8:	mov    %r11,%rcx
+   405fb:	nopl   0x0(%rax,%rax,1)
+   40600:	mov    %rdx,(%rcx)
+   40603:	mov    -0x10(%rcx),%rdx
+   40607:	add    $0xfffffffffffffff8,%rcx
+   4060b:	cmp    %rdx,%rax
+   4060e:	jb     40600 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6e0>
+   40610:	mov    %rax,(%rcx)
+   40613:	jmp    405e0 <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x6c0>
+   40615:	mov    %rcx,(%r11)
+   40618:	mov    %rax,0x8(%r11)
+   4061c:	mov    -0x8(%rbx),%rcx
+   40620:	cmp    %rax,%rcx
+   40623:	jae    4062d <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x70d>
+   40625:	mov    %rcx,0x8(%r11)
+   40629:	mov    %rax,-0x8(%rbx)
+   4062d:	mov    %fs:0x28,%rax
+   40636:	cmp    -0x30(%rbp),%rax
+   4063a:	jne    4064b <void std::__1::__sort<std::__1::__less<unsigned long, unsigned long>&, unsigned long*>(unsigned long*, unsigned long*, std::__1::__less<unsigned long, unsigned long>&)@@Base+0x72b>
+   4063c:	add    $0x28,%rsp
+   40640:	pop    %rbx
+   40641:	pop    %r12
+   40643:	pop    %r13
+   40645:	pop    %r14
+   40647:	pop    %r15
+   40649:	pop    %rbp
+   4064a:	ret
+   4064b:	call   3a970 <void std::__1::__sort<std::__1::__less<char, char>&, char*>(char*, char*, std::__1::__less<char, char>&)@@Base-0x1220>
+
+0000000000040650 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base>:
+   40650:	endbr64
+   40654:	push   %rbp
+   40655:	mov    %rsp,%rbp
+   40658:	mov    %rsi,%rax
+   4065b:	sub    %rdi,%rax
+   4065e:	sar    $0x3,%rax
+   40662:	je     4066e <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1e>
+   40664:	bsr    %rax,%rax
+   40668:	xor    $0x3f,%rax
+   4066c:	jmp    40673 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x23>
+   4066e:	mov    $0x40,%eax
+   40673:	add    %rax,%rax
+   40676:	mov    $0x7e,%edx
+   4067b:	sub    %rax,%rdx
+   4067e:	mov    $0x1,%ecx
+   40683:	pop    %rbp
+   40684:	jmp    40690 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x40>
+   40689:	nopl   0x0(%rax)
+   40690:	endbr64
+   40694:	push   %rbp
+   40695:	mov    %rsp,%rbp
+   40698:	push   %r15
+   4069a:	push   %r14
+   4069c:	push   %r13
+   4069e:	push   %r12
+   406a0:	push   %rbx
+   406a1:	sub    $0x28,%rsp
+   406a5:	mov    %ecx,-0x38(%rbp)
+   406a8:	mov    %rdx,%r15
+   406ab:	mov    %rsi,%rbx
+   406ae:	mov    %rdi,%r14
+   406b1:	mov    %fs:0x28,%rax
+   406ba:	mov    %rax,-0x30(%rbp)
+   406be:	mov    %r14,%r11
+   406c1:	mov    %rbx,%rsi
+   406c4:	sub    %r14,%rsi
+   406c7:	sar    $0x3,%rsi
+   406cb:	cmp    $0x5,%rsi
+   406cf:	jbe    40b0a <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x4ba>
+   406d5:	cmp    $0x17,%rsi
+   406d9:	jle    40be4 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x594>
+   406df:	test   %r15,%r15
+   406e2:	je     40c6d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x61d>
+   406e8:	mov    %rsi,%rdx
+   406eb:	shr    $1,%rdx
+   406ee:	lea    (%r11,%rdx,8),%rax
+   406f2:	mov    -0x8(%rbx),%rcx
+   406f6:	cmp    $0x81,%rsi
+   406fd:	jb     40720 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0xd0>
+   406ff:	mov    (%rax),%rdi
+   40702:	mov    (%r11),%rsi
+   40705:	cmp    %rsi,%rdi
+   40708:	jge    4073c <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0xec>
+   4070a:	cmp    %rdi,%rcx
+   4070d:	jge    40785 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x135>
+   4070f:	mov    %rcx,(%r11)
+   40712:	jmp    40797 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x147>
+   40717:	nopw   0x0(%rax,%rax,1)
+   40720:	mov    (%r11),%rsi
+   40723:	mov    (%rax),%rdx
+   40726:	cmp    %rdx,%rsi
+   40729:	jge    4075b <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x10b>
+   4072b:	cmp    %rsi,%rcx
+   4072e:	jge    407e1 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x191>
+   40734:	mov    %rcx,(%rax)
+   40737:	jmp    407f7 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1a7>
+   4073c:	cmp    %rdi,%rcx
+   4073f:	jge    4079b <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x14b>
+   40741:	mov    %rcx,(%rax)
+   40744:	mov    %rdi,-0x8(%rbx)
+   40748:	mov    (%rax),%rcx
+   4074b:	mov    (%r11),%rsi
+   4074e:	cmp    %rsi,%rcx
+   40751:	jge    4079b <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x14b>
+   40753:	mov    %rcx,(%r11)
+   40756:	mov    %rsi,(%rax)
+   40759:	jmp    4079b <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x14b>
+   4075b:	cmp    %rsi,%rcx
+   4075e:	jge    408c6 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x276>
+   40764:	mov    %rcx,(%r11)
+   40767:	mov    %rsi,-0x8(%rbx)
+   4076b:	mov    (%r11),%rcx
+   4076e:	mov    (%rax),%rdx
+   40771:	cmp    %rdx,%rcx
+   40774:	jge    408c6 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x276>
+   4077a:	mov    %rcx,(%rax)
+   4077d:	mov    %rdx,(%r11)
+   40780:	jmp    408c6 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x276>
+   40785:	mov    %rdi,(%r11)
+   40788:	mov    %rsi,(%rax)
+   4078b:	mov    -0x8(%rbx),%rcx
+   4078f:	cmp    %rsi,%rcx
+   40792:	jge    4079b <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x14b>
+   40794:	mov    %rcx,(%rax)
+   40797:	mov    %rsi,-0x8(%rbx)
+   4079b:	lea    (%r11,%rdx,8),%rcx
+   4079f:	add    $0xfffffffffffffff8,%rcx
+   407a3:	mov    -0x8(%r11,%rdx,8),%rdi
+   407a8:	mov    0x8(%r11),%rsi
+   407ac:	mov    -0x10(%rbx),%r8
+   407b0:	cmp    %rsi,%rdi
+   407b3:	jge    407c0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x170>
+   407b5:	cmp    %rdi,%r8
+   407b8:	jge    40800 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1b0>
+   407ba:	mov    %r8,0x8(%r11)
+   407be:	jmp    40813 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1c3>
+   407c0:	cmp    %rdi,%r8
+   407c3:	jge    40817 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1c7>
+   407c5:	mov    %r8,(%rcx)
+   407c8:	mov    %rdi,-0x10(%rbx)
+   407cc:	mov    (%rcx),%rsi
+   407cf:	mov    0x8(%r11),%rdi
+   407d3:	cmp    %rdi,%rsi
+   407d6:	jge    40817 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1c7>
+   407d8:	mov    %rsi,0x8(%r11)
+   407dc:	mov    %rdi,(%rcx)
+   407df:	jmp    40817 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1c7>
+   407e1:	mov    %rsi,(%rax)
+   407e4:	mov    %rdx,(%r11)
+   407e7:	mov    -0x8(%rbx),%rax
+   407eb:	cmp    %rdx,%rax
+   407ee:	jge    408c6 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x276>
+   407f4:	mov    %rax,(%r11)
+   407f7:	mov    %rdx,-0x8(%rbx)
+   407fb:	jmp    408c6 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x276>
+   40800:	mov    %rdi,0x8(%r11)
+   40804:	mov    %rsi,(%rcx)
+   40807:	mov    -0x10(%rbx),%rdi
+   4080b:	cmp    %rsi,%rdi
+   4080e:	jge    40817 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1c7>
+   40810:	mov    %rdi,(%rcx)
+   40813:	mov    %rsi,-0x10(%rbx)
+   40817:	lea    (%r11,%rdx,8),%rsi
+   4081b:	add    $0x8,%rsi
+   4081f:	mov    0x8(%r11,%rdx,8),%rdi
+   40824:	mov    0x10(%r11),%rdx
+   40828:	mov    -0x18(%rbx),%r8
+   4082c:	cmp    %rdx,%rdi
+   4082f:	jge    4083c <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x1ec>
+   40831:	cmp    %rdi,%r8
+   40834:	jge    4085d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x20d>
+   40836:	mov    %r8,0x10(%r11)
+   4083a:	jmp    40870 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x220>
+   4083c:	cmp    %rdi,%r8
+   4083f:	jge    40874 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x224>
+   40841:	mov    %r8,(%rsi)
+   40844:	mov    %rdi,-0x18(%rbx)
+   40848:	mov    (%rsi),%rdx
+   4084b:	mov    0x10(%r11),%rdi
+   4084f:	cmp    %rdi,%rdx
+   40852:	jge    40874 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x224>
+   40854:	mov    %rdx,0x10(%r11)
+   40858:	mov    %rdi,(%rsi)
+   4085b:	jmp    40874 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x224>
+   4085d:	mov    %rdi,0x10(%r11)
+   40861:	mov    %rdx,(%rsi)
+   40864:	mov    -0x18(%rbx),%rdi
+   40868:	cmp    %rdx,%rdi
+   4086b:	jge    40874 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x224>
+   4086d:	mov    %rdi,(%rsi)
+   40870:	mov    %rdx,-0x18(%rbx)
+   40874:	mov    (%rax),%rdx
+   40877:	mov    (%rcx),%rdi
+   4087a:	mov    (%rsi),%r8
+   4087d:	cmp    %rdi,%rdx
+   40880:	jge    4089d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x24d>
+   40882:	cmp    %rdx,%r8
+   40885:	jl     408b7 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x267>
+   40887:	mov    %rdx,(%rcx)
+   4088a:	mov    %rdi,(%rax)
+   4088d:	mov    %rax,%rcx
+   40890:	mov    %r8,%rdx
+   40893:	cmp    %rdi,%r8
+   40896:	jl     408b7 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x267>
+   40898:	mov    %rdi,%rdx
+   4089b:	jmp    408bd <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x26d>
+   4089d:	cmp    %rdx,%r8
+   408a0:	jge    408bd <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x26d>
+   408a2:	mov    %r8,(%rax)
+   408a5:	mov    %rdx,(%rsi)
+   408a8:	mov    %rax,%rsi
+   408ab:	mov    %rdi,%rdx
+   408ae:	cmp    %rdi,%r8
+   408b1:	jge    40ae9 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x499>
+   408b7:	mov    %r8,(%rcx)
+   408ba:	mov    %rdi,(%rsi)
+   408bd:	mov    (%r11),%rcx
+   408c0:	mov    %rdx,(%r11)
+   408c3:	mov    %rcx,(%rax)
+   408c6:	dec    %r15
+   408c9:	mov    (%r11),%rax
+   408cc:	cmpb   $0x0,-0x38(%rbp)
+   408d0:	jne    408dc <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x28c>
+   408d2:	cmp    %rax,-0x8(%r11)
+   408d6:	jge    4099d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x34d>
+   408dc:	mov    $0x8,%ecx
+   408e1:	xor    %esi,%esi
+   408e3:	data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   408f0:	mov    (%r11,%rcx,1),%rdx
+   408f4:	add    $0xfffffffffffffff8,%rsi
+   408f8:	add    $0x8,%rcx
+   408fc:	cmp    %rax,%rdx
+   408ff:	jl     408f0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x2a0>
+   40901:	mov    %r11,%rcx
+   40904:	sub    %rsi,%rcx
+   40907:	mov    %rbx,%rdi
+   4090a:	cmp    $0xfffffffffffffff8,%rsi
+   4090e:	je     40920 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x2d0>
+   40910:	lea    -0x8(%rdi),%rsi
+   40914:	cmp    %rax,-0x8(%rdi)
+   40918:	mov    %rsi,%rdi
+   4091b:	jge    40910 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x2c0>
+   4091d:	jmp    40950 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x300>
+   4091f:	nop
+   40920:	mov    %rbx,%rdi
+   40923:	data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   40930:	cmp    %rdi,%rcx
+   40933:	jae    409c2 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x372>
+   40939:	lea    -0x8(%rdi),%rsi
+   4093d:	cmp    %rax,-0x8(%rdi)
+   40941:	mov    %rsi,%rdi
+   40944:	jge    40930 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x2e0>
+   40946:	cs nopw 0x0(%rax,%rax,1)
+   40950:	cmp    %rsi,%rcx
+   40953:	jae    409d0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x380>
+   40955:	mov    (%rsi),%r8
+   40958:	mov    %rcx,%r13
+   4095b:	mov    %rsi,%rdi
+   4095e:	xchg   %ax,%ax
+   40960:	mov    %r8,0x0(%r13)
+   40964:	mov    %rdx,(%rdi)
+   40967:	nopw   0x0(%rax,%rax,1)
+   40970:	mov    0x8(%r13),%rdx
+   40974:	add    $0x8,%r13
+   40978:	cmp    %rax,%rdx
+   4097b:	jl     40970 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x320>
+   4097d:	nopl   (%rax)
+   40980:	mov    -0x8(%rdi),%r8
+   40984:	add    $0xfffffffffffffff8,%rdi
+   40988:	cmp    %rax,%r8
+   4098b:	jge    40980 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x330>
+   4098d:	cmp    %rdi,%r13
+   40990:	jb     40960 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x310>
+   40992:	add    $0xfffffffffffffff8,%r13
+   40996:	cmp    %r11,%r13
+   40999:	jne    409d9 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x389>
+   4099b:	jmp    409e0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x390>
+   4099d:	cmp    -0x8(%rbx),%rax
+   409a1:	jge    40a54 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x404>
+   409a7:	mov    %r11,%rcx
+   409aa:	nopw   0x0(%rax,%rax,1)
+   409b0:	lea    0x8(%rcx),%r14
+   409b4:	cmp    0x8(%rcx),%rax
+   409b8:	mov    %r14,%rcx
+   409bb:	jge    409b0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x360>
+   409bd:	jmp    40a71 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x421>
+   409c2:	mov    %rdi,%rsi
+   409c5:	cmp    %rsi,%rcx
+   409c8:	jb     40955 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x305>
+   409ca:	nopw   0x0(%rax,%rax,1)
+   409d0:	lea    -0x8(%rcx),%r13
+   409d4:	cmp    %r11,%r13
+   409d7:	je     409e0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x390>
+   409d9:	mov    0x0(%r13),%rdx
+   409dd:	mov    %rdx,(%r11)
+   409e0:	mov    %rax,0x0(%r13)
+   409e4:	cmp    %rsi,%rcx
+   409e7:	jb     40a2a <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x3da>
+   409e9:	mov    %rbx,%r12
+   409ec:	mov    %r15,-0x48(%rbp)
+   409f0:	mov    %r11,-0x40(%rbp)
+   409f4:	mov    %r11,%rdi
+   409f7:	mov    %r13,%rsi
+   409fa:	call   46e60 <void std::__1::__sort<std::__1::__less<long double, long double>&, long double*>(long double*, long double*, std::__1::__less<long double, long double>&)@@Base+0x4980>
+   409ff:	mov    %eax,%r15d
+   40a02:	lea    0x8(%r13),%r14
+   40a06:	mov    %r14,%rdi
+   40a09:	mov    %rbx,%rsi
+   40a0c:	call   46e60 <void std::__1::__sort<std::__1::__less<long double, long double>&, long double*>(long double*, long double*, std::__1::__less<long double, long double>&)@@Base+0x4980>
+   40a11:	test   %al,%al
+   40a13:	jne    40af1 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x4a1>
+   40a19:	test   %r15b,%r15b
+   40a1c:	mov    -0x48(%rbp),%r15
+   40a20:	mov    -0x40(%rbp),%r11
+   40a24:	jne    406be <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6e>
+   40a2a:	xor    %ecx,%ecx
+   40a2c:	cmpb   $0x0,-0x38(%rbp)
+   40a30:	setne  %cl
+   40a33:	mov    %r11,%rdi
+   40a36:	mov    %r13,%rsi
+   40a39:	mov    %r15,%rdx
+   40a3c:	call   40690 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x40>
+   40a41:	add    $0x8,%r13
+   40a45:	movl   $0x0,-0x38(%rbp)
+   40a4c:	mov    %r13,%r14
+   40a4f:	jmp    406be <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6e>
+   40a54:	lea    0x8(%r11),%rcx
+   40a58:	nopl   0x0(%rax,%rax,1)
+   40a60:	mov    %rcx,%r14
+   40a63:	cmp    %rbx,%rcx
+   40a66:	jae    40a71 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x421>
+   40a68:	lea    0x8(%r14),%rcx
+   40a6c:	cmp    (%r14),%rax
+   40a6f:	jge    40a60 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x410>
+   40a71:	mov    %rbx,%rcx
+   40a74:	cmp    %rbx,%r14
+   40a77:	jae    40a8d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x43d>
+   40a79:	mov    %rbx,%rdx
+   40a7c:	nopl   0x0(%rax)
+   40a80:	lea    -0x8(%rdx),%rcx
+   40a84:	cmp    -0x8(%rdx),%rax
+   40a88:	mov    %rcx,%rdx
+   40a8b:	jl     40a80 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x430>
+   40a8d:	cmp    %rcx,%r14
+   40a90:	jae    40ad2 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x482>
+   40a92:	mov    (%r14),%rdx
+   40a95:	mov    (%rcx),%rsi
+   40a98:	nopl   0x0(%rax,%rax,1)
+   40aa0:	mov    %rsi,(%r14)
+   40aa3:	mov    %rdx,(%rcx)
+   40aa6:	cs nopw 0x0(%rax,%rax,1)
+   40ab0:	mov    0x8(%r14),%rdx
+   40ab4:	add    $0x8,%r14
+   40ab8:	cmp    %rdx,%rax
+   40abb:	jge    40ab0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x460>
+   40abd:	nopl   (%rax)
+   40ac0:	mov    -0x8(%rcx),%rsi
+   40ac4:	add    $0xfffffffffffffff8,%rcx
+   40ac8:	cmp    %rsi,%rax
+   40acb:	jl     40ac0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x470>
+   40acd:	cmp    %rcx,%r14
+   40ad0:	jb     40aa0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x450>
+   40ad2:	lea    -0x8(%r14),%rcx
+   40ad6:	cmp    %r11,%rcx
+   40ad9:	je     40ae1 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x491>
+   40adb:	mov    (%rcx),%rdx
+   40ade:	mov    %rdx,(%r11)
+   40ae1:	mov    %rax,(%rcx)
+   40ae4:	jmp    406be <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6e>
+   40ae9:	mov    %r8,%rdx
+   40aec:	jmp    408bd <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x26d>
+   40af1:	mov    %r13,%rbx
+   40af4:	test   %r15b,%r15b
+   40af7:	mov    -0x48(%rbp),%r15
+   40afb:	mov    -0x40(%rbp),%r14
+   40aff:	je     406be <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6e>
+   40b05:	jmp    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40b0a:	lea    0x71d6f(%rip),%rax        # b2880 <std::__1::__fs::filesystem::__weakly_canonical(std::__1::__fs::filesystem::path const&, std::__1::error_code*)@@Base+0x1200>
+   40b11:	movslq (%rax,%rsi,4),%rcx
+   40b15:	add    %rax,%rcx
+   40b18:	notrack jmp *%rcx
+   40b1b:	mov    -0x8(%rbx),%rax
+   40b1f:	mov    (%r11),%rcx
+   40b22:	cmp    %rcx,%rax
+   40b25:	jge    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40b2b:	mov    %rax,(%r11)
+   40b2e:	mov    %rcx,-0x8(%rbx)
+   40b32:	jmp    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40b37:	mov    (%r11),%rax
+   40b3a:	mov    0x8(%r11),%rcx
+   40b3e:	mov    -0x8(%rbx),%rdx
+   40b42:	cmp    %rax,%rcx
+   40b45:	jge    40c8d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x63d>
+   40b4b:	cmp    %rcx,%rdx
+   40b4e:	jge    40d45 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6f5>
+   40b54:	mov    %rdx,(%r11)
+   40b57:	jmp    40d59 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x709>
+   40b5c:	mov    %fs:0x28,%rax
+   40b65:	cmp    -0x30(%rbp),%rax
+   40b69:	jne    40d7b <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x72b>
+   40b6f:	lea    0x8(%r11),%rsi
+   40b73:	lea    0x10(%r11),%rdx
+   40b77:	lea    0x18(%r11),%rcx
+   40b7b:	add    $0xfffffffffffffff8,%rbx
+   40b7f:	mov    %r11,%rdi
+   40b82:	mov    %rbx,%r8
+   40b85:	add    $0x28,%rsp
+   40b89:	pop    %rbx
+   40b8a:	pop    %r12
+   40b8c:	pop    %r13
+   40b8e:	pop    %r14
+   40b90:	pop    %r15
+   40b92:	pop    %rbp
+   40b93:	jmp    470c0 <void std::__1::__sort<std::__1::__less<long double, long double>&, long double*>(long double*, long double*, std::__1::__less<long double, long double>&)@@Base+0x4be0>
+   40b98:	lea    0x8(%r11),%rax
+   40b9c:	lea    0x10(%r11),%rcx
+   40ba0:	mov    (%r11),%rdx
+   40ba3:	mov    0x8(%r11),%rsi
+   40ba7:	mov    0x10(%r11),%rdi
+   40bab:	cmp    %rdx,%rsi
+   40bae:	jge    40ca7 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x657>
+   40bb4:	mov    %r11,%r8
+   40bb7:	mov    %rcx,%r9
+   40bba:	mov    %rdx,%r10
+   40bbd:	cmp    %rsi,%rdi
+   40bc0:	jl     40cc0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x670>
+   40bc6:	mov    %rsi,(%r11)
+   40bc9:	mov    %rdx,0x8(%r11)
+   40bcd:	mov    %rax,%r8
+   40bd0:	mov    %rcx,%r9
+   40bd3:	mov    %rdx,%r10
+   40bd6:	cmp    %rdx,%rdi
+   40bd9:	jl     40cc0 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x670>
+   40bdf:	jmp    40ccb <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x67b>
+   40be4:	cmp    %rbx,%r11
+   40be7:	sete   %dl
+   40bea:	lea    0x8(%r11),%rcx
+   40bee:	cmp    %rbx,%rcx
+   40bf1:	sete   %al
+   40bf4:	or     %dl,%al
+   40bf6:	cmpb   $0x0,-0x38(%rbp)
+   40bfa:	je     40d06 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6b6>
+   40c00:	test   %al,%al
+   40c02:	jne    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40c08:	mov    $0x8,%eax
+   40c0d:	mov    %r11,%rdx
+   40c10:	jmp    40c37 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x5e7>
+   40c12:	data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   40c20:	mov    %r11,%rcx
+   40c23:	mov    %rsi,(%rcx)
+   40c26:	lea    0x8(%rdx),%rcx
+   40c2a:	add    $0x8,%rax
+   40c2e:	cmp    %rbx,%rcx
+   40c31:	je     40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40c37:	mov    (%rdx),%rdi
+   40c3a:	mov    0x8(%rdx),%rsi
+   40c3e:	mov    %rcx,%rdx
+   40c41:	cmp    %rdi,%rsi
+   40c44:	jge    40c26 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x5d6>
+   40c46:	mov    %rax,%rcx
+   40c49:	nopl   0x0(%rax)
+   40c50:	mov    %rdi,(%r11,%rcx,1)
+   40c54:	cmp    $0x8,%rcx
+   40c58:	je     40c20 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x5d0>
+   40c5a:	mov    -0x10(%r11,%rcx,1),%rdi
+   40c5f:	add    $0xfffffffffffffff8,%rcx
+   40c63:	cmp    %rdi,%rsi
+   40c66:	jl     40c50 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x600>
+   40c68:	add    %r11,%rcx
+   40c6b:	jmp    40c23 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x5d3>
+   40c6d:	cmp    %rbx,%r11
+   40c70:	je     40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40c76:	lea    -0x31(%rbp),%rcx
+   40c7a:	mov    %r11,%rdi
+   40c7d:	mov    %rbx,%rsi
+   40c80:	mov    %rbx,%rdx
+   40c83:	call   471a0 <void std::__1::__sort<std::__1::__less<long double, long double>&, long double*>(long double*, long double*, std::__1::__less<long double, long double>&)@@Base+0x4cc0>
+   40c88:	jmp    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40c8d:	cmp    %rcx,%rdx
+   40c90:	jge    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40c96:	mov    %rdx,0x8(%r11)
+   40c9a:	mov    %rcx,-0x8(%rbx)
+   40c9e:	mov    (%r11),%rax
+   40ca1:	mov    0x8(%r11),%rcx
+   40ca5:	jmp    40cf8 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6a8>
+   40ca7:	cmp    %rsi,%rdi
+   40caa:	jge    40ccb <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x67b>
+   40cac:	mov    %rdi,(%rax)
+   40caf:	mov    %rsi,(%rcx)
+   40cb2:	mov    %r11,%r8
+   40cb5:	mov    %rax,%r9
+   40cb8:	mov    %rsi,%r10
+   40cbb:	cmp    %rdx,%rdi
+   40cbe:	jge    40cce <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x67e>
+   40cc0:	mov    %rdi,(%r8)
+   40cc3:	mov    %rdx,(%r9)
+   40cc6:	mov    %r10,%rsi
+   40cc9:	jmp    40cce <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x67e>
+   40ccb:	mov    %rdi,%rsi
+   40cce:	mov    -0x8(%rbx),%rdx
+   40cd2:	cmp    %rsi,%rdx
+   40cd5:	jge    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40cdb:	mov    %rdx,(%rcx)
+   40cde:	mov    %rsi,-0x8(%rbx)
+   40ce2:	mov    (%rcx),%rcx
+   40ce5:	mov    (%rax),%rax
+   40ce8:	cmp    %rax,%rcx
+   40ceb:	jge    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40ced:	mov    %rcx,0x8(%r11)
+   40cf1:	mov    %rax,0x10(%r11)
+   40cf5:	mov    (%r11),%rax
+   40cf8:	cmp    %rax,%rcx
+   40cfb:	jge    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40cfd:	mov    %rcx,(%r11)
+   40d00:	mov    %rax,0x8(%r11)
+   40d04:	jmp    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40d06:	test   %al,%al
+   40d08:	je     40d19 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6c9>
+   40d0a:	jmp    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40d0c:	nopl   0x0(%rax)
+   40d10:	lea    0x8(%r11),%rcx
+   40d14:	cmp    %rbx,%rcx
+   40d17:	je     40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40d19:	mov    (%r11),%rdx
+   40d1c:	mov    0x8(%r11),%rax
+   40d20:	mov    %rcx,%r11
+   40d23:	cmp    %rdx,%rax
+   40d26:	jge    40d10 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6c0>
+   40d28:	mov    %r11,%rcx
+   40d2b:	nopl   0x0(%rax,%rax,1)
+   40d30:	mov    %rdx,(%rcx)
+   40d33:	mov    -0x10(%rcx),%rdx
+   40d37:	add    $0xfffffffffffffff8,%rcx
+   40d3b:	cmp    %rdx,%rax
+   40d3e:	jl     40d30 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6e0>
+   40d40:	mov    %rax,(%rcx)
+   40d43:	jmp    40d10 <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x6c0>
+   40d45:	mov    %rcx,(%r11)
+   40d48:	mov    %rax,0x8(%r11)
+   40d4c:	mov    -0x8(%rbx),%rcx
+   40d50:	cmp    %rax,%rcx
+   40d53:	jge    40d5d <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x70d>
+   40d55:	mov    %rcx,0x8(%r11)
+   40d59:	mov    %rax,-0x8(%rbx)
+   40d5d:	mov    %fs:0x28,%rax
+   40d66:	cmp    -0x30(%rbp),%rax
+   40d6a:	jne    40d7b <void std::__1::__sort<std::__1::__less<long long, long long>&, long long*>(long long*, long long*, std::__1::__less<long long, long long>&)@@Base+0x72b>
+   40d6c:	add    $0x28,%rsp
+   40d70:	pop    %rbx
+   40d71:	pop    %r12
+   40d73:	pop    %r13
+   40d75:	pop    %r14
+   40d77:	pop    %r15
+   40d79:	pop    %rbp
+   40d7a:	ret
+   40d7b:	call   3a970 <void std::__1::__sort<std::__1::__less<char, char>&, char*>(char*, char*, std::__1::__less<char, char>&)@@Base-0x1220>
+

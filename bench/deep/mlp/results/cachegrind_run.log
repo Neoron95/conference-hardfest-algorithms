@@ -1,0 +1,91 @@
+[08:55:25] x86 sort N=1048576 U=1048576
+grep: results/cachegrind/cg_x86_sort_1048576_1048576.out: No such file or directory
+[08:55:25] x86 uset N=1048576 U=1048576
+grep: results/cachegrind/cg_x86_uset_1048576_1048576.out: No such file or directory
+[08:55:25] x86 flat N=1048576 U=1048576
+grep: results/cachegrind/cg_x86_flat_1048576_1048576.out: No such file or directory
+[08:55:25] x86 open N=1048576 U=1048576
+grep: results/cachegrind/cg_x86_open_1048576_1048576.out: No such file or directory
+[08:55:25] x86 radix N=1048576 U=1048576
+grep: results/cachegrind/cg_x86_radix_1048576_1048576.out: No such file or directory
+[08:55:25] x86 sort N=1048576 U=524288
+grep: results/cachegrind/cg_x86_sort_1048576_524288.out: No such file or directory
+[08:55:25] x86 uset N=1048576 U=524288
+grep: results/cachegrind/cg_x86_uset_1048576_524288.out: No such file or directory
+[08:55:25] x86 flat N=1048576 U=524288
+grep: results/cachegrind/cg_x86_flat_1048576_524288.out: No such file or directory
+[08:55:25] x86 open N=1048576 U=524288
+grep: results/cachegrind/cg_x86_open_1048576_524288.out: No such file or directory
+[08:55:25] x86 radix N=1048576 U=524288
+grep: results/cachegrind/cg_x86_radix_1048576_524288.out: No such file or directory
+[08:55:25] x86 sort N=524288 U=262144
+grep: results/cachegrind/cg_x86_sort_524288_262144.out: No such file or directory
+[08:55:25] x86 uset N=524288 U=262144
+grep: results/cachegrind/cg_x86_uset_524288_262144.out: No such file or directory
+[08:55:25] x86 flat N=524288 U=262144
+grep: results/cachegrind/cg_x86_flat_524288_262144.out: No such file or directory
+[08:55:25] x86 open N=524288 U=262144
+grep: results/cachegrind/cg_x86_open_524288_262144.out: No such file or directory
+[08:55:25] x86 radix N=524288 U=262144
+grep: results/cachegrind/cg_x86_radix_524288_262144.out: No such file or directory
+[08:55:25] appleP sort N=1048576 U=1048576
+grep: results/cachegrind/cg_appleP_sort_1048576_1048576.out: No such file or directory
+[08:55:25] appleP uset N=1048576 U=1048576
+grep: results/cachegrind/cg_appleP_uset_1048576_1048576.out: No such file or directory
+[08:55:25] appleP flat N=1048576 U=1048576
+grep: results/cachegrind/cg_appleP_flat_1048576_1048576.out: No such file or directory
+[08:55:25] appleP open N=1048576 U=1048576
+grep: results/cachegrind/cg_appleP_open_1048576_1048576.out: No such file or directory
+[08:55:25] appleP radix N=1048576 U=1048576
+grep: results/cachegrind/cg_appleP_radix_1048576_1048576.out: No such file or directory
+[08:55:25] appleP sort N=1048576 U=524288
+grep: results/cachegrind/cg_appleP_sort_1048576_524288.out: No such file or directory
+[08:55:25] appleP uset N=1048576 U=524288
+grep: results/cachegrind/cg_appleP_uset_1048576_524288.out: No such file or directory
+[08:55:25] appleP flat N=1048576 U=524288
+grep: results/cachegrind/cg_appleP_flat_1048576_524288.out: No such file or directory
+[08:55:25] appleP open N=1048576 U=524288
+grep: results/cachegrind/cg_appleP_open_1048576_524288.out: No such file or directory
+[08:55:25] appleP radix N=1048576 U=524288
+grep: results/cachegrind/cg_appleP_radix_1048576_524288.out: No such file or directory
+[08:55:25] appleP sort N=524288 U=262144
+grep: results/cachegrind/cg_appleP_sort_524288_262144.out: No such file or directory
+[08:55:25] appleP uset N=524288 U=262144
+grep: results/cachegrind/cg_appleP_uset_524288_262144.out: No such file or directory
+[08:55:25] appleP flat N=524288 U=262144
+grep: results/cachegrind/cg_appleP_flat_524288_262144.out: No such file or directory
+[08:55:25] appleP open N=524288 U=262144
+grep: results/cachegrind/cg_appleP_open_524288_262144.out: No such file or directory
+[08:55:25] appleP radix N=524288 U=262144
+grep: results/cachegrind/cg_appleP_radix_524288_262144.out: No such file or directory
+[08:55:25] appleE sort N=1048576 U=1048576
+grep: results/cachegrind/cg_appleE_sort_1048576_1048576.out: No such file or directory
+[08:55:25] appleE uset N=1048576 U=1048576
+grep: results/cachegrind/cg_appleE_uset_1048576_1048576.out: No such file or directory
+[08:55:25] appleE flat N=1048576 U=1048576
+grep: results/cachegrind/cg_appleE_flat_1048576_1048576.out: No such file or directory
+[08:55:25] appleE open N=1048576 U=1048576
+grep: results/cachegrind/cg_appleE_open_1048576_1048576.out: No such file or directory
+[08:55:25] appleE radix N=1048576 U=1048576
+grep: results/cachegrind/cg_appleE_radix_1048576_1048576.out: No such file or directory
+[08:55:25] appleE sort N=1048576 U=524288
+grep: results/cachegrind/cg_appleE_sort_1048576_524288.out: No such file or directory
+[08:55:25] appleE uset N=1048576 U=524288
+grep: results/cachegrind/cg_appleE_uset_1048576_524288.out: No such file or directory
+[08:55:25] appleE flat N=1048576 U=524288
+grep: results/cachegrind/cg_appleE_flat_1048576_524288.out: No such file or directory
+[08:55:25] appleE open N=1048576 U=524288
+grep: results/cachegrind/cg_appleE_open_1048576_524288.out: No such file or directory
+[08:55:25] appleE radix N=1048576 U=524288
+grep: results/cachegrind/cg_appleE_radix_1048576_524288.out: No such file or directory
+[08:55:25] appleE sort N=524288 U=262144
+grep: results/cachegrind/cg_appleE_sort_524288_262144.out: No such file or directory
+[08:55:25] appleE uset N=524288 U=262144
+grep: results/cachegrind/cg_appleE_uset_524288_262144.out: No such file or directory
+[08:55:25] appleE flat N=524288 U=262144
+grep: results/cachegrind/cg_appleE_flat_524288_262144.out: No such file or directory
+[08:55:25] appleE open N=524288 U=262144
+grep: results/cachegrind/cg_appleE_open_524288_262144.out: No such file or directory
+[08:55:25] appleE radix N=524288 U=262144
+grep: results/cachegrind/cg_appleE_radix_524288_262144.out: No such file or directory
+DONE

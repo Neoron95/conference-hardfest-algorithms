@@ -1,0 +1,12 @@
+freq_ghz,1.12
+freq_ghz,0.99
+freq_ghz,1.00
+latency_ns,16 KB,5.9
+latency_ns,32 KB,4.5
+latency_ns,128 KB,15.1
+latency_ns,1024 KB,20.9
+latency_ns,4096 KB,123.7
+latency_ns,16384 KB,184.0
+latency_ns,65536 KB,509.4
+latency_ns,262144 KB,632.9
+latency_ns,1048576 KB,779.2

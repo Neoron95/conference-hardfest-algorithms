@@ -1,0 +1,31 @@
+scenario,variant,ms_median,ns_per_elem,ms_min,ms_max
+U=N random,sorted_unique,745.39,710.9,708.62,783.10
+U=N random,sort_inplace,677.26,645.9,661.74,740.65
+U=N random,set,149.46,142.5,142.98,248.86
+U=N random,list_set,231.64,220.9,229.51,264.91
+U=N random,sorted_set,1037.68,989.6,1035.95,1130.75
+U=N random,dict_fromkeys,278.09,265.2,256.91,415.33
+U=N random,np_unique,865.37,825.3,807.65,1076.47
+U=N random,np_sort_mask,16.64,15.9,16.56,50.64
+U=N random,np_set,349.94,333.7,215.49,795.91
+# sizeof(set of 1048576) = 33554648 B = 32.0 B/key (без самих int-объектов)
+# sizeof(int 64-bit) = 36 B, sizeof(list) = 8388664 B = 8.0 B/elem
+# numpy 2.5.3, python 3.13.16
+U=N sorted,sorted_unique,86.30,82.3,80.04,111.41
+U=N sorted,sort_inplace,81.00,77.3,79.59,86.12
+U=N sorted,set,165.18,157.5,140.48,374.89
+U=N sorted,list_set,446.09,425.4,328.92,508.20
+U=N sorted,sorted_set,1367.56,1304.2,1275.71,1715.31
+U=N sorted,dict_fromkeys,432.44,412.4,373.58,462.09
+U=N sorted,np_unique,1032.42,984.6,949.21,1160.53
+U=N sorted,np_sort_mask,34.01,32.4,25.44,37.57
+U=N sorted,np_set,259.34,247.3,232.57,795.35
+U=1% random,sorted_unique,845.74,806.6,766.66,875.03
+U=1% random,sort_inplace,980.89,935.5,977.61,1030.99
+U=1% random,set,74.67,71.2,68.97,156.39
+U=1% random,list_set,79.82,76.1,69.25,130.56
+U=1% random,sorted_set,84.85,80.9,84.14,183.27
+U=1% random,dict_fromkeys,127.26,121.4,120.28,190.72
+U=1% random,np_unique,89.99,85.8,85.91,146.40
+U=1% random,np_sort_mask,24.77,23.6,20.43,42.49
+U=1% random,np_set,274.58,261.9,215.73,637.35

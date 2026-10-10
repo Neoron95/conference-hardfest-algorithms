@@ -1,0 +1,51 @@
+== default flat
+vmstat before: allocstall_normal 0 allocstall_movable 0 pgfault 19036632 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2047 thp_fault_fallback 0 thp_collapse_alloc 0 
+E9d,deep,gcc13-libstdc++,-,flat,random64,random,1048576,1048576,64,1,2,3,37.242,37.222,41.853,12.4,41.853;37.222;37.242
+faults: gcc13-libstdc++ alg=flat N=1048576 U=1048576 minflt_per_call=4288.2
+vmstat after:  allocstall_normal 0 allocstall_movable 0 pgfault 19158186 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2047 thp_fault_fallback 0 thp_collapse_alloc 0 
+== default uset
+vmstat before: allocstall_normal 0 allocstall_movable 0 pgfault 19158669 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2047 thp_fault_fallback 0 thp_collapse_alloc 0 
+E9d,deep,gcc13-libstdc++,-,uset,random64,random,1048576,1048576,64,1,2,3,246.223,236.262,292.879,23.0,246.223;292.879;236.262
+faults: gcc13-libstdc++ alg=uset N=1048576 U=1048576 minflt_per_call=5124.1
+vmstat after:  allocstall_normal 0 allocstall_movable 0 pgfault 19295075 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2047 thp_fault_fallback 0 thp_collapse_alloc 0 
+== default sort
+vmstat before: allocstall_normal 0 allocstall_movable 0 pgfault 19295687 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2047 thp_fault_fallback 0 thp_collapse_alloc 0 
+E9d,deep,gcc13-libstdc++,-,sort,random64,random,1048576,1048576,64,1,2,3,62.764,57.549,64.039,10.3,62.764;64.039;57.549
+faults: gcc13-libstdc++ alg=sort N=1048576 U=1048576 minflt_per_call=0.2
+vmstat after:  allocstall_normal 0 allocstall_movable 0 pgfault 19356762 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2047 thp_fault_fallback 0 thp_collapse_alloc 0 
+== thp flat
+vmstat before: allocstall_normal 0 allocstall_movable 0 pgfault 19357235 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2047 thp_fault_fallback 0 thp_collapse_alloc 0 
+E9d,deep,gcc13-libstdc++,-,flat,random64,random,1048576,1048576,64,1,2,3,78.259,77.988,83.574,7.1,78.259;83.574;77.988
+faults: gcc13-libstdc++ alg=flat N=1048576 U=1048576 minflt_per_call=8.6
+vmstat after:  allocstall_normal 0 allocstall_movable 0 pgfault 19455958 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2140 thp_fault_fallback 0 thp_collapse_alloc 0 
+== thp uset
+vmstat before: allocstall_normal 0 allocstall_movable 0 pgfault 19457108 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2140 thp_fault_fallback 0 thp_collapse_alloc 0 
+E9d,deep,gcc13-libstdc++,-,uset,random64,random,1048576,1048576,64,1,2,3,180.731,164.473,206.329,23.2,164.473;180.731;206.329
+faults: gcc13-libstdc++ alg=uset N=1048576 U=1048576 minflt_per_call=76.1
+vmstat after:  allocstall_normal 0 allocstall_movable 0 pgfault 19494966 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2234 thp_fault_fallback 0 thp_collapse_alloc 0 
+== thp sort
+vmstat before: allocstall_normal 0 allocstall_movable 0 pgfault 19495446 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2234 thp_fault_fallback 0 thp_collapse_alloc 0 
+E9d,deep,gcc13-libstdc++,-,sort,random64,random,1048576,1048576,64,1,2,3,57.550,57.246,62.311,8.8,57.550;57.246;62.311
+faults: gcc13-libstdc++ alg=sort N=1048576 U=1048576 minflt_per_call=0.2
+vmstat after:  allocstall_normal 0 allocstall_movable 0 pgfault 19512472 compact_stall 0 compact_fail 0 compact_success 0 thp_fault_alloc 2309 thp_fault_fallback 0 thp_collapse_alloc 0 
+== strace -c flat default (blocks 1)
+E9s,deep,gcc13-libstdc++,-,flat,random64,random,1048576,1048576,64,1,2,1,37.691,37.691,37.691,0.0,37.691
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 96.62    0.000400          57         7           munmap
+  2.42    0.000010           0        35           mmap
+  0.97    0.000004           0        11           brk
+  0.00    0.000000           0         9           mprotect
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000414           6        62           total
+== strace -c flat thp (blocks 1)
+E9s,deep,gcc13-libstdc++,-,flat,random64,random,1048576,1048576,64,1,2,1,30.811,30.811,30.811,0.0,30.811
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 57.14    0.000048           6         7           munmap
+ 21.43    0.000018           0        35           mmap
+ 15.48    0.000013           1        12           madvise
+  5.95    0.000005           0        11           brk
+  0.00    0.000000           0         9           mprotect
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000084           1        74           total

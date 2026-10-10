@@ -1,0 +1,22 @@
+08:54:33 start 6.18.44-fc-v114 model name	: Intel(R) Xeon(R) Processor
+08:54:59 probe done
+08:55:09 membw done
+08:55:30 radix 1M random done
+08:55:38 radix 1M dense done
+08:55:47 radix 256K done
+08:57:11 radix 4M done
+08:57:22 radix native done
+08:58:01 sortphase_gcc done
+08:58:24 sortphase_libcxx done
+08:58:37 sortphase_clang_libstdcxx done
+08:58:50 sortphase_gcc_native done
+08:59:04 sortphase_libcxx_native done
+08:59:19 simdsort_base done
+08:59:34 simdsort_native done
+08:59:54 simdsort_avx2 done
+09:00:12 simdsort_avx512 done
+09:00:28 simdsort_libcxx_base done
+09:00:46 simdsort_libcxx_avx512 done
+09:00:59 baseline bench_gcc done
+09:01:10 baseline bench_clang_libcxx done
+09:01:10 ALL DONE

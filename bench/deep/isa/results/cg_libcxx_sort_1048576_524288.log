@@ -1,0 +1,11 @@
+==7961== Callgrind, a call-graph generating cache profiler
+==7961== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==7961== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7961== Command: build/isa_clang_libcxx --alg sort --n 1048576 --u 524288 --calls 3
+==7961== 
+==7961== For interactive control, run 'callgrind_control -h'.
+==7961== 
+==7961== Events    : Ir
+==7961== Collected : 294012229
+==7961== 
+==7961== I   refs:      294,012,229

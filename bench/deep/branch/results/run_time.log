@@ -1,0 +1,5 @@
+[08:52:16] build/bb_gcc U=512 done
+[08:52:55] build/bb_gcc U=1024 done
+[08:53:32] build/bb_clang_libcxx U=512 done
+[08:53:47] build/bb_clang_libcxx U=1024 done
+DONE_TIME

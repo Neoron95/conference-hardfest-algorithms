@@ -1,0 +1,14 @@
+==7833== Callgrind, a call-graph generating cache profiler
+==7833== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==7833== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7833== Command: build/isa_gcc --alg merge --n 1114112 --u 0 --calls 3 --nlocal 1048576
+==7833== 
+==7833== For interactive control, run 'callgrind_control -h'.
+==7833== brk segment overflow in thread #1: can't grow to 0x486d000
+==7833== (see section Limitations in user manual)
+==7833== NOTE: further instances of this message will not be shown
+==7833== 
+==7833== Events    : Ir
+==7833== Collected : 194436254
+==7833== 
+==7833== I   refs:      194,436,254

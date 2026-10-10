@@ -1,0 +1,14 @@
+==7786== Callgrind, a call-graph generating cache profiler
+==7786== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==7786== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7786== Command: build/isa_gcc --alg flat --n 1048576 --u 524288 --calls 3
+==7786== 
+==7786== For interactive control, run 'callgrind_control -h'.
+==7786== brk segment overflow in thread #1: can't grow to 0x526d000
+==7786== (see section Limitations in user manual)
+==7786== NOTE: further instances of this message will not be shown
+==7786== 
+==7786== Events    : Ir
+==7786== Collected : 272447447
+==7786== 
+==7786== I   refs:      272,447,447

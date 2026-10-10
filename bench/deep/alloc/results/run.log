@@ -1,0 +1,13 @@
+[08:52:42] build/uset_decomp_gcc U=1048576 dump=assign
+[08:53:10] build/uset_decomp_gcc U=1048576 dump=1pass
+[08:53:32] build/uset_decomp_gcc U=524288 dump=assign
+[08:53:46] build/uset_decomp_gcc U=524288 dump=1pass
+[08:53:59] build/uset_decomp_clang_libcxx U=1048576 dump=assign
+[08:54:34] build/uset_decomp_clang_libcxx U=1048576 dump=1pass
+[08:55:17] build/uset_decomp_clang_libcxx U=524288 dump=assign
+[08:55:36] build/uset_decomp_clang_libcxx U=524288 dump=1pass
+[08:55:44] jemalloc build/uset_decomp_gcc U=1048576
+[08:55:49] jemalloc build/uset_decomp_gcc U=524288
+[08:55:51] jemalloc build/uset_decomp_clang_libcxx U=1048576
+[08:55:56] jemalloc build/uset_decomp_clang_libcxx U=524288
+done

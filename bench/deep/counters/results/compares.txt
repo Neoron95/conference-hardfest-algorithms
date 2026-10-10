@@ -1,0 +1,6 @@
+compares_per_element=23.920 N=1048576 U=524288 order=random toolchain=gcc13-libstdc++
+compares_per_element=24.035 N=1048576 U=524288 order=runs toolchain=gcc13-libstdc++
+compares_per_element=23.947 N=1048576 U=524288 order=sorted toolchain=gcc13-libstdc++
+compares_per_element=21.980 N=1048576 U=524288 order=random toolchain=clang18-libc++
+compares_per_element=22.449 N=1048576 U=524288 order=runs toolchain=clang18-libc++
+compares_per_element=6.071 N=1048576 U=524288 order=sorted toolchain=clang18-libc++

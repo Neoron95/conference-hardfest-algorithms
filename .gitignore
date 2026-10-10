@@ -8,3 +8,20 @@ prep/deck/*/slides/.render-*.html
 __pycache__/
 prep/.v8-build/
 prep/.v9-build/
+
+# deep-dive agent benches (10.10): keep sources, scripts and CSV/TXT summaries; drop binaries and raw profiler dumps
+bench/deep/*/build/
+bench/deep/**/*.out
+bench/deep/**/*.out.*
+bench/deep/counters/results/cg/
+bench/deep/branch/results/cg/
+bench/deep/**/results/raw/
+bench/deep/**/*.flag
+bench/deep/langs/go/dedup_*
+bench/deep/langs/rust/target/
+bench/deep/langs/java/*.class
+bench/deep/sort/xss/
+bench/deep/sort/results/cg/
+bench/deep/isa/asm/libcxx_so_full.txt
+bench/deep/langs/cpp/ptrsort
+bench/deep/langs/cpp/listvec

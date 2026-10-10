@@ -1,0 +1,18 @@
+freq_ghz,0.99
+div_r64_latency_cycles(dividend~2^64, divisor=1056323),18.6
+div_r64_latency_cycles(dividend<2^28),19.4
+div_r64_throughput_cycles_per_div(4 independent),10.2
+and+add_latency_cycles,0.9
+branch_predictable_cycles_per_iter,0.9
+branch_random_cycles_per_iter,13.2
+mispredict_penalty_cycles_est(=(rand-pred)/0.5),24.7
+L1_load_latency_cycles,4.8
+freq_ghz,0.97
+div_r64_latency_cycles(dividend~2^64, divisor=1056323),19.1
+div_r64_latency_cycles(dividend<2^28),19.1
+div_r64_throughput_cycles_per_div(4 independent),9.9
+and+add_latency_cycles,0.9
+branch_predictable_cycles_per_iter,0.8
+branch_random_cycles_per_iter,13.2
+mispredict_penalty_cycles_est(=(rand-pred)/0.5),24.7
+L1_load_latency_cycles,4.8

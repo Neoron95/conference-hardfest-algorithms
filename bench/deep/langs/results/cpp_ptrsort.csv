@@ -1,0 +1,7 @@
+variant,N,ns_per_elem
+values,1048576,191.30
+ptr_seq16,1048576,392.93
+ptr_shuf16,1048576,470.07
+ptr_seq32,1048576,428.59
+ptr_shuf32,1048576,517.35
+ptr_shuf48,1048576,566.93

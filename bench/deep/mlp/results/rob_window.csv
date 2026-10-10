@@ -1,0 +1,22 @@
+exp,param,ns_per_iter
+nops,0,10.30
+nops,8,12.26
+nops,16,9.25
+nops,32,13.15
+nops,64,27.03
+nops,96,31.04
+nops,128,49.53
+nops,192,71.09
+nops,256,102.71
+nops,384,160.17
+nops,512,296.12
+nops,768,322.87
+nops,1024,327.81
+nops,2048,434.86
+mode,loads,13.32
+mode,malloc_only,21.28
+mode,loads+malloc,59.58
+mode,loads+malloc+free,12.84
+mode,loads_dep2,23.21
+mode,loads_dep2+malloc,91.52
+sink=1957977893687656462 anon_huge_kb=65536

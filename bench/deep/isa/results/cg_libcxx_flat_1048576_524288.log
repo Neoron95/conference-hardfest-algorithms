@@ -1,0 +1,14 @@
+==8032== Callgrind, a call-graph generating cache profiler
+==8032== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==8032== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==8032== Command: build/isa_clang_libcxx --alg flat --n 1048576 --u 524288 --calls 3
+==8032== 
+==8032== For interactive control, run 'callgrind_control -h'.
+==8032== brk segment overflow in thread #1: can't grow to 0x525b000
+==8032== (see section Limitations in user manual)
+==8032== NOTE: further instances of this message will not be shown
+==8032== 
+==8032== Events    : Ir
+==8032== Collected : 255669351
+==8032== 
+==8032== I   refs:      255,669,351

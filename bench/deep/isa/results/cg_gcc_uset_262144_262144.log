@@ -1,0 +1,14 @@
+==7335== Callgrind, a call-graph generating cache profiler
+==7335== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==7335== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==7335== Command: build/isa_gcc --alg uset --n 262144 --u 262144 --calls 3
+==7335== 
+==7335== For interactive control, run 'callgrind_control -h'.
+==7335== brk segment overflow in thread #1: can't grow to 0x496d000
+==7335== (see section Limitations in user manual)
+==7335== NOTE: further instances of this message will not be shown
+==7335== 
+==7335== Events    : Ir
+==7335== Collected : 302222641
+==7335== 
+==7335== I   refs:      302,222,641

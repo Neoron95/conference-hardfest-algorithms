@@ -1,0 +1,4 @@
+sink=3940649556508672 b0=33554431
+exp,gb_per_s_median,gb_per_s_best
+stream_sum_256MiB,10.8,10.9
+memcpy_256MiB_rw,13.9,15.6

@@ -1,0 +1,21 @@
+# 4K pages, 32 MB, fresh mmap each rep: ms per rep (touch 1 byte per 4K), MB/s, AnonHugePages after touch
+rep 0: first touch 208.03 ms (154 MB/s, 13.002 ms per 2MB), second touch 0.228 ms, AnonHugePages 0 kB
+rep 1: first touch 74.15 ms (432 MB/s, 4.635 ms per 2MB), second touch 0.177 ms, AnonHugePages 0 kB
+rep 2: first touch 45.81 ms (699 MB/s, 2.863 ms per 2MB), second touch 0.146 ms, AnonHugePages 0 kB
+rep 3: first touch 33.46 ms (956 MB/s, 2.091 ms per 2MB), second touch 0.137 ms, AnonHugePages 0 kB
+rep 4: first touch 32.95 ms (971 MB/s, 2.060 ms per 2MB), second touch 0.136 ms, AnonHugePages 0 kB
+rep 5: first touch 32.60 ms (982 MB/s, 2.038 ms per 2MB), second touch 0.131 ms, AnonHugePages 0 kB
+# THP madvise, 32 MB, fresh mmap each rep: ms per rep (touch 1 byte per 4K), MB/s, AnonHugePages after touch
+rep 0: first touch 419.40 ms (76 MB/s, 26.212 ms per 2MB), second touch 12.175 ms, AnonHugePages 32768 kB
+rep 1: first touch 3.34 ms (9570 MB/s, 0.209 ms per 2MB), second touch 0.176 ms, AnonHugePages 32768 kB
+rep 2: first touch 3.29 ms (9722 MB/s, 0.206 ms per 2MB), second touch 0.127 ms, AnonHugePages 32768 kB
+rep 3: first touch 14.06 ms (2275 MB/s, 0.879 ms per 2MB), second touch 0.130 ms, AnonHugePages 32768 kB
+rep 4: first touch 1.62 ms (19712 MB/s, 0.101 ms per 2MB), second touch 0.125 ms, AnonHugePages 32768 kB
+rep 5: first touch 13.57 ms (2358 MB/s, 0.848 ms per 2MB), second touch 0.127 ms, AnonHugePages 32768 kB
+# THP, 32 MB, one mapping, MADV_DONTNEED between reps (страницы возвращаются ядру гостя, но не хосту?)
+rep 0: touch 1.46 ms (0.091 ms per 2MB) AnonHugePages 32768 kB
+rep 1: touch 13.54 ms (0.846 ms per 2MB) AnonHugePages 32768 kB
+rep 2: touch 1.46 ms (0.091 ms per 2MB) AnonHugePages 32768 kB
+rep 3: touch 1.38 ms (0.086 ms per 2MB) AnonHugePages 32768 kB
+rep 4: touch 13.59 ms (0.849 ms per 2MB) AnonHugePages 32768 kB
+rep 5: touch 1.49 ms (0.093 ms per 2MB) AnonHugePages 32768 kB
