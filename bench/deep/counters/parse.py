@@ -73,6 +73,7 @@ for out in sorted(glob.glob(os.path.join(RAW, '*.out'))):
                      file=fname.split(':', 1)[0] if ':' in fname else '', full=fname[:160])
             for e, t in zip(events, vals): p[e + '/el'] = round(t / el, 4)
             p['DLm/el'] = round((vals[events.index('DLmr')] + vals[events.index('DLmw')]) / el, 4)
+            p['D1m/el'] = round((vals[events.index('D1mr')] + vals[events.index('D1mw')]) / el, 4)
             prow.append(p)
 
 if rows:
