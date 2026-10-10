@@ -41,6 +41,15 @@ for path in sorted((DECK/'notes').glob('*.json')):
         if isinstance(item,dict) and 'speech' in item:
             notes[id]={**notes.get(id,{}),**item}
 
+# Editable speaker text is never regenerated or overwritten by this script.
+speaker_file=ROOT/'prep/script/speaker_notes_v9.md'
+if speaker_file.exists():
+    for match in re.finditer(r'^## \d+\. `([^`]+)`[^\n]*\n(.*?)(?=^## \d+\. |\Z)',speaker_file.read_text(),re.M|re.S):
+        id,speech=match.groups()
+        if id in notes:
+            notes[id]['speech']=speech.strip()
+            notes[id]['authorNotesExact']=True
+
 missing=[id for id in main if id not in notes]
 if missing:raise SystemExit('Missing V9 note topics: '+', '.join(missing))
 

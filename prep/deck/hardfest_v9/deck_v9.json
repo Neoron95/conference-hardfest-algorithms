@@ -105,15 +105,31 @@
   ],
   "firstFiveSha256": "e1c6cccc3915a93e47933f6097b1cf87d8e5379858d9dd292e8ddad03d7bb112",
   "updatedThroughSlide": 5,
+  "reviewedSlides": [
+    4,
+    6,
+    7
+  ],
   "changedParts": [
+    "[Content_Types].xml",
     "docProps/core.xml",
+    "ppt/media/v9-approve-f30887d2f295ee342ad4b3be.png",
+    "ppt/notesSlides/_rels/notesSlide6.xml.rels",
+    "ppt/notesSlides/_rels/notesSlide80.xml.rels",
     "ppt/notesSlides/notesSlide1.xml",
     "ppt/notesSlides/notesSlide2.xml",
     "ppt/notesSlides/notesSlide3.xml",
     "ppt/notesSlides/notesSlide4.xml",
     "ppt/notesSlides/notesSlide5.xml",
+    "ppt/notesSlides/notesSlide6.xml",
+    "ppt/notesSlides/notesSlide80.xml",
+    "ppt/slides/_rels/slide4.xml.rels",
+    "ppt/slides/_rels/slide6.xml.rels",
+    "ppt/slides/_rels/slide80.xml.rels",
     "ppt/slides/slide3.xml",
-    "ppt/slides/slide4.xml"
+    "ppt/slides/slide4.xml",
+    "ppt/slides/slide6.xml",
+    "ppt/slides/slide80.xml"
   ],
-  "finalSha256": "c7936e85a69b2286992b8451e8a8d7daa02bebabf0e464cd0ab1f1dd6cdc73d9"
+  "finalSha256": "0f0622b60aae899d6217b0c080293da2c85588ef7280b2ef5437c3845aa47346"
 }
