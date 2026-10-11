@@ -30,8 +30,13 @@
 <p data-build-in="fade 1" class="abs lead sort" style="left:525px;top:783px;width:408px;font-size:42px;">sort ×1,3</p>
 <p data-build-in="fade 1" class="abs lead mut" style="left:960px;top:783px;width:408px;font-size:42px;">≈ близко</p>
 <p data-build-in="fade 1" class="abs lead sort" style="left:1395px;top:783px;width:408px;font-size:42px;">sort ×3,3</p>
-<p data-build-in="fade 3" class="abs body" style="left:117px;top:862px;width:1686px;font-size:34px;">CI отвечает про свою среду. Рейтинг переносим после проверки</p>
-<p class="abs lbl" style="left:117px;top:922px;width:1630px;font-size:22px;line-height:28px;color:#8F8F8F">Xeon: L2 2 МиБ, но L3 на десятки мегабайт — таблица до 512K живёт там, потому хеш впереди в середине (гипотеза)</p>
+<p data-build-in="fade 3" class="abs body" style="left:117px;top:862px;width:1686px;font-size:34px;">CI отвечает про свою среду</p>
+
+<!-- env -->
+<p class="pill" style="left:117px;top:926px;width:120px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #46CDAE;color:#46CDAE">M2 Pro</p>
+<p class="pill" style="left:249px;top:926px;width:130px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #46CDAE;color:#46CDAE">Xeon VM</p>
+<p class="pill" style="left:391px;top:926px;width:170px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #46CDAE;color:#46CDAE">iPhone 14 Pro</p>
+<!-- /env -->
 <!-- /body -->
 <aside>Три среды вместе. Везде половина id уникальна. Коэффициент сравнивает два алгоритма внутри машины, не скорость машин.<br>[щелчок] Сначала двести пятьдесят шесть тысяч и миллион. M2 Pro на среднем входе даёт близкие времена, на миллионе sort впереди. Xeon на среднем помогает хешу, на миллионе близко. iPhone в utility помогает сортировке, а на миллионе разрыв уже три и три.<br>[щелчок] Ещё два размера подтверждают различие. На Xeon таблица держит преимущество в середине — у него маленький второй уровень, зато таблица до полумиллиона живёт в большом общем третьем. На телефоне сортировка получает преимущество с ростом входа.<br>[щелчок] CI честно отвечает про свою среду. Отличаются кэши, библиотека и режим выполнения. Сто процентов опрошенных раннеров рекомендуют эту оптимизацию. Опрошен один раннер. [пауза 2 с]<br>Перф-тест полезен для изменений в контролируемой среде. Рейтинг для пользователя проверяем на его устройстве.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Xeon E2 (gcc13/libstdc++): sort/uset 1,64 / 1,29 / 1,12 / 1,02 на 64K / 256K / 512K / 1M; 1M ±2 % — «близко». M2 Pro/libc++/userInitiated и iPhone 14 Pro/A16/libc++/utility — исходная V9. Hosted macOS-раннеры GitHub — VM с одним типом ядер (apple.md §6): QoS там не уведёт поток на E-ядро. Это сравнение алгоритмов внутри сред, не пропускной способности устройств.</aside>
 </section>

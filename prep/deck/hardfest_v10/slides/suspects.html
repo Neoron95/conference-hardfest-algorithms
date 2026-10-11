@@ -3,15 +3,13 @@
 <h2 class="t">ТРИ ГИПОТЕЗЫ: ГДЕ ТЕРЯЕТСЯ ВРЕМЯ</h2>
 <!-- body -->
 <p class="abs" style="left:117px;top:250px;width:1686px;font-size:40px;font-weight:700;line-height:50px">Время на элемент ≈ <span class="acc">инструкций</span> × <span class="acc">тактов на инструкцию</span></p>
-<p class="abs sec" style="left:117px;top:306px;width:1686px;font-size:26px;line-height:32px">Оценка считала шаги: у хеша их в 20 раз меньше. Секундомер: в 2,6 раза дольше.<br>Значит, дороже либо первый множитель, либо второй. Пройдём путь одной инструкции</p>
 
 <!-- гипотезы над якорями схемы -->
-<p data-build-in="fade 1" class="abs ph" style="left:117px;top:374px;width:580px;font-size:28px;font-weight:700;line-height:36px">1 · Инструкций больше, чем шагов?</p>
-<p data-build-in="fade 1" class="abs sec" style="left:117px;top:410px;width:580px;font-size:24px;line-height:28px">один шаг на бумаге — десятки инструкций</p>
-<p data-build-in="fade 3" class="abs ph" style="left:720px;top:374px;width:560px;font-size:28px;font-weight:700;line-height:36px">3 · Начал заранее и выбросил?</p>
-<p data-build-in="fade 3" class="abs sec" style="left:720px;top:410px;width:560px;font-size:24px;line-height:28px">выбрали ветку до ответа и ошиблись</p>
-<p data-build-in="fade 2" class="abs ph" style="left:1297px;top:374px;width:506px;font-size:28px;font-weight:700;line-height:36px">2 · Инструкция ждёт данные?</p>
-<p data-build-in="fade 2" class="abs sec" style="left:1297px;top:410px;width:506px;font-size:24px;line-height:28px">каждая инструкция дороже</p>
+<p data-build-in="fade 1" class="abs ph" style="left:117px;top:374px;width:580px;font-size:28px;font-weight:700;line-height:36px">1 · больше инструкций?</p>
+
+<p data-build-in="fade 3" class="abs ph" style="left:720px;top:374px;width:560px;font-size:28px;font-weight:700;line-height:36px">3 · выбросил заранее?</p>
+
+<p data-build-in="fade 2" class="abs ph" style="left:1297px;top:374px;width:506px;font-size:28px;font-weight:700;line-height:36px">2 · ждёт данные?</p>
 
 <!-- схема: лента инструкций → ядро (предсказатель, исполнение) → L1 → L2 → память; 1686×300 при left 117, top 440 -->
 <svg class="abs" style="left:117px;top:440px" xmlns="http://www.w3.org/2000/svg" width="1686" height="300" viewBox="0 0 1686 300">
@@ -32,7 +30,7 @@
   <line x1="1420" y1="151" x2="1480" y2="151" stroke="#BDBDBD" stroke-width="3"/>
   <rect x="1480" y="86" width="206" height="130" rx="12" fill="none" stroke="#8F8F8F" stroke-width="3"/>
 </svg>
-<p class="abs sec" style="left:117px;top:524px;width:400px;font-size:24px;line-height:28px">инструкции программы</p>
+<p class="abs sec" style="left:117px;top:524px;width:400px;font-size:24px;line-height:28px">инструкции</p>
 <p class="abs mut" style="left:607px;top:486px;width:200px;font-size:24px;line-height:28px">ядро</p>
 <p class="abs sec" style="left:597px;top:646px;width:220px;font-size:22px;line-height:28px">предсказатель</p>
 <p class="abs sec" style="left:837px;top:646px;width:200px;font-size:22px;line-height:28px">исполнение</p>
@@ -84,7 +82,7 @@
 <div data-build-in="fade 3" class="abs" style="left:299px;top:856px;width:76px;height:66px;border-radius:12px;background:#000;border:3px solid #555"></div>
 <p data-build-in="fade 3" class="abs" style="left:299px;top:860px;width:76px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">?</p>
 <p data-build-in="fade 3" class="abs" style="left:293px;top:894px;width:88px;text-align:center;font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">отмена</p>
-<p data-build-in="fade 3" class="abs mut" style="left:410px;top:868px;width:1337px;font-size:24px;line-height:32px">Эти три множителя — в углу следующих слайдов: проверим каждый счётчиком и впишем числа</p>
+
 <!-- /body -->
 <aside>В два и шесть десятых раза. Линейная оценка на месте — куда делось время? Есть три подозреваемых. [щелчок] Первый: мы просто выполняем больше инструкций, чем обещала бумага. [щелчок] Второй: инструкций столько же, но каждая ждёт память. [щелчок] Третий: процессор угадывает, что будет дальше, начинает работу заранее — и иногда её выбрасывает.<br>Будем допрашивать по очереди. Доска останется в углу: по ней видно, кого уже допросили.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Три подозреваемых — это конвейер, подсистема памяти и предсказатель ветвлений; слова не произносим, зал не обязан их знать. На review три вопроса ревьюера встанут рядом с этими карточками.</aside>
 </section>

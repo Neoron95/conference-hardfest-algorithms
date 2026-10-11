@@ -8,7 +8,11 @@
 <p data-build-in="fade 1" class="abs big hash" style="left:117px;top:580px;width:1686px;font-size:104px">+26 мс · +12 МиБ</p>
 <p data-build-in="fade 1" class="abs body sec" style="left:117px;top:726px;width:1686px">На тестовом 1M: ≈60 против ≈197 мс</p>
 <p data-build-in="fade 2" class="abs lead acc" style="left:117px;top:814px;width:1686px">Наш кандидат: sort дельты, unique и слияние</p>
-<p class="abs lbl" style="left:117px;top:881px;width:1686px;font-size:30px;line-height:38px;">M2 Pro: см. сравнение&nbsp;&nbsp;&nbsp; Xeon VM: см. сравнение&nbsp;&nbsp;&nbsp; iPhone 14 Pro: utility</p>
+<!-- env -->
+<p class="pill" style="left:117px;top:926px;width:120px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #3A3A3A;color:#6A6A6A">M2 Pro</p>
+<p class="pill" style="left:249px;top:926px;width:130px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #3A3A3A;color:#6A6A6A">Xeon VM</p>
+<p class="pill" style="left:391px;top:926px;width:170px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #46CDAE;color:#46CDAE">iPhone 14 Pro</p>
+<!-- /env -->
 <!-- /body -->
 <aside>Переведём наносекунды в стоимость этапа. [щелчок] На полумиллионе id этот iPhone в utility тратит на сортировку около двадцати девяти миллисекунд, на узловую таблицу — пятьдесят пять. Разница двадцать шесть миллисекунд на один дедуп и ещё около двенадцати мебибайт структуры таблицы. Это лабораторная цена конкретного этапа.<br>[щелчок] Для нашей задачи кандидат — подготовить дельту и слить с готовой локальной частью. Слияние на телефоне пока не измерено. Мы нашли способ сократить работу и будем проверять его в целевом режиме.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Производные от qos/x33: 55,3 × 2^19 ≈ 29 мс; 105,3 × 2^19 ≈ 55; 57,4 × 2^20 ≈ 60; 187,7 × 2^20 ≈ 197. +12 МиБ — оценка структуры (32·U + 8·N), не RSS. Это не вся синхронизация и не продуктовый выкат.</aside>
 </section>

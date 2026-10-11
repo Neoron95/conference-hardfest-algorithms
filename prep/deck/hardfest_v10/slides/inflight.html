@@ -17,13 +17,13 @@
 <!-- /board -->
 <!-- слева: видео «склад и курьеры» (пока видео V9 memory_flight как заглушка), справа: лестница K цепочек -->
 <video data-dur="6" loop src="../assets/memory_flight.mp4" poster="../assets/memory_flight.png" style="position:absolute;left:117px;top:300px;width:820px;height:290px"></video>
-<p class="abs mut" style="left:117px;top:594px;width:820px;font-size:20px;line-height:26px">заглушка: видео V9 · целевое — склад и курьеры (У3)</p>
+<p class="abs mut" style="left:117px;top:594px;width:820px;font-size:20px;line-height:26px">заглушка: видео V9</p>
 <p data-build-in="fade 1" class="abs" style="left:117px;top:632px;width:360px;font-size:30px;font-weight:600;line-height:40px">1 курьер</p>
 <p data-build-in="fade 1" class="abs hash" style="left:117px;top:668px;width:360px;font-size:56px;font-weight:800;line-height:60px">389 <span style="font-size:30px;font-weight:600">нс</span></p>
 <p data-build-in="fade 2" class="abs" style="left:560px;top:632px;width:360px;font-size:30px;font-weight:600;line-height:40px">16 курьеров</p>
 <p data-build-in="fade 2" class="abs sort" style="left:560px;top:668px;width:360px;font-size:56px;font-weight:800;line-height:60px">17 <span style="font-size:30px;font-weight:600">нс</span></p>
 
-<p class="abs lbl" style="left:1000px;top:268px;width:803px;font-size:28px;color:#C8C8C8">нс на чтение · K цепочек в потоке · Xeon VM, 64 МиБ</p>
+<p class="abs lbl" style="left:1000px;top:268px;width:803px;font-size:28px;color:#C8C8C8">нс на чтение · K цепочек · 64 МиБ</p>
 <svg class="abs" style="left:1000px;top:320px" xmlns="http://www.w3.org/2000/svg" width="803" height="400" viewBox="0 0 803 400">
   <line x1="90" y1="20" x2="90" y2="340" stroke="#333333" stroke-width="2"/>
   <line x1="90" y1="340" x2="780" y2="340" stroke="#8F8F8F" stroke-width="2"/>
@@ -40,7 +40,7 @@
 <p class="abs lbl" style="left:1490px;top:668px;width:100px;text-align:center;font-size:28px;color:#C8C8C8">8</p>
 <p class="abs lbl" style="left:1630px;top:668px;width:100px;text-align:center;font-size:28px;color:#C8C8C8">16</p>
 <p class="abs lbl" style="left:1700px;top:668px;width:110px;text-align:center;font-size:28px;color:#C8C8C8">24</p>
-<p class="abs lbl" style="left:1150px;top:704px;width:500px;text-align:center;font-size:26px;color:#C8C8C8">курьеров (цепочек), лог. шкала</p>
+<p class="abs lbl" style="left:1150px;top:704px;width:500px;text-align:center;font-size:26px;color:#C8C8C8">цепочек (курьеров)</p>
 <!-- y = 340 - 106.5*log10(ns/4): 389->128.6, 168->167.3, 82->200.4, 34->241.1, 17->273.1, 15->279 ; x = 120 + 140*log2(K): 1->120, 2->260, 4->400, 8->540, 16->680, 24->762 -->
 <svg data-build-in="fade 1" class="abs" style="left:1000px;top:320px" xmlns="http://www.w3.org/2000/svg" width="803" height="400" viewBox="0 0 803 400">
   <circle cx="120" cy="128.6" r="12" fill="#E2489B"/>
@@ -55,13 +55,17 @@
 </svg>
 <p data-build-in="fade 2" class="abs sort" style="left:1560px;top:360px;width:240px;font-size:56px;font-weight:800;line-height:64px;text-align:right">×23</p>
 
-<p data-build-in="fade 3" class="abs" style="left:117px;top:740px;width:1686px;font-size:34px;font-weight:700;line-height:42px">Один vCPU держит в полёте ≈20 промахов — если адреса известны заранее.<br>Цепочка узлов — один курьер</p>
+<p data-build-in="fade 3" class="abs" style="left:117px;top:746px;width:1686px;font-size:40px;font-weight:700;line-height:50px"><span class="sort">≈20</span> промахов в полёте &nbsp;·&nbsp; цепочка узлов — <span class="hash">1</span></p>
 
-<p data-build-in="fade 4" class="abs lbl" style="left:117px;top:848px;width:640px;font-size:26px;color:#C8C8C8">нс на один промах в настоящей программе:</p>
+<p data-build-in="fade 4" class="abs lbl" style="left:117px;top:848px;width:640px;font-size:26px;color:#C8C8C8">нс на промах в программе</p>
 <p data-build-in="fade 4" class="abs flat" style="left:760px;top:836px;width:300px;font-size:44px;font-weight:800;line-height:52px">плоская 20</p>
 <p data-build-in="fade 4" class="abs hash" style="left:1080px;top:836px;width:400px;font-size:44px;font-weight:800;line-height:52px">узловая 49</p>
-<p data-build-in="fade 4" class="abs sec" style="left:117px;top:892px;width:1630px;font-size:24px;line-height:30px">49 нс — полная задержка одного зависимого чтения: хеш ждёт каждый промах целиком, плоская держит несколько за раз</p>
-<p class="abs lbl" style="left:117px;top:930px;width:1630px;font-size:22px;line-height:28px;">Xeon VM: эта серия; точка K=1 шумит от хоста, промахов в полёте 6–40, по изгибу ≈20&nbsp;&nbsp;&nbsp; M2 Pro, iPhone 14 Pro: не измерено</p>
+
+<!-- env -->
+<p class="pill" style="left:117px;top:926px;width:120px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #3A3A3A;color:#6A6A6A">M2 Pro</p>
+<p class="pill" style="left:249px;top:926px;width:130px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #46CDAE;color:#46CDAE">Xeon VM</p>
+<p class="pill" style="left:391px;top:926px;width:170px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #3A3A3A;color:#6A6A6A">iPhone 14 Pro</p>
+<!-- /env -->
 <!-- /body -->
 <aside>Процессор — не один курьер. Если адреса известны заранее, он отправляет несколько запросов сразу и ждёт их все вместе.<br>[щелчок] Опыт: одна цепочка зависимых чтений по набору в шестьдесят четыре мегабайта — почти четыреста наносекунд на чтение. [щелчок] Шестнадцать независимых цепочек в том же потоке — семнадцать. В двадцать с лишним раз быстрее, тот же один поток, та же память.<br>[щелчок] Сортировка и плоская таблица живут в правой части этого графика: следующий адрес у них известен заранее — соседняя ячейка или хеш следующего ключа. Узловая таблица живёт слева: адрес следующего узла лежит внутри текущего, и пока он не прочитан, второго курьера послать некуда.<br>[щелчок] Это видно и в настоящей программе. Делим время на промахи: у плоской таблицы один промах мимо кэша обходится в двадцать наносекунд, у узловой — в сорок девять. Сорок девять — это ровно задержка одного зависимого чтения на этой машине. Хеш ждёт каждый промах целиком; плоская таблица промахивается пачками и платит втрое меньше за каждый.<br>Остаётся вопрос: почему процессор не отправляет курьера за следующим ключом, пока ждёт текущий? Ведь следующий ключ он знает.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Xeon VM, один поток, K независимых цепочек pointer chasing по 64 МиБ, страницы 4 КиБ (bench/deep/mlp, mlp.md §1). Точка «одна цепочка» шумит от хоста (68–550 нс в разных прогонах), поэтому промахов в полёте — от 6 до 40, по изгибу ≈20; плато при K ≥ 16–24: 10–15 нс. На 16 МиБ: 97 → 8,5 (×11); на 1 МиБ: 12,7 → 0,9. Granite Rapids без VM держит ≈30 [О]. Ориентир на M2: Лемир, 2025 — 102 нс одна цепочка, 4,3 на 28. «Нс на промах»: время E1 ÷ промахи LL при кэше 2 МиБ, U = N: uset 49, flat 20, radix 18; 49 ≈ задержка зависимого чтения этой VM на 16 МБ (counters.md §2). Гипотеза для E-ядра: у Apple Firestorm ≈130 загрузок в полёте, у Icestorm ≈30 (Dougall Johnson, applecpu) — проверяется тем же кодом в utility.</aside>
 </section>

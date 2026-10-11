@@ -21,16 +21,21 @@
 <p class="abs body" style="left:117px;top:480px;width:700px;font-size:44px;line-height:58px">8 Б на ключ, подряд</p>
 <video data-build-in="fade 1" data-dur="7" loop src="../assets/nodes_scatter.mp4" poster="../assets/nodes_scatter.png" style="position:absolute;left:920px;top:300px;width:850px;height:470px"></video>
 <p data-build-in="fade 1" class="abs hash" style="left:920px;top:270px;width:850px;font-size:44px;font-weight:700;line-height:56px">unordered_set</p>
-<p data-build-in="fade 1" class="abs sec" style="left:117px;top:600px;width:740px;font-size:44px;line-height:58px">Узлы: адрес следующего<br>узнаём после чтения текущего</p>
+
 <p data-build-in="fade 2" class="abs sort" style="left:117px;top:770px;width:700px;font-size:80px;font-weight:800;line-height:90px">0 new</p>
 <p data-build-in="fade 2" class="abs hash" style="left:920px;top:770px;width:850px;font-size:80px;font-weight:800;line-height:90px">≈1 млн new</p>
-<p data-build-in="fade 2" class="abs sec" style="left:117px;top:862px;width:780px;font-size:30px;line-height:38px">Вход готов. N = U = 2²⁰, libc++</p>
-<p data-build-in="fade 2" class="abs sec" style="left:920px;top:862px;width:860px;font-size:30px;line-height:38px">и ≈1 млн delete в конце · glibc: ≈42 МБ узлов</p>
+
+<p data-build-in="fade 2" class="abs sec" style="left:920px;top:862px;width:860px;font-size:30px;line-height:38px">+ ≈1 млн delete</p>
 <div data-build-in="fade 3" class="rule" style="left:117px;top:904px;width:1686px"></div>
-<p data-build-in="fade 3" class="abs" style="left:117px;top:914px;width:760px;font-size:28px;font-weight:600;line-height:40px;color:#C8C8C8">Промахов ближайшего кэша на элемент:</p>
+<p data-build-in="fade 3" class="abs" style="left:117px;top:914px;width:760px;font-size:28px;font-weight:600;line-height:40px;color:#C8C8C8">промахов L1 на элемент</p>
 <p data-build-in="fade 3" class="abs" style="left:760px;top:912px;width:300px;font-size:36px;font-weight:800;line-height:44px"><span class="sort">sort 0,7</span></p>
 <p data-build-in="fade 3" class="abs" style="left:1040px;top:912px;width:360px;font-size:36px;font-weight:800;line-height:44px"><span class="hash">узловая 2,8</span></p>
-<p data-build-in="fade 3" class="abs ph" style="left:1360px;top:912px;width:380px;font-size:36px;font-weight:800;line-height:44px;text-align:right">×4 чаще · Xeon VM</p>
+<p data-build-in="fade 3" class="abs ph" style="left:1360px;top:912px;width:380px;font-size:36px;font-weight:800;line-height:44px;text-align:right">×4</p>
+<!-- env -->
+<p class="pill" style="left:117px;top:926px;width:120px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #3A3A3A;color:#6A6A6A">M2 Pro</p>
+<p class="pill" style="left:249px;top:926px;width:130px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #46CDAE;color:#46CDAE">Xeon VM</p>
+<p class="pill" style="left:391px;top:926px;width:170px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #3A3A3A;color:#6A6A6A">iPhone 14 Pro</p>
+<!-- /env -->
 <!-- /body -->
 <aside>Слева вектор, наш массив чисел: ключи рядом, по восемь байт. В замере std::sort и unique работают на этом буфере, отдельный узел им не нужен.<br>[щелчок] Справа узловая таблица. Массив ячеек хранит адреса отдельных узлов. По адресу находим узел: ключ, следующий адрес, служебные данные. Если случилась коллизия, адрес следующего узла узнаём только после чтения текущего.<br>[щелчок] Каждый новый ключ — отдельное выделение памяти. На миллионе — миллион выделений, потом миллион освобождений. Узлы существуют по причине: стандарт обещает, что ссылки на элементы переживут рост таблицы. Для временного множества мы платим за гарантию, которой не пользуемся.<br>[щелчок] Счётчик подтверждает: на каждый элемент сортировка промахивается мимо ближайшего кэша меньше раза, узловая таблица — почти три. Вчетверо чаще. Теперь — сколько стоит один промах.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>Промахи L1 на элемент: Xeon VM, cachegrind, N = 2^20, U = N/2 (counters.md §2, D1m). Размер узла: libc++ 24 Б → 32 Б у malloc; libstdc++ 16 Б → тот же чанк 32 Б. Ссылки переживают rehash, итераторы — нет. Детальные счётчики аллокаций — backup allocs.</aside>
 </section>

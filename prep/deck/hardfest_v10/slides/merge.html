@@ -18,7 +18,11 @@
 <p data-build-in="fade 1" class="abs sm acc" style="left:980px;top:698px;width:800px;font-size:32px;text-align:right">unique обязателен: дубли есть и внутри дельты</p>
 <p data-build-in="fade 2" class="abs huge sort" style="left:117px;top:755px;width:900px;font-size:112px">×3,5–6,6</p>
 <p data-build-in="fade 2" class="abs body" style="left:1000px;top:768px;width:800px">быстрее полной сортировки<br><span class="sec">Xeon VM · Linux</span></p>
-<p class="abs lbl" style="left:117px;top:881px;width:1686px;font-size:30px;line-height:38px;">M2 Pro: не измерено&nbsp;&nbsp;&nbsp; Xeon VM: эта серия&nbsp;&nbsp;&nbsp; iPhone 14 Pro: не измерено</p>
+<!-- env -->
+<p class="pill" style="left:117px;top:926px;width:120px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #3A3A3A;color:#6A6A6A">M2 Pro</p>
+<p class="pill" style="left:249px;top:926px;width:130px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #46CDAE;color:#46CDAE">Xeon VM</p>
+<p class="pill" style="left:391px;top:926px;width:170px;height:30px;font-size:16px;line-height:26px;letter-spacing:0.5px;border:2px solid #3A3A3A;color:#6A6A6A">iPhone 14 Pro</p>
+<!-- /env -->
 <!-- /body -->
 <aside>Полчаса выбираем, чем быстрее пересортировать готовые данные. Решение оказалось неприлично простым: перестать пересортировывать готовые данные. [пауза 2 с]<br>Локальные id уже отсортированы и уникальны. [щелчок] Сортируем дельту, убираем повторы и сливаем две готовые последовательности. Unique по дельте обязателен: set_union ожидает отсортированные входы, но повторы внутри одного входа не схлопывает.<br>[щелчок] На Xeon в двух библиотечных связках это быстрее полной сортировки в три с половиной — шесть и шесть десятых раза. Для M2 и iPhone серию не снимали.<br>Для нашей задачи я начал бы со слияния: используем готовый порядок и сортируем только новое. Сначала сокращаем работу, потом проверяем цену в целевой среде.<br>[→ следующий слайд]<br><br>──────────<br>Источники и условия<br>bench/results/summary.md E8: L = 2^20 sorted unique, D = 2^16, U/N дельты 0,5; libstdc++ 42,4 → 6,4 (×6,6), libc++ 31,2 → 8,9 (×3,5). Важно: ни std::sort, ни pdqsort, ни SIMD-сортировка не распознают «почти отсортированный» вход этого сценария (21 / 25 / 19 нс/эл против 0,7 / 7 на полностью отсортированном) — выигрыш даёт только слияние, а не «умная сортировка» (sort.md §0 п. 6). std::flat_set::insert(range) в libc++ — тот же рецепт в стандартной библиотеке (на вопрос).</aside>
 </section>
