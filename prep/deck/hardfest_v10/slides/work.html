@@ -1,17 +1,19 @@
 <section id="work">
-<p class="k">Подозреваемый <b>№1</b> · работа</p>
+<p class="k">Гипотеза <b>1</b> · инструкции</p>
 <h2 class="t">ШАГОВ МЕНЬШЕ, ИНСТРУКЦИЙ БОЛЬШЕ</h2>
 <!-- body -->
 <!-- board -->
-<div class="abs" style="left:1545px;top:62px;width:80px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E;color:#000"></div>
-<p class="abs" style="left:1545px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">1</p>
-<p class="abs" style="left:1539px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">Работа</p>
-<div class="abs" style="left:1632px;top:62px;width:80px;height:66px;border-radius:12px;background:#000;border:3px solid #555;color:#8F8F8F"></div>
-<p class="abs" style="left:1632px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">2</p>
-<p class="abs" style="left:1626px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">Ожидание</p>
-<div class="abs" style="left:1719px;top:62px;width:80px;height:66px;border-radius:12px;background:#000;border:3px solid #555;color:#8F8F8F"></div>
-<p class="abs" style="left:1719px;top:66px;width:80px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">3</p>
-<p class="abs" style="left:1713px;top:100px;width:92px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">Отмена</p>
+<div class="abs" style="left:1545px;top:62px;width:76px;height:66px;border-radius:12px;background:#F2C14E;border:3px solid #F2C14E"></div>
+<p class="abs" style="left:1545px;top:66px;width:76px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#000">?</p>
+<p class="abs" style="left:1539px;top:100px;width:88px;text-align:center;font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#000">инструкции</p>
+<p class="abs ph" style="left:1621px;top:78px;width:15px;text-align:center;font-size:18px;font-weight:700;line-height:24px">×</p>
+<div class="abs" style="left:1636px;top:62px;width:76px;height:66px;border-radius:12px;background:#000;border:3px solid #555"></div>
+<p class="abs" style="left:1636px;top:66px;width:76px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">?</p>
+<p class="abs" style="left:1630px;top:100px;width:88px;text-align:center;font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">ожидание</p>
+<p class="abs ph" style="left:1712px;top:78px;width:15px;text-align:center;font-size:18px;font-weight:700;line-height:24px">+</p>
+<div class="abs" style="left:1727px;top:62px;width:76px;height:66px;border-radius:12px;background:#000;border:3px solid #555"></div>
+<p class="abs" style="left:1727px;top:66px;width:76px;text-align:center;font-size:28px;font-weight:800;line-height:32px;color:#8F8F8F">?</p>
+<p class="abs" style="left:1721px;top:100px;width:88px;text-align:center;font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:#8F8F8F">отмена</p>
 <!-- /board -->
 <p class="abs lbl" style="left:117px;top:268px;width:1630px;font-size:26px;color:#C8C8C8">Машинных инструкций на один элемент входа · N = U = 2²⁰ · Xeon VM · cachegrind, детерминированный счётчик</p>
 
@@ -34,7 +36,7 @@
 
 <div data-build-in="fade 4" class="rule" style="left:117px;top:756px;width:1686px"></div>
 <p data-build-in="fade 4" class="abs" style="left:117px;top:772px;width:1686px;font-size:36px;font-weight:700;line-height:46px">Инструкций в <span class="hash">3 раза</span> больше, времени — в 2,6–3 раза:<br>обе программы исполняют по ⅔ инструкции за такт</p>
-<p data-build-in="fade 4" class="abs ph" style="left:117px;top:874px;width:1630px;font-size:32px;font-weight:600;line-height:40px">Одинаково медленно — по разным причинам. Работа: виновна, подозреваемый — аллокатор</p>
+<p data-build-in="fade 4" class="abs ph" style="left:117px;top:874px;width:1630px;font-size:28px;font-weight:600;line-height:40px">Одинаково медленно — по разным причинам. Гипотеза 1 подтверждена: инструкций ×3, и это аллокатор</p>
 
 <p class="abs lbl" style="left:117px;top:922px;width:1630px;font-size:22px;line-height:28px;">Xeon VM: эта серия, libstdc++ 13 (libc++: 136 / 539 / 117)&nbsp;&nbsp;&nbsp; M2 Pro, iPhone 14 Pro: инструкции те же — программа одна, меняется их цена</p>
 <!-- /body -->

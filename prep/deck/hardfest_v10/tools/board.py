@@ -1,20 +1,23 @@
-"""Доска подозреваемых: три мини-карточки в правом верхнем углу слайда (над логотипом, правее кикера).
+"""Плитки-гипотезы: три множителя формулы со слайда 16 в правом верхнем углу «железных» слайдов.
 
-Состояния карточки: 'off' (серый контур), 'on' (янтарная заливка, чёрный текст), 'done' (тёмно-бирюзовая
-заливка, галочка). Вставляется между <!-- board --> и <!-- /board --> в тело слайда; без билда — видна сразу.
+Состояния: 'off' (серый контур, «?»), 'on' (янтарная заливка, «?» — эту гипотезу сейчас проверяем),
+'done' (тёмно-бирюзовая заливка, вписано измеренное число). Между плитками операторы формулы: × и +.
+Вставляется между <!-- board --> и <!-- /board --> в тело слайда; без билда — видна сразу.
 
     python3 tools/board.py            # применить состояния из BOARD ко всем слайдам
-    python3 tools/board.py suspects   # только к одному
+    python3 tools/board.py work       # только к одному
 """
 import re, sys
 from pathlib import Path
 
 DECK = Path(__file__).resolve().parents[1]
-LABELS = ['Работа', 'Ожидание', 'Отмена']
+LABELS = ['инструкции', 'ожидание', 'отмена']
+VALUES = ['×3', '49 нс', '9 : 1']      # что вписывается после проверки: слайды 17, 21–23, 33
+OPS = ['×', '+']
 # Свободная зона: x 1540–1803, y 60–135 (кикер кончается на 1517, логотип начинается на y 144).
-X0, Y0, W, H, GAP = 1545, 62, 80, 66, 7
+X0, Y0, W, H, GAP = 1545, 62, 76, 66, 15
 
-# id слайда -> состояния карточек 1..3
+# id слайда -> состояния плиток 1..3
 BOARD = {
     'work':        ['on',   'off',  'off'],
     'curve':       ['done', 'on',   'off'],
@@ -33,18 +36,18 @@ BOARD = {
 def card(i, state):
     x = X0 + i * (W + GAP)
     if state == 'on':
-        box = f'background:#F2C14E;border:3px solid #F2C14E;color:#000'
+        box, color, mark, size = 'background:#F2C14E;border:3px solid #F2C14E', '#000', '?', 28
     elif state == 'done':
-        box = f'background:#174F45;border:3px solid #46CDAE;color:#46CDAE'
+        box, color, mark, size = 'background:#174F45;border:3px solid #46CDAE', '#46CDAE', VALUES[i], 22
     else:
-        box = f'background:#000;border:3px solid #555;color:#8F8F8F'
-    mark = '✓' if state == 'done' else str(i + 1)
-    return (f'<div class="abs" style="left:{x}px;top:{Y0}px;width:{W}px;height:{H}px;border-radius:12px;{box}"></div>\n'
-            f'<p class="abs" style="left:{x}px;top:{Y0 + 4}px;width:{W}px;text-align:center;font-size:28px;font-weight:800;line-height:32px;'
-            f'{"color:#000" if state == "on" else ("color:#46CDAE" if state == "done" else "color:#8F8F8F")}">{mark}</p>\n'
-            f'<p class="abs" style="left:{x - 6}px;top:{Y0 + 38}px;width:{W + 12}px;text-align:center;font-size:13px;font-weight:700;'
-            f'letter-spacing:0.3px;text-transform:uppercase;line-height:16px;'
-            f'{"color:#000" if state == "on" else ("color:#46CDAE" if state == "done" else "color:#8F8F8F")}">{LABELS[i]}</p>')
+        box, color, mark, size = 'background:#000;border:3px solid #555', '#8F8F8F', '?', 28
+    out = [f'<div class="abs" style="left:{x}px;top:{Y0}px;width:{W}px;height:{H}px;border-radius:12px;{box}"></div>',
+           f'<p class="abs" style="left:{x}px;top:{Y0 + 4}px;width:{W}px;text-align:center;font-size:{size}px;font-weight:800;line-height:32px;color:{color}">{mark}</p>',
+           f'<p class="abs" style="left:{x - 6}px;top:{Y0 + 38}px;width:{W + 12}px;text-align:center;font-size:11px;font-weight:700;'
+           f'letter-spacing:0.3px;text-transform:uppercase;line-height:16px;color:{color}">{LABELS[i]}</p>']
+    if i < 2:
+        out.append(f'<p class="abs ph" style="left:{x + W}px;top:{Y0 + 16}px;width:{GAP}px;text-align:center;font-size:18px;font-weight:700;line-height:24px">{OPS[i]}</p>')
+    return '\n'.join(out)
 
 def board_html(states):
     return '<!-- board -->\n' + '\n'.join(card(i, s) for i, s in enumerate(states)) + '\n<!-- /board -->'
