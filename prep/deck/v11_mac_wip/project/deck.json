@@ -41,7 +41,7 @@
     "window-v5",
     "meme-quest",
     "speculation-v2",
-    "sortfamily-v2",
+    "sortfamily-v3",
     "flatmin-v2",
     "flat-v3",
     "alloc-split-v4",
@@ -143,7 +143,8 @@
     "memory-v3",
     "window-v3",
     "alloc-split-v3",
-    "window-v4"
+    "window-v4",
+    "sortfamily-v2"
   ],
   "sections": {
     "s0": {
