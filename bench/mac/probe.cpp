@@ -27,7 +27,9 @@ static double freq_ghz() {
 #endif
 }
 
+namespace {  // своя структура в каждом файле: в iOS-приложении все замеры линкуются вместе
 struct alignas(128) Line { Line* next; char pad[120]; };
+}  // namespace
 
 int main(int argc, char** argv) {
   std::string qos = set_qos(qos_from_args(argc, argv));

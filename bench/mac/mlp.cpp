@@ -11,7 +11,9 @@
 static uint64_t sink;
 constexpr size_t kLine = 128;                    // строка кэша Apple
 constexpr size_t kWords = kLine / sizeof(uint64_t);
+namespace {  // своя структура в каждом файле: в iOS-приложении все замеры линкуются вместе
 struct alignas(kLine) Line { uint32_t next; uint32_t pad[kLine / 4 - 1]; };
+}  // namespace
 
 template <int K>
 static double chains(const Line* a, const uint32_t* starts, long steps_per_lane) {

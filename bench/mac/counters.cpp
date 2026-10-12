@@ -11,6 +11,10 @@
 
 static void sort_only_std(Vec& v, const Ctx&) { std::sort(v.begin(), v.end()); }
 static void sort_only_pdqbl(Vec& v, const Ctx&) { pdqsort_branchless(v.begin(), v.end()); }
+// Своя лямбда вместо std::less: pdqsort берёт вариант с ветвлениями — для цены ошибки предсказателя.
+static void sort_only_pdqbranchy(Vec& v, const Ctx&) {
+  pdqsort(v.begin(), v.end(), [](u64 x, u64 y) { return x < y; });
+}
 
 int main(int argc, char** argv) {
   std::string qos = "ui";
@@ -46,7 +50,8 @@ int main(int argc, char** argv) {
   struct A { const char* name; AlgFn fn; };
   const A algs[] = {{"sort", alg_sort},           {"uset", alg_uset},
                     {"flat", alg_flat},           {"radix", alg_radix},
-                    {"sort_only_std", sort_only_std}, {"sort_only_pdqbl", sort_only_pdqbl}};
+                    {"sort_only_std", sort_only_std}, {"sort_only_pdqbl", sort_only_pdqbl},
+                    {"sort_only_pdqbranchy", sort_only_pdqbranchy}};
   printf("exp,qos,alg,N,U,order,ns_el,cycles_el,instr_el,branches_el,br_mispred_el,"
          "br_cond_mispred_el,l1d_ld_miss_el,dtlb_miss_el\n");
   for (auto& cs : cases) {
