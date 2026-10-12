@@ -29,7 +29,6 @@ share-v2
 inputorder-v3
 learned-v2
 qos
-x33
 meme-comma
 boxes
 cores-v2
@@ -39,6 +38,5 @@ flip-v2
 reasons
 meme-weather
 merge-v2
-prod
 review
 final
