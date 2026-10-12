@@ -16,7 +16,7 @@ command -v "$CXX" >/dev/null || { echo "нет $CXX: xcode-select --install" >&2
 command -v cmake >/dev/null || { echo "нет cmake: brew install cmake" >&2; exit 1; }
 
 if [[ ! -f "$ABSL_SRC/absl/container/flat_hash_set.h" ]]; then
-  git clone --depth 1 --branch "$ABSL_TAG" https://github.com/abseil/abseil-cpp "$ABSL_SRC"
+  git -c advice.detachedHead=false clone -q --depth 1 --branch "$ABSL_TAG" https://github.com/abseil/abseil-cpp "$ABSL_SRC"
 fi
 if [[ ! -f "$ABSL_BUILD/absl/container/libabsl_raw_hash_set.a" ]]; then
   echo "сборка Abseil (1–3 минуты)…"
@@ -25,13 +25,18 @@ if [[ ! -f "$ABSL_BUILD/absl/container/libabsl_raw_hash_set.a" ]]; then
   cmake --build "$ABSL_BUILD" -j"$JOBS" --target raw_hash_set hash > build/absl.make.log 2>&1
 fi
 LIBS=$(find "$ABSL_BUILD" -name 'libabsl_*.a' | sort | tr '\n' ' ')
-[[ $(uname) == Linux ]] && LIBS="-Wl,--start-group $LIBS -Wl,--end-group"
+if [[ $(uname) == Linux ]]; then LIBS="-Wl,--start-group $LIBS -Wl,--end-group"
+else LIBS="$LIBS -framework CoreFoundation"; fi  # absl/time (часовые пояса) на macOS ходит в CoreFoundation
 
 ok=(); fail=()
 build() {  # build <имя> <исходник> [флаги...]
   local name=$1 src=$2; shift 2
   if $CXX $CXXFLAGS -I"$ABSL_SRC" "$src" "$@" -o "build/$name" 2> "build/$name.log"; then ok+=("$name")
-  else fail+=("$name"); echo "НЕ СОБРАЛСЯ $name — см. build/$name.log" >&2; fi
+  else
+    fail+=("$name")
+    echo "НЕ СОБРАЛСЯ $name — первые ошибки из build/$name.log:" >&2
+    grep -m 12 -E 'error|Undefined|undefined|ld:' "build/$name.log" >&2 || tail -n 12 "build/$name.log" >&2
+  fi
 }
 build dedup_bench ../dedup_bench.cpp $LIBS
 build counters counters.cpp $LIBS
