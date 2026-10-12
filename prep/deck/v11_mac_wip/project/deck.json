@@ -61,7 +61,6 @@
     "merge-qa",
     "weather-qa",
     "learned-v2",
-    "learned-v3a",
     "why-nodes",
     "alloc-split-v4",
     "when-which",
@@ -157,7 +156,8 @@
     "flip-v2",
     "meme-weather",
     "merge-v2",
-    "final"
+    "final",
+    "learned-v3a"
   ],
   "sections": {
     "s0": {
