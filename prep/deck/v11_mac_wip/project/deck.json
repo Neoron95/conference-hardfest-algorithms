@@ -38,7 +38,6 @@
     "curve-v3",
     "nodes-v2",
     "inflight-v4",
-    "window-v3",
     "alloc-split-v3",
     "meme-quest",
     "speculation-v2",
@@ -140,7 +139,8 @@
     "merge-short",
     "merge",
     "inflight-v3",
-    "memory-v3"
+    "memory-v3",
+    "window-v3"
   ],
   "sections": {
     "s0": {
