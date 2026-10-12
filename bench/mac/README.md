@@ -18,6 +18,7 @@ cd bench/mac
 ./build.sh                       # 2–4 минуты: Abseil + 6 программ, в конце selftest: OK
 ./run.sh m2                      # ≈30–40 минут, results/m2/*.csv
 sudo ./run_counters.sh m2        # ≈3–5 минут, results/m2/counters_*.csv
+sudo ./run_phases.sh m2c         # ≈1–2 минуты, results/m2c/counters_phases_*.csv
 ```
 
 Отправить результаты: `git add results/m2 && git commit -m "M2 results" && git push`
@@ -34,6 +35,7 @@ sudo ./run_counters.sh m2        # ≈3–5 минут, results/m2/counters_*.cs
 | `E1.csv` | N = U = 2^20: sort, uset, radix, flat; P-ядро (ui) и E-ядро (background) | 13 первый замер, 16, 29 flat |
 | `E2.csv` | U = N/2, от 16 до 4M — та же сессия для всей кривой | 18 кривая, flip |
 | `E11_phases.csv` | вставки / выгрузка / деструктор, uset и flat | 23 alloc-split |
+| `counters_phases_*.csv` | счётчики по фазам: команды на вставку у uset, uset на pmr-буфере и flat | 16 work, 22 window, 23 alloc-split |
 | `alloc.csv` | стандартный аллокатор против pmr-буфера против flat | 23 alloc-split |
 | `probe.csv` | частота ядра и лестница задержек 16 КБ … 1 ГБ, P и E | 17 такты, 20 лестница, cores |
 | `mlp.csv` | цепочки K = 1…64 (сколько чтений в полёте), окно с nop, модель вставки | 21 inflight, 22 window |
