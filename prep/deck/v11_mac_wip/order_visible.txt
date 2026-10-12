@@ -30,7 +30,7 @@ inputorder-v3
 learned-v3b
 qos-v2
 cores-v3
-flat-e
+flat-e-v2
 meme-address
 flip-v2
 reasons
