@@ -1,0 +1,117 @@
+[13:04:40] thermal=nominal battery=100% probe --qos ui
+[13:04:59] thermal=nominal battery=100% E1 ui --n 1048576 --u 1048576 --algs sort,uset,radix,flat --pool 16
+[13:05:02] thermal=nominal battery=100% E2 ui --n 16 --u 8 --algs sort,uset,radix,flat --pool 64
+[13:05:03] thermal=nominal battery=100% E2 ui --n 64 --u 32 --algs sort,uset,radix,flat --pool 64
+[13:05:04] thermal=nominal battery=100% E2 ui --n 256 --u 128 --algs sort,uset,radix,flat --pool 64
+[13:05:05] thermal=nominal battery=100% E2 ui --n 1024 --u 512 --algs sort,uset,radix,flat --pool 64
+[13:05:07] thermal=nominal battery=100% E2U ui --n 1024 --u 1024 --algs sort,uset,radix,flat --pool 64
+[13:05:08] thermal=nominal battery=100% E2D ui --n 1024 --u 102 --algs sort,uset,radix,flat --pool 64
+[13:05:09] thermal=nominal battery=100% E2 ui --n 4096 --u 2048 --algs sort,uset,radix,flat --pool 64
+[13:05:10] thermal=nominal battery=100% E2U ui --n 4096 --u 4096 --algs sort,uset,radix,flat --pool 64
+[13:05:12] thermal=nominal battery=100% E2D ui --n 4096 --u 409 --algs sort,uset,radix,flat --pool 64
+[13:05:12] thermal=nominal battery=100% E2 ui --n 16384 --u 8192 --algs sort,uset,radix,flat --pool 64
+[13:05:14] thermal=nominal battery=100% E2U ui --n 16384 --u 16384 --algs sort,uset,radix,flat --pool 64
+[13:05:15] thermal=nominal battery=100% E2D ui --n 16384 --u 1638 --algs sort,uset,radix,flat --pool 64
+[13:05:16] thermal=nominal battery=100% E2 ui --n 65536 --u 32768 --algs sort,uset,radix,flat --pool 64
+[13:05:18] thermal=nominal battery=100% E2U ui --n 65536 --u 65536 --algs sort,uset,radix,flat --pool 64
+[13:05:19] thermal=nominal battery=100% E2D ui --n 65536 --u 6553 --algs sort,uset,radix,flat --pool 64
+[13:05:20] thermal=nominal battery=100% E2 ui --n 131072 --u 65536 --algs sort,uset,radix,flat --pool 64
+[13:05:22] thermal=nominal battery=100% E2U ui --n 131072 --u 131072 --algs sort,uset,radix,flat --pool 64
+[13:05:24] thermal=nominal battery=100% E2D ui --n 131072 --u 13107 --algs sort,uset,radix,flat --pool 64
+[13:05:25] thermal=nominal battery=100% E2 ui --n 262144 --u 131072 --algs sort,uset,radix,flat --pool 64
+[13:05:27] thermal=nominal battery=100% E2U ui --n 262144 --u 262144 --algs sort,uset,radix,flat --pool 64
+[13:05:29] thermal=nominal battery=100% E2D ui --n 262144 --u 26214 --algs sort,uset,radix,flat --pool 64
+[13:05:30] thermal=nominal battery=100% E2 ui --n 524288 --u 262144 --algs sort,uset,radix,flat --pool 16
+[13:05:32] thermal=nominal battery=100% E2U ui --n 524288 --u 524288 --algs sort,uset,radix,flat --pool 16
+[13:05:34] thermal=nominal battery=100% E2D ui --n 524288 --u 52428 --algs sort,uset,radix,flat --pool 16
+[13:05:35] thermal=nominal battery=100% E2 ui --n 1048576 --u 524288 --algs sort,uset,radix,flat --pool 16
+[13:05:37] thermal=nominal battery=100% E2U ui --n 1048576 --u 1048576 --algs sort,uset,radix,flat --pool 16
+[13:05:40] thermal=nominal battery=100% E2D ui --n 1048576 --u 104857 --algs sort,uset,radix,flat --pool 16
+[13:05:42] thermal=nominal battery=100% E2 ui --n 2097152 --u 1048576 --algs sort,uset,radix,flat --pool 8
+[13:05:44] thermal=nominal battery=100% E2U ui --n 2097152 --u 2097152 --algs sort,uset,radix,flat --pool 8
+[13:05:48] thermal=nominal battery=100% E2D ui --n 2097152 --u 209715 --algs sort,uset,radix,flat --pool 8
+[13:05:49] thermal=nominal battery=100% E2 ui --n 4194304 --u 2097152 --algs sort,uset,radix,flat --pool 8
+[13:05:55] thermal=nominal battery=100% E2U ui --n 4194304 --u 4194304 --algs sort,uset,radix,flat --pool 8
+[13:06:04] thermal=nominal battery=100% E2D ui --n 4194304 --u 419430 --algs sort,uset,radix,flat --pool 8
+[13:06:08] thermal=nominal battery=100% phases ui U=1048576
+[13:06:10] thermal=nominal battery=100% phases ui U=524288
+[13:06:12] thermal=nominal battery=100% alloc --qos ui --n 1048576 --u 1048576
+[13:06:16] thermal=nominal battery=100% mlp --qos ui
+[13:07:12] thermal=nominal battery=100% sortfam --qos ui
+[13:07:15] thermal=nominal battery=100% E8 ui --keys e8 --nlocal 1048576 --n 1114112 --pool 16 --algs sort,uset,radix,flat,merge_inplace,merge_union
+[13:07:19] thermal=nominal battery=100% E4 ui --n 1048576 --u 524288 --order random --pool 16
+[13:07:21] thermal=nominal battery=100% E4 ui --n 1048576 --u 524288 --order runs --pool 16
+[13:07:23] thermal=nominal battery=100% E4 ui --n 1048576 --u 524288 --order sorted --pool 16
+[13:07:25] thermal=nominal battery=100% E3 ui --n 1048576 --u 1 --variant all_equal --pool 16
+[13:07:25] thermal=nominal battery=100% E3 ui --n 1048576 --ufrac 0.01 --variant ufrac_0.01 --pool 16
+[13:07:26] thermal=nominal battery=100% E3 ui --n 1048576 --ufrac 0.1 --variant ufrac_0.1 --pool 16
+[13:07:27] thermal=nominal battery=100% E3 ui --n 1048576 --ufrac 0.5 --variant ufrac_0.5 --pool 16
+[13:07:29] thermal=nominal battery=100% E3 ui --n 1048576 --ufrac 1 --variant ufrac_1 --pool 16
+[13:07:32] thermal=nominal battery=100% E5 ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 1 --variant a_one_array_restored
+[13:07:32] thermal=nominal battery=100% E5 ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 64 --variant b_64_identical_copies
+[13:07:32] thermal=nominal battery=100% E5 ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 64 --batch 64 --variant c_64_different
+[13:07:32] thermal=nominal battery=100% E5 ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 2 --batch 1 --variant f_2_different_one_buffer
+[13:07:33] thermal=nominal battery=100% E5 ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 4 --batch 1 --variant f_4_different_one_buffer
+[13:07:33] thermal=nominal battery=100% E5 ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 8 --batch 1 --variant f_8_different_one_buffer
+[13:07:33] thermal=nominal battery=100% E5 ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 16 --batch 1 --variant f_16_different_one_buffer
+[13:07:33] thermal=nominal battery=100% probe --qos utility
+[13:07:57] thermal=nominal battery=100% E1 utility --n 1048576 --u 1048576 --algs sort,uset,radix,flat --pool 16
+[13:08:10] thermal=nominal battery=100% E2 utility --n 1024 --u 512 --algs sort,uset,radix,flat --pool 64
+[13:08:12] thermal=nominal battery=100% E2U utility --n 1024 --u 1024 --algs sort,uset,radix,flat --pool 64
+[13:08:16] thermal=nominal battery=100% E2D utility --n 1024 --u 102 --algs sort,uset,radix,flat --pool 64
+[13:08:17] thermal=nominal battery=100% E2 utility --n 16384 --u 8192 --algs sort,uset,radix,flat --pool 64
+[13:08:20] thermal=nominal battery=100% E2U utility --n 16384 --u 16384 --algs sort,uset,radix,flat --pool 64
+[13:08:24] thermal=nominal battery=100% E2D utility --n 16384 --u 1638 --algs sort,uset,radix,flat --pool 64
+[13:08:26] thermal=nominal battery=100% E2 utility --n 65536 --u 32768 --algs sort,uset,radix,flat --pool 64
+[13:08:29] thermal=nominal battery=100% E2U utility --n 65536 --u 65536 --algs sort,uset,radix,flat --pool 64
+[13:08:33] thermal=nominal battery=100% E2D utility --n 65536 --u 6553 --algs sort,uset,radix,flat --pool 64
+[13:08:35] thermal=nominal battery=100% E2 utility --n 262144 --u 131072 --algs sort,uset,radix,flat --pool 64
+[13:08:40] thermal=nominal battery=100% E2U utility --n 262144 --u 262144 --algs sort,uset,radix,flat --pool 64
+[13:08:48] thermal=nominal battery=100% E2D utility --n 262144 --u 26214 --algs sort,uset,radix,flat --pool 64
+[13:08:51] thermal=nominal battery=100% E2 utility --n 524288 --u 262144 --algs sort,uset,radix,flat --pool 16
+[13:08:56] thermal=nominal battery=100% E2U utility --n 524288 --u 524288 --algs sort,uset,radix,flat --pool 16
+[13:09:05] thermal=nominal battery=100% E2D utility --n 524288 --u 52428 --algs sort,uset,radix,flat --pool 16
+[13:09:08] thermal=nominal battery=100% E2 utility --n 1048576 --u 524288 --algs sort,uset,radix,flat --pool 16
+[13:09:16] thermal=nominal battery=100% E2U utility --n 1048576 --u 1048576 --algs sort,uset,radix,flat --pool 16
+[13:09:28] thermal=nominal battery=100% E2D utility --n 1048576 --u 104857 --algs sort,uset,radix,flat --pool 16
+[13:09:32] thermal=nominal battery=100% E2 utility --n 2097152 --u 1048576 --algs sort,uset,radix,flat --pool 8
+[13:09:41] thermal=nominal battery=100% E2U utility --n 2097152 --u 2097152 --algs sort,uset,radix,flat --pool 8
+[13:09:57] thermal=nominal battery=100% E2D utility --n 2097152 --u 209715 --algs sort,uset,radix,flat --pool 8
+[13:10:02] thermal=nominal battery=100% E2 utility --n 4194304 --u 2097152 --algs sort,uset,radix,flat --pool 8
+[13:10:24] thermal=nominal battery=100% E2U utility --n 4194304 --u 4194304 --algs sort,uset,radix,flat --pool 8
+[13:11:04] thermal=nominal battery=100% E2D utility --n 4194304 --u 419430 --algs sort,uset,radix,flat --pool 8
+[13:11:17] thermal=nominal battery=100% phases utility U=1048576
+[13:11:34] thermal=nominal battery=100% phases utility U=524288
+[13:11:42] thermal=nominal battery=100% alloc --qos utility --n 1048576 --u 1048576
+[13:12:07] thermal=nominal battery=100% mlp --qos utility
+[13:14:26] thermal=nominal battery=100% sortfam --qos utility
+[13:14:33] thermal=nominal battery=100% E8 utility --keys e8 --nlocal 1048576 --n 1114112 --pool 16 --algs sort,uset,radix,flat,merge_inplace,merge_union
+[13:14:47] thermal=nominal battery=100% E4 utility --n 1048576 --u 524288 --order random --pool 16
+[13:14:54] thermal=nominal battery=100% E4 utility --n 1048576 --u 524288 --order runs --pool 16
+[13:15:01] thermal=nominal battery=100% E4 utility --n 1048576 --u 524288 --order sorted --pool 16
+[13:15:06] thermal=nominal battery=100% probe --qos background
+[13:16:54] thermal=nominal battery=100% E1 background --n 1048576 --u 1048576 --algs sort,uset,radix,flat --pool 16
+[13:17:21] thermal=nominal battery=100% E2 background --n 16384 --u 8192 --algs sort,uset,radix,flat --pool 64
+[13:17:31] thermal=nominal battery=100% E2U background --n 16384 --u 16384 --algs sort,uset,radix,flat --pool 64
+[13:17:44] thermal=nominal battery=100% E2D background --n 16384 --u 1638 --algs sort,uset,radix,flat --pool 64
+[13:17:49] thermal=nominal battery=100% E2 background --n 65536 --u 32768 --algs sort,uset,radix,flat --pool 64
+[13:18:00] thermal=nominal battery=100% E2U background --n 65536 --u 65536 --algs sort,uset,radix,flat --pool 64
+[13:18:14] thermal=nominal battery=100% E2D background --n 65536 --u 6553 --algs sort,uset,radix,flat --pool 64
+[13:18:21] thermal=nominal battery=100% E2 background --n 262144 --u 131072 --algs sort,uset,radix,flat --pool 64
+[13:18:35] thermal=nominal battery=100% E2U background --n 262144 --u 262144 --algs sort,uset,radix,flat --pool 64
+[13:18:55] thermal=nominal battery=100% E2D background --n 262144 --u 26214 --algs sort,uset,radix,flat --pool 64
+[13:19:04] thermal=nominal battery=100% E2 background --n 524288 --u 262144 --algs sort,uset,radix,flat --pool 16
+[13:19:18] thermal=nominal battery=100% E2U background --n 524288 --u 524288 --algs sort,uset,radix,flat --pool 16
+[13:19:38] thermal=nominal battery=100% E2D background --n 524288 --u 52428 --algs sort,uset,radix,flat --pool 16
+[13:19:46] thermal=nominal battery=100% E2 background --n 1048576 --u 524288 --algs sort,uset,radix,flat --pool 16
+[13:20:04] thermal=nominal battery=100% E2U background --n 1048576 --u 1048576 --algs sort,uset,radix,flat --pool 16
+[13:20:31] thermal=nominal battery=100% E2D background --n 1048576 --u 104857 --algs sort,uset,radix,flat --pool 16
+[13:20:42] thermal=nominal battery=100% phases background U=1048576
+[13:21:13] thermal=nominal battery=100% phases background U=524288
+[13:21:28] thermal=nominal battery=100% alloc --qos background --n 1048576 --u 1048576
+[13:22:12] thermal=nominal battery=100% mlp --qos background
+[13:27:52] thermal=nominal battery=100% sortfam --qos background
+[13:28:13] thermal=nominal battery=100% E8 background --keys e8 --nlocal 1048576 --n 1114112 --pool 16 --algs sort,uset,radix,flat,merge_inplace,merge_union
+[13:28:45] thermal=nominal battery=100% E4 background --n 1048576 --u 524288 --order random --pool 16
+[13:29:02] thermal=nominal battery=100% E4 background --n 1048576 --u 524288 --order runs --pool 16
+[13:29:18] thermal=nominal battery=100% E4 background --n 1048576 --u 524288 --order sorted --pool 16

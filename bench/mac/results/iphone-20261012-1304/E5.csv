@@ -1,0 +1,8 @@
+exp,session,toolchain,variant,alg,keys,order,N,U,pool,batch,calls_per_block,blocks,median_ns_el,min_ns_el,max_ns_el,spread_pct,blocks_ns_el
+E5,iphone-20261012-1304/ui,clang21-libc++,a_one_array_restored,sort,random64,random,1024,512,1,1,1024,9,7.485,7.458,7.728,3.6,7.728;7.485;7.471;7.503;7.479;7.521;7.484;7.527;7.458
+E5,iphone-20261012-1304/ui,clang21-libc++,b_64_identical_copies,sort,random64,random,1024,512,1,64,1024,9,7.525,7.490,7.622,1.7,7.622;7.543;7.525;7.574;7.546;7.500;7.495;7.515;7.490
+E5,iphone-20261012-1304/ui,clang21-libc++,c_64_different,sort,random64,random,1024,512,64,64,1024,9,16.023,15.893,16.045,1.0,15.893;15.900;15.902;15.943;16.045;16.041;16.028;16.023;16.028
+E5,iphone-20261012-1304/ui,clang21-libc++,f_2_different_one_buffer,sort,random64,random,1024,512,2,1,1024,9,8.477,8.332,8.585,3.0,8.571;8.585;8.494;8.483;8.447;8.379;8.477;8.332;8.403
+E5,iphone-20261012-1304/ui,clang21-libc++,f_4_different_one_buffer,sort,random64,random,1024,512,4,1,1024,9,9.863,9.817,9.935,1.2,9.868;9.863;9.853;9.908;9.935;9.847;9.862;9.926;9.817
+E5,iphone-20261012-1304/ui,clang21-libc++,f_8_different_one_buffer,sort,random64,random,1024,512,8,1,1024,9,13.643,13.567,14.186,4.5,13.694;13.609;13.583;14.186;13.744;13.643;13.678;13.627;13.567
+E5,iphone-20261012-1304/ui,clang21-libc++,f_16_different_one_buffer,sort,random64,random,1024,512,16,1,1024,9,15.019,14.935,15.239,2.0,15.019;14.948;14.962;14.935;14.953;15.239;15.168;15.166;15.066

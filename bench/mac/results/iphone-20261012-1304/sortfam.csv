@@ -1,0 +1,15 @@
+exp,qos,alg,N,median_ns_el,min_ns_el,max_ns_el
+sortfam,ui,std_sort,1048576,19.64,19.57,19.90
+sortfam,ui,pdqsort_branchy,1048576,49.70,49.21,50.57
+sortfam,ui,pdqsort_branchless,1048576,18.42,18.37,18.75
+sortfam,ui,radix_lsd,1048576,7.21,7.05,11.46
+exp,qos,alg,N,median_ns_el,min_ns_el,max_ns_el
+sortfam,utility,std_sort,1048576,44.04,43.48,44.37
+sortfam,utility,pdqsort_branchy,1048576,80.59,79.28,82.44
+sortfam,utility,pdqsort_branchless,1048576,38.58,38.33,40.08
+sortfam,utility,radix_lsd,1048576,22.50,21.64,25.14
+exp,qos,alg,N,median_ns_el,min_ns_el,max_ns_el
+sortfam,background,std_sort,1048576,147.37,144.87,150.31
+sortfam,background,pdqsort_branchy,1048576,270.14,267.61,274.10
+sortfam,background,pdqsort_branchless,1048576,129.25,127.44,132.99
+sortfam,background,radix_lsd,1048576,66.41,66.05,67.62

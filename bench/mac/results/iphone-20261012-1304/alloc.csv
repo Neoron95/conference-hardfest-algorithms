@@ -1,0 +1,12 @@
+exp,qos,variant,N,U,median_ns_el,min_ns_el,max_ns_el
+alloc,ui,uset_default,1048576,1048576,56.47,54.45,59.77
+alloc,ui,uset_pmr_monotonic,1048576,1048576,35.18,34.57,38.23
+alloc,ui,flat,1048576,1048576,16.71,15.90,20.89
+exp,qos,variant,N,U,median_ns_el,min_ns_el,max_ns_el
+alloc,utility,uset_default,1048576,1048576,410.95,405.35,440.42
+alloc,utility,uset_pmr_monotonic,1048576,1048576,248.62,243.74,270.16
+alloc,utility,flat,1048576,1048576,70.02,66.39,85.30
+exp,qos,variant,N,U,median_ns_el,min_ns_el,max_ns_el
+alloc,background,uset_default,1048576,1048576,733.36,714.03,754.95
+alloc,background,uset_pmr_monotonic,1048576,1048576,426.52,413.83,442.49
+alloc,background,flat,1048576,1048576,134.28,132.30,148.25
