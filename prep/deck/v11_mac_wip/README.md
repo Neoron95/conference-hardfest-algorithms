@@ -1,6 +1,6 @@
 # V11 Mac — главная машина M2 Pro
 
-Опубликовано: https://claude.ai/artifact/4z4yL1HoVWWN3sGk2hPyYG (версия 1791825124-f421).
+Опубликовано: https://claude.ai/artifact/4z4yL1HoVWWN3sGk2hPyYG (версия 1791825348-cb48).
 Вариант колоды, где все основные замеры — M2 Pro (macOS, Apple clang 21 + libc++), контрасты — iPhone 14 Pro и CI Xeon.
 Числа — bench/mac/results/{m2,m2b,iphone-20261012-1304,xeon207}, сводка — bench/mac/results/THREE_MACHINES.md.
 Проверено тремя независимыми проверками (каждое число против CSV, связки слайдов); найденное исправлено.
