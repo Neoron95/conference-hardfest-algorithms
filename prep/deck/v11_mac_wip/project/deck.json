@@ -46,7 +46,7 @@
     "flat-v3",
     "meme-spiders",
     "share-v2",
-    "inputorder",
+    "inputorder-v2",
     "learned-v2",
     "qos",
     "x33",
@@ -145,7 +145,8 @@
     "sortfamily-v2",
     "share-q",
     "share",
-    "outcontract"
+    "outcontract",
+    "inputorder"
   ],
   "sections": {
     "s0": {
