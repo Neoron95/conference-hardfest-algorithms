@@ -29,7 +29,7 @@ share-v2
 inputorder-v3
 learned-v3b
 qos-v2
-cores-v2
+cores-v3
 flat-e
 meme-address
 flip-v2

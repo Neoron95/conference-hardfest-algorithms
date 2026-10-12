@@ -49,7 +49,7 @@
     "inputorder-v3",
     "learned-v3b",
     "qos-v2",
-    "cores-v2",
+    "cores-v3",
     "flat-e",
     "meme-address",
     "flip-v2",
@@ -150,7 +150,8 @@
     "prod",
     "qos",
     "meme-comma",
-    "boxes"
+    "boxes",
+    "cores-v2"
   ],
   "sections": {
     "s0": {
