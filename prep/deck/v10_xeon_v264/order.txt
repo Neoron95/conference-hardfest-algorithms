@@ -1,0 +1,115 @@
+  1 cover
+  2 about
+  3 audience
+  4 case
+  5 diff
+  6 vote
+  7 meme-boxing
+  8 algo-sort
+  9 algo-hash
+ 10 cost-model-v2
+ 11 qa-ticket
+ 12 meme-receipt
+ 13 result-v2
+ 14 step-cost-v2
+ 15 suspects-v3
+ 16 work-v4
+ 17 pace-v2
+ 18 curve-v3
+ 19 nodes-v2
+ 20 memory-v2
+ 21 inflight-v2
+ 22 window-v2
+ 23 alloc-split-v2
+ 24 meme-quest
+ 25 speculation-v2
+ 26 sortfamily-v2
+ 27 why-nodes
+ 28 flatmin-v2
+ 29 flat-v3
+ 30 when-which
+ 31 meme-spiders
+ 32 share-q
+ 33 share
+ 34 outcontract
+ 35 inputorder
+ 36 learned-v2
+ 37 qos
+ 38 x33
+ 39 meme-comma
+ 40 boxes
+ 41 cores
+ 42 meme-address
+ 43 flip
+ 44 meme-weather
+ 45 langs
+ 46 merge-short
+ 47 merge
+ 48 prod
+ 49 review
+ 50 final
+
+# скрытые
+backup
+language-layout
+cpu-loads
+xeon-cache
+core-model
+cache-path
+platforms
+radixmin
+learned-table
+nb-lang
+allocs
+decision
+share-full
+nb-where
+nb-kernel
+nb-dense
+nb-merge
+qos-bg
+systems
+drift
+stdlib
+cachecost
+sortmin
+hashtable
+reserve
+checklist
+sums
+twoways
+bigo
+questions
+sort-walk
+hash-walk
+radix-walk
+merge-walk
+winners
+platform-map
+meme-trailer
+contract
+sort-short
+hash-short
+suspects-v2
+suspects
+work-v2
+work
+curve
+nodes
+memory
+inflight
+window
+flatmin
+flat
+alloc-split
+speculation
+sortfamily
+learned
+cost-model
+step-race
+work-v3
+pace
+result
+step-cost
+curve-v2
+flat-v2
