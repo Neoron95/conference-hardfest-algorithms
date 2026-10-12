@@ -1,5 +1,6 @@
 const pptxgen=require('pptxgenjs');const fs=require('fs');
-const spec=JSON.parse(fs.readFileSync('B/spec.json','utf8'));const durs=JSON.parse(fs.readFileSync('A/durs.json','utf8'));
+const MAXN=+(process.env.MAXN||999),NONOTES=!!process.env.NONOTES,OUT=process.env.OUT||'B';
+const spec=JSON.parse(fs.readFileSync('B/spec.json','utf8')).filter(s=>s.n<=MAXN);const durs=JSON.parse(fs.readFileSync('A/durs.json','utf8'));
 const pres=new pptxgen();pres.layout='LAYOUT_WIDE';pres.title='O(n) проиграл O(n log n) — HardFest 2026';pres.author='Никита Нагорнов';
 pres.theme={headFontFace:'Montserrat',bodyFontFace:'Montserrat'};
 const plan=[];
@@ -16,7 +17,7 @@ for(const s of spec){
     else if(sh.t==='img'){sl.addImage({path:sh.path,x:sh.x,y:sh.y,w:sh.w,h:sh.h});kinds.push('pic');}
     else if(sh.t==='video'){sl.addMedia({type:'video',path:sh.path,x:sh.x,y:sh.y,w:sh.w,h:sh.h,cover:'image/png;base64,'+fs.readFileSync(sh.poster).toString('base64')});kinds.push('video');}
   }
-  if(s.notes)sl.addNotes(s.notes);
+  if(s.notes&&!NONOTES)sl.addNotes(s.notes);
   // timing plan
   const byOrder={};s.shapes.forEach((sh,i)=>{(byOrder[sh.g.order]=byOrder[sh.g.order]||[]).push(i)});
   const orders=Object.keys(byOrder).map(Number).filter(k=>k>0).sort((a,b)=>a-b);
@@ -30,5 +31,5 @@ for(const s of spec){
   const bld=s.shapes.map((sh,i)=>[sh,i]).filter(([sh])=>sh.g.order>0&&['rect','round','line','text'].includes(sh.t)).map(([,i])=>i);
   plan.push({n:s.n,shapes:kinds,blocks,videos:vids,bld});
 }
-fs.writeFileSync('B/plan.json',JSON.stringify(plan));
-pres.writeFile({fileName:'B/raw.pptx'}).then(f=>console.log('wrote',f));
+fs.writeFileSync(OUT+'/plan.json',JSON.stringify(plan));
+pres.writeFile({fileName:OUT+'/raw.pptx'}).then(f=>console.log('wrote',f));
