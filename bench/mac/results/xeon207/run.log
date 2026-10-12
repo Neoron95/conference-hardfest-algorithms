@@ -23,3 +23,5 @@ sink=1722897400806545590
 [05:48:33] E2D qos=ui --n 2097152 --u 209715 --algs sort,uset,radix,flat
 [05:48:39] E2U qos=ui --n 4194304 --u 4194304 --algs sort,uset,radix,flat
 [05:49:17] E2D qos=ui --n 4194304 --u 419430 --algs sort,uset,radix,flat
+[05:49:31] готово: results/xeon207/E2U.csv, E2D.csv
+[05:49:31] done
