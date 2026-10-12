@@ -28,3 +28,4 @@ bench/deep/langs/cpp/listvec
 
 # V10 deck previews (rendered locally with tools/preview.js)
 prep/deck/hardfest_v10/preview/
+*.DS_Store
