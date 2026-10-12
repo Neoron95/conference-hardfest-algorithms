@@ -37,7 +37,6 @@
     "pace-v2",
     "curve-v3",
     "nodes-v2",
-    "memory-v3",
     "inflight-v4",
     "window-v3",
     "alloc-split-v3",
@@ -140,7 +139,8 @@
     "alloc-split-v2",
     "merge-short",
     "merge",
-    "inflight-v3"
+    "inflight-v3",
+    "memory-v3"
   ],
   "sections": {
     "s0": {
