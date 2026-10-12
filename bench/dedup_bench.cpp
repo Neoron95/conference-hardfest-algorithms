@@ -30,6 +30,10 @@
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
+#if defined(__APPLE__)
+#include <pthread.h>
+#include <pthread/qos.h>
+#endif
 
 using u64 = uint64_t;
 using Vec = std::vector<u64>;
@@ -453,11 +457,27 @@ static void usage() {
           "  --n N --u U | --ufrac F              размер и число уникальных (U=max(1,round(F*N)))\n"
           "  --keys random|dense|e8 --order random|runs|sorted --nlocal L (e8)\n"
           "  --algs sort,uset,radix,flat,merge_inplace,merge_union\n"
-          "  --blocks B --warmup W --work ELEMS --pool P --batch K --seed S\n");
+          "  --blocks B --warmup W --work ELEMS --pool P --batch K --seed S\n"
+          "  --qos ui|utility|background|default  (только macOS)\n");
+}
+
+// macOS: QoS потока решает, на какие ядра его пустит система (ui → P-ядра, background → E-ядра).
+static void apply_qos(const std::string& q) {
+#if defined(__APPLE__)
+  qos_class_t c = QOS_CLASS_USER_INITIATED;
+  if (q == "utility") c = QOS_CLASS_UTILITY;
+  else if (q == "background") c = QOS_CLASS_BACKGROUND;
+  else if (q == "default") c = QOS_CLASS_DEFAULT;
+  else if (q == "interactive") c = QOS_CLASS_USER_INTERACTIVE;
+  if (pthread_set_qos_class_self_np(c, 0) != 0) fprintf(stderr, "warning: QoS %s не выставлен\n", q.c_str());
+#else
+  if (!q.empty()) fprintf(stderr, "note: --qos %s игнорируется вне macOS\n", q.c_str());
+#endif
 }
 
 int main(int argc, char** argv) {
   Config c;
+  std::string qos;
   bool ufrac = false, phases_mode = false;
   double frac = 1.0;
   for (int i = 1; i < argc; ++i) {
@@ -487,8 +507,10 @@ int main(int argc, char** argv) {
     else if (a == "--seed") c.seed = std::stoull(val());
     else if (a == "--faults") c.faults = true;
     else if (a == "--phases") phases_mode = true;
+    else if (a == "--qos") qos = val();
     else { usage(); return 2; }
   }
+  if (!qos.empty()) apply_qos(qos);
   if (ufrac) c.U = std::max<size_t>(1, (size_t)(frac * (double)c.N + 0.5));
   if (c.keys != Keys::E8 && (c.U < 1 || c.U > c.N)) { fprintf(stderr, "need 1 <= U <= N\n"); return 2; }
   if (c.keys == Keys::E8 && c.nlocal >= c.N) { fprintf(stderr, "need nlocal < N\n"); return 2; }
