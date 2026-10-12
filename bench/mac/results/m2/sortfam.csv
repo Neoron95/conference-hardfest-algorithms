@@ -1,0 +1,5 @@
+exp,qos,alg,N,median_ns_el,min_ns_el,max_ns_el
+sortfam,ui,std_sort,1048576,18.94,18.85,19.21
+sortfam,ui,pdqsort_branchy,1048576,48.17,47.79,50.76
+sortfam,ui,pdqsort_branchless,1048576,18.74,18.60,20.30
+sortfam,ui,radix_lsd,1048576,6.40,6.34,7.07

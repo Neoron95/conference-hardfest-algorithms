@@ -1,0 +1,9 @@
+session,toolchain,set,N,U,insert_ns_el,unload_ns_el,dtor_ns_el,total_ns_el
+m2/ui,clang21-libc++,uset,1048576,1048576,30.5,13.5,11.8,55.4
+m2/ui,clang21-libc++,flat,1048576,1048576,5.1,9.9,0.0,15.1
+m2/ui,clang21-libc++,uset,1048576,1048576,30.0,13.5,11.8,55.2
+m2/ui,clang21-libc++,flat,1048576,1048576,5.4,10.0,0.0,15.4
+m2/ui,clang21-libc++,uset,1048576,524288,16.8,2.7,4.0,23.4
+m2/ui,clang21-libc++,flat,1048576,524288,7.3,6.6,0.0,13.9
+m2/ui,clang21-libc++,uset,1048576,524288,16.8,2.7,4.0,23.5
+m2/ui,clang21-libc++,flat,1048576,524288,7.2,6.6,0.0,13.8

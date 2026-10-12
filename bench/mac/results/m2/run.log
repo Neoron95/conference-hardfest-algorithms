@@ -1,0 +1,52 @@
+[12:05:42] probe: build/probe --qos ui
+[12:09:59] counters qos=ui
+events: [FIXED_CYCLES] [FIXED_INSTRUCTIONS] [INST_BRANCH] [BRANCH_MISPRED_NONSPEC] [BRANCH_COND_MISPRED_NONSPEC] [L1D_CACHE_MISS_LD] [L1D_TLB_MISS]
+[12:10:02] counters qos=background
+events: [FIXED_CYCLES] [FIXED_INSTRUCTIONS] [INST_BRANCH] [BRANCH_MISPRED_NONSPEC] [BRANCH_COND_MISPRED_NONSPEC] [L1D_CACHE_MISS_LD] [L1D_TLB_MISS]
+[12:11:37] probe: build/probe --qos ui
+[12:11:58] probe: build/probe --qos background
+[12:13:26] E1 qos=ui --n 1048576 --u 1048576 --algs sort,uset,radix,flat
+[12:13:29] E1 qos=background --n 1048576 --u 1048576 --algs sort,uset,radix,flat
+[12:13:55] E2 qos=ui --n 16 --u 8 --algs sort,uset,radix,flat
+[12:13:56] E2 qos=ui --n 64 --u 32 --algs sort,uset,radix,flat
+[12:13:57] E2 qos=ui --n 256 --u 128 --algs sort,uset,radix,flat
+[12:13:58] E2 qos=ui --n 1024 --u 512 --algs sort,uset,radix,flat
+[12:14:00] E2 qos=ui --n 4096 --u 2048 --algs sort,uset,radix,flat
+[12:14:01] E2 qos=ui --n 16384 --u 8192 --algs sort,uset,radix,flat
+[12:14:02] E2 qos=ui --n 65536 --u 32768 --algs sort,uset,radix,flat
+[12:14:04] E2 qos=ui --n 131072 --u 65536 --algs sort,uset,radix,flat
+[12:14:05] E2 qos=ui --n 262144 --u 131072 --algs sort,uset,radix,flat
+[12:14:07] E2 qos=ui --n 524288 --u 262144 --algs sort,uset,radix,flat
+[12:14:09] E2 qos=ui --n 1048576 --u 524288 --algs sort,uset,radix,flat
+[12:14:11] E2 qos=ui --n 2097152 --u 1048576 --algs sort,uset,radix,flat
+[12:14:14] E2 qos=ui --n 4194304 --u 2097152 --algs sort,uset,radix,flat
+[12:14:19] E2 qos=background --n 262144 --u 131072 --algs sort,uset,flat
+[12:14:29] E2 qos=background --n 524288 --u 262144 --algs sort,uset,flat
+[12:14:39] E2 qos=background --n 1048576 --u 524288 --algs sort,uset,flat
+[12:14:50] phases U=1048576
+[12:14:53] phases U=524288
+[12:14:54] alloc: build/alloc --qos ui --n 1048576 --u 1048576
+[12:14:59] alloc: build/alloc --qos ui --n 1048576 --u 524288
+[12:15:01] mlp: build/mlp --qos ui
+sink=436246082120494513
+[12:15:18] mlp: build/mlp --qos background
+sink=436246082120494513
+[12:16:56] sortfam: build/sortfam --qos ui
+[12:16:59] E3 qos=ui --n 1048576 --u 1 --variant all_equal
+[12:17:00] E3 qos=ui --n 1048576 --ufrac 0.01 --variant ufrac_0.01
+[12:17:00] E3 qos=ui --n 1048576 --ufrac 0.1 --variant ufrac_0.1
+[12:17:02] E3 qos=ui --n 1048576 --ufrac 0.5 --variant ufrac_0.5
+[12:17:04] E3 qos=ui --n 1048576 --ufrac 1 --variant ufrac_1
+[12:17:07] E4 qos=ui --n 1048576 --u 524288 --order random
+[12:17:09] E4 qos=ui --n 1048576 --u 524288 --order runs
+[12:17:11] E4 qos=ui --n 1048576 --u 524288 --order sorted
+[12:17:12] E5 qos=ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 1 --variant a_one_array_restored
+[12:17:13] E5 qos=ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 1 --batch 64 --variant b_64_identical_copies
+[12:17:13] E5 qos=ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 64 --batch 64 --variant c_64_different
+[12:17:13] E5 qos=ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 64 --batch 1 --variant e_64_different_one_buffer
+[12:17:13] E5 qos=ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 2 --batch 1 --variant f_2_different_one_buffer
+[12:17:13] E5 qos=ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 4 --batch 1 --variant f_4_different_one_buffer
+[12:17:13] E5 qos=ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 8 --batch 1 --variant f_8_different_one_buffer
+[12:17:13] E5 qos=ui --n 1024 --u 512 --algs sort --work 1048576 --blocks 9 --pool 16 --batch 1 --variant f_16_different_one_buffer
+[12:17:14] E8 qos=ui --keys e8 --nlocal 1048576 --n 1114112 --algs sort,uset,radix,flat,merge_inplace,merge_union
+[12:17:17] готово: results/m2. Дальше — sudo ./run_counters.sh m2
