@@ -1,11 +1,16 @@
-# V11 Mac (в работе)
+# V11 Mac — главная машина M2 Pro
 
-Вариант колоды, где главная машина — M2 Pro, контрасты — iPhone 14 Pro и CI Xeon.
+Опубликовано: https://claude.ai/artifact/4z4yL1HoVWWN3sGk2hPyYG (версия 1791789893-d6d4).
+Вариант колоды, где все основные замеры — M2 Pro (macOS, Apple clang 21 + libc++), контрасты — iPhone 14 Pro и CI Xeon.
 Числа — bench/mac/results/{m2,m2b,iphone-20261012-1304,xeon207}, сводка — bench/mac/results/THREE_MACHINES.md.
+Проверено тремя независимыми проверками (каждое число против CSV, связки слайдов); найденное исправлено.
 
-- `project/` — файлы колоды (deck.json + slides/*.html, ссылки на картинки — ассеты исходной колоды V10).
-- `slides_text.md` — текст слайдов, речь и заметки по порядку показа.
+- `project/` — файлы колоды ровно как в артефакте (ссылки /_blob/ — ассеты нового артефакта).
+- `blobmap_from_v10.txt` — соответствие ассетов V10 → V11.
+- `slides_text.md` — текст слайдов, речь и заметки; `order_visible.txt` — порядок показа.
 
-Не закрыто: команды на вставку на ARM (слайды window-v2, alloc-split-v2, why-nodes помечены «⚠ пока x86»)
-и M2 в QoS utility (слайд qos, ячейка ⟨m2c⟩) — ждут `sudo ./run_phases.sh m2c && ./run_utility.sh m2c`.
-Новые слайды: flip-v2 (карта победителей), reasons (четыре причины), cores-v2 (лестница на новых данных).
+Новые слайды: flip-v2 (карта победителей CI / Mac / iPhone P / iPhone E), reasons (четыре причины), cores-v2 (лестница на новых данных).
+
+Не закрыто (ждёт `cd bench/mac && sudo ./run_phases.sh m2c && ./run_utility.sh m2c`):
+- window-v2, alloc-split-v2, why-nodes — команды на вставку и промахи пока x86, на слайдах пометка «⚠ пока x86»;
+- qos — ячейка «M2 Pro · utility» = ⟨m2c⟩.

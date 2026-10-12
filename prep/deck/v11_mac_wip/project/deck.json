@@ -132,8 +132,8 @@
     "step-cost",
     "curve-v2",
     "flat-v2",
-    "flip",
-    "cores"
+    "cores",
+    "flip"
   ],
   "sections": {
     "s0": {
@@ -174,5 +174,5 @@
       "start": "platform-map"
     }
   },
-  "title": "O(n) проиграл O(n log n) — HardFest 2026 · V10 (вариант A «Три подозреваемых»)"
+  "title": "O(n) проиграл O(n log n) — HardFest 2026 · V11 Mac (главная машина — M2 Pro)"
 }
