@@ -57,7 +57,7 @@
     "reasons",
     "review",
     "final-v2",
-    "backup",
+    "backup-v2",
     "prod",
     "qos-bg-v2",
     "merge-qa",
@@ -159,6 +159,7 @@
     "merge-v2",
     "final",
     "qos-bg",
+    "backup",
     "learned-v3a"
   ],
   "sections": {
