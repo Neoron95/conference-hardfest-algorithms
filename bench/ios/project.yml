@@ -35,7 +35,8 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: dev.nagornov.hashbench
         HEADER_SEARCH_PATHS: ["$(SRCROOT)/build/abseil-cpp"]
         LIBRARY_SEARCH_PATHS: ["$(SRCROOT)/build"]
-        OTHER_LDFLAGS: ["$(inherited)", "-labsl_ios", "-framework", "CoreFoundation"]
+        # в .mm-файлах Xcode не подключает фреймворки сам — перечисляем явно
+        OTHER_LDFLAGS: ["$(inherited)", "-labsl_ios", "-framework", "UIKit", "-framework", "Foundation", "-framework", "CoreFoundation"]
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
     info:
