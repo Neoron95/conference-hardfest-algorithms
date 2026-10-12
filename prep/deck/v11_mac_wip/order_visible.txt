@@ -28,7 +28,7 @@ meme-spiders
 share-v2
 inputorder-v3
 learned-v2
-qos
+qos-v2
 meme-comma
 boxes
 cores-v2

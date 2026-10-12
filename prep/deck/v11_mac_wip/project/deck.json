@@ -48,7 +48,7 @@
     "share-v2",
     "inputorder-v3",
     "learned-v2",
-    "qos",
+    "qos-v2",
     "meme-comma",
     "boxes",
     "cores-v2",
@@ -147,7 +147,8 @@
     "inputorder",
     "inputorder-v2",
     "x33",
-    "prod"
+    "prod",
+    "qos"
   ],
   "sections": {
     "s0": {
@@ -173,7 +174,7 @@
     },
     "s6": {
       "description": "Вопрос C: где и в каком режиме",
-      "start": "qos"
+      "start": "qos-v2"
     },
     "s7": {
       "description": "Решение и ревью",
