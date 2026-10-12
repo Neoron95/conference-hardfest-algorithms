@@ -37,17 +37,14 @@
     "pace-v2",
     "curve-v3",
     "nodes-v2",
-    "memory-v2",
-    "inflight-v2",
-    "window-v2",
-    "alloc-split-v2",
+    "inflight-v3",
+    "window-v3",
+    "alloc-split-v3",
     "meme-quest",
     "speculation-v2",
     "sortfamily-v2",
-    "why-nodes",
     "flatmin-v2",
     "flat-v3",
-    "when-which",
     "meme-spiders",
     "share-q",
     "share",
@@ -64,13 +61,14 @@
     "flip-v2",
     "reasons",
     "meme-weather",
-    "langs",
-    "merge-short",
-    "merge",
+    "merge-v2",
     "prod",
     "review",
     "final",
     "backup",
+    "why-nodes",
+    "when-which",
+    "langs",
     "language-layout",
     "cpu-loads",
     "xeon-cache",
@@ -134,7 +132,13 @@
     "curve-v2",
     "flat-v2",
     "cores",
-    "flip"
+    "flip",
+    "memory-v2",
+    "inflight-v2",
+    "window-v2",
+    "alloc-split-v2",
+    "merge-short",
+    "merge"
   ],
   "sections": {
     "s0": {
@@ -152,7 +156,7 @@
     },
     "s3": {
       "description": "Реализация таблицы",
-      "start": "why-nodes"
+      "start": "flatmin-v2"
     },
     "s4": {
       "description": "Вопрос C: данные и контракт",
@@ -163,8 +167,8 @@
       "start": "qos"
     },
     "s7": {
-      "description": "Язык, решение и ревью",
-      "start": "langs"
+      "description": "Решение и ревью",
+      "start": "merge-v2"
     },
     "s8": {
       "description": "Дополнительные материалы",
