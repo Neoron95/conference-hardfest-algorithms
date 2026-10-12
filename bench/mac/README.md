@@ -19,6 +19,7 @@ cd bench/mac
 ./run.sh m2                      # ≈30–40 минут, results/m2/*.csv
 sudo ./run_counters.sh m2        # ≈3–5 минут, results/m2/counters_*.csv
 sudo ./run_phases.sh m2c         # ≈1–2 минуты, results/m2c/counters_phases_*.csv
+./run_utility.sh m2c             # ≈2–3 минуты, results/m2c/E1.csv, E2.csv в режиме QoS utility
 ```
 
 Отправить результаты: `git add results/m2 && git commit -m "M2 results" && git push`
