@@ -1,0 +1,5 @@
+exp,session,toolchain,variant,alg,keys,order,N,U,pool,batch,calls_per_block,blocks,median_ns_el,min_ns_el,max_ns_el,spread_pct,blocks_ns_el
+E1,m2c/utility,clang21-libc++,-,sort,random64,random,1048576,1048576,64,1,2,7,20.617,20.568,20.719,0.7,20.568;20.571;20.698;20.719;20.651;20.617;20.614
+E1,m2c/utility,clang21-libc++,-,uset,random64,random,1048576,1048576,64,1,2,7,126.337,120.323,128.575,6.5,128.533;126.957;123.601;124.183;120.323;126.337;128.575
+E1,m2c/utility,clang21-libc++,-,radix,random64,random,1048576,1048576,64,1,2,7,9.167,8.671,9.658,10.8,9.658;9.243;8.884;8.796;9.167;9.538;8.671
+E1,m2c/utility,clang21-libc++,-,flat,random64,random,1048576,1048576,64,1,2,7,25.537,24.098,26.572,9.7,25.537;25.118;26.572;24.165;24.098;25.592;26.421

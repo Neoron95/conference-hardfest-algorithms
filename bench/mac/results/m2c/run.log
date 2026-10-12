@@ -1,0 +1,4 @@
+[22:00:03] E1 qos=utility --n 1048576 --u 1048576 --algs sort,uset,radix,flat
+[22:00:07] E2 qos=utility --n 524288 --u 262144 --algs sort,uset,flat
+[22:00:09] E2 qos=utility --n 1048576 --u 524288 --algs sort,uset,flat
+[22:00:12] готово: results/m2c/E1.csv, E2.csv
