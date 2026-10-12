@@ -4,7 +4,8 @@
 //   window: поток независимых случайных чтений, между соседними — F пустых команд (nop);
 //           когда F × (сколько чтений в полёте) больше окна, чтения начинают ждать по одному.
 //   model:  «одно чтение», «чтение + malloc», «ячейка → узел», «ячейка → узел + malloc» — модель вставки.
-//   ./mlp [--qos ui|utility|background] → CSV в stdout
+//   window_add: то же, но наполнитель — независимые сложения (nop на Apple-ядрах окно не занимает).
+//   ./mlp [--qos ui|utility|background] [--only chains|window|model] → CSV в stdout
 #include "mac_common.h"
 
 static uint64_t sink;
@@ -37,6 +38,26 @@ __attribute__((noinline)) static double loads_with_nops(const uint64_t* a, size_
   return (t1 - t0) / iters;
 }
 
+// Тот же поток чтений, но между ними F независимых сложений: в отличие от nop, их нельзя выбросить
+// при декодировании — каждое занимает место в окне до своей очереди на отставку. Результат пишется
+// в отдельный регистр (=&r), входы не меняются, поэтому цепочки зависимостей нет.
+template <int F>
+__attribute__((noinline)) static double loads_with_adds(const uint64_t* a, size_t mask, long iters) {
+  uint64_t s = 0, d = 0, x = 1, y = 2;
+  double t0 = now_ns();
+  for (long i = 0; i < iters; ++i) {
+    s += a[(mix64((uint64_t)i) & mask) * kWords];
+#if defined(__aarch64__)
+    asm volatile(".rept %c1\n\tadd %0, %2, %3\n\t.endr" : "=&r"(d) : "i"(F), "r"(x), "r"(y));
+#else
+    asm volatile(".rept %c1\n\tlea (%2,%3), %0\n\t.endr" : "=&r"(d) : "i"(F), "r"(x), "r"(y));
+#endif
+  }
+  double t1 = now_ns();
+  sink += s + d;
+  return (t1 - t0) / iters;
+}
+
 enum Mode { LOADS, MALLOC_ONLY, LOADS_MALLOC, LOADS_DEP2, LOADS_DEP2_MALLOC };
 
 __attribute__((noinline)) static double model(const uint64_t* a, size_t mask, long iters, Mode m, void** ptrs) {
@@ -59,9 +80,12 @@ __attribute__((noinline)) static double model(const uint64_t* a, size_t mask, lo
 
 int main(int argc, char** argv) {
   std::string qos = set_qos(qos_from_args(argc, argv));
+  std::string only;  // --only chains|window|model — запустить одну часть
+  for (int i = 1; i + 1 < argc; ++i) if (std::string(argv[i]) == "--only") only = argv[i + 1];
+  auto want = [&](const char* part) { return only.empty() || only == part; };
   printf("exp,qos,param,ns\n");
   // ---- chains
-  {
+  if (want("chains")) {
     const size_t bytes = 64u << 20, n = bytes / sizeof(Line);
     Line* a = (Line*)alloc_touched(bytes);
     uint64_t rng = 0x9e3779b97f4a7c15ULL;
@@ -88,16 +112,23 @@ int main(int argc, char** argv) {
     free(a);
   }
   // ---- window + model
-  {
+  if (want("window") || want("model")) {
     const size_t bytes = 64u << 20, lines = bytes / kLine, mask = lines - 1;
     uint64_t* a = (uint64_t*)alloc_touched(bytes);
     uint64_t rng = 7;
     for (size_t i = 0; i < bytes / 8; ++i) { rng ^= rng << 13; rng ^= rng >> 7; rng ^= rng << 17; a[i] = rng; }
     const long iters = 1L << 22;
     auto rep = [&](auto fn) { std::vector<double> v; for (int r = 0; r < 3; ++r) v.push_back(fn()); return median(v); };
+    if (want("window")) {
 #define W(F) printf("window,%s,%d,%.2f\n", qos.c_str(), F, rep([&] { return loads_with_nops<F>(a, mask, iters); })); fflush(stdout);
-    W(0) W(8) W(16) W(32) W(64) W(96) W(128) W(192) W(256) W(384) W(512) W(640) W(768) W(1024) W(2048)
+      W(0) W(8) W(16) W(32) W(64) W(96) W(128) W(192) W(256) W(384) W(512) W(640) W(768) W(1024) W(2048)
 #undef W
+#define WA(F) printf("window_add,%s,%d,%.2f\n", qos.c_str(), F, rep([&] { return loads_with_adds<F>(a, mask, iters); })); fflush(stdout);
+      WA(0) WA(8) WA(16) WA(32) WA(48) WA(64) WA(96) WA(128) WA(160) WA(192) WA(256) WA(320) WA(384) WA(448)
+      WA(512) WA(576) WA(640) WA(768) WA(896) WA(1024) WA(1536) WA(2048)
+#undef WA
+    }
+    if (!want("model")) { free(a); fprintf(stderr, "sink=%llu\n", (unsigned long long)sink); return 0; }
     std::vector<void*> ptrs(iters);
     auto run_mode = [&](const char* name, Mode m) {
       std::vector<double> v;
