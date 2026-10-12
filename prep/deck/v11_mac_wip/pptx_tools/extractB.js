@@ -1,5 +1,7 @@
-const {chromium}=require('/opt/node22/lib/node_modules/playwright');const fs=require('fs');
-(async()=>{const pages=JSON.parse(fs.readFileSync('pages.json','utf8'));
+// Step 2B. Editable variant: text runs per line, boxes, borders, rasters (img/svg at 2x) -> build/B/prims.json
+const {chromium}=require('./pw.js')();const fs=require('fs');const path=require('path');
+const B=path.join(__dirname,'build');fs.mkdirSync(path.join(B,'B'),{recursive:true});
+(async()=>{const pages=JSON.parse(fs.readFileSync(path.join(B,'pages.json'),'utf8'));
 const b=await chromium.launch({args:['--allow-file-access-from-files']});
 const p=await b.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:2});
 const all=[];
@@ -40,7 +42,7 @@ for(const pg of pages){
     const cs=getComputedStyle(el);if(cs.display==='none')return;
     const tag=el.tagName.toLowerCase();
     if(tag==='img'||tag==='svg'){const id='r'+(rid++);el.dataset.rid=id;
-      out.push({type:el.hasAttribute('data-video')?'video':'raster',group,rid:id,rect:R(el),video:el.getAttribute('data-video')||'',poster:tag==='img'?el.getAttribute('src'):'',nw:el.naturalWidth||0,nh:el.naturalHeight||0,fit:getComputedStyle(el).objectFit});return;}
+      out.push({type:el.hasAttribute('data-video')?'video':'raster',group,rid:id,rect:R(el),video:el.getAttribute('data-video')||'',poster:tag==='img'?el.getAttribute('src'):'',alt:(el.getAttribute('alt')||el.getAttribute('aria-label')||'').slice(0,250),nw:el.naturalWidth||0,nh:el.naturalHeight||0,fit:getComputedStyle(el).objectFit});return;}
     boxOf(el,group);textOf(el,group);
     for(const c of el.children){if(isBlock(c))walk(c,group);}
   }
@@ -52,9 +54,9 @@ for(const pg of pages){
    await p.evaluate(rid=>{document.querySelectorAll('section *').forEach(e=>e.style.visibility='hidden');const t=document.querySelector(`[data-rid="${rid}"]`);t.style.visibility='visible';t.querySelectorAll('*').forEach(e=>e.style.visibility='visible');
      const s=document.querySelector('section');s.dataset.bg=s.dataset.bg||s.style.background;s.style.background='transparent';document.body.style.background='transparent';},pr.rid);
    const r=pr.rect;const clip={x:Math.max(0,Math.floor(r.x)-2),y:Math.max(0,Math.floor(r.y)-2)};clip.width=Math.min(1920,Math.ceil(r.x+r.w)+2)-clip.x;clip.height=Math.min(1080,Math.ceil(r.y+r.h)+2)-clip.y;
-   const f=`B/${String(pg.n).padStart(2,'0')}-${pr.rid}.png`;await p.screenshot({path:f,clip,omitBackground:true});pr.file=f;pr.clip=clip;
+   const f=path.join(B,'B',`${String(pg.n).padStart(2,'0')}-${pr.rid}.png`);await p.screenshot({path:f,clip,omitBackground:true});pr.file=f;pr.clip=clip;
  }
  all.push({n:pg.n,id:pg.id,notes:pg.notes,...prim});
 }
-fs.writeFileSync('B/prims.json',JSON.stringify(all));await b.close();
+fs.writeFileSync(path.join(B,'B/prims.json'),JSON.stringify(all));await b.close();
 const c={};for(const s of all)for(const x of s.prims)c[x.type]=(c[x.type]||0)+1;console.log('ok',all.length,c);})();

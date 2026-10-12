@@ -1,6 +1,11 @@
+"""Step 3B. prims.json -> spec.json: PowerPoint text boxes with forced line breaks, shapes, pictures.
+Layout model: 1 px = 1/144 in = 0.5 pt; first baseline = box top + 0.8 * line spacing (PowerPoint, exact spacing)."""
 import json, re
+from urllib.parse import unquote
+from pathlib import Path
 from PIL import Image
-D=json.load(open('B/prims.json'))
+B=Path(__file__).resolve().parent/'build'
+D=json.load(open(B/'B/prims.json'))
 PX=1/144  # inch per px
 PT=0.5    # pt per px
 MET={'Montserrat':(0.968,0.251),'JetBrains Mono':(1.020,0.300)}
@@ -56,8 +61,8 @@ for s in D:
                     shapes.append(sh)
         elif p['type']=='text' and all(c['ch'] in '\u2713\u2717' or c['ch'].isspace() for c in p['chars']):
             r=p['rect']; box=(int(r['x'])-2,int(r['y'])-2,int(r['x']+r['w'])+2,int(r['y']+r['h'])+2)
-            f=f"B/{s['n']:02d}-glyph{len(shapes)}.png"; Image.open(f"A/{s['n']:02d}-final.png").crop(box).save(f)
-            shapes.append({'t':'img','path':f,'x':box[0]*PX,'y':box[1]*PX,'w':(box[2]-box[0])*PX,'h':(box[3]-box[1])*PX,'g':g})
+            f=str(B/f"B/{s['n']:02d}-glyph{len(shapes)}.png"); Image.open(B/f"A/{s['n']:02d}-final.png").crop(box).save(f)
+            shapes.append({'t':'img','alt':''.join(c['ch'] for c in p['chars']).strip() or 'Значок','path':f,'x':box[0]*PX,'y':box[1]*PX,'w':(box[2]-box[0])*PX,'h':(box[3]-box[1])*PX,'g':g})
         elif p['type']=='text':
             chars=p['chars']; fs=p['fs']
             L=float(p['lh'][:-2]) if p['lh'].endswith('px') else 1.22*fs
@@ -111,13 +116,13 @@ for s in D:
                            'st':[[ (r['st']['ff'],r['st']['fw'],r['st']['fs'],r['st']['ls'],r['st']['tt']) for r in l['runs']] for l in out_lines]})
             stats['lines']+=len(out_lines)
         elif p['type']=='raster':
-            c=p['clip']; shapes.append({'t':'img','path':p['file'],'x':c['x']*PX,'y':c['y']*PX,'w':c['width']*PX,'h':c['height']*PX,'g':g})
+            c=p['clip']; shapes.append({'t':'img','alt':p.get('alt') or 'Иллюстрация','path':p['file'],'x':c['x']*PX,'y':c['y']*PX,'w':c['width']*PX,'h':c['height']*PX,'g':g})
         elif p['type']=='video':
             r=p['rect']; a=p['nw']/p['nh']; w,h=r['w'],r['h']
             if w/h>a: w=h*a
             else: h=w/a
-            shapes.append({'t':'video','path':p['video'],'poster':p['poster'].replace('file://',''),'x':(r['x']+(r['w']-w)/2)*PX,'y':(r['y']+(r['h']-h)/2)*PX,'w':w*PX,'h':h*PX,'g':g})
+            shapes.append({'t':'video','path':p['video'],'poster':unquote(p['poster'].replace('file://','')),'x':(r['x']+(r['w']-w)/2)*PX,'y':(r['y']+(r['h']-h)/2)*PX,'w':w*PX,'h':h*PX,'g':g})
     bg=rgba(s['bg'])
     spec.append({'n':s['n'],'id':s['id'],'bg':bg[0] if bg else '000000','notes':s['notes'],'shapes':shapes})
-json.dump(spec,open('B/spec.json','w'),ensure_ascii=False)
+json.dump(spec,open(B/'B/spec.json','w'),ensure_ascii=False)
 print(stats, sum(len(s['shapes']) for s in spec))

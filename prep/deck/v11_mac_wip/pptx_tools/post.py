@@ -1,4 +1,6 @@
-"""Post-process a pptxgenjs deck: click-sequenced fade-ins, video autoplay, embedded fonts (EOT .fntdata)."""
+"""Step 5. Post-process a pptxgenjs deck: click-sequenced fade-ins, video autoplay, embedded fonts (EOT .fntdata).
+Usage: python3 post.py raw.pptx plan.json out.pptx fonts/embed [--kern]
+  --kern  turn kerning on for every text run (editable variants)."""
 import json, re, struct, sys, zipfile, io, itertools, os
 from fontTools.ttLib import TTFont
 
@@ -75,11 +77,12 @@ def eot(ttf_path):
     total=8+len(body)
     return struct.pack('<II',total,len(raw))+body
 
-FONTS=[('Montserrat',{'regular':'g3.ttf','bold':'g6.ttf'}),('Montserrat Medium',{'regular':'g4.ttf'}),
-       ('Montserrat SemiBold',{'regular':'g5.ttf'}),('Montserrat ExtraBold',{'regular':'g7.ttf'}),
-       ('JetBrains Mono',{'regular':'g1.ttf','bold':'g2.ttf'})]
+# typeface name in slides -> embedded files (PowerPoint keeps regular/bold slots per typeface)
+FONTS=[('Montserrat',{'regular':'Montserrat-Regular.ttf','bold':'Montserrat-Bold.ttf'}),('Montserrat Medium',{'regular':'Montserrat-Medium.ttf'}),
+       ('Montserrat SemiBold',{'regular':'Montserrat-SemiBold.ttf'}),('Montserrat ExtraBold',{'regular':'Montserrat-ExtraBold.ttf'}),
+       ('JetBrains Mono',{'regular':'JetBrainsMono-Regular.ttf','bold':'JetBrainsMono-Bold.ttf'})]
 
-def process(src, plan_path, dst, fontdir):
+def process(src, plan_path, dst, fontdir, kern=False):
     plan=json.load(open(plan_path))
     zin=zipfile.ZipFile(src); out=io.BytesIO(); zout=zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED)
     files={n:zin.read(n) for n in zin.namelist()}
@@ -100,7 +103,8 @@ def process(src, plan_path, dst, fontdir):
             t=t.replace('{BLD}',f'<p:bldLst>{bld}</p:bldLst>' if bld else '')
             assert '<p:timing>' not in x
             x=x.replace('</p:clrMapOvr>','</p:clrMapOvr>'+t,1)
-            files[name]=x.encode('utf-8')
+        if kern: x=re.sub(r'<a:rPr (?![^>]*\bkern=)','<a:rPr kern="100" ',x)
+        files[name]=x.encode('utf-8')
     # --- fonts
     pres=files['ppt/presentation.xml'].decode(); rels=files['ppt/_rels/presentation.xml.rels'].decode()
     ct=files['[Content_Types].xml'].decode()
@@ -124,4 +128,6 @@ def process(src, plan_path, dst, fontdir):
     zout.close(); open(dst,'wb').write(out.getvalue())
 
 if __name__=='__main__':
-    process(*sys.argv[1:5])
+    a=[x for x in sys.argv[1:] if not x.startswith('--')]
+    process(*a[:4], kern='--kern' in sys.argv)
+    print('wrote',a[2])

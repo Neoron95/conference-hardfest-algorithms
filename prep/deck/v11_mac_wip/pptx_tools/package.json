@@ -1,0 +1,9 @@
+{
+  "name": "hardfest-deck-pptx-tools",
+  "private": true,
+  "description": "Builds PPTX files from the Slides deck HTML in ../project",
+  "dependencies": {
+    "playwright": "^1.40.0",
+    "pptxgenjs": "^3.12.0"
+  }
+}

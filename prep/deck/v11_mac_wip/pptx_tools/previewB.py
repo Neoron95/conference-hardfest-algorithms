@@ -1,13 +1,17 @@
+"""QA for the editable variant: draws every slide from spec.json with the embedded fonts by the PowerPoint layout model
+(build/B/prev-NN.png) and compares it with the browser render (build/A/NN-final.png); writes build/B/compare-K.png sheets."""
 import json
+from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageChops, ImageStat
-spec=json.load(open('B/spec.json'))
-FD='../fonts_embed/'
-FILES={('Montserrat',False):'g3.ttf',('Montserrat',True):'g6.ttf',('Montserrat Medium',False):'g4.ttf',('Montserrat SemiBold',False):'g5.ttf',
-       ('Montserrat ExtraBold',False):'g7.ttf',('JetBrains Mono',False):'g1.ttf',('JetBrains Mono',True):'g2.ttf'}
+ROOT=Path(__file__).resolve().parent; B=ROOT/'build'
+spec=json.load(open(B/'B/spec.json'))
+FD=str(ROOT/'fonts/embed')+'/'
+FILES={('Montserrat',False):'Montserrat-Regular.ttf',('Montserrat',True):'Montserrat-Bold.ttf',('Montserrat Medium',False):'Montserrat-Medium.ttf',('Montserrat SemiBold',False):'Montserrat-SemiBold.ttf',
+       ('Montserrat ExtraBold',False):'Montserrat-ExtraBold.ttf',('JetBrains Mono',False):'JetBrainsMono-Regular.ttf',('JetBrains Mono',True):'JetBrainsMono-Bold.ttf'}
 cache={}
 def font(face,bold,px):
     k=(face,bold,round(px*4)/4)
-    if k not in cache: cache[k]=ImageFont.truetype(FD+FILES.get((face,bold),FILES[(face,False)] if (face,False) in FILES else 'g3.ttf'),size=max(1,round(px)))
+    if k not in cache: cache[k]=ImageFont.truetype(FD+FILES.get((face,bold),FILES.get((face,False),'Montserrat-Regular.ttf')),size=max(1,round(px)))
     return cache[k]
 S=144  # px per inch at 1920 width
 def hexc(h,t=0): return tuple(int(h[i:i+2],16) for i in (0,2,4))+(round(255*(1-t/100)),)
@@ -53,7 +57,15 @@ def render(s):
     return im
 res=[]
 for s in spec:
-    im=render(s).convert('RGB'); im.save(f"B/prev-{s['n']:02d}.png")
-    fin=Image.open(f"A/{s['n']:02d}-final.png").convert('RGB')
+    im=render(s).convert('RGB'); im.save(B/f"B/prev-{s['n']:02d}.png")
+    fin=Image.open(B/f"A/{s['n']:02d}-final.png").convert('RGB')
     dd=ImageChops.difference(fin,im).convert('L'); res.append((s['n'],s['id'],round(ImageStat.Stat(dd).mean[0],2)))
-res.sort(key=lambda r:-r[2]); print(res[:15])
+res.sort(key=lambda r:-r[2]); print('mean pixel diff, worst first:',res[:8])
+ns=[s['n'] for s in spec]
+for k in range(0,len(ns),13):
+    part=ns[k:k+13]; W=Image.new('RGB',(1300,325*len(part)),(60,60,60))
+    for i,n in enumerate(part):
+        W.paste(Image.open(B/f'A/{n:02d}-final.png').convert('RGB').resize((576,324)),(60,325*i))
+        W.paste(Image.open(B/f'B/prev-{n:02d}.png').convert('RGB').resize((576,324)),(700,325*i))
+    W.save(B/f'B/compare-{k//13}.png')
+print('compare sheets: build/B/compare-*.png (left: deck, right: PowerPoint model)')
