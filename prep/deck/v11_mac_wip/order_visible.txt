@@ -29,7 +29,6 @@ share-v2
 inputorder-v3
 learned-v2
 qos-v2
-boxes
 cores-v2
 flat-e
 meme-address
