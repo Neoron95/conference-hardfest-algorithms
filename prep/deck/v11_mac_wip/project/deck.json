@@ -38,12 +38,12 @@
     "curve-v3",
     "nodes-v2",
     "inflight-v4",
-    "alloc-split-v3",
     "meme-quest",
     "speculation-v2",
     "sortfamily-v2",
     "flatmin-v2",
     "flat-v3",
+    "alloc-split-v4",
     "meme-spiders",
     "share-q",
     "share",
@@ -140,7 +140,8 @@
     "merge",
     "inflight-v3",
     "memory-v3",
-    "window-v3"
+    "window-v3",
+    "alloc-split-v3"
   ],
   "sections": {
     "s0": {
