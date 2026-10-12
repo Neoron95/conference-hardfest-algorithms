@@ -56,7 +56,7 @@
     "flip-flat",
     "reasons",
     "review",
-    "final",
+    "final-v2",
     "backup",
     "merge-qa",
     "weather-qa",
@@ -156,7 +156,8 @@
     "flat-e",
     "flip-v2",
     "meme-weather",
-    "merge-v2"
+    "merge-v2",
+    "final"
   ],
   "sections": {
     "s0": {
