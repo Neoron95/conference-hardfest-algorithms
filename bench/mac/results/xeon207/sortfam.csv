@@ -1,0 +1,5 @@
+exp,qos,alg,N,median_ns_el,min_ns_el,max_ns_el
+sortfam,n/a,std_sort,1048576,92.38,80.90,106.26
+sortfam,n/a,pdqsort_branchy,1048576,95.31,85.40,114.47
+sortfam,n/a,pdqsort_branchless,1048576,30.22,29.47,31.42
+sortfam,n/a,radix_lsd,1048576,26.50,25.74,39.47

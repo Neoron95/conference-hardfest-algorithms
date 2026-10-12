@@ -1,0 +1,25 @@
+[05:44:08] E1
+[05:44:22] probe
+[05:45:07] sortfam
+[05:45:16] alloc
+[05:45:43] mlp
+sink=1722897400806545590
+[05:46:56] extra
+[05:46:56] E2U qos=ui --n 1024 --u 1024 --algs sort,uset,radix,flat
+[05:47:00] E2D qos=ui --n 1024 --u 102 --algs sort,uset,radix,flat
+[05:47:02] E2U qos=ui --n 4096 --u 4096 --algs sort,uset,radix,flat
+[05:47:07] E2D qos=ui --n 4096 --u 409 --algs sort,uset,radix,flat
+[05:47:08] E2U qos=ui --n 16384 --u 16384 --algs sort,uset,radix,flat
+[05:47:14] E2D qos=ui --n 16384 --u 1638 --algs sort,uset,radix,flat
+[05:47:16] E2U qos=ui --n 65536 --u 65536 --algs sort,uset,radix,flat
+[05:47:22] E2D qos=ui --n 65536 --u 6553 --algs sort,uset,radix,flat
+[05:47:25] E2U qos=ui --n 262144 --u 262144 --algs sort,uset,radix,flat
+[05:47:35] E2D qos=ui --n 262144 --u 26214 --algs sort,uset,radix,flat
+[05:47:39] E2U qos=ui --n 524288 --u 524288 --algs sort,uset,radix,flat
+[05:47:51] E2D qos=ui --n 524288 --u 52428 --algs sort,uset,radix,flat
+[05:47:56] E2U qos=ui --n 1048576 --u 1048576 --algs sort,uset,radix,flat
+[05:48:11] E2D qos=ui --n 1048576 --u 104857 --algs sort,uset,radix,flat
+[05:48:16] E2U qos=ui --n 2097152 --u 2097152 --algs sort,uset,radix,flat
+[05:48:33] E2D qos=ui --n 2097152 --u 209715 --algs sort,uset,radix,flat
+[05:48:39] E2U qos=ui --n 4194304 --u 4194304 --algs sort,uset,radix,flat
+[05:49:17] E2D qos=ui --n 4194304 --u 419430 --algs sort,uset,radix,flat

@@ -1,0 +1,8 @@
+exp,qos,variant,N,U,median_ns_el,min_ns_el,max_ns_el
+alloc,n/a,uset_default,1048576,1048576,417.27,321.00,613.81
+alloc,n/a,uset_pmr_monotonic,1048576,1048576,148.39,116.84,209.83
+alloc,n/a,flat,1048576,1048576,34.62,32.11,43.01
+exp,qos,variant,N,U,median_ns_el,min_ns_el,max_ns_el
+alloc,n/a,uset_default,1048576,524288,93.70,80.80,146.71
+alloc,n/a,uset_pmr_monotonic,1048576,524288,45.73,44.35,52.81
+alloc,n/a,flat,1048576,524288,28.59,26.64,37.13

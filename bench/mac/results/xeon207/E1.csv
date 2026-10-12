@@ -1,0 +1,5 @@
+exp,session,toolchain,variant,alg,keys,order,N,U,pool,batch,calls_per_block,blocks,median_ns_el,min_ns_el,max_ns_el,spread_pct,blocks_ns_el
+E1,xeon207/ui,gcc13-libstdc++,-,sort,random64,random,1048576,1048576,64,1,2,7,86.500,85.544,92.659,8.2,92.659;85.671;86.823;86.346;91.333;86.500;85.544
+E1,xeon207/ui,gcc13-libstdc++,-,uset,random64,random,1048576,1048576,64,1,2,7,381.469,339.415,437.169,25.6,386.658;373.728;437.169;385.568;381.469;339.415;352.396
+E1,xeon207/ui,gcc13-libstdc++,-,radix,random64,random,1048576,1048576,64,1,2,7,41.806,39.496,57.112,42.1,57.112;39.496;44.090;41.806;47.450;41.707;40.689
+E1,xeon207/ui,gcc13-libstdc++,-,flat,random64,random,1048576,1048576,64,1,2,7,48.044,42.620,49.845,15.0,48.788;47.482;45.467;48.059;49.845;48.044;42.620
