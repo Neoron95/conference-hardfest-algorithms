@@ -32,7 +32,8 @@ qos-v2
 cores-v3
 flat-e-v2
 meme-address
-flip-v2
+flip-v3
+flip-flat
 reasons
 meme-weather
 merge-v2
