@@ -55,11 +55,11 @@
     "flip-v3",
     "flip-flat",
     "reasons",
-    "meme-weather",
-    "merge-v2",
     "review",
     "final",
     "backup",
+    "merge-qa",
+    "weather-qa",
     "learned-v2",
     "learned-v3a",
     "why-nodes",
@@ -154,7 +154,9 @@
     "boxes",
     "cores-v2",
     "flat-e",
-    "flip-v2"
+    "flip-v2",
+    "meme-weather",
+    "merge-v2"
   ],
   "sections": {
     "s0": {
@@ -183,8 +185,8 @@
       "start": "qos-v2"
     },
     "s7": {
-      "description": "Решение и ревью",
-      "start": "merge-v2"
+      "description": "Ревью и финал",
+      "start": "review"
     },
     "s8": {
       "description": "Дополнительные материалы",

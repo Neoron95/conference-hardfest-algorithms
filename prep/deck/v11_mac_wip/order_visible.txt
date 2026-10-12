@@ -35,7 +35,5 @@ meme-address
 flip-v3
 flip-flat
 reasons
-meme-weather
-merge-v2
 review
 final
