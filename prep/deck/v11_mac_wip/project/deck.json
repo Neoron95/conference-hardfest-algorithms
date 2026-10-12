@@ -37,7 +37,7 @@
     "pace-v2",
     "curve-v3",
     "nodes-v2",
-    "inflight-v3",
+    "inflight-v4",
     "window-v3",
     "alloc-split-v3",
     "meme-quest",
@@ -138,7 +138,8 @@
     "window-v2",
     "alloc-split-v2",
     "merge-short",
-    "merge"
+    "merge",
+    "inflight-v3"
   ],
   "sections": {
     "s0": {
