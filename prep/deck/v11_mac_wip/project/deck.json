@@ -45,9 +45,7 @@
     "flatmin-v2",
     "flat-v3",
     "meme-spiders",
-    "share-q",
-    "share",
-    "outcontract",
+    "share-v2",
     "inputorder",
     "learned-v2",
     "qos",
@@ -144,7 +142,10 @@
     "window-v3",
     "alloc-split-v3",
     "window-v4",
-    "sortfamily-v2"
+    "sortfamily-v2",
+    "share-q",
+    "share",
+    "outcontract"
   ],
   "sections": {
     "s0": {
@@ -166,7 +167,7 @@
     },
     "s4": {
       "description": "Вопрос C: данные и контракт",
-      "start": "share-q"
+      "start": "share-v2"
     },
     "s6": {
       "description": "Вопрос C: где и в каком режиме",

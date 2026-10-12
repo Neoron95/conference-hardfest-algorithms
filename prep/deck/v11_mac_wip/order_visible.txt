@@ -25,9 +25,7 @@ sortfamily-v3
 flatmin-v2
 flat-v3
 meme-spiders
-share-q
-share
-outcontract
+share-v2
 inputorder
 learned-v2
 qos
