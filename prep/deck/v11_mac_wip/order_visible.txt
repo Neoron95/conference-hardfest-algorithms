@@ -11,6 +11,7 @@ cost-model-v2
 qa-ticket
 meme-receipt
 result-steps
+step-cost-v3
 suspects-v3
 work-v4
 pace-v2
