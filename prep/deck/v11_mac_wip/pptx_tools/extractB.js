@@ -41,7 +41,7 @@ for(const pg of pages){
   function walk(el,group){
     const cs=getComputedStyle(el);if(cs.display==='none')return;
     const tag=el.tagName.toLowerCase();
-    if(tag==='img'||tag==='svg'){const id='r'+(rid++);el.dataset.rid=id;
+    if(tag==='img'||tag==='svg'||cs.transform!=='none'){const id='r'+(rid++);el.dataset.rid=id;
       out.push({type:el.hasAttribute('data-video')?'video':'raster',group,rid:id,rect:R(el),video:el.getAttribute('data-video')||'',poster:tag==='img'?el.getAttribute('src'):'',alt:(el.getAttribute('alt')||el.getAttribute('aria-label')||'').slice(0,250),nw:el.naturalWidth||0,nh:el.naturalHeight||0,fit:getComputedStyle(el).objectFit});return;}
     boxOf(el,group);textOf(el,group);
     for(const c of el.children){if(isBlock(c))walk(c,group);}
