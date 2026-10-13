@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parent; B=ROOT/'build'
 spec=json.load(open(B/'B/spec.json'))
 FD=str(ROOT/'fonts/embed')+'/'
 FILES={('Montserrat',False):'Montserrat-Regular.ttf',('Montserrat',True):'Montserrat-Bold.ttf',('Montserrat Medium',False):'Montserrat-Medium.ttf',('Montserrat SemiBold',False):'Montserrat-SemiBold.ttf',
-       ('Montserrat ExtraBold',False):'Montserrat-ExtraBold.ttf',('JetBrains Mono',False):'JetBrainsMono-Regular.ttf',('JetBrains Mono',True):'JetBrainsMono-Bold.ttf'}
+       ('Montserrat ExtraBold',False):'Montserrat-ExtraBold.ttf',('JetBrains Mono',False):'JetBrainsMono-Regular.ttf',('JetBrains Mono',True):'JetBrainsMono-Bold.ttf',('IBM Plex Mono',False):'IBMPlexMono-Regular.ttf',('IBM Plex Mono',True):'IBMPlexMono-Bold.ttf',('IBM Plex Mono Medium',False):'IBMPlexMono-Medium.ttf'}
 cache={}
 def font(face,bold,px):
     k=(face,bold,round(px*4)/4)

@@ -8,7 +8,7 @@ B=Path(__file__).resolve().parent/'build'
 D=json.load(open(B/'B/prims.json'))
 PX=1/144  # inch per px
 PT=0.5    # pt per px
-MET={'Montserrat':(0.968,0.251),'JetBrains Mono':(1.020,0.300)}
+MET={'Montserrat':(0.968,0.251),'JetBrains Mono':(1.020,0.300),'IBM Plex Mono':(1.025,0.275)}
 def rgba(s):
     m=re.match(r'rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)',s or '')
     if not m: return None
@@ -23,6 +23,10 @@ def face(ff,fw):
         if w<750: return 'Montserrat',True
         return 'Montserrat ExtraBold',False
     if fam=='JetBrains Mono': return 'JetBrains Mono', w>=600
+    if fam=='IBM Plex Mono':
+        if w<=450: return 'IBM Plex Mono',False
+        if w<650: return 'IBM Plex Mono Medium',False
+        return 'IBM Plex Mono',True
     return fam, w>=600
 def tt(s,t):
     return s.upper() if t=='uppercase' else s.lower() if t=='lowercase' else s

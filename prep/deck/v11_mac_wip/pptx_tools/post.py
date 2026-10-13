@@ -80,7 +80,8 @@ def eot(ttf_path):
 # typeface name in slides -> embedded files (PowerPoint keeps regular/bold slots per typeface)
 FONTS=[('Montserrat',{'regular':'Montserrat-Regular.ttf','bold':'Montserrat-Bold.ttf'}),('Montserrat Medium',{'regular':'Montserrat-Medium.ttf'}),
        ('Montserrat SemiBold',{'regular':'Montserrat-SemiBold.ttf'}),('Montserrat ExtraBold',{'regular':'Montserrat-ExtraBold.ttf'}),
-       ('JetBrains Mono',{'regular':'JetBrainsMono-Regular.ttf','bold':'JetBrainsMono-Bold.ttf'})]
+       ('JetBrains Mono',{'regular':'JetBrainsMono-Regular.ttf','bold':'JetBrainsMono-Bold.ttf'}),
+       ('IBM Plex Mono',{'regular':'IBMPlexMono-Regular.ttf','bold':'IBMPlexMono-Bold.ttf'}),('IBM Plex Mono Medium',{'regular':'IBMPlexMono-Medium.ttf'})]
 
 def process(src, plan_path, dst, fontdir, kern=False):
     plan=json.load(open(plan_path))
