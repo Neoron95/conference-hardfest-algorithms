@@ -1,0 +1,106 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/local.css">
+<style>
+html,body{margin:0;padding:0;background:transparent;overflow:hidden}
+body.dark{background:#000}
+svg{display:block}
+text{font-family:'Montserrat';font-weight:800}
+</style></head>
+<body>
+<svg id="s" xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<defs>
+  <!-- big paper/felt piece: irregular cut + fuzzy fibre edge + grain + cut-edge rim + soft layer shadow -->
+  <filter id="felt" x="-8%" y="-8%" width="116%" height="118%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="4" result="lo"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.9 0.55" numOctaves="2" seed="11" result="hi"/>
+    <feDisplacementMap in="SourceGraphic" in2="lo" scale="12" xChannelSelector="R" yChannelSelector="G" result="d1"/>
+    <feDisplacementMap in="d1" in2="hi" scale="4" xChannelSelector="G" yChannelSelector="B" result="d2"/>
+    <feColorMatrix in="hi" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1" result="hiG"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="2" seed="5" result="mid"/>
+    <feColorMatrix in="mid" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1" result="midG"/>
+    <feComposite in="hiG" in2="midG" operator="arithmetic" k2="0.44" k3="0.09" k4="0.655" result="grain"/>
+    <feBlend in="d2" in2="grain" mode="multiply" result="tex0"/>
+    <feComposite in="tex0" in2="d2" operator="in" result="tex"/>
+    <feMorphology in="d2" operator="erode" radius="1.4" result="er"/>
+    <feComposite in="d2" in2="er" operator="out" result="rimA"/>
+    <feFlood flood-color="#fff8ea" flood-opacity="0.28"/>
+    <feComposite in2="rimA" operator="in" result="rim"/>
+    <feGaussianBlur in="d2" stdDeviation="4" result="bl"/>
+    <feOffset in="bl" dx="3" dy="6" result="off"/>
+    <feFlood flood-color="#000" flood-opacity="0.6"/>
+    <feComposite in2="off" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="tex"/><feMergeNode in="rim"/></feMerge>
+  </filter>
+  <!-- big flat cream paper (board, cards, sticker): fine grain, no mottle -->
+  <filter id="paper" x="-8%" y="-8%" width="116%" height="118%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="4" result="lo"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.9 0.55" numOctaves="2" seed="11" result="hi"/>
+    <feDisplacementMap in="SourceGraphic" in2="lo" scale="12" xChannelSelector="R" yChannelSelector="G" result="d1"/>
+    <feDisplacementMap in="d1" in2="hi" scale="4" xChannelSelector="G" yChannelSelector="B" result="d2"/>
+    <feColorMatrix in="hi" type="matrix" values="0.45 0 0 0 0.71  0.45 0 0 0 0.71  0.45 0 0 0 0.71  0 0 0 0 1" result="grain"/>
+    <feBlend in="d2" in2="grain" mode="multiply" result="tex0"/>
+    <feComposite in="tex0" in2="d2" operator="in" result="tex"/>
+    <feMorphology in="d2" operator="erode" radius="1.4" result="er"/>
+    <feComposite in="d2" in2="er" operator="out" result="rimA"/>
+    <feFlood flood-color="#fff8ea" flood-opacity="0.28"/>
+    <feComposite in2="rimA" operator="in" result="rim"/>
+    <feGaussianBlur in="d2" stdDeviation="4" result="bl"/>
+    <feOffset in="bl" dx="3" dy="6" result="off"/>
+    <feFlood flood-color="#000" flood-opacity="0.6"/>
+    <feComposite in2="off" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="tex"/><feMergeNode in="rim"/></feMerge>
+  </filter>
+  <!-- medium piece -->
+  <filter id="feltM" x="-22%" y="-22%" width="144%" height="150%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="lo"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.9 0.55" numOctaves="2" seed="13" result="hi"/>
+    <feDisplacementMap in="SourceGraphic" in2="lo" scale="8" xChannelSelector="R" yChannelSelector="G" result="d1"/>
+    <feDisplacementMap in="d1" in2="hi" scale="3" xChannelSelector="G" yChannelSelector="B" result="d2"/>
+    <feColorMatrix in="hi" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1" result="hiG"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="2" seed="6" result="mid"/>
+    <feColorMatrix in="mid" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1" result="midG"/>
+    <feComposite in="hiG" in2="midG" operator="arithmetic" k2="0.44" k3="0.09" k4="0.655" result="grain"/>
+    <feBlend in="d2" in2="grain" mode="multiply" result="tex0"/>
+    <feComposite in="tex0" in2="d2" operator="in" result="tex"/>
+    <feMorphology in="d2" operator="erode" radius="1.2" result="er"/>
+    <feComposite in="d2" in2="er" operator="out" result="rimA"/>
+    <feFlood flood-color="#fff8ea" flood-opacity="0.25"/>
+    <feComposite in2="rimA" operator="in" result="rim"/>
+    <feGaussianBlur in="d2" stdDeviation="3" result="bl"/>
+    <feOffset in="bl" dx="2" dy="4" result="off"/>
+    <feFlood flood-color="#000" flood-opacity="0.55"/>
+    <feComposite in2="off" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="tex"/><feMergeNode in="rim"/></feMerge>
+  </filter>
+  <!-- small piece -->
+  <filter id="feltS" x="-60%" y="-60%" width="220%" height="230%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="1" seed="9" result="lo"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.9 0.55" numOctaves="2" seed="17" result="hi"/>
+    <feDisplacementMap in="SourceGraphic" in2="lo" scale="3.5" xChannelSelector="R" yChannelSelector="G" result="d1"/>
+    <feDisplacementMap in="d1" in2="hi" scale="2.2" xChannelSelector="G" yChannelSelector="B" result="d2"/>
+    <feColorMatrix in="hi" type="matrix" values="0.4 0 0 0 0.74  0.4 0 0 0 0.74  0.4 0 0 0 0.74  0 0 0 0 1" result="grain"/>
+    <feBlend in="d2" in2="grain" mode="multiply" result="tex0"/>
+    <feComposite in="tex0" in2="d2" operator="in" result="tex"/>
+    <feGaussianBlur in="d2" stdDeviation="2" result="bl"/>
+    <feOffset in="bl" dx="1.5" dy="3" result="off"/>
+    <feFlood flood-color="#000" flood-opacity="0.5"/>
+    <feComposite in2="off" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="tex"/></feMerge>
+  </filter>
+  <!-- cut-out letters -->
+  <filter id="ink" x="-6%" y="-15%" width="112%" height="135%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9 0.6" numOctaves="2" seed="21" result="hi"/>
+    <feDisplacementMap in="SourceGraphic" in2="hi" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="d2"/>
+    <feGaussianBlur in="d2" stdDeviation="1.2" result="bl"/>
+    <feOffset in="bl" dx="1" dy="2" result="off"/>
+    <feFlood flood-color="#000" flood-opacity="0.35"/>
+    <feComposite in2="off" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="d2"/></feMerge>
+  </filter>
+</defs>
+<g id="root"></g>
+</svg>
+<script src="scene.js"></script>
+<script src="audience.js"></script>
+</body></html>

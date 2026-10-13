@@ -20,7 +20,7 @@
   "order": [
     "cover",
     "about",
-    "audience",
+    "audience-v2",
     "case",
     "diff",
     "vote",
@@ -71,7 +71,8 @@
     "algo-sort",
     "prod",
     "algo-sort-v2",
-    "final-v2"
+    "final-v2",
+    "audience"
   ],
   "sections": {
     "s0": {
