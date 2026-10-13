@@ -25,7 +25,7 @@
     "diff",
     "vote",
     "meme-boxing",
-    "algo-sort",
+    "algo-sort-v2",
     "algo-hash",
     "cost-model-v2",
     "qa-ticket",
@@ -67,7 +67,8 @@
     "nb-lang",
     "when-which",
     "alloc-split-v4",
-    "nb-dense"
+    "nb-dense",
+    "algo-sort"
   ],
   "sections": {
     "s0": {

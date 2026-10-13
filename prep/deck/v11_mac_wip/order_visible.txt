@@ -5,7 +5,7 @@ case
 diff
 vote
 meme-boxing
-algo-sort
+algo-sort-v2
 algo-hash
 cost-model-v2
 qa-ticket
