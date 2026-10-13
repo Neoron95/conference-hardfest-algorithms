@@ -1,0 +1,109 @@
+{
+  "v": 4,
+  "attachments": {},
+  "createdOnFiles": {
+    "at": "2026-10-11T07:26:07Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "faces": {
+    "jetbrains-mono": {
+      "family": "JetBrains Mono",
+      "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+    },
+    "montserrat": {
+      "family": "Montserrat",
+      "href": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+    }
+  },
+  "lists": "css",
+  "order": [
+    "cover",
+    "about",
+    "audience",
+    "case",
+    "diff",
+    "vote",
+    "meme-boxing",
+    "algo-sort-v2",
+    "algo-hash",
+    "cost-model-v2",
+    "qa-ticket",
+    "meme-receipt",
+    "result-steps",
+    "step-cost-v3",
+    "suspects-v3",
+    "work-v4",
+    "pace-v2",
+    "curve-v3",
+    "nodes-v2",
+    "inflight-v4",
+    "window-v5",
+    "meme-quest",
+    "speculation-v2",
+    "sortfamily-v3",
+    "flatmin-v2",
+    "meme-spiders",
+    "flat-v3",
+    "share-v2",
+    "inputorder-v3",
+    "learned-v3b",
+    "qos-v2",
+    "cores-v3",
+    "meme-address",
+    "flat-e-v2",
+    "flip-v3",
+    "flip-flat",
+    "reasons",
+    "review",
+    "final-v2",
+    "backup-v2",
+    "prod-v2",
+    "qos-bg-v2",
+    "merge-qa",
+    "method-qa",
+    "nb-kernel",
+    "nb-lang",
+    "when-which",
+    "alloc-split-v4",
+    "nb-dense",
+    "algo-sort",
+    "prod"
+  ],
+  "sections": {
+    "s0": {
+      "description": "Задача и три среды",
+      "start": "cover"
+    },
+    "s1": {
+      "before": null,
+      "description": "Как получаются уникальные значения",
+      "start": "result-steps"
+    },
+    "s2": {
+      "description": "Три подозреваемых",
+      "start": "suspects-v3"
+    },
+    "s3": {
+      "description": "Реализация таблицы",
+      "start": "flatmin-v2"
+    },
+    "s4": {
+      "description": "Вопрос C: данные и контракт",
+      "start": "share-v2"
+    },
+    "s6": {
+      "description": "Вопрос C: где и в каком режиме",
+      "start": "qos-v2"
+    },
+    "s7": {
+      "description": "Ревью и финал",
+      "start": "review"
+    },
+    "s8": {
+      "description": "Ответы на вопросы",
+      "start": "backup-v2"
+    }
+  },
+  "title": "O(n) проиграл O(n log n) — HardFest 2026 · V11 Mac (главная машина — M2 Pro)"
+}
