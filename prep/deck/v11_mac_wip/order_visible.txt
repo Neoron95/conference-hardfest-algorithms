@@ -38,7 +38,7 @@ reasons
 review
 final-v2
 backup-v2
-prod
+prod-v2
 qos-bg-v2
 merge-qa
 method-qa

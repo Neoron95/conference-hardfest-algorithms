@@ -58,7 +58,7 @@
     "review",
     "final-v2",
     "backup-v2",
-    "prod",
+    "prod-v2",
     "qos-bg-v2",
     "merge-qa",
     "method-qa",
@@ -67,7 +67,8 @@
     "when-which",
     "alloc-split-v4",
     "nb-dense",
-    "algo-sort"
+    "algo-sort",
+    "prod"
   ],
   "sections": {
     "s0": {
