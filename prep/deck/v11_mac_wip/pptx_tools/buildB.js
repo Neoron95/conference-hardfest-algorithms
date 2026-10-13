@@ -1,4 +1,4 @@
-// Step 4B. Editable variant from build/B/spec.json. Env: MAXN=39 (first N slides), NONOTES=1 (no speaker notes), OUT=build/P (output dir).
+// Step 4B. Editable variant from build/B/spec.json. Env: MAXN=N (first N slides), NONOTES=1 (no speaker notes), OUT=build/P (output dir).
 const pptxgen=require('pptxgenjs');const fs=require('fs');const path=require('path');const B=path.join(__dirname,'build');
 const MAXN=+(process.env.MAXN||999),NONOTES=!!process.env.NONOTES,OUT=path.resolve(process.env.OUT||path.join(B,'B'));fs.mkdirSync(OUT,{recursive:true});
 const spec=JSON.parse(fs.readFileSync(path.join(B,'B/spec.json'),'utf8')).filter(s=>s.n<=MAXN);const durs=JSON.parse(fs.readFileSync(path.join(B,'durs.json'),'utf8'));

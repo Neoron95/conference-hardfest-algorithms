@@ -6,7 +6,7 @@
 |---|---|
 | `hardfest2026_deck_mac_clicks.pptx` | Слайды картинками, разрезанными по щелчкам. Выглядит один в один с колодой, текст не редактируется |
 | `hardfest2026_deck_mac_editable.pptx` | Текст и плашки — редактируемые объекты PowerPoint; схемы, графики, мемы — картинками |
-| `hardfest2026_deck_mac_editable_prod.pptx` | То же, что editable, но только 39 слайдов основной части и без заметок спикера |
+| `hardfest2026_deck_mac_editable_prod.pptx` | То же, что editable, но только слайды основной части (всё до оглавления вопросов) и без заметок спикера |
 
 Во всех трёх: щелчки как в колоде, видео встроены и стартуют со своим щелчком, речь и подсказки в заметках (кроме prod), шрифты Montserrat и JetBrains Mono встроены в файл.
 
@@ -47,7 +47,7 @@ pip3 install -r requirements.txt
 | 2 | `layersA.js`, `cropA.py` | Вариант clicks: рендер в Chromium по слоям — фон и по картинке на каждый щелчок. Проверка: сумма слоёв попиксельно совпадает с полным рендером |
 | 3 | `buildA.js` | Вариант clicks: сборка PPTX (pptxgenjs) и план анимаций |
 | 4 | `extractB.js`, `convertB.py` | Вариант editable: из браузера берутся строки текста с их стилями, плашки, рамки, картинки и SVG (в 2×) → `build/B/spec.json` |
-| 5 | `buildB.js` | Вариант editable: сборка PPTX. `MAXN=39 NONOTES=1 OUT=build/P` — версия prod |
+| 5 | `buildB.js` | Вариант editable: сборка PPTX. `MAXN=<число основных слайдов> NONOTES=1 OUT=build/P` — версия prod (`build.sh` считает число сам по `deck.json`) |
 | 6 | `post.py` | Дописывает в PPTX анимации (щелчки, автозапуск видео) и встраивает шрифты |
 | 7 | `previewB.py` | Проверка editable: рисует каждый слайд из `spec.json` теми же шрифтами по модели PowerPoint и сравнивает с колодой (`build/B/compare-*.png`) |
 
