@@ -56,7 +56,8 @@
     "flip-flat",
     "reasons",
     "review",
-    "final-v2",
+    "final-thought",
+    "final-thanks",
     "backup-v2",
     "prod-v2",
     "qos-bg-v2",
@@ -69,7 +70,8 @@
     "nb-dense",
     "algo-sort",
     "prod",
-    "algo-sort-v2"
+    "algo-sort-v2",
+    "final-v2"
   ],
   "sections": {
     "s0": {
