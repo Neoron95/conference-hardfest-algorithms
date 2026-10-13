@@ -25,7 +25,6 @@
     "diff",
     "vote",
     "meme-boxing",
-    "algo-sort-v2",
     "algo-tree",
     "algo-hash",
     "cost-model-v2",
@@ -69,7 +68,8 @@
     "alloc-split-v4",
     "nb-dense",
     "algo-sort",
-    "prod"
+    "prod",
+    "algo-sort-v2"
   ],
   "sections": {
     "s0": {
