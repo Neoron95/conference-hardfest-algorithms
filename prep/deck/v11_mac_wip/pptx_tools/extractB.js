@@ -46,8 +46,8 @@ for(const pg of pages){
     boxOf(el,group);textOf(el,group);
     for(const c of el.children){if(isBlock(c))walk(c,group);}
   }
-  kids.forEach((e,i)=>{const bi=e.getAttribute('data-build-in')||'';const m=bi.match(/(\d+)/);
-    walk(e,{order:m?+m[1]:(bi?1:0),auto:/\bauto\b/.test(bi),kid:i});});
+  kids.forEach((e,i)=>{const bi=e.getAttribute('data-build-in')||'';const m=bi.match(/(\d+)/);const bo=e.getAttribute('data-build-out')||'';const mo=bo.match(/(\d+)/);
+    walk(e,{order:m?+m[1]:(bi?1:0),auto:/\bauto\b/.test(bi),out:mo?+mo[1]:(bo?1:0),oauto:/\bauto\b/.test(bo),kid:i});});
   return {bg:getComputedStyle(sec).backgroundColor,prims:out};});
  // raster captures
  for(const pr of prim.prims.filter(x=>x.type==='raster')){

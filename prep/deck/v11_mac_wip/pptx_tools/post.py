@@ -1,4 +1,4 @@
-"""Step 5. Post-process a pptxgenjs deck: click-sequenced fade-ins, video autoplay, embedded fonts (EOT .fntdata).
+"""Step 5. Post-process a pptxgenjs deck: click-sequenced fade-ins and fade-outs, video autoplay, embedded fonts (EOT .fntdata).
 Usage: python3 post.py raw.pptx plan.json out.pptx fonts/embed [--kern]
   --kern  turn kerning on for every text run (editable variants)."""
 import json, re, struct, sys, zipfile, io, itertools, os
@@ -23,6 +23,16 @@ def fade(ids,spid,nt):
             f'<p:animEffect transition="in" filter="fade"><p:cBhvr><p:cTn id="{c}" dur="500"/><p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cBhvr></p:animEffect>'
             f'</p:childTnLst></p:cTn></p:par>')
 
+def fadeout(ids,spid,nt,grp):
+    a,b,c=next(ids),next(ids),next(ids)
+    return (f'<p:par><p:cTn id="{a}" presetID="10" presetClass="exit" presetSubtype="0" fill="hold" grpId="{grp}" nodeType="{nt}">'
+            f'<p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>'
+            f'<p:animEffect transition="out" filter="fade"><p:cBhvr><p:cTn id="{b}" dur="500"/><p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cBhvr></p:animEffect>'
+            f'<p:set><p:cBhvr><p:cTn id="{c}" dur="1" fill="hold"><p:stCondLst><p:cond delay="499"/></p:stCondLst></p:cTn>'
+            f'<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl><p:attrNameLst><p:attrName>style.visibility</p:attrName></p:attrNameLst></p:cBhvr>'
+            f'<p:to><p:strVal val="hidden"/></p:to></p:set>'
+            f'</p:childTnLst></p:cTn></p:par>')
+
 def play(ids,spid,dur,nt):
     a,b=next(ids),next(ids)
     return (f'<p:par><p:cTn id="{a}" presetID="1" presetClass="mediacall" presetSubtype="0" fill="hold" nodeType="{nt}">'
@@ -31,10 +41,12 @@ def play(ids,spid,dur,nt):
             f'<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cBhvr></p:cmd></p:childTnLst></p:cTn></p:par>')
 
 def build_timing(blocks, videos):
-    """blocks: list of {'auto':bool,'steps':[[('fade'|'play', spid, dur), ...], ...]} — a block = one click (or auto start);
+    """blocks: list of {'auto':bool,'steps':[[('fade'|'out'|'play', spid, dur), ...], ...]} — a block = one click (or auto start);
        steps inside a block run one after another (auto chain). videos: [(spid,dur)] for cMediaNode."""
     if not blocks and not videos: return ''
     ids=itertools.count(3)
+    # a shape with both an entrance and an exit: the exit is build group 1
+    entr={e[1] for blk in blocks for step in blk['steps'] for e in step if e[0]=='fade'}
     out=[]
     for bi,blk in enumerate(blocks):
         cid=next(ids)
@@ -47,7 +59,7 @@ def build_timing(blocks, videos):
             for k,(kind,spid,dur) in enumerate(step):
                 if k==0: nt='afterEffect' if (blk['auto'] or si>0) else 'clickEffect'
                 else: nt='withEffect'
-                effs.append(fade(ids,spid,nt) if kind=='fade' else play(ids,spid,dur,nt))
+                effs.append(fade(ids,spid,nt) if kind=='fade' else fadeout(ids,spid,nt,1 if spid in entr else 0) if kind=='out' else play(ids,spid,dur,nt))
             inner.append(f'<p:par><p:cTn id="{sid}" fill="hold"><p:stCondLst><p:cond delay="{t}"/></p:stCondLst><p:childTnLst>{"".join(effs)}</p:childTnLst></p:cTn></p:par>')
             t+=500
         out.append(f'<p:par><p:cTn id="{cid}" fill="hold"><p:stCondLst>{cond}</p:stCondLst><p:childTnLst>{"".join(inner)}</p:childTnLst></p:cTn></p:par>')
@@ -100,6 +112,10 @@ def process(src, plan_path, dst, fontdir, kern=False):
         t=build_timing(blocks,vids)
         if t:
             bld=''.join(f'<p:bldP spid="{spid(k)}" grpId="0" animBg="1"/>' for k in sp.get('bld',[]))
+            # exits of PowerPoint shapes (text, boxes) need their own build entry; group 1 if the shape also has an entrance
+            entr={e[1] for blk in sp['blocks'] for step in blk['steps'] for e in step if e[0]=='fade'}
+            bld+=''.join(f'<p:bldP spid="{spid(e[1])}" grpId="{1 if e[1] in entr else 0}" animBg="1"/>'
+                         for blk in sp['blocks'] for step in blk['steps'] for e in step if e[0]=='out' and sp['shapes'][e[1]]=='sp')
             t=t.replace('{BLD}',f'<p:bldLst>{bld}</p:bldLst>' if bld else '')
             assert '<p:timing>' not in x
             x=x.replace('</p:clrMapOvr>','</p:clrMapOvr>'+t,1)

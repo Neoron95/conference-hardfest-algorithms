@@ -20,14 +20,15 @@ for(const s of spec){
   }
   if(s.notes&&!NONOTES)sl.addNotes(s.notes);
   // timing plan
-  const byOrder={};s.shapes.forEach((sh,i)=>{(byOrder[sh.g.order]=byOrder[sh.g.order]||[]).push(i)});
-  const orders=Object.keys(byOrder).map(Number).filter(k=>k>0).sort((a,b)=>a-b);
+  const byOrder={},byOut={};s.shapes.forEach((sh,i)=>{(byOrder[sh.g.order]=byOrder[sh.g.order]||[]).push(i);if(sh.g.out)(byOut[sh.g.out]=byOut[sh.g.out]||[]).push(i);});
+  const orders=[...new Set([...Object.keys(byOrder),...Object.keys(byOut)].map(Number))].filter(k=>k>0).sort((a,b)=>a-b);
   const blocks=[];const vids=[];
   s.shapes.forEach((sh,i)=>{if(sh.t==='video')vids.push([i,durs[sh.path]])});
   const v0=vids.filter(([i])=>s.shapes[i].g.order===0);
   if(v0.length)blocks.push({auto:true,steps:[v0.map(([i,d])=>['play',i,d])]});
-  for(const k of orders){const idx=byOrder[k];const auto=idx.every(i=>s.shapes[i].g.auto);const eff=[];
+  for(const k of orders){const idx=byOrder[k]||[],out=byOut[k]||[];const auto=idx.every(i=>s.shapes[i].g.auto)&&out.every(i=>s.shapes[i].g.oauto);const eff=[];
     for(const i of idx){eff.push(['fade',i,0]);if(s.shapes[i].t==='video')eff.push(['play',i,durs[s.shapes[i].path]]);}
+    for(const i of out)eff.push(['out',i,0]);
     if(auto&&blocks.length)blocks[blocks.length-1].steps.push(eff);else blocks.push({auto,steps:[eff]});}
   const bld=s.shapes.map((sh,i)=>[sh,i]).filter(([sh])=>sh.g.order>0&&['rect','round','line','text'].includes(sh.t)).map(([,i])=>i);
   plan.push({n:s.n,shapes:kinds,blocks,videos:vids,bld});
