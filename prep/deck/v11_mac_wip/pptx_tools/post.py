@@ -102,6 +102,11 @@ def process(src, plan_path, dst, fontdir, kern=False):
     for sp in plan:
         name=f'ppt/slides/slide{sp["n"]}.xml'; x=files[name].decode('utf-8')
         tree=x[x.index('<p:spTree>'):x.index('</p:spTree>')]
+        # pptxgenjs numbers a video by its relationship id, which can collide with another shape's id;
+        # animations target shapes by id, so renumber all shapes 1, 2, 3... in document order
+        cnt=itertools.count(1)
+        fixed=re.sub(r'<p:cNvPr id="\d+"',lambda m:f'<p:cNvPr id="{next(cnt)}"',tree)
+        x=x.replace(tree,fixed,1); tree=fixed
         ids=[int(i) for i in re.findall(r'<p:cNvPr id="(\d+)"',tree)][1:]
         assert len(ids)==len(sp['shapes']),(sp['n'],len(ids),len(sp['shapes']))
         spid=lambda k: ids[k]

@@ -20,4 +20,5 @@ echo "== 6. editable prod ($MAIN main slides, no notes)"
 MAXN=$MAIN NONOTES=1 OUT=build/P node buildB.js
 python3 post.py build/P/raw.pptx build/P/plan.json out/hardfest2026_deck_mac_editable_prod.pptx fonts/embed --kern
 echo "== 7. QA preview of the editable variant"; python3 previewB.py
+echo "== 8. video check (ids, embedding, click, loop)"; python3 checkvideo.py out/*.pptx
 ls -la out
