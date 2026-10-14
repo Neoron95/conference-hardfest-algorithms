@@ -38,7 +38,7 @@ def main():
         body = re.sub(r'(<section[^>]*?)style="', r'\1style="position:relative;width:1920px;height:1080px;overflow:hidden;', body, count=1)
         f = B / 'pages' / f'{len(pages) + 1:02d}-{s}.html'
         f.write_text('<html><head><meta charset="utf-8"><style>' + css +
-                     ' body{margin:0;background:#000} p,h1,h2,h3{margin:0}</style></head><body>' + body + '</body></html>')
+                     ' *,*::before,*::after{box-sizing:border-box} body{margin:0;background:#000} p,h1,h2,h3{margin:0}</style></head><body>' + body + '</body></html>')
         t = re.sub(r'<[^>]+>', '', asd.replace('<br>', '\n'))
         pages.append({'n': len(pages) + 1, 'id': s, 'page': str(f), 'notes': html.unescape(t).strip()})
     json.dump(pages, open(B / 'pages.json', 'w'), ensure_ascii=False, indent=1)
